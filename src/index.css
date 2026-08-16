@@ -10,6 +10,7 @@
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
+  --font-display: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
 }
 
 html, body, #root {
