@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #4ee2a6;
+  --color-bg: #0d0d0f;
+  --color-bg-panel: #161619;
+  --color-bg-panel-2: #1e1e22;
+  --color-text-dim: #888888;
+  --color-text-faint: #444444;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: #f0f0f0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
