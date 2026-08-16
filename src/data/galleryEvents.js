@@ -1,13 +1,46 @@
 export const GROUP_ORDER = ['JKT48', 'KLP48', 'Quadlips']
 
 /**
+ * Accepts a photos array of either:
+ *   - plain strings:  "file.jpg"
+ *   - objects:        { filename, frameNum?, title?, story?, size?, exif?, tags? }
+ * Returns a normalized array of objects.
+ */
+export function normalizePhotos(photos) {
+  return photos.map((p, i) => {
+    if (typeof p === 'string') {
+      return {
+        filename: p,
+        frameNum: String(i + 1).padStart(3, '0'),
+        title: null,
+        story: null,
+        size: '',
+        exif: null,
+        tags: [],
+      }
+    }
+    return {
+      filename: p.filename,
+      frameNum: p.frameNum ?? String(i + 1).padStart(3, '0'),
+      title:    p.title    ?? null,
+      story:    p.story    ?? null,
+      size:     p.size     ?? '',
+      exif:     p.exif     ?? null,
+      tags:     p.tags     ?? [],
+    }
+  })
+}
+
+/**
  * Event entry shape:
- *   id       — used as /gallery/<id> route and /public/gallery/<id>/ folder
- *   title    — display name
- *   group    — must match a key in GROUP_ORDER
- *   location — venue string
- *   date     — display date string
- *   photos   — filenames inside /public/gallery/<id>/  (empty = "Segera Hadir")
+ *   id          — used as /gallery/<id> route and /public/gallery/<id>/ folder
+ *   title       — display name
+ *   group       — must match a key in GROUP_ORDER
+ *   location    — venue string
+ *   date        — display date string
+ *   description — optional long text shown on event page
+ *   gear        — optional camera/lens summary for FactsPanel
+ *   photos      — filenames or photo objects (empty = "Segera Hadir")
  */
 export const EVENTS = [
   // ── JKT48 ──────────────────────────────────────────────────────────────────
