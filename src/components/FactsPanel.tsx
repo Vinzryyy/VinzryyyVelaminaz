@@ -12,7 +12,7 @@ export function FactsPanel({ event }: { event: Event }) {
   ];
 
   return (
-    <div className="grid grid-cols-2 border border-hairline">
+    <div className="grid max-w-sm grid-cols-2 border border-hairline lg:max-w-none">
       {facts.map(({ label, value }, i) => (
         <div
           key={label}
