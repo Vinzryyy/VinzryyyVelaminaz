@@ -1,34 +1,130 @@
 @import "tailwindcss";
 
-@theme {
-  --color-accent: #4ee2a6;
-  --color-bg: #0d0d0f;
-  --color-bg-panel: #161619;
-  --color-bg-panel-2: #1e1e22;
-  --color-text-dim: #888888;
-  --color-text-faint: #444444;
+/* ── Theme tokens ─────────────────────────────────────────────── */
 
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
-  --font-display: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
+@theme {
+  --color-sumi:     #14121a;
+  --color-card:     #1e1b28;
+  --color-ink:      #ede9f3;
+  --color-muted:    #8b8598;
+  --color-faint:    #3d3850;
+  --color-crimson:  #c4293b;
+  --color-sakura:   #f2b8c6;
+  --color-gold:     #c9a45c;
+  --color-hairline: #2a2634;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans:    "Space Grotesk", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", Menlo, monospace;
+  --font-jp:      "Noto Serif JP", serif;
+
+  --animate-blade-sweep: blade-sweep 0.6s ease-out forwards;
+  --animate-fade-up:     fade-up 0.6s ease-out forwards;
+}
+
+/* ── Keyframes ────────────────────────────────────────────────── */
+
+@keyframes blade-sweep {
+  0%   { transform: scaleX(0); transform-origin: left center; }
+  100% { transform: scaleX(1); transform-origin: left center; }
+}
+
+@keyframes fade-up {
+  0%   { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Base ─────────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-sumi);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
 html, body, #root {
   height: 100%;
 }
 
-body {
-  background-color: var(--color-bg);
-  color: #f0f0f0;
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+/* ── Scroll reveal ────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-@keyframes photo-fade {
-  from { opacity: 0; transform: scale(0.985); }
-  to   { opacity: 1; transform: scale(1); }
+/* ── Staggered children reveal ────────────────────────────────── */
+
+.reveal-stagger > .reveal-child {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal-stagger.is-visible > .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger.is-visible > .reveal-child:nth-child(1)  { transition-delay: 0ms; }
+.reveal-stagger.is-visible > .reveal-child:nth-child(2)  { transition-delay: 70ms; }
+.reveal-stagger.is-visible > .reveal-child:nth-child(3)  { transition-delay: 140ms; }
+.reveal-stagger.is-visible > .reveal-child:nth-child(4)  { transition-delay: 210ms; }
+.reveal-stagger.is-visible > .reveal-child:nth-child(5)  { transition-delay: 280ms; }
+.reveal-stagger.is-visible > .reveal-child:nth-child(6)  { transition-delay: 350ms; }
+
+/* ── Katana blade divider ─────────────────────────────────────── */
+
+.katana-line {
+  height: 2px;
+  background: linear-gradient(90deg, #c4293b, #c9a45c);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s ease;
+}
+.group:hover .katana-line,
+.katana-line.is-active {
+  transform: scaleX(1);
 }
 
-.animate-photo-fade {
-  animation: photo-fade 0.25s ease-out forwards;
+/* ── Photo hover (desktop only) ───────────────────────────────── */
+
+@media (hover: hover) {
+  .photo-frame:hover img {
+    transform: scale(1.03);
+  }
+  .photo-frame:hover .frame-veil {
+    opacity: 1;
+  }
+}
+
+/* ── Vertical tate text ───────────────────────────────────────── */
+
+.tate {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  letter-spacing: 0.25em;
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .sakura-petal {
+    animation: none !important;
+    display: none;
+  }
+  .reveal,
+  .reveal-stagger > .reveal-child {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
