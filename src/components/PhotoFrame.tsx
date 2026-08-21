@@ -29,9 +29,13 @@ export function PhotoFrame({
         <img
           src={photo.src}
           alt={photo.title}
+          width={photo.width}
+          height={photo.height}
           loading="lazy"
+          decoding="async"
           draggable={false}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-300"
+          sizes="(min-width: 640px) 33vw, 100vw"
         />
       ) : (
         <div

@@ -178,8 +178,11 @@ export function Lightbox({
               key={photo.src}
               src={photo.src}
               alt={photo.title}
+              width={photo.width}
+              height={photo.height}
               onLoad={() => setLoaded(true)}
               onClick={(e) => e.stopPropagation()}
+              decoding="async"
               draggable={false}
               className={`max-h-full max-w-full object-contain shadow-2xl transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
             />
