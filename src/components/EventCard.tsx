@@ -46,7 +46,12 @@ export function EventCard({
         )}
 
         {/* Kanji frame-count badge */}
-        <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center border border-ink/10 bg-sumi/80 font-jp text-sm text-gold backdrop-blur-sm">
+        <div
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center border border-ink/10 bg-sumi/80 font-jp text-sm text-gold backdrop-blur-sm"
+          aria-label={`${photoCount} photos`}
+          role="img"
+          lang="ja"
+        >
           {toKanji(photoCount)}
         </div>
 
