@@ -265,6 +265,7 @@ export function Lightbox({
                   : "opacity-40 hover:opacity-70"
               }`}
               aria-label={`Go to ${p.title}`}
+              aria-current={i === idx ? "true" : undefined}
             >
               {p.src ? (
                 <img src={p.src} alt="" className="h-full w-full object-cover" loading="lazy" />
