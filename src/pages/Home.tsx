@@ -151,11 +151,26 @@ const EMAIL = "hello@mal.photo";
 function CopyEmail() {
   const [copied, setCopied] = useState(false);
 
-  const copy = () => {
-    navigator.clipboard.writeText(EMAIL).then(() => {
+  const copy = async () => {
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(EMAIL);
+      } else {
+        // Fallback for HTTP / older browsers
+        const ta = document.createElement("textarea");
+        ta.value = EMAIL;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    });
+    } catch {
+      // Silently fail — the mailto link still works
+    }
   };
 
   return (
