@@ -130,11 +130,11 @@ export function Lightbox({
   /* ── EXIF ───────────────────────────────────────────────────── */
 
   const exifItems = [
-    photo.lens     && { label: "Lens",     value: photo.lens },
-    photo.aperture && { label: "Aperture", value: photo.aperture },
-    photo.shutter  && { label: "Shutter",  value: photo.shutter },
-    photo.iso      && { label: "ISO",      value: String(photo.iso) },
-  ].filter((item): item is { label: string; value: string } => !!item);
+    photo.lens     != null ? { label: "Lens",     value: photo.lens }            : null,
+    photo.aperture != null ? { label: "Aperture", value: photo.aperture }        : null,
+    photo.shutter  != null ? { label: "Shutter",  value: photo.shutter }         : null,
+    photo.iso      != null ? { label: "ISO",      value: String(photo.iso) }     : null,
+  ].filter((item): item is { label: string; value: string } => item != null);
 
   return (
     <div

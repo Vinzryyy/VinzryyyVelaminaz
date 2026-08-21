@@ -3,10 +3,10 @@ export interface Photo {
   story: string;
   src?: string;        // "/photos/{event-slug}/001.jpg" — optional,
                        // falls back to a generated placeholder gradient
-  lens: string;
-  aperture: string;
-  shutter: string;
-  iso: number;
+  lens?: string;
+  aperture?: string;
+  shutter?: string;
+  iso?: number;
   width?: number;
   height?: number;
 }

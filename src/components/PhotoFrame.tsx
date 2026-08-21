@@ -51,8 +51,8 @@ export function PhotoFrame({
           {photo.title}
         </h4>
         <p className="mt-0.5 font-mono text-[10px] text-sakura/70">
-          {[photo.lens, photo.aperture, photo.shutter, `ISO ${photo.iso}`]
-            .filter(Boolean)
+          {[photo.lens, photo.aperture, photo.shutter, photo.iso != null ? `ISO ${photo.iso}` : null]
+            .filter((v): v is string => v != null)
             .join(" · ")}
         </p>
       </div>
