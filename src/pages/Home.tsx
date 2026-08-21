@@ -1,18 +1,68 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { getAllEvents } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { EventCard } from "@/components/EventCard";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { KatanaDivider } from "@/components/KatanaDivider";
+
+function pickRandom<T>(arr: T[], count: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
+type HeroSet = { hero: string; left: string; right: string };
+
+/**
+ * Crossfade hook: keeps current + next image layered.
+ * Fades next in over `duration` ms, then promotes it to current.
+ */
+function useCrossfade(allPhotos: string[], interval: number, duration: number) {
+  const pick = useCallback((): HeroSet => {
+    const p = pickRandom(allPhotos, 3);
+    return { hero: p[0], left: p[1], right: p[2] };
+  }, [allPhotos]);
+
+  const [current, setCurrent] = useState<HeroSet>(pick);
+  const [next, setNext] = useState<HeroSet | null>(null);
+  const [fading, setFading] = useState(false);
+  const timeoutRef = useRef<number>();
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      const incoming = pick();
+      setNext(incoming);
+      // Trigger fade on next frame so the new img element is in DOM at opacity 0
+      requestAnimationFrame(() => setFading(true));
+      // After transition completes, promote next → current
+      timeoutRef.current = window.setTimeout(() => {
+        setCurrent(incoming);
+        setNext(null);
+        setFading(false);
+      }, duration);
+    }, interval);
+
+    return () => {
+      clearInterval(id);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [pick, interval, duration]);
+
+  return { current, next, fading };
+}
 
 export default function Home() {
   const location = useLocation();
   const events = getAllEvents();
-  const heroImage = events.find((e) => e.featured)?.photos[0]?.src;
+
+  const allPhotos = useMemo(
+    () => events.flatMap((e) => e.photos.map((p) => p.src)),
+    [events]
+  );
+
+  const { current, next, fading } = useCrossfade(allPhotos, 15_000, 1500);
 
   useDocumentHead({
-    title: "mal.photo — Event Photography",
+    title: "VinzryyySaga — Event Photography",
     description: "Live performance, documentary travel, and quiet portrait work — photographed on location across Indonesia.",
   });
   const totalFrames = events.reduce((n, e) => n + e.photos.length, 0);
@@ -33,58 +83,109 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative flex min-h-[85vh] items-end overflow-hidden px-6 pb-16 pt-24 md:pb-24 md:pt-40 md:px-10">
-        {/* Hero background — featured event cover, blurred and darkened */}
-        {heroImage && (
+      <section className="relative flex h-screen min-h-[600px] flex-col overflow-hidden">
+        {/* Hero background — smooth crossfade */}
+        <img
+          src={current.hero}
+          alt=""
+          aria-hidden="true"
+          width={1920}
+          height={1080}
+          decoding="async"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        />
+        {next && (
           <img
-            src={heroImage}
+            src={next.hero}
             alt=""
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-15 blur-sm"
+            width={1920}
+            height={1080}
+            decoding="async"
+            className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
           />
         )}
-        {/* Dark overlay on top of hero image */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sumi/60 via-sumi/80 to-sumi" />
-        {/* Ambient glow */}
-        <div className="pointer-events-none absolute -left-32 top-0 h-[30rem] w-[30rem] rounded-full bg-crimson/[0.06] blur-[160px]" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-64 w-64 rounded-full bg-gold/[0.04] blur-[120px]" />
+        {/* Dark overlay */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
 
-        <div className="mx-auto w-full max-w-[1400px]">
-          <div className="flex gap-8">
-            {/* Vertical decorative text */}
-            <div className="hidden shrink-0 items-start md:flex">
-              <span className="tate font-jp text-xs tracking-[0.5em] text-gold/30" lang="ja" aria-hidden="true">
-                写真集 · 記録
-              </span>
+        {/* Bio text — top-left, below nav */}
+        <div className="relative z-10 mt-28 px-6 md:mt-32 md:px-10">
+          <ScrollReveal>
+            <p className="max-w-xs text-sm leading-6 text-ink/70 md:max-w-sm">
+              Vinzryyy, an event photographer and visual storyteller,
+              captures the beauty of live performance with a unique
+              perspective and storytelling.
+            </p>
+          </ScrollReveal>
+        </div>
+
+        {/* Spacer to push bottom content down */}
+        <div className="flex-1" />
+
+        {/* Bottom layer: giant name + floating thumbnails */}
+        <div className="relative z-10 px-6 pb-6 md:px-10 md:pb-10">
+          {/* Floating portrait thumbnails */}
+          <div className="pointer-events-none absolute inset-x-6 bottom-12 md:inset-x-10 md:bottom-16">
+            {/* Left thumbnail */}
+            <div className="absolute bottom-8 left-0 md:bottom-4 md:left-[8%]">
+              <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.2em] text-ink/60">
+                Event Coverage
+              </p>
+              <div className="relative h-28 w-24 overflow-hidden border border-ink/20 shadow-2xl md:h-40 md:w-32">
+                <img
+                  src={current.left}
+                  alt=""
+                  width={128}
+                  height={160}
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                {next && (
+                  <img
+                    src={next.left}
+                    alt=""
+                    width={128}
+                    height={160}
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+                  />
+                )}
+              </div>
             </div>
 
-            <div className="space-y-6">
-              <ScrollReveal>
-                <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-sakura/60">
-                  Event Photography
-                </p>
-              </ScrollReveal>
-
-              <ScrollReveal>
-                <h1 className="font-display text-5xl font-bold leading-[1.05] text-ink md:text-7xl">
-                  Moments caught<br />
-                  in <em className="text-sakura">available light</em>
-                </h1>
-              </ScrollReveal>
-
-              <ScrollReveal>
-                <p className="max-w-lg text-base leading-7 text-muted">
-                  Live performance, documentary travel, and quiet portrait work —
-                  photographed on location across Indonesia with natural and
-                  stage light.
-                </p>
-              </ScrollReveal>
-
-              <ScrollReveal>
-                <KatanaDivider active className="w-32" />
-              </ScrollReveal>
+            {/* Right thumbnail */}
+            <div className="absolute bottom-8 right-0 md:bottom-4 md:right-[12%]">
+              <p className="mb-2 text-right text-[10px] font-medium uppercase tracking-[0.2em] text-ink/60">
+                Visual Storyteller
+              </p>
+              <div className="relative h-28 w-24 overflow-hidden border border-ink/20 shadow-2xl md:h-40 md:w-32">
+                <img
+                  src={current.right}
+                  alt=""
+                  width={128}
+                  height={160}
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                {next && (
+                  <img
+                    src={next.right}
+                    alt=""
+                    width={128}
+                    height={160}
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+                  />
+                )}
+              </div>
             </div>
           </div>
+
+          {/* Giant name text */}
+          <h1 className="hero-name select-none text-center font-display font-bold uppercase leading-[0.85] text-white">
+            <span className="block text-[12vw] md:text-[10vw]">Vinzryyy</span>
+            <span className="block text-[12vw] md:text-[10vw]">Saga</span>
+          </h1>
         </div>
       </section>
 
@@ -130,12 +231,12 @@ export default function Home() {
               <div className="mt-6 flex flex-col items-center gap-3">
                 <CopyEmail />
                 <a
-                  href="https://instagram.com/mal.photo"
+                  href="https://instagram.com/VinzryyySaga"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-mono text-sm text-muted transition-colors duration-200 hover:text-ink"
                 >
-                  @mal.photo
+                  @VinzryyySaga
                 </a>
               </div>
             </div>
@@ -146,7 +247,7 @@ export default function Home() {
   );
 }
 
-const EMAIL = "hello@mal.photo";
+const EMAIL = "hello@vinzryyysaga.com";
 
 function CopyEmail() {
   const [copied, setCopied] = useState(false);

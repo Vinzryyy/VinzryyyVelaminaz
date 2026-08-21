@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-6 sm:flex-row sm:justify-between">
         {/* Left: copyright */}
         <p className="font-mono text-xs text-faint">
-          &copy; {new Date().getFullYear()} mal.photo &mdash; All rights reserved.
+          &copy; {new Date().getFullYear()} VinzryyySaga &mdash; All rights reserved.
         </p>
 
         {/* Center: nav links */}

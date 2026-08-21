@@ -16,7 +16,7 @@ export default function EventPage() {
   const event = slug ? getEvent(slug) : undefined;
 
   useDocumentHead({
-    title: event ? `${event.title} — mal.photo` : "Not Found — mal.photo",
+    title: event ? `${event.title} — VinzryyySaga` : "Not Found — VinzryyySaga",
     description: event?.subtitle,
     ogImage: event?.cover ?? event?.photos[0]?.src,
   });

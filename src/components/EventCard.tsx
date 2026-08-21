@@ -38,6 +38,8 @@ export function EventCard({
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             loading={index < 2 ? "eager" : "lazy"}
             fetchPriority={index < 2 ? "high" : undefined}
+            decoding="async"
+            sizes={event.featured ? "(min-width: 768px) 1400px, 100vw" : "(min-width: 768px) 700px, 100vw"}
           />
         ) : (
           <div
