@@ -17,6 +17,12 @@ export function getNextEvent(slug: string): Event {
   return events[(idx + 1) % events.length];
 }
 
+/** Returns the previous event before the given slug (wraps around). */
+export function getPrevEvent(slug: string): Event {
+  const idx = events.findIndex((e) => e.slug === slug);
+  return events[(idx - 1 + events.length) % events.length];
+}
+
 /**
  * Generates a dark, moody CSS gradient placeholder for photos
  * that don't have a real `src` yet.

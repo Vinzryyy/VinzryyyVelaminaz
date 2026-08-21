@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router";
-import { getEvent, getNextEvent } from "@/lib/data";
+import { getEvent, getNextEvent, getPrevEvent } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { FactsPanel } from "@/components/FactsPanel";
 import { KatanaDivider } from "@/components/KatanaDivider";
@@ -23,6 +23,7 @@ export default function EventPage() {
 
   if (!event) return <NotFound />;
 
+  const prevEvent = getPrevEvent(event.slug);
   const nextEvent = getNextEvent(event.slug);
 
   return (
@@ -107,29 +108,51 @@ export default function EventPage() {
         </div>
       </section>
 
-      {/* ── Next event card ────────────────────────────────────── */}
+      {/* ── Prev / Next event navigation ─────────────────────── */}
       <section className="border-t border-hairline px-6 py-16 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
-            <Link
-              to={`/events/${nextEvent.slug}`}
-              className="group flex items-center justify-between gap-6"
-            >
-              <div className="space-y-1">
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
-                  Next event
-                </p>
-                <h3 className="font-display text-2xl font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink">
-                  {nextEvent.title}
-                </h3>
-                <p className="text-sm text-muted">{nextEvent.subtitle}</p>
-              </div>
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson">
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </span>
-            </Link>
+            <div className="grid gap-6 sm:grid-cols-2">
+              {/* Previous */}
+              <Link
+                to={`/events/${prevEvent.slug}`}
+                className="group flex items-center gap-4"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </span>
+                <div className="min-w-0 space-y-0.5">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
+                    Previous
+                  </p>
+                  <h3 className="truncate font-display text-lg font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink">
+                    {prevEvent.title}
+                  </h3>
+                </div>
+              </Link>
+
+              {/* Next */}
+              <Link
+                to={`/events/${nextEvent.slug}`}
+                className="group flex items-center justify-end gap-4 text-right"
+              >
+                <div className="min-w-0 space-y-0.5">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
+                    Next
+                  </p>
+                  <h3 className="truncate font-display text-lg font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink">
+                    {nextEvent.title}
+                  </h3>
+                </div>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>
