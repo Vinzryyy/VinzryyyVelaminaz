@@ -21,7 +21,7 @@ export function EventCard({
   return (
     <Link
       to={`/events/${event.slug}`}
-      className={`group relative flex flex-col overflow-hidden border border-hairline bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(196,41,59,0.15)] ${
+      className={`group relative flex flex-col overflow-hidden border border-hairline bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_40px_color-mix(in_srgb,var(--color-crimson)_15%,transparent)] ${
         event.featured ? "col-span-1 md:col-span-2" : ""
       }`}
     >
