@@ -9,6 +9,7 @@ import { KatanaDivider } from "@/components/KatanaDivider";
 export default function Home() {
   const location = useLocation();
   const events = getAllEvents();
+  const heroImage = events.find((e) => e.featured)?.photos[0]?.src;
 
   useDocumentHead({
     title: "mal.photo — Event Photography",
@@ -32,7 +33,18 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative flex min-h-[85vh] items-end px-6 pb-16 pt-24 md:pb-24 md:pt-40 md:px-10">
+      <section className="relative flex min-h-[85vh] items-end overflow-hidden px-6 pb-16 pt-24 md:pb-24 md:pt-40 md:px-10">
+        {/* Hero background — featured event cover, blurred and darkened */}
+        {heroImage && (
+          <img
+            src={heroImage}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-15 blur-sm"
+          />
+        )}
+        {/* Dark overlay on top of hero image */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-sumi/60 via-sumi/80 to-sumi" />
         {/* Ambient glow */}
         <div className="pointer-events-none absolute -left-32 top-0 h-[30rem] w-[30rem] rounded-full bg-crimson/[0.06] blur-[160px]" />
         <div className="pointer-events-none absolute bottom-0 right-0 h-64 w-64 rounded-full bg-gold/[0.04] blur-[120px]" />
