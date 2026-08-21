@@ -41,7 +41,7 @@ export default function EventPage() {
             <div className="flex gap-6">
               {/* Vertical tate text */}
               <div className="hidden shrink-0 items-start md:flex">
-                <span className="tate font-jp text-xs tracking-[0.5em] text-gold/30">
+                <span className="tate font-jp text-xs tracking-[0.5em] text-gold/30" lang="ja" aria-hidden="true">
                   {event.tateText}
                 </span>
               </div>
@@ -81,7 +81,7 @@ export default function EventPage() {
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="flex items-center gap-4">
-              <span className="font-jp text-sm text-gold/40">枠</span>
+              <span className="font-jp text-sm text-gold/40" lang="ja" aria-hidden="true">枠</span>
               <h2 className="font-display text-xl font-bold text-ink">All frames</h2>
               <div className="h-px flex-1 bg-hairline" />
               <span className="font-mono text-[11px] text-faint">

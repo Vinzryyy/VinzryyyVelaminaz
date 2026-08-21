@@ -35,7 +35,7 @@ export default function Home() {
           <div className="flex gap-8">
             {/* Vertical decorative text */}
             <div className="hidden shrink-0 items-start md:flex">
-              <span className="tate font-jp text-xs tracking-[0.5em] text-gold/30">
+              <span className="tate font-jp text-xs tracking-[0.5em] text-gold/30" lang="ja" aria-hidden="true">
                 写真集 · 記録
               </span>
             </div>
@@ -75,7 +75,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="mb-10 flex items-center gap-4">
-              <span className="font-jp text-sm text-gold/40">巻</span>
+              <span className="font-jp text-sm text-gold/40" lang="ja" aria-hidden="true">巻</span>
               <h2 className="font-display text-2xl font-bold text-ink">Events</h2>
               <div className="h-px flex-1 bg-hairline" />
               <span className="font-mono text-[11px] text-faint">

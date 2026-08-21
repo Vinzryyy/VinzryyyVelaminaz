@@ -5,7 +5,7 @@ export function Footer() {
         <p className="font-mono text-xs text-faint">
           &copy; {new Date().getFullYear()} mal.photo &mdash; All rights reserved.
         </p>
-        <p className="font-jp text-xs text-faint/60">
+        <p className="font-jp text-xs text-faint/60" lang="ja" aria-hidden="true">
           侍 · 桜
         </p>
       </div>

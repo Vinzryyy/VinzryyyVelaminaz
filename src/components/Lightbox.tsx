@@ -183,7 +183,7 @@ export function Lightbox({
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <span className="font-jp text-2xl text-gold/30">{toKanji(idx + 1)}</span>
+              <span className="font-jp text-2xl text-gold/30" lang="ja" aria-hidden="true">{toKanji(idx + 1)}</span>
             </div>
           )}
 
@@ -219,7 +219,7 @@ export function Lightbox({
         >
           <div className="border-b border-hairline px-5 py-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/70">
-              Frame {toKanji(idx + 1)} &middot; {event.location}
+              Frame <span lang="ja">{toKanji(idx + 1)}</span> &middot; {event.location}
             </p>
           </div>
 

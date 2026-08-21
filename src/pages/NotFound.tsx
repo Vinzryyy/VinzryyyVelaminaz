@@ -3,7 +3,7 @@ import { Link } from "react-router";
 export default function NotFound() {
   return (
     <div className="flex min-h-[80vh] flex-col items-center justify-center px-6 text-center">
-      <span className="font-jp text-6xl text-crimson/30">四〇四</span>
+      <span className="font-jp text-6xl text-crimson/30" lang="ja" aria-hidden="true">四〇四</span>
       <h1 className="mt-4 font-display text-3xl font-bold text-ink md:text-4xl">
         Page not found
       </h1>
