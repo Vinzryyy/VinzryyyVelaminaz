@@ -41,12 +41,12 @@ export function PhotoFrame({
       )}
 
       {/* Kanji frame number */}
-      <span className="absolute left-2.5 top-2.5 z-10 font-jp text-xs text-gold/60">
+      <span className="absolute left-2.5 top-2.5 z-10 font-jp text-xs text-gold/60" aria-hidden="true" lang="ja">
         {toKanji(index + 1)}
       </span>
 
-      {/* Hover veil */}
-      <div className="frame-veil pointer-events-none absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-sumi/85 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300">
+      {/* Hover veil — visual only, button's aria-label provides the accessible name */}
+      <div className="frame-veil pointer-events-none absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-sumi/85 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300" aria-hidden="true">
         <h4 className="font-display text-sm font-semibold text-ink">
           {photo.title}
         </h4>
