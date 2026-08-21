@@ -1,0 +1,81 @@
+import { Link } from "react-router";
+import type { Event } from "@/lib/types";
+import { toKanji, placeholder } from "@/lib/data";
+import { KatanaDivider } from "./KatanaDivider";
+
+/**
+ * Card component for the home page event grid.
+ * `featured` events span the full grid width and are taller.
+ */
+export function EventCard({
+  event,
+  index,
+}: {
+  event: Event;
+  index: number;
+}) {
+  const photoCount = event.photos.length;
+  const coverSrc = event.cover ?? event.photos[0]?.src;
+  const hasCover = !!coverSrc;
+
+  return (
+    <Link
+      to={`/events/${event.slug}`}
+      className={`group relative flex flex-col overflow-hidden border border-hairline bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(196,41,59,0.15)] ${
+        event.featured ? "col-span-1 md:col-span-2" : ""
+      }`}
+    >
+      {/* Cover image */}
+      <div
+        className={`relative w-full shrink-0 overflow-hidden ${
+          event.featured ? "h-72 md:h-96" : "h-56 md:h-64"
+        }`}
+      >
+        {hasCover ? (
+          <img
+            src={coverSrc}
+            alt={event.title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            loading="lazy"
+          />
+        ) : (
+          <div
+            className="h-full w-full transition-transform duration-500 group-hover:scale-[1.04]"
+            style={{ background: placeholder(index) }}
+          />
+        )}
+
+        {/* Kanji frame-count badge */}
+        <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center border border-ink/10 bg-sumi/80 font-jp text-sm text-gold backdrop-blur-sm">
+          {toKanji(photoCount)}
+        </div>
+
+        {/* Bottom fade */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-card to-transparent" />
+      </div>
+
+      {/* Info strip */}
+      <div className="relative flex flex-col gap-2 px-5 pb-5 pt-4">
+        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/70">
+          {event.location} &middot; {event.date}
+        </p>
+
+        <h3 className="font-display text-xl font-bold leading-snug text-ink/85 transition-colors duration-200 group-hover:text-ink">
+          {event.title}
+        </h3>
+
+        <p className="text-sm leading-relaxed text-muted">
+          {event.subtitle}
+        </p>
+
+        <div className="mt-2 flex items-center justify-between">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1 font-mono text-[10px] text-faint">
+            {photoCount} frames
+          </span>
+        </div>
+
+        <KatanaDivider className="mt-3" />
+      </div>
+    </Link>
+  );
+}
