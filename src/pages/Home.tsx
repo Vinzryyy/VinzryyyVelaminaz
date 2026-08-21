@@ -84,59 +84,63 @@ export default function Home() {
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="relative flex h-screen min-h-[600px] flex-col overflow-hidden">
-        {/* Hero background — smooth crossfade */}
+        {/* Hero background — smooth crossfade + Ken Burns zoom */}
         <img
+          key={`bg-cur-${current.hero}`}
           src={current.hero}
           alt=""
           aria-hidden="true"
           width={1920}
           height={1080}
           decoding="async"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+          className="hero-bg pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
         {next && (
           <img
+            key={`bg-nxt-${next.hero}`}
             src={next.hero}
             alt=""
             aria-hidden="true"
             width={1920}
             height={1080}
             decoding="async"
-            className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+            className={`hero-bg pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
           />
         )}
-        {/* Dark overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
+
+        {/* Layered overlays — vignette + gradient */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.5)_100%)]" />
 
         {/* Bio text — top-left, below nav */}
         <div className="relative z-10 mt-28 px-6 md:mt-32 md:px-10">
           <ScrollReveal>
-            <p className="max-w-xs text-sm leading-6 text-ink/70 md:max-w-sm">
-              Vinzryyy, an event photographer and visual storyteller,
-              captures the beauty of live performance with a unique
-              perspective and storytelling.
+            <p className="max-w-[280px] font-display text-sm italic leading-6 text-ink/70 md:max-w-sm md:text-base md:leading-7">
+              A fan with a camera, capturing the
+              energy and emotion of live events
+              — one frame at a time.
             </p>
           </ScrollReveal>
         </div>
 
-        {/* Spacer to push bottom content down */}
+        {/* Spacer */}
         <div className="flex-1" />
 
         {/* Bottom layer: giant name + floating thumbnails */}
-        <div className="relative z-10 px-6 pb-6 md:px-10 md:pb-10">
+        <div className="relative z-10 px-6 pb-16 md:px-10 md:pb-14">
           {/* Floating portrait thumbnails */}
-          <div className="pointer-events-none absolute inset-x-6 bottom-12 md:inset-x-10 md:bottom-16">
-            {/* Left thumbnail */}
-            <div className="absolute bottom-8 left-0 md:bottom-4 md:left-[8%]">
-              <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.2em] text-ink/60">
+          <div className="pointer-events-none absolute inset-x-6 bottom-20 md:inset-x-10 md:bottom-20">
+            {/* Left thumbnail — slightly tilted */}
+            <div className="absolute bottom-8 left-0 md:bottom-4 md:left-[6%]">
+              <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
                 Event Coverage
               </p>
-              <div className="relative h-28 w-24 overflow-hidden border border-ink/20 shadow-2xl md:h-40 md:w-32">
+              <div className="relative h-32 w-[104px] -rotate-3 overflow-hidden border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)] md:h-44 md:w-36">
                 <img
                   src={current.left}
                   alt=""
-                  width={128}
-                  height={160}
+                  width={144}
+                  height={176}
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
@@ -144,8 +148,8 @@ export default function Home() {
                   <img
                     src={next.left}
                     alt=""
-                    width={128}
-                    height={160}
+                    width={144}
+                    height={176}
                     decoding="async"
                     className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
                   />
@@ -153,17 +157,17 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right thumbnail */}
-            <div className="absolute bottom-8 right-0 md:bottom-4 md:right-[12%]">
-              <p className="mb-2 text-right text-[10px] font-medium uppercase tracking-[0.2em] text-ink/60">
+            {/* Right thumbnail — slightly tilted opposite */}
+            <div className="absolute bottom-8 right-0 md:bottom-4 md:right-[10%]">
+              <p className="mb-2 text-right text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
                 Visual Storyteller
               </p>
-              <div className="relative h-28 w-24 overflow-hidden border border-ink/20 shadow-2xl md:h-40 md:w-32">
+              <div className="relative h-32 w-[104px] rotate-2 overflow-hidden border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)] md:h-44 md:w-36">
                 <img
                   src={current.right}
                   alt=""
-                  width={128}
-                  height={160}
+                  width={144}
+                  height={176}
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
@@ -171,8 +175,8 @@ export default function Home() {
                   <img
                     src={next.right}
                     alt=""
-                    width={128}
-                    height={160}
+                    width={144}
+                    height={176}
                     decoding="async"
                     className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
                   />
@@ -181,65 +185,83 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Giant name text */}
-          <h1 className="hero-name select-none text-center font-display font-bold uppercase leading-[0.85] text-white">
-            <span className="block text-[12vw] md:text-[10vw]">Vinzryyy</span>
-            <span className="block text-[12vw] md:text-[10vw]">Saga</span>
+          {/* Giant name text — outlined */}
+          <h1 className="hero-name select-none text-center font-display font-bold uppercase leading-[0.85]">
+            <span className="block text-[13vw] md:text-[10vw]">Vinzryyy</span>
+            <span className="block text-[13vw] md:text-[10vw]">Saga</span>
           </h1>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center">
+          <div className="scroll-hint flex flex-col items-center gap-1">
+            <span className="text-[9px] uppercase tracking-[0.3em] text-ink/40">Scroll</span>
+            <svg className="h-4 w-4 text-ink/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </section>
 
       {/* ── Profile section ─────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-sumi px-6 py-20 md:px-10 md:py-32">
+      <section className="relative overflow-hidden bg-sumi px-6 py-24 md:px-10 md:py-36">
         {/* Subtle noise texture overlay */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
+        {/* Ambient glow */}
+        <div className="pointer-events-none absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-crimson/[0.04] blur-[180px]" />
 
         <div className="mx-auto max-w-[1400px]">
-          {/* Section label */}
+          {/* Section label with decorative line */}
           <ScrollReveal>
-            <p className="mb-16 font-display text-2xl italic text-ink/80 md:mb-24 md:text-3xl">
-              Profile
-            </p>
+            <div className="mb-20 flex items-center gap-6 md:mb-28">
+              <p className="font-display text-3xl italic text-ink/80 md:text-4xl">
+                Profile
+              </p>
+              <div className="h-px flex-1 bg-gradient-to-r from-hairline to-transparent" />
+            </div>
           </ScrollReveal>
 
           {/* Content: text left, photo right */}
-          <div className="grid items-end gap-12 md:grid-cols-[1fr_auto]">
+          <div className="grid items-center gap-16 md:grid-cols-[1fr_320px] lg:grid-cols-[1fr_380px]">
             <ScrollReveal>
-              <p className="max-w-2xl text-sm leading-7 text-ink/70 md:text-base md:leading-8" style={{ textAlign: "justify" }}>
-                Vinzryyy is a fan who fell in love with taking photos at live
-                events. What started as snapping memories from the crowd grew
-                into a passion for capturing the energy, emotion, and
-                fleeting moments that make every show unique. Armed with a
-                camera and a front-row spirit, Vinzryyy documents performances,
-                fan meetings, and behind-the-scenes glimpses — turning the
-                experience of being a fan into visual stories that preserve
-                those moments long after the lights go down. No studio, no
-                assignments — just a fan with a lens and a love for the
-                stage.
-              </p>
+              <div className="space-y-6">
+                <p className="max-w-2xl text-sm leading-7 text-ink/70 md:text-[15px] md:leading-8" style={{ textAlign: "justify" }}>
+                  Vinzryyy is a fan who fell in love with taking photos at live
+                  events. What started as snapping memories from the crowd grew
+                  into a passion for capturing the energy, emotion, and
+                  fleeting moments that make every show unique. Armed with a
+                  camera and a front-row spirit, Vinzryyy documents performances,
+                  fan meetings, and behind-the-scenes glimpses — turning the
+                  experience of being a fan into visual stories that preserve
+                  those moments long after the lights go down.
+                </p>
+                <p className="font-display text-sm italic text-sakura/50">
+                  No studio, no assignments — just a fan with a lens and a love for the stage.
+                </p>
+              </div>
             </ScrollReveal>
 
-            {/* Tilted stacked photo */}
+            {/* Tilted stacked photo with hover interaction */}
             <ScrollReveal>
-              <div className="relative mx-auto h-72 w-56 md:mx-0 md:h-80 md:w-64">
+              <div className="photo-stack relative mx-auto h-80 w-60 md:mx-0 md:h-[360px] md:w-72">
                 {/* Back photo — tilted */}
-                <div className="absolute inset-0 rotate-6 overflow-hidden border border-ink/10 shadow-2xl">
+                <div className="photo-back absolute inset-0 rotate-6 overflow-hidden border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.4)] transition-transform duration-500">
                   <img
                     src={current.left}
                     alt=""
-                    width={256}
-                    height={320}
+                    width={288}
+                    height={360}
                     decoding="async"
                     className="h-full w-full object-cover"
                   />
                 </div>
                 {/* Front photo — slight opposite tilt */}
-                <div className="absolute inset-0 -rotate-2 overflow-hidden border border-ink/10 shadow-2xl">
+                <div className="photo-front absolute inset-0 -rotate-2 overflow-hidden border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.4)] transition-transform duration-500">
                   <img
                     src={current.right}
                     alt=""
-                    width={256}
-                    height={320}
+                    width={288}
+                    height={360}
                     decoding="async"
                     className="h-full w-full object-cover"
                   />
@@ -248,10 +270,10 @@ export default function Home() {
             </ScrollReveal>
           </div>
 
-          {/* Giant name at bottom, clipped */}
-          <div className="mt-16 overflow-hidden md:mt-24">
+          {/* Giant name at bottom — half-clipped like reference */}
+          <div className="mt-20 h-[8vw] overflow-hidden md:mt-28">
             <ScrollReveal>
-              <p className="hero-name select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-white text-[14vw] md:text-[11vw]" aria-hidden="true">
+              <p className="hero-name-solid select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-[14vw] md:text-[11vw]" aria-hidden="true">
                 Vinzryyy Saga
               </p>
             </ScrollReveal>
