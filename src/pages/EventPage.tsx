@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { getEvent, getNextEvent } from "@/lib/data";
+import { useDocumentHead } from "@/lib/useDocumentHead";
 import { FactsPanel } from "@/components/FactsPanel";
 import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -13,6 +14,13 @@ export default function EventPage() {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   const event = slug ? getEvent(slug) : undefined;
+
+  useDocumentHead({
+    title: event ? `${event.title} — mal.photo` : "Not Found — mal.photo",
+    description: event?.subtitle,
+    ogImage: event?.cover ?? event?.photos[0]?.src,
+  });
+
   if (!event) return <NotFound />;
 
   const nextEvent = getNextEvent(event.slug);

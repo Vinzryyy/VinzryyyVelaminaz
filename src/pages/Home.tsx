@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 import { getAllEvents } from "@/lib/data";
+import { useDocumentHead } from "@/lib/useDocumentHead";
 import { EventCard } from "@/components/EventCard";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { KatanaDivider } from "@/components/KatanaDivider";
@@ -8,6 +9,11 @@ import { KatanaDivider } from "@/components/KatanaDivider";
 export default function Home() {
   const location = useLocation();
   const events = getAllEvents();
+
+  useDocumentHead({
+    title: "mal.photo — Event Photography",
+    description: "Live performance, documentary travel, and quiet portrait work — photographed on location across Indonesia.",
+  });
   const totalFrames = events.reduce((n, e) => n + e.photos.length, 0);
 
   // Handle deferred scroll from Nav links on other pages
