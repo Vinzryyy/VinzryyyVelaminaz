@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import { SakuraPetals } from "@/components/SakuraPetals";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -17,9 +17,10 @@ function PageLoader() {
 }
 
 export default function App() {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen bg-sumi font-sans text-ink antialiased">
-      {/* Skip to main content — first focusable element */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-crimson focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-ink"
@@ -30,11 +31,14 @@ export default function App() {
       <Nav />
       <main id="main-content">
         <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/events/:slug" element={<EventPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          {/* key on pathname triggers page-enter animation on route change */}
+          <div key={location.pathname} className="page-enter">
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
+              <Route path="/events/:slug" element={<EventPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </Suspense>
       </main>
       <Footer />
