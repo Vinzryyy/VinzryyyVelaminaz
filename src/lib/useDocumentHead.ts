@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+const TAG_ATTR = "data-dynamic-head";
+
 interface HeadOptions {
   title: string;
   description?: string;
@@ -8,34 +10,38 @@ interface HeadOptions {
 
 /**
  * Sets document title, canonical URL, and Open Graph / Twitter meta tags.
- * Cleans up dynamic tags on unmount so they don't leak between routes.
+ * Uses a data attribute to find and remove all previous dynamic tags
+ * before inserting new ones, avoiding leaks on fast navigations.
  */
 export function useDocumentHead({ title, description, ogImage }: HeadOptions) {
   useEffect(() => {
+    // Remove any previously injected dynamic tags
+    document.head.querySelectorAll(`[${TAG_ATTR}]`).forEach((el) => el.remove());
+
     // Title
     document.title = title;
 
-    const tags: HTMLElement[] = [];
+    const addTag = (tag: HTMLElement) => {
+      tag.setAttribute(TAG_ATTR, "");
+      document.head.appendChild(tag);
+    };
 
     const setMeta = (property: string, content: string) => {
       const meta = document.createElement("meta");
-      // OG uses property, Twitter uses name
       if (property.startsWith("twitter:")) {
         meta.setAttribute("name", property);
       } else {
         meta.setAttribute("property", property);
       }
       meta.setAttribute("content", content);
-      document.head.appendChild(meta);
-      tags.push(meta);
+      addTag(meta);
     };
 
     // Canonical
     const canonical = document.createElement("link");
     canonical.setAttribute("rel", "canonical");
     canonical.setAttribute("href", window.location.origin + window.location.pathname);
-    document.head.appendChild(canonical);
-    tags.push(canonical);
+    addTag(canonical);
 
     // Open Graph
     setMeta("og:title", title);
@@ -55,7 +61,7 @@ export function useDocumentHead({ title, description, ogImage }: HeadOptions) {
     setMeta("twitter:title", title);
 
     return () => {
-      tags.forEach((tag) => tag.remove());
+      document.head.querySelectorAll(`[${TAG_ATTR}]`).forEach((el) => el.remove());
     };
   }, [title, description, ogImage]);
 }
