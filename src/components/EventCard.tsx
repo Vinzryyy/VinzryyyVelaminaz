@@ -36,7 +36,8 @@ export function EventCard({
             src={coverSrc}
             alt={event.title}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            loading="lazy"
+            loading={index < 2 ? "eager" : "lazy"}
+            fetchPriority={index < 2 ? "high" : undefined}
           />
         ) : (
           <div
