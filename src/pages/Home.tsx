@@ -189,6 +189,76 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Profile section ─────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-sumi px-6 py-20 md:px-10 md:py-32">
+        {/* Subtle noise texture overlay */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
+
+        <div className="mx-auto max-w-[1400px]">
+          {/* Section label */}
+          <ScrollReveal>
+            <p className="mb-16 font-display text-2xl italic text-ink/80 md:mb-24 md:text-3xl">
+              Profile
+            </p>
+          </ScrollReveal>
+
+          {/* Content: text left, photo right */}
+          <div className="grid items-end gap-12 md:grid-cols-[1fr_auto]">
+            <ScrollReveal>
+              <p className="max-w-2xl text-sm leading-7 text-ink/70 md:text-base md:leading-8" style={{ textAlign: "justify" }}>
+                Vinzryyy is a fan who fell in love with taking photos at live
+                events. What started as snapping memories from the crowd grew
+                into a passion for capturing the energy, emotion, and
+                fleeting moments that make every show unique. Armed with a
+                camera and a front-row spirit, Vinzryyy documents performances,
+                fan meetings, and behind-the-scenes glimpses — turning the
+                experience of being a fan into visual stories that preserve
+                those moments long after the lights go down. No studio, no
+                assignments — just a fan with a lens and a love for the
+                stage.
+              </p>
+            </ScrollReveal>
+
+            {/* Tilted stacked photo */}
+            <ScrollReveal>
+              <div className="relative mx-auto h-72 w-56 md:mx-0 md:h-80 md:w-64">
+                {/* Back photo — tilted */}
+                <div className="absolute inset-0 rotate-6 overflow-hidden border border-ink/10 shadow-2xl">
+                  <img
+                    src={current.left}
+                    alt=""
+                    width={256}
+                    height={320}
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                {/* Front photo — slight opposite tilt */}
+                <div className="absolute inset-0 -rotate-2 overflow-hidden border border-ink/10 shadow-2xl">
+                  <img
+                    src={current.right}
+                    alt=""
+                    width={256}
+                    height={320}
+                    decoding="async"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Giant name at bottom, clipped */}
+          <div className="mt-16 overflow-hidden md:mt-24">
+            <ScrollReveal>
+              <p className="hero-name select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-white text-[14vw] md:text-[11vw]" aria-hidden="true">
+                Vinzryyy Saga
+              </p>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* ── Events section ────────────────────────────────────── */}
       <section id="events" className="px-6 pb-24 pt-8 md:px-10">
         <div className="mx-auto max-w-[1400px]">
