@@ -33,8 +33,9 @@ export function placeholder(index: number): string {
   return `linear-gradient(135deg, hsl(${h}, 30%, 12%) 0%, hsl(${(h + 40) % 360}, 25%, 18%) 100%)`;
 }
 
-/** Converts a number to kanji numerals (0-99). */
+/** Converts a non-negative integer to kanji numerals. */
 export function toKanji(n: number): string {
+  if (!Number.isFinite(n) || n < 0 || !Number.isInteger(n)) return "?";
   const digits = ["〇", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
   return String(n)
     .split("")
