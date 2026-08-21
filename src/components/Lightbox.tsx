@@ -244,7 +244,8 @@ export function Lightbox({
           )}
 
           <div className="px-5 pb-4">
-            <p className="font-mono text-[9px] text-faint/60">← → navigate · Esc close</p>
+            <p className="hidden font-mono text-[9px] text-faint/60 md:block">← → navigate · Esc close</p>
+            <p className="font-mono text-[9px] text-faint/60 md:hidden">Swipe to navigate · Tap outside to close</p>
           </div>
         </aside>
       </div>
