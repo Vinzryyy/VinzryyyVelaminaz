@@ -50,7 +50,7 @@ export function Nav() {
         }`}
       >
         {/* Left: crest + wordmark */}
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-3 group" onClick={() => setMenuOpen(false)}>
           <svg
             className={`text-crimson transition-all duration-300 ${scrolled ? "h-7 w-7" : "h-8 w-8"}`}
             viewBox="0 0 32 32"
