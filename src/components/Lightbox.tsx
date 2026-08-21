@@ -24,6 +24,7 @@ export function Lightbox({
   const touchStartX = useRef<number | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const filmstripRef = useRef<HTMLDivElement>(null);
   const [, setSearchParams] = useSearchParams();
 
   const photo = photos[idx];
@@ -118,6 +119,13 @@ export function Lightbox({
       }
     });
   }, [idx, photos]);
+
+  /* ── Auto-scroll filmstrip to active thumbnail ──────────────── */
+
+  useEffect(() => {
+    const active = filmstripRef.current?.querySelector('[aria-current="true"]');
+    active?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+  }, [idx]);
 
   /* ── EXIF ───────────────────────────────────────────────────── */
 
@@ -253,6 +261,7 @@ export function Lightbox({
       {/* ── Filmstrip ─────────────────────────────────────────── */}
       {photos.length > 1 && (
         <div
+          ref={filmstripRef}
           className="flex shrink-0 gap-1 overflow-x-auto border-t border-hairline bg-sumi/80 p-2 backdrop-blur-sm"
           onClick={(e) => e.stopPropagation()}
         >
