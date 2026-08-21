@@ -26,26 +26,49 @@ export default function EventPage() {
   const prevEvent = getPrevEvent(event.slug);
   const nextEvent = getNextEvent(event.slug);
 
+  const coverSrc = event.cover ?? event.photos[0]?.src;
+
   return (
-    <div className="pt-20">
-      {/* ── Back link ──────────────────────────────────────────── */}
-      <div className="px-6 pb-6 md:px-10">
-        <div className="mx-auto max-w-[1400px]">
-          <Link
-            to="/"
-            state={{ scrollTo: "events" }}
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-muted transition-colors duration-200 hover:text-ink"
-          >
-            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            All events
-          </Link>
-        </div>
-      </div>
+    <div>
+      {/* ── Cover hero ─────────────────────────────────────────── */}
+      {coverSrc && (
+        <section className="relative flex h-[50vh] min-h-[320px] items-end overflow-hidden">
+          <img
+            src={coverSrc}
+            alt={event.title}
+            width={1920}
+            height={1080}
+            decoding="async"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
+          <div className="relative z-10 w-full px-6 pb-8 md:px-10">
+            <div className="mx-auto max-w-[1400px]">
+              <Link
+                to="/"
+                state={{ scrollTo: "events" }}
+                className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/80 backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:text-ink"
+              >
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                All events
+              </Link>
+              {event.group && (
+                <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.35em] text-sakura/60">
+                  {event.group}
+                </p>
+              )}
+              <h1 className="font-display text-4xl font-bold leading-[1.05] text-ink md:text-5xl lg:text-6xl">
+                {event.title}
+              </h1>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Header ─────────────────────────────────────────────── */}
-      <section className="px-6 pb-12 md:px-10">
+      <section className="px-6 pb-12 pt-10 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
             <div className="flex gap-6">
@@ -63,11 +86,13 @@ export default function EventPage() {
                   </p>
                 </ScrollReveal>
 
-                <ScrollReveal>
-                  <h1 className="font-display text-4xl font-bold leading-[1.05] text-ink md:text-5xl">
-                    {event.title}
-                  </h1>
-                </ScrollReveal>
+                {!coverSrc && (
+                  <ScrollReveal>
+                    <h1 className="font-display text-4xl font-bold leading-[1.05] text-ink md:text-5xl">
+                      {event.title}
+                    </h1>
+                  </ScrollReveal>
+                )}
 
                 <ScrollReveal>
                   <p className="max-w-xl text-sm leading-7 text-muted">{event.description}</p>
@@ -113,18 +138,18 @@ export default function EventPage() {
       <section className="border-t border-hairline px-6 py-16 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               {/* Previous */}
               <Link
                 to={`/events/${prevEvent.slug}`}
-                className="group flex items-center gap-4"
+                className="group flex items-center gap-4 rounded-lg border border-hairline bg-card/40 p-4 transition-all duration-300 hover:border-hairline/80 hover:bg-card/70"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                 </span>
-                <div className="min-w-0 space-y-0.5">
+                <div className="min-w-0 flex-1 space-y-0.5">
                   <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
                     Previous
                   </p>
@@ -132,14 +157,24 @@ export default function EventPage() {
                     {prevEvent.title}
                   </h3>
                 </div>
+                {prevEvent.photos[0]?.src && (
+                  <div className="hidden h-14 w-14 shrink-0 overflow-hidden rounded border border-hairline md:block">
+                    <img src={prevEvent.photos[0].src} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                  </div>
+                )}
               </Link>
 
               {/* Next */}
               <Link
                 to={`/events/${nextEvent.slug}`}
-                className="group flex items-center justify-end gap-4 text-right"
+                className="group flex items-center justify-end gap-4 rounded-lg border border-hairline bg-card/40 p-4 text-right transition-all duration-300 hover:border-hairline/80 hover:bg-card/70"
               >
-                <div className="min-w-0 space-y-0.5">
+                {nextEvent.photos[0]?.src && (
+                  <div className="hidden h-14 w-14 shrink-0 overflow-hidden rounded border border-hairline md:block">
+                    <img src={nextEvent.photos[0].src} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                  </div>
+                )}
+                <div className="min-w-0 flex-1 space-y-0.5">
                   <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
                     Next
                   </p>

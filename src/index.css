@@ -74,7 +74,7 @@ html, body, #root {
 }
 
 .hero-bg {
-  animation: ken-burns 18s ease-in-out forwards;
+  animation: ken-burns 28s ease-in-out forwards;
 }
 
 /* ── Hero giant name ──────────────────────────────────────────── */
@@ -111,6 +111,17 @@ html, body, #root {
 
 .scroll-hint {
   animation: scroll-hint 2s ease-in-out infinite;
+}
+
+/* ── Marquee ──────────────────────────────────────────────────── */
+
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee-scroll 20s linear infinite;
 }
 
 /* ── Scroll reveal ────────────────────────────────────────────── */
@@ -179,12 +190,18 @@ html, body, #root {
 /* ── Page transition ──────────────────────────────────────────── */
 
 .page-enter {
-  animation: page-fade-in 0.3s ease both;
+  animation: page-fade-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes page-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Smooth image loading ─────────────────────────────────────── */
+
+img {
+  transition: opacity 0.3s ease;
 }
 
 /* ── Reduced motion ───────────────────────────────────────────── */

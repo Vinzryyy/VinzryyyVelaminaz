@@ -47,7 +47,7 @@ export function Nav() {
           scrolled ? "h-14" : "h-20"
         }`}
       >
-        {/* Left: Menu */}
+        {/* Left: Menu (mobile) / Wordmark (desktop) */}
         <button
           className={`${italicLink} md:hidden`}
           onClick={() => setMenuOpen((v) => !v)}
@@ -56,28 +56,35 @@ export function Nav() {
         >
           {menuOpen ? "Close" : "Menu"}
         </button>
-        <span className="hidden md:block w-[140px]" />
-
-        {/* Center: Logo */}
         <Link
           to="/"
-          className="absolute left-1/2 -translate-x-1/2 flex items-center gap-0"
+          className="hidden items-center gap-2 md:flex"
           onClick={() => setMenuOpen(false)}
         >
           <span
-            className={`font-display font-bold tracking-wide text-crimson transition-all duration-300 ${
-              scrolled ? "text-lg" : "text-xl"
+            className={`font-display font-bold tracking-wide text-ink/90 transition-all duration-300 ${
+              scrolled ? "text-base" : "text-lg"
             }`}
-            lang="ja"
           >
+            Vinzryyy<span className="text-crimson">Saga</span>
+          </span>
+        </Link>
+
+        {/* Center: Logo kanji (mobile only) */}
+        <Link
+          to="/"
+          className="absolute left-1/2 -translate-x-1/2 md:hidden"
+          onClick={() => setMenuOpen(false)}
+        >
+          <span className="font-display text-xl font-bold tracking-wide text-crimson">
             標識
           </span>
         </Link>
 
         {/* Right: Links */}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-8 md:flex">
           <a href="/#events" onClick={scrollTo("events")} className={italicLink}>
-            Let's talk
+            Events
           </a>
           <a href="/#contact" onClick={scrollTo("contact")} className={italicLink}>
             Contact me

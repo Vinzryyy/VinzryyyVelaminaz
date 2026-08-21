@@ -21,7 +21,7 @@ export function EventCard({
   return (
     <Link
       to={`/events/${event.slug}`}
-      className={`group relative flex flex-col overflow-hidden border border-hairline bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_40px_color-mix(in_srgb,var(--color-crimson)_15%,transparent)] ${
+      className={`group relative flex flex-col overflow-hidden rounded-lg border border-hairline bg-card transition-all duration-300 hover:-translate-y-1 hover:border-hairline/80 hover:shadow-[0_12px_48px_rgba(0,0,0,0.4)] ${
         event.featured ? "col-span-1 md:col-span-2" : ""
       }`}
     >
@@ -35,7 +35,7 @@ export function EventCard({
           <img
             src={coverSrc}
             alt={event.title}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
             loading={index < 2 ? "eager" : "lazy"}
             fetchPriority={index < 2 ? "high" : undefined}
             decoding="async"
@@ -43,19 +43,26 @@ export function EventCard({
           />
         ) : (
           <div
-            className="h-full w-full transition-transform duration-500 group-hover:scale-[1.04]"
+            className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.05]"
             style={{ background: placeholder(index) }}
           />
         )}
 
         {/* Kanji frame-count badge */}
         <div
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center border border-ink/10 bg-sumi/80 font-jp text-sm text-gold backdrop-blur-sm"
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded border border-ink/10 bg-sumi/80 font-jp text-sm text-gold backdrop-blur-sm"
           aria-label={`${photoCount} photos`}
           role="img"
           lang="ja"
         >
           {toKanji(photoCount)}
+        </div>
+
+        {/* Hover overlay with CTA */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 group-hover:bg-black/30">
+          <span className="translate-y-4 rounded-full border border-white/40 bg-white/10 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-white opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            View gallery &rarr;
+          </span>
         </div>
 
         {/* Bottom fade */}
@@ -64,9 +71,9 @@ export function EventCard({
 
       {/* Info strip */}
       <div className="relative flex flex-col gap-2 px-5 pb-5 pt-4">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {event.group && (
-            <span className="inline-block border border-crimson/30 bg-crimson/10 px-1.5 py-0.5 font-mono text-[9px] font-medium uppercase tracking-[0.15em] text-crimson/80">
+            <span className="inline-block rounded border border-crimson/30 bg-crimson/10 px-1.5 py-0.5 font-mono text-[9px] font-medium uppercase tracking-[0.15em] text-crimson/80">
               {event.group}
             </span>
           )}
@@ -79,13 +86,16 @@ export function EventCard({
           {event.title}
         </h3>
 
-        <p className="text-sm leading-relaxed text-muted">
+        <p className="line-clamp-2 text-sm leading-relaxed text-muted">
           {event.subtitle}
         </p>
 
         <div className="mt-2 flex items-center justify-between">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1 font-mono text-[10px] text-faint">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1 font-mono text-[10px] text-faint transition-colors duration-200 group-hover:border-crimson/30 group-hover:text-muted">
             {photoCount} frames
+          </span>
+          <span className="font-mono text-[10px] text-faint opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+            View &rarr;
           </span>
         </div>
 
