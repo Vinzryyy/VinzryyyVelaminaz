@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative flex min-h-[85vh] items-end px-6 pb-24 pt-40 md:px-10">
+      <section className="relative flex min-h-[85vh] items-end px-6 pb-16 pt-24 md:pb-24 md:pt-40 md:px-10">
         {/* Ambient glow */}
         <div className="pointer-events-none absolute -left-32 top-0 h-[30rem] w-[30rem] rounded-full bg-crimson/[0.06] blur-[160px]" />
         <div className="pointer-events-none absolute bottom-0 right-0 h-64 w-64 rounded-full bg-gold/[0.04] blur-[120px]" />
