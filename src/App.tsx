@@ -1,10 +1,20 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router";
 import { SakuraPetals } from "@/components/SakuraPetals";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import Home from "@/pages/Home";
-import EventPage from "@/pages/EventPage";
-import NotFound from "@/pages/NotFound";
+
+const Home = lazy(() => import("@/pages/Home"));
+const EventPage = lazy(() => import("@/pages/EventPage"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+
+function PageLoader() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
+    </div>
+  );
+}
 
 export default function App() {
   return (
@@ -19,11 +29,13 @@ export default function App() {
       <SakuraPetals />
       <Nav />
       <main id="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/events/:slug" element={<EventPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/events/:slug" element={<EventPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
     </div>
