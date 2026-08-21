@@ -92,11 +92,11 @@ export function Lightbox({
   /* ── EXIF ───────────────────────────────────────────────────── */
 
   const exifItems = [
-    { label: "Lens",     value: photo.lens },
-    { label: "Aperture", value: photo.aperture },
-    { label: "Shutter",  value: photo.shutter },
-    { label: "ISO",      value: String(photo.iso) },
-  ];
+    photo.lens     && { label: "Lens",     value: photo.lens },
+    photo.aperture && { label: "Aperture", value: photo.aperture },
+    photo.shutter  && { label: "Shutter",  value: photo.shutter },
+    photo.iso      && { label: "ISO",      value: String(photo.iso) },
+  ].filter((item): item is { label: string; value: string } => !!item);
 
   return (
     <div
@@ -113,9 +113,9 @@ export function Lightbox({
       }}
     >
       {/* ── Main area: image + info panel ───────────────────────── */}
-      <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
+      <div className="flex flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
         {/* Photo */}
-        <div className="relative flex flex-1 items-center justify-center p-4 md:p-10" onClick={onClose}>
+        <div className="relative flex shrink-0 items-center justify-center p-4 md:flex-1 md:p-10" onClick={onClose}>
           {/* Close */}
           <button
             className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink"
@@ -184,7 +184,7 @@ export function Lightbox({
 
         {/* ── Info panel ──────────────────────────────────────── */}
         <aside
-          className="shrink-0 overflow-y-auto border-t border-hairline bg-card/60 md:w-80 md:border-l md:border-t-0"
+          className="shrink-0 border-t border-hairline bg-card/60 md:w-80 md:overflow-y-auto md:border-l md:border-t-0"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="border-b border-hairline px-5 py-4">
@@ -199,17 +199,19 @@ export function Lightbox({
             {photo.story && <p className="text-sm leading-7 text-muted">{photo.story}</p>}
           </div>
 
-          <div className="px-5 py-4">
-            <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.3em] text-faint">EXIF Data</p>
-            <div className="grid grid-cols-2 gap-px border border-hairline">
-              {exifItems.map(({ label, value }) => (
-                <div key={label} className="bg-sumi/50 px-3 py-2.5">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">{label}</p>
-                  <p className="mt-0.5 font-mono text-xs text-ink/70">{value}</p>
-                </div>
-              ))}
+          {exifItems.length > 0 && (
+            <div className="px-5 py-4">
+              <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.3em] text-faint">EXIF Data</p>
+              <div className="grid grid-cols-2 gap-px border border-hairline">
+                {exifItems.map(({ label, value }) => (
+                  <div key={label} className="bg-sumi/50 px-3 py-2.5">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">{label}</p>
+                    <p className="mt-0.5 font-mono text-xs text-ink/70">{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="px-5 pb-4">
             <p className="font-mono text-[9px] text-faint/60">← → navigate · Esc close</p>

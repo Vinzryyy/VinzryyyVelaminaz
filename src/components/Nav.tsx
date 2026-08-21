@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 
 /**
  * Sticky navigation bar with crest/seal + wordmark.
@@ -7,12 +7,27 @@ import { Link } from "react-router";
  */
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  /** Navigate to home then scroll to a section by id. */
+  const scrollTo = useCallback(
+    (id: string) => (e: React.MouseEvent) => {
+      e.preventDefault();
+      if (location.pathname === "/") {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/", { state: { scrollTo: id } });
+      }
+    },
+    [location.pathname, navigate]
+  );
 
   return (
     <header
@@ -53,12 +68,14 @@ export function Nav() {
       <nav className="flex items-center gap-8">
         <a
           href="/#events"
+          onClick={scrollTo("events")}
           className="text-[13px] font-medium uppercase tracking-[0.15em] text-muted transition-colors duration-200 hover:text-ink"
         >
           Events
         </a>
         <a
           href="/#contact"
+          onClick={scrollTo("contact")}
           className="text-[13px] font-medium uppercase tracking-[0.15em] text-muted transition-colors duration-200 hover:text-ink"
         >
           Contact

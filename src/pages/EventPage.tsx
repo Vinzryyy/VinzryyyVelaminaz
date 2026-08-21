@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { Link, Navigate, useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { getEvent, getNextEvent } from "@/lib/data";
 import { FactsPanel } from "@/components/FactsPanel";
 import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { Lightbox } from "@/components/Lightbox";
+import NotFound from "@/pages/NotFound";
 
 export default function EventPage() {
   const { slug } = useParams<{ slug: string }>();
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   const event = slug ? getEvent(slug) : undefined;
-  if (!event) return <Navigate to="/" replace />;
+  if (!event) return <NotFound />;
 
   const nextEvent = getNextEvent(event.slug);
 

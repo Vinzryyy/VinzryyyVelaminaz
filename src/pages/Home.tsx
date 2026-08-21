@@ -1,11 +1,27 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router";
 import { getAllEvents } from "@/lib/data";
 import { EventCard } from "@/components/EventCard";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { KatanaDivider } from "@/components/KatanaDivider";
 
 export default function Home() {
+  const location = useLocation();
   const events = getAllEvents();
   const totalFrames = events.reduce((n, e) => n + e.photos.length, 0);
+
+  // Handle deferred scroll from Nav links on other pages
+  useEffect(() => {
+    const id = (location.state as { scrollTo?: string } | null)?.scrollTo;
+    if (id) {
+      // Small delay so the DOM is painted before scrolling
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      });
+      // Clear the state so back-navigation doesn't re-scroll
+      window.history.replaceState({}, "");
+    }
+  }, [location.state]);
 
   return (
     <>
