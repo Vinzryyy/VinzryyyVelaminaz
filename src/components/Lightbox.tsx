@@ -70,6 +70,36 @@ export function Lightbox({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose, prev, next]);
 
+  /* ── Focus trap ──────────────────────────────────────────────── */
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const onTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+
+      const focusable = container.querySelectorAll<HTMLElement>(
+        'button, [href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    container.addEventListener("keydown", onTab);
+    return () => container.removeEventListener("keydown", onTab);
+  }, [idx]);
+
   /* ── Body scroll lock ───────────────────────────────────────── */
 
   useEffect(() => {
