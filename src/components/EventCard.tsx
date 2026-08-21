@@ -62,9 +62,16 @@ export function EventCard({
 
       {/* Info strip */}
       <div className="relative flex flex-col gap-2 px-5 pb-5 pt-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/70">
-          {event.location} &middot; {event.date}
-        </p>
+        <div className="flex items-center gap-2">
+          {event.group && (
+            <span className="inline-block border border-crimson/30 bg-crimson/10 px-1.5 py-0.5 font-mono text-[9px] font-medium uppercase tracking-[0.15em] text-crimson/80">
+              {event.group}
+            </span>
+          )}
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/70">
+            {event.location} &middot; {event.date}
+          </p>
+        </div>
 
         <h3 className="font-display text-xl font-bold leading-snug text-ink/85 transition-colors duration-200 group-hover:text-ink">
           {event.title}

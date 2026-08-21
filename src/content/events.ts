@@ -23,6 +23,7 @@ export const events: Event[] = [
   {
     slug: "quadlips-performance-day1",
     title: "Quadlips Performance Day 1",
+    group: "Quadlips",
     tateText: "第一巻 · 舞台",
     location: "Axiata Arena, Kuala Lumpur",
     date: "August 2025",
@@ -66,6 +67,7 @@ export const events: Event[] = [
   {
     slug: "quadlips-performance-day2",
     title: "Quadlips Performance Day 2",
+    group: "Quadlips",
     tateText: "第二巻 · 舞台",
     location: "Axiata Arena, Kuala Lumpur",
     date: "August 2025",
@@ -84,6 +86,7 @@ export const events: Event[] = [
   {
     slug: "quadlips-don-bon-day1",
     title: "Quadlips Don Bon Day 1",
+    group: "Quadlips",
     tateText: "第三巻 · 縁",
     location: "Kuala Lumpur",
     date: "August 2025",
@@ -112,6 +115,7 @@ export const events: Event[] = [
   {
     slug: "quadlips-kkv",
     title: "Quadlips at KKV",
+    group: "Quadlips",
     tateText: "第四巻 · 街",
     location: "KKV, Kuala Lumpur",
     date: "August 2025",
@@ -139,6 +143,7 @@ export const events: Event[] = [
   {
     slug: "klp48-performance-day1",
     title: "KLP48 Performance Day 1",
+    group: "KLP48",
     tateText: "第五巻 · 舞台",
     location: "Axiata Arena, Kuala Lumpur",
     date: "August 2025",
@@ -158,6 +163,7 @@ export const events: Event[] = [
   {
     slug: "klp48-performance-day2",
     title: "KLP48 Performance Day 2",
+    group: "KLP48",
     tateText: "第六巻 · 舞台",
     location: "Axiata Arena, Kuala Lumpur",
     date: "August 2025",
@@ -175,6 +181,7 @@ export const events: Event[] = [
   {
     slug: "klp48-kkv",
     title: "KLP48 at KKV",
+    group: "KLP48",
     tateText: "第七巻 · 街",
     location: "KKV, Kuala Lumpur",
     date: "August 2025",
@@ -211,6 +218,7 @@ export const events: Event[] = [
   {
     slug: "jkt48-klia",
     title: "JKT48 at KLIA",
+    group: "JKT48",
     tateText: "第八巻 · 空港",
     location: "KLIA, Kuala Lumpur",
     date: "August 2025",
@@ -244,6 +252,7 @@ export const events: Event[] = [
   {
     slug: "jkt48-don-bon-day1",
     title: "JKT48 Don Bon Day 1",
+    group: "JKT48",
     tateText: "第九巻 · 縁",
     location: "Kuala Lumpur",
     date: "August 2025",
@@ -268,6 +277,7 @@ export const events: Event[] = [
   {
     slug: "jkt48-don-bon-day2",
     title: "JKT48 Don Bon Day 2",
+    group: "JKT48",
     tateText: "第十巻 · 縁",
     location: "Kuala Lumpur",
     date: "August 2025",
@@ -285,6 +295,7 @@ export const events: Event[] = [
   {
     slug: "jkt48-stage-day1",
     title: "JKT48 Stage Day 1",
+    group: "JKT48",
     tateText: "第十一巻 · 舞台",
     location: "Kuala Lumpur",
     date: "August 2025",

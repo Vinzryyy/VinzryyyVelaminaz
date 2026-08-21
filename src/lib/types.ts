@@ -14,6 +14,7 @@ export interface Photo {
 export interface Event {
   slug: string;         // URL segment, e.g. "onstage-jul"
   title: string;
+  group?: string;       // e.g. "JKT48", "KLP48", "Quadlips" — shown as tag on card
   tateText: string;     // short vertical decorative label, e.g. "第七巻 · 舞台"
   location: string;
   date: string;
