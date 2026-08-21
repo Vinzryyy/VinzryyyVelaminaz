@@ -32,7 +32,8 @@ export default function EventPage() {
       <div className="px-6 pb-6 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <Link
-            to="/#events"
+            to="/"
+            state={{ scrollTo: "events" }}
             className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-muted transition-colors duration-200 hover:text-ink"
           >
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
