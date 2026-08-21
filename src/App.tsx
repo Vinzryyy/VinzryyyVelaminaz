@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router";
 import { SakuraPetals } from "@/components/SakuraPetals";
 import { Nav } from "@/components/Nav";
@@ -18,6 +18,14 @@ function PageLoader() {
 
 export default function App() {
   const location = useLocation();
+
+  // Scroll to top on route change (unless Home handles deferred scroll)
+  useEffect(() => {
+    const state = location.state as { scrollTo?: string } | null;
+    if (!state?.scrollTo) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname, location.state]);
 
   return (
     <div className="min-h-screen bg-sumi font-sans text-ink antialiased">
