@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@radix-ui/react-toast": "^1.2.0",
@@ -21,8 +22,13 @@
     "three": "^0.170.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.0.0",
     "@vitejs/plugin-react": "^4.5.0",
+    "eslint": "^10.8.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.4",
+    "globals": "^17.11.0",
     "tailwindcss": "^4.0.0",
     "vite": "^7.0.0",
     "vite-plugin-pwa": "^1.0.0"

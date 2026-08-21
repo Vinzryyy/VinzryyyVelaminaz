@@ -4,8 +4,8 @@ import { ArrowLeft, Images, MapPin } from "lucide-react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { EVENTS, GROUP_ORDER } from "../data/galleryEvents";
-import { SakuraPetals } from "../components/SakuraPetals";
+import { EVENTS, GROUP_ORDER } from "@/data/galleryEvents";
+import { SakuraPetals } from "@/components/SakuraPetals";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 

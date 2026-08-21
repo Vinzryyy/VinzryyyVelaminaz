@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams, useSearchParams, Navigate } from "react-router";
 import { ArrowLeft, ArrowRight, X, MapPin, Calendar, Camera, Aperture } from "lucide-react";
-import { EVENTS, normalizePhotos } from "../data/galleryEvents";
-import { SakuraPetals } from "../components/SakuraPetals";
+import { EVENTS, normalizePhotos } from "@/data/galleryEvents";
+import { SakuraPetals } from "@/components/SakuraPetals";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -432,15 +432,15 @@ export const GalleryEvent = () => {
   const pillRef      = useRef(null);
   const metaRef      = useRef(null);
   const factsWrapRef = useRef(null);
+  const initialFrameHandled = useRef(false);
 
   const event = EVENTS.find((e) => e.id === eventId);
-  if (!event) return <Navigate to="/gallery" replace />;
-
-  const photos  = normalizePhotos(event.photos);
-  const warm    = WARM[event.group] ?? WARM.JKT48;
+  const photos  = useMemo(() => event ? normalizePhotos(event.photos) : [], [event]);
+  const warm    = event ? (WARM[event.group] ?? WARM.JKT48) : WARM.JKT48;
   const isEmpty = photos.length === 0;
 
   useEffect(() => {
+    if (!event) return;
     const ctx = gsap.context(() => {
       if (titleRef.current) {
         const split = new SplitText(titleRef.current, { type: "chars" });
@@ -470,16 +470,19 @@ export const GalleryEvent = () => {
       });
     }, rootRef);
     return () => ctx.revert();
-  }, []);
+  }, [event]);
 
   useEffect(() => {
+    if (initialFrameHandled.current || !event) return;
+    initialFrameHandled.current = true;
     const frameParam = searchParams.get("photo");
     if (frameParam && photos.length > 0) {
       const i = photos.findIndex((p) => p.frameNum === frameParam);
-      if (i !== -1) setLightboxIdx(i);
+      if (i !== -1) requestAnimationFrame(() => setLightboxIdx(i));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [event, searchParams, photos]);
+
+  if (!event) return <Navigate to="/gallery" replace />;
 
   return (
     <div

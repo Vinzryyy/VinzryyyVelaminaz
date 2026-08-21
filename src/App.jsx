@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router'
-import Navbar from './components/layout/Navbar.jsx'
-import { ToastProvider } from './components/ui/Toast.jsx'
-import Home from './pages/Home.jsx'
-import Gallery from './pages/Gallery.jsx'
-import GalleryEvent from './pages/GalleryEvent.jsx'
+import Navbar from '@/components/layout/Navbar'
+import { ToastProvider } from '@/components/ui/Toast'
+import Home from '@/pages/Home'
+import Gallery from '@/pages/Gallery'
+import GalleryEvent from '@/pages/GalleryEvent'
 
 export default function App() {
   return (
