@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
 import { getAllEvents, ALL_GROUPS, toKanji } from "@/lib/data";
+import { getPageContent } from "@/lib/pageContent";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { EventCard } from "@/components/EventCard";
 import { GroupFilter } from "@/components/GroupFilter";
@@ -61,6 +62,7 @@ export default function Home() {
   );
 
   const { current, next, fading } = useCrossfade(allPhotos, 25_000, 2000);
+  const content = useMemo(() => getPageContent(), []);
 
   const [activeGroup, setActiveGroup] = useState<string>(ALL_GROUPS);
   const visibleEvents = useMemo(
@@ -144,9 +146,7 @@ export default function Home() {
         <div className="relative z-10 mt-20 px-4 sm:mt-28 sm:px-6 md:mt-32 md:px-10">
           <ScrollReveal>
             <p className="max-w-[240px] font-display text-xs italic leading-5 text-ink/70 sm:max-w-[280px] sm:text-sm sm:leading-6 md:max-w-sm md:text-base md:leading-7">
-              A fan with a camera, capturing the
-              energy and emotion of live events
-              — one frame at a time.
+              {content.hero.tagline}
             </p>
           </ScrollReveal>
         </div>
@@ -154,7 +154,7 @@ export default function Home() {
         {/* Vertical kanji — right side */}
         <div className="pointer-events-none absolute right-4 top-1/2 z-10 -translate-y-1/2 sm:right-6 md:right-10">
           <p className="tate font-jp text-sm tracking-[0.5em] text-ink/20 md:text-base" lang="ja" aria-hidden="true">
-            写真記録
+            {content.hero.verticalKanji}
           </p>
         </div>
 
@@ -165,8 +165,8 @@ export default function Home() {
         <div className="relative z-10 px-4 pb-14 sm:px-6 sm:pb-16 md:px-10 md:pb-14">
           {/* Giant name text — outlined */}
           <h1 className="hero-name select-none text-center font-display font-bold uppercase leading-[0.85]">
-            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">Vinzryyy</span>
-            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">Saga</span>
+            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">{content.hero.nameLine1}</span>
+            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">{content.hero.nameLine2}</span>
           </h1>
         </div>
 
@@ -193,7 +193,7 @@ export default function Home() {
           <ScrollReveal>
             <div className="mb-12 flex items-center gap-6 sm:mb-20 md:mb-28">
               <p className="font-display text-3xl italic text-ink/80 md:text-4xl">
-                Profile
+                {content.profile.sectionLabel}
               </p>
               <div className="h-px flex-1 bg-gradient-to-r from-hairline to-transparent" />
             </div>
@@ -204,17 +204,10 @@ export default function Home() {
             <ScrollReveal>
               <div className="space-y-6">
                 <p className="max-w-2xl text-sm leading-7 text-ink/70 md:text-[15px] md:leading-8" style={{ textAlign: "justify" }}>
-                  Vinzryyy is a fan who fell in love with taking photos at live
-                  events. What started as snapping memories from the crowd grew
-                  into a passion for capturing the energy, emotion, and
-                  fleeting moments that make every show unique. Armed with a
-                  camera and a front-row spirit, Vinzryyy documents performances,
-                  fan meetings, and behind-the-scenes glimpses — turning the
-                  experience of being a fan into visual stories that preserve
-                  those moments long after the lights go down.
+                  {content.profile.bio}
                 </p>
                 <p className="font-display text-sm italic text-sakura/50">
-                  No studio, no assignments — just a fan with a lens and a love for the stage.
+                  {content.profile.quote}
                 </p>
               </div>
             </ScrollReveal>
@@ -341,21 +334,20 @@ export default function Home() {
           <ScrollReveal>
             <div className="mx-auto max-w-xl text-center">
               <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.35em] text-sakura/60">
-                Get in Touch
+                {content.contact.label}
               </p>
               <h2 className="font-display text-3xl font-bold text-ink md:text-4xl">
-                Let's create something together
+                {content.contact.heading}
               </h2>
               <p className="mt-5 text-sm leading-7 text-muted">
-                Interested in event coverage or collaborative projects?
-                Reach out and let's make it happen.
+                {content.contact.description}
               </p>
 
               <div className="mt-8 flex flex-col items-center gap-4">
-                <CopyEmail />
+                <CopyEmail email={content.contact.email} />
                 <div className="flex items-center gap-6">
                   <a
-                    href="https://instagram.com/VinzryyySaga"
+                    href={content.contact.instagramUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center gap-2 font-mono text-sm text-muted transition-colors duration-200 hover:text-ink"
@@ -363,7 +355,7 @@ export default function Home() {
                     <svg className="h-4 w-4 text-faint transition-colors duration-200 group-hover:text-sakura" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                     </svg>
-                    @VinzryyySaga
+                    {content.contact.instagramHandle}
                   </a>
                 </div>
               </div>
@@ -375,19 +367,16 @@ export default function Home() {
   );
 }
 
-const EMAIL = "hello@vinzryyysaga.com";
-
-function CopyEmail() {
+function CopyEmail({ email }: { email: string }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
     try {
       if (navigator.clipboard) {
-        await navigator.clipboard.writeText(EMAIL);
+        await navigator.clipboard.writeText(email);
       } else {
-        // Fallback for HTTP / older browsers
         const ta = document.createElement("textarea");
-        ta.value = EMAIL;
+        ta.value = email;
         ta.style.position = "fixed";
         ta.style.opacity = "0";
         document.body.appendChild(ta);
@@ -405,10 +394,10 @@ function CopyEmail() {
   return (
     <span className="inline-flex items-center gap-2">
       <a
-        href={`mailto:${EMAIL}`}
+        href={`mailto:${email}`}
         className="font-mono text-sm text-sakura transition-colors duration-200 hover:text-ink"
       >
-        {EMAIL}
+        {email}
       </a>
       <button
         onClick={copy}
