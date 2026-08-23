@@ -15,7 +15,7 @@ export interface Photo {
   height?: number;
 }
 
-export type EventLayout = "classic" | "magazine" | "filmstrip" | "masonry" | "spotlight" | "fullbleed" | "timeline";
+export type EventLayout = "classic" | "magazine" | "filmstrip" | "masonry" | "spotlight" | "fullbleed" | "timeline" | "polaroid" | "honeycomb" | "diagonal" | "splitscroll" | "carousel" | "stacked" | "mosaic" | "infinite";
 
 export interface Event {
   slug: string;         // URL segment, e.g. "onstage-jul"

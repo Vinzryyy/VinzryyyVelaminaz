@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import type { Photo } from "@/lib/types";
 import { toKanji, placeholder } from "@/lib/data";
 
@@ -271,6 +271,371 @@ export function TimelineLayout({ photos, onOpen }: LayoutProps) {
           </button>
         </div>
       ))}
+    </div>
+  );
+}
+
+/* ── Polaroid Scatter ────────────────────────────────────────────── */
+
+export function PolaroidLayout({ photos, onOpen }: LayoutProps) {
+  const angles = useMemo(
+    () => photos.map((_, i) => ((i * 37 + 13) % 25) - 12),
+    [photos.length], // eslint-disable-line
+  );
+
+  return (
+    <div className="flex flex-wrap justify-center gap-6 px-4 py-8">
+      {photos.map((p, i) => (
+        <button
+          key={i}
+          className="group relative transition-transform duration-300 hover:!rotate-0 hover:scale-110 hover:z-10"
+          style={{ transform: `rotate(${angles[i]}deg)` }}
+          onClick={() => onOpen(i)}
+        >
+          <div className="rounded bg-white p-2 pb-10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+            <div className="h-40 w-36 overflow-hidden sm:h-48 sm:w-44">
+              {p.src ? (
+                <img src={p.src} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
+              ) : (
+                <div className="h-full w-full" style={{ background: placeholder(i) }} />
+              )}
+            </div>
+          </div>
+          <p className="absolute bottom-2 left-0 w-full text-center font-display text-[10px] italic text-sumi/60">
+            {p.title}
+          </p>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/* ── Honeycomb / Hexagon ─────────────────────────────────────────── */
+
+export function HoneycombLayout({ photos, onOpen }: LayoutProps) {
+  return (
+    <div className="flex flex-wrap justify-center gap-2 px-4 py-6">
+      {photos.map((p, i) => {
+        const isOddRow = Math.floor(i / 4) % 2 === 1;
+        return (
+          <button
+            key={i}
+            className="group relative overflow-hidden transition-transform duration-300 hover:scale-110 hover:z-10"
+            style={{
+              width: "130px",
+              height: "150px",
+              clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+              marginLeft: isOddRow && i % 4 === 0 ? "68px" : undefined,
+              marginTop: i >= 4 ? "-20px" : undefined,
+            }}
+            onClick={() => onOpen(i)}
+          >
+            {p.src ? (
+              <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+            ) : (
+              <div className="h-full w-full" style={{ background: placeholder(i) }} />
+            )}
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/40">
+              <span className="font-display text-xs font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">{p.title}</span>
+            </div>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── Diagonal Slices ─────────────────────────────────────────────── */
+
+export function DiagonalLayout({ photos, onOpen }: LayoutProps) {
+  return (
+    <div className="flex h-[500px] overflow-hidden">
+      {photos.map((p, i) => (
+        <button
+          key={i}
+          className="group relative flex-1 overflow-hidden transition-all duration-500 hover:flex-[3]"
+          style={{
+            clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)",
+            marginLeft: i > 0 ? "-4%" : undefined,
+          }}
+          onClick={() => onOpen(i)}
+        >
+          {p.src ? (
+            <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+          ) : (
+            <div className="h-full w-full" style={{ background: placeholder(i) }} />
+          )}
+          <div className="pointer-events-none absolute inset-0 bg-black/30 transition-colors group-hover:bg-black/10" />
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center opacity-0 transition-opacity group-hover:opacity-100">
+            <p className="whitespace-nowrap font-display text-sm font-bold text-white">{p.title}</p>
+            <p className="font-jp text-xs text-gold/60" lang="ja">{toKanji(i + 1)}</p>
+          </div>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/* ── Split Screen Scroll ─────────────────────────────────────────── */
+
+export function SplitScrollLayout({ photos, onOpen }: LayoutProps) {
+  const [active, setActive] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const panels = container.querySelectorAll<HTMLElement>("[data-panel]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute("data-panel"));
+            if (!isNaN(idx)) setActive(idx);
+          }
+        });
+      },
+      { root: container, threshold: 0.6 },
+    );
+    panels.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [photos.length]);
+
+  const photo = photos[active];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 md:h-[600px]">
+      {/* Left: sticky photo */}
+      <div className="sticky top-0 flex h-[300px] items-center justify-center bg-sumi md:h-full">
+        <button className="relative h-full w-full overflow-hidden" onClick={() => onOpen(active)}>
+          {photo?.src ? (
+            <img src={photo.src} alt={photo.title} className="h-full w-full object-cover transition-opacity duration-500" />
+          ) : (
+            <div className="h-full w-full" style={{ background: placeholder(active) }} />
+          )}
+          <span className="absolute left-4 top-4 font-jp text-sm text-gold/50" lang="ja">{toKanji(active + 1)}</span>
+        </button>
+      </div>
+
+      {/* Right: scrollable panels */}
+      <div ref={containerRef} className="h-[400px] overflow-y-auto md:h-full">
+        {photos.map((p, i) => (
+          <div
+            key={i}
+            data-panel={i}
+            className={`cursor-pointer border-b border-hairline p-6 transition-colors ${
+              i === active ? "bg-card/60" : "bg-transparent hover:bg-card/30"
+            }`}
+            onClick={() => setActive(i)}
+          >
+            <p className="font-mono text-[9px] uppercase tracking-widest text-sakura/60">Frame {i + 1}</p>
+            <h4 className="mt-1 font-display text-base font-bold text-ink">{p.title}</h4>
+            {p.story && <p className="mt-2 text-sm leading-6 text-muted">{p.story}</p>}
+            <p className="mt-2 font-mono text-[9px] text-faint">
+              {[p.lens, p.aperture, p.shutter, p.iso ? `ISO ${p.iso}` : null].filter(Boolean).join(" · ")}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Carousel / Slider ───────────────────────────────────────────── */
+
+export function CarouselLayout({ photos, onOpen }: LayoutProps) {
+  const [idx, setIdx] = useState(0);
+  const photo = photos[idx];
+  const timerRef = useRef<number>();
+
+  const next = useCallback(() => setIdx((i) => (i + 1) % photos.length), [photos.length]);
+  const prev = useCallback(() => setIdx((i) => (i - 1 + photos.length) % photos.length), [photos.length]);
+
+  useEffect(() => {
+    timerRef.current = window.setInterval(next, 5000);
+    return () => clearInterval(timerRef.current);
+  }, [next]);
+
+  const pause = () => clearInterval(timerRef.current);
+  const resume = () => { timerRef.current = window.setInterval(next, 5000); };
+
+  if (!photo) return null;
+
+  return (
+    <div className="space-y-4" onMouseEnter={pause} onMouseLeave={resume}>
+      <div className="relative aspect-[16/9] overflow-hidden rounded-lg border border-hairline bg-card">
+        <button className="h-full w-full" onClick={() => onOpen(idx)}>
+          {photo.src ? (
+            <img key={photo.src} src={photo.src} alt={photo.title} className="h-full w-full object-cover animate-[hero-fade_0.5s_ease-in-out]" />
+          ) : (
+            <div className="h-full w-full" style={{ background: placeholder(idx) }} />
+          )}
+        </button>
+
+        <button onClick={prev} className="absolute left-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-sumi/60 text-ink backdrop-blur-sm hover:bg-sumi/90">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <button onClick={next} className="absolute right-3 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-sumi/60 text-ink backdrop-blur-sm hover:bg-sumi/90">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" d="M9 5l7 7-7 7" /></svg>
+        </button>
+
+        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-5">
+          <p className="font-display text-base font-bold text-white">{photo.title}</p>
+          <p className="font-mono text-[10px] text-white/50">{[photo.lens, photo.aperture].filter(Boolean).join(" · ")}</p>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-1.5">
+        {photos.map((_, i) => (
+          <button key={i} onClick={() => setIdx(i)} className={`h-2 rounded-full transition-all ${i === idx ? "w-6 bg-crimson" : "w-2 bg-faint hover:bg-muted"}`} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Stacked Cards ───────────────────────────────────────────────── */
+
+export function StackedLayout({ photos, onOpen }: LayoutProps) {
+  const [idx, setIdx] = useState(0);
+  const next = () => setIdx((i) => (i + 1) % photos.length);
+
+  return (
+    <div className="flex flex-col items-center py-8">
+      <div className="relative h-[400px] w-[300px] sm:h-[480px] sm:w-[360px]">
+        {[2, 1, 0].map((offset) => {
+          const i = (idx + offset) % photos.length;
+          const p = photos[i];
+          const isTop = offset === 0;
+          return (
+            <button
+              key={`${idx}-${offset}`}
+              className="absolute inset-0 overflow-hidden rounded-xl border border-hairline bg-card shadow-[0_8px_40px_rgba(0,0,0,0.4)] transition-all duration-500"
+              style={{
+                transform: `translateY(${offset * -12}px) scale(${1 - offset * 0.05})`,
+                zIndex: 3 - offset,
+                opacity: offset === 2 ? 0.3 : offset === 1 ? 0.6 : 1,
+              }}
+              onClick={() => { if (isTop) onOpen(i); else next(); }}
+            >
+              {p.src ? (
+                <img src={p.src} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
+              ) : (
+                <div className="h-full w-full" style={{ background: placeholder(i) }} />
+              )}
+              {isTop && (
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-5">
+                  <p className="font-display text-lg font-bold text-white">{p.title}</p>
+                  {p.story && <p className="mt-1 text-sm text-white/50 line-clamp-2">{p.story}</p>}
+                </div>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-6 flex items-center gap-4">
+        <button onClick={() => setIdx((i) => (i - 1 + photos.length) % photos.length)} className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-muted hover:text-ink">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <span className="font-mono text-sm text-muted">{idx + 1} / {photos.length}</span>
+        <button onClick={next} className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline text-muted hover:text-ink">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── Mosaic ───────────────────────────────────────────────────────── */
+
+export function MosaicLayout({ photos, onOpen }: LayoutProps) {
+  const patterns = [
+    "col-span-2 row-span-2",
+    "col-span-1 row-span-1",
+    "col-span-1 row-span-1",
+    "col-span-1 row-span-2",
+    "col-span-2 row-span-1",
+    "col-span-1 row-span-1",
+  ];
+
+  return (
+    <div className="grid auto-rows-[140px] grid-cols-4 gap-1 sm:auto-rows-[180px]">
+      {photos.map((p, i) => {
+        const pattern = patterns[i % patterns.length];
+        return (
+          <button key={i} className={`group relative overflow-hidden border border-hairline bg-card ${pattern}`} onClick={() => onOpen(i)}>
+            {p.src ? (
+              <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
+            ) : (
+              <div className="h-full w-full" style={{ background: placeholder(i) }} />
+            )}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+            <span className="absolute left-2 top-2 font-jp text-xs text-gold/40" lang="ja">{toKanji(i + 1)}</span>
+            <span className="absolute bottom-2 left-2 font-display text-xs font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">{p.title}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── Infinite Scroll (parallax grid) ─────────────────────────────── */
+
+export function InfiniteLayout({ photos, onOpen }: LayoutProps) {
+  const [visible, setVisible] = useState(6);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible((v) => Math.min(v + 6, photos.length));
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [photos.length]);
+
+  return (
+    <div className="space-y-1">
+      <div className="grid grid-cols-2 gap-1 md:grid-cols-3">
+        {photos.slice(0, visible).map((p, i) => {
+          const speed = i % 3 === 0 ? "translate-y-0" : i % 3 === 1 ? "-translate-y-2" : "translate-y-2";
+          return (
+            <button key={i} className={`group relative overflow-hidden border border-hairline bg-card transition-transform duration-700 ${speed}`} onClick={() => onOpen(i)}>
+              <div className="aspect-[4/5]">
+                {p.src ? (
+                  <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" loading="lazy" />
+                ) : (
+                  <div className="h-full w-full" style={{ background: placeholder(i) }} />
+                )}
+              </div>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="absolute bottom-3 left-3 opacity-0 transition-opacity group-hover:opacity-100">
+                <p className="font-display text-sm font-bold text-white">{p.title}</p>
+                <p className="font-mono text-[9px] text-white/40">{[p.lens, p.aperture].filter(Boolean).join(" · ")}</p>
+              </div>
+              <span className="absolute left-2 top-2 font-jp text-xs text-gold/30" lang="ja">{toKanji(i + 1)}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {visible < photos.length && (
+        <div ref={sentinelRef} className="flex items-center justify-center py-8">
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
+        </div>
+      )}
+
+      {visible >= photos.length && photos.length > 6 && (
+        <p className="py-4 text-center font-mono text-[10px] text-faint">All {photos.length} frames loaded</p>
+      )}
     </div>
   );
 }

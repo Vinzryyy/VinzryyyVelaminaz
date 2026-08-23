@@ -7,7 +7,7 @@ import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ResponsiveImg } from "@/components/ResponsiveImg";
 import { PhotoGrid } from "@/components/PhotoGrid";
-import { MagazineLayout, FilmstripLayout, MasonryLayout, SpotlightLayout, FullbleedLayout, TimelineLayout } from "@/components/EventLayouts";
+import { MagazineLayout, FilmstripLayout, MasonryLayout, SpotlightLayout, FullbleedLayout, TimelineLayout, PolaroidLayout, HoneycombLayout, DiagonalLayout, SplitScrollLayout, CarouselLayout, StackedLayout, MosaicLayout, InfiniteLayout } from "@/components/EventLayouts";
 import NotFound from "@/pages/NotFound";
 
 const Lightbox = lazy(() =>
@@ -168,6 +168,30 @@ export default function EventPage() {
           )}
           {event.layout === "timeline" && (
             <TimelineLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "polaroid" && (
+            <PolaroidLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "honeycomb" && (
+            <HoneycombLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "diagonal" && (
+            <DiagonalLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "splitscroll" && (
+            <SplitScrollLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "carousel" && (
+            <CarouselLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "stacked" && (
+            <StackedLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "mosaic" && (
+            <MosaicLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "infinite" && (
+            <InfiniteLayout photos={event.photos} onOpen={setLightboxIdx} />
           )}
         </div>
       </section>

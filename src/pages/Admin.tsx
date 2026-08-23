@@ -759,6 +759,97 @@ function LayoutPreview({
         </div>
       );
 
+    case "polaroid":
+      return (
+        <div className="flex flex-wrap justify-center gap-3 py-4">
+          {photos.map((p, i) => (
+            <div key={i} style={{ transform: `rotate(${((i * 37 + 13) % 25) - 12}deg)` }} className="rounded bg-white p-1 pb-4 shadow-md">
+              <PhotoThumb photo={p} index={i} {...thumbProps} className="h-16 w-14" />
+            </div>
+          ))}
+        </div>
+      );
+
+    case "honeycomb":
+      return (
+        <div className="flex flex-wrap justify-center gap-1 py-4">
+          {photos.map((p, i) => (
+            <div key={i} style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
+              <PhotoThumb photo={p} index={i} {...thumbProps} className="h-16 w-14" />
+            </div>
+          ))}
+        </div>
+      );
+
+    case "diagonal":
+      return (
+        <div className="flex h-32 overflow-hidden">
+          {photos.map((p, i) => (
+            <div key={i} className="flex-1" style={{ clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)", marginLeft: i > 0 ? "-4%" : undefined }}>
+              <PhotoThumb photo={p} index={i} {...thumbProps} className="h-full w-full" />
+            </div>
+          ))}
+        </div>
+      );
+
+    case "splitscroll":
+      return (
+        <div className="grid grid-cols-2 gap-1">
+          {photos[0] && <PhotoThumb photo={photos[0]} index={0} {...thumbProps} className="aspect-square row-span-3" />}
+          {photos.slice(1, 4).map((p, i) => (
+            <PhotoThumb key={i + 1} photo={p} index={i + 1} {...thumbProps} className="aspect-[3/1]" />
+          ))}
+        </div>
+      );
+
+    case "carousel":
+      return (
+        <div className="space-y-1">
+          {photos[0] && <PhotoThumb photo={photos[0]} index={0} {...thumbProps} className="aspect-[16/9] w-full" />}
+          <div className="flex justify-center gap-1">
+            {photos.slice(0, 8).map((_, i) => (
+              <div key={i} className={`h-1.5 rounded-full ${i === 0 ? "w-4 bg-crimson" : "w-1.5 bg-faint"}`} />
+            ))}
+          </div>
+        </div>
+      );
+
+    case "stacked":
+      return (
+        <div className="relative mx-auto h-32 w-24">
+          {photos.slice(0, 3).map((p, i) => (
+            <div key={i} className="absolute inset-0" style={{ transform: `translateY(${(2 - i) * -6}px) scale(${1 - (2 - i) * 0.05})`, zIndex: i, opacity: i === 2 ? 1 : i === 1 ? 0.6 : 0.3 }}>
+              <PhotoThumb photo={p} index={i} {...thumbProps} className="h-full w-full rounded-lg" />
+            </div>
+          ))}
+        </div>
+      );
+
+    case "mosaic": {
+      const mPatterns = ["col-span-2 row-span-2", "", "", "row-span-2", "col-span-2", ""];
+      return (
+        <div className="grid auto-rows-[40px] grid-cols-4 gap-1">
+          {photos.slice(0, 6).map((p, i) => (
+            <div key={i} className={mPatterns[i % 6]}>
+              <PhotoThumb photo={p} index={i} {...thumbProps} className="h-full w-full" />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    case "infinite":
+      return (
+        <div className="grid grid-cols-3 gap-1">
+          {photos.slice(0, 9).map((p, i) => (
+            <PhotoThumb key={i} photo={p} index={i} {...thumbProps} className="aspect-[4/5]" />
+          ))}
+          {photos.length > 9 && (
+            <div className="col-span-3 py-2 text-center font-mono text-[8px] text-faint">+{photos.length - 9} more (lazy loaded)</div>
+          )}
+        </div>
+      );
+
     default: // classic
       return (
         <div className="grid grid-cols-4 gap-1 sm:grid-cols-5 md:grid-cols-6">
@@ -997,6 +1088,14 @@ function EventEditor({
                 <option value="spotlight">Spotlight — one photo + thumbnail strip</option>
                 <option value="fullbleed">Full-bleed — each photo full width</option>
                 <option value="timeline">Timeline — vertical story with photos</option>
+                <option value="polaroid">Polaroid — scattered cards at angles</option>
+                <option value="honeycomb">Honeycomb — hexagonal grid</option>
+                <option value="diagonal">Diagonal — parallelogram slices</option>
+                <option value="splitscroll">Split Screen — photo + scrolling text</option>
+                <option value="carousel">Carousel — slideshow with arrows</option>
+                <option value="stacked">Stacked Cards — 3D card deck</option>
+                <option value="mosaic">Mosaic — mixed size tiles</option>
+                <option value="infinite">Infinite Scroll — lazy-load parallax grid</option>
               </select>
             </label>
           </div>
