@@ -670,9 +670,22 @@ function PhotoManager({
               <PhotoField label="Title" value={photos[editIdx].title} onChange={(v) => updatePhoto(editIdx, { title: v })} />
               <PhotoField label="Src" value={photos[editIdx].src ?? ""} onChange={(v) => updatePhoto(editIdx, { src: v })} />
             </div>
+            <PhotoField label="Story" value={photos[editIdx].story} onChange={(v) => updatePhoto(editIdx, { story: v })} textarea />
             <div className="flex gap-3">
-              <PhotoField label="Story" value={photos[editIdx].story} onChange={(v) => updatePhoto(editIdx, { story: v })} />
-              <PhotoField label="Filmstrip Group" value={photos[editIdx].sequence ?? ""} onChange={(v) => updatePhoto(editIdx, { sequence: v || undefined })} />
+              <PhotoField label="Sequence Group" value={photos[editIdx].sequence ?? ""} onChange={(v) => updatePhoto(editIdx, { sequence: v || undefined })} />
+              <label className="block flex-1">
+                <span className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-muted">Display Mode</span>
+                <select
+                  value={photos[editIdx].sequenceDisplay ?? "filmstrip"}
+                  onChange={(e) => updatePhoto(editIdx, { sequenceDisplay: (e.target.value as Photo["sequenceDisplay"]) || undefined })}
+                  className="w-full rounded-lg border border-hairline bg-sumi px-3 py-2 font-sans text-sm text-ink outline-none focus:border-crimson/50"
+                >
+                  <option value="filmstrip">Filmstrip (horizontal scroll)</option>
+                  <option value="stack">Stack (best shot + badge)</option>
+                  <option value="slideshow">Slideshow (auto-crossfade)</option>
+                  <option value="collage">Collage (mosaic grid)</option>
+                </select>
+              </label>
             </div>
             <div className="flex gap-3">
               <PhotoField label="Lens" value={photos[editIdx].lens ?? ""} onChange={(v) => updatePhoto(editIdx, { lens: v })} />

@@ -1,10 +1,12 @@
+export type SequenceDisplay = "filmstrip" | "stack" | "slideshow" | "collage";
+
 export interface Photo {
   title: string;
   story: string;
-  src?: string;        // "/photos/{event-slug}/001.jpg" — optional,
-                       // falls back to a generated placeholder gradient
-  sequence?: string;   // manual filmstrip group name — photos with the same
-                       // sequence are rendered as a horizontal scrollable strip
+  src?: string;            // "/photos/{event-slug}/001.jpg" — optional,
+                           // falls back to a generated placeholder gradient
+  sequence?: string;       // group name — photos with the same sequence form a set
+  sequenceDisplay?: SequenceDisplay;  // how the sequence renders (default: filmstrip)
   lens?: string;
   aperture?: string;
   shutter?: string;
