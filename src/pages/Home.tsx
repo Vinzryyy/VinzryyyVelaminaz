@@ -268,18 +268,42 @@ export default function Home() {
             </div>
           </ScrollReveal>
 
-          {/* Keyed on the filter so cards re-run their entrance animation */}
-          <div key={activeGroup} className="grid gap-4 sm:gap-5 md:grid-cols-2">
-            {visibleEvents.map((event, i) => (
-              <div
-                key={event.slug}
-                className="card-pop"
-                style={{ animationDelay: `${Math.min(i, 7) * 60}ms` }}
-              >
-                <EventCard event={event} index={i} />
+          {/* 3-column masonry grid, last row centered */}
+          {(() => {
+            const tail = visibleEvents.length % 3;
+            const full = visibleEvents.slice(0, visibleEvents.length - tail);
+            const remainder = visibleEvents.slice(visibleEvents.length - tail);
+            return (
+              <div key={activeGroup} className="space-y-4 sm:space-y-5">
+                {full.length > 0 && (
+                  <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
+                    {full.map((event, i) => (
+                      <div
+                        key={event.slug}
+                        className="card-pop"
+                        style={{ animationDelay: `${Math.min(i, 7) * 60}ms` }}
+                      >
+                        <EventCard event={event} index={i} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {tail > 0 && (
+                  <div className="flex justify-center gap-4 sm:gap-5">
+                    {remainder.map((event, i) => (
+                      <div
+                        key={event.slug}
+                        className="card-pop w-full md:w-[calc(33.333%-0.875rem)]"
+                        style={{ animationDelay: `${Math.min(full.length + i, 7) * 60}ms` }}
+                      >
+                        <EventCard event={event} index={full.length + i} />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
+            );
+          })()}
 
           {visibleEvents.length === 0 && (
             <p className="py-16 text-center font-mono text-sm text-faint">
