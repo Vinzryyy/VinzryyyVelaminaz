@@ -38,16 +38,15 @@ function planRows(totalPhotos: number): PlannedRow[] {
   return rows;
 }
 
-/* Mobile gets friendlier ratios; multi-column keeps the designed rhythm */
 const ASPECT: Record<RowType, string> = {
-  triple:   "aspect-[4/3] sm:aspect-[3/2]",
-  double:   "aspect-[4/3] sm:aspect-[3/2]",
-  breather: "aspect-video sm:aspect-[21/9]",
+  triple:   "aspect-[3/2]",
+  double:   "aspect-[3/2]",
+  breather: "aspect-[21/9]",
 };
 
 const GRID: Record<RowType, string> = {
-  triple:   "grid-cols-1 sm:grid-cols-3",
-  double:   "grid-cols-1 sm:grid-cols-2",
+  triple:   "grid-cols-3",
+  double:   "grid-cols-2",
   breather: "grid-cols-1",
 };
 

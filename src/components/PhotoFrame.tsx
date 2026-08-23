@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { toKanji, placeholder } from "@/lib/data";
 import type { Photo } from "@/lib/types";
 
 /**
  * A single photo in the grid.
  * Shows a kanji frame number, hover veil with title + EXIF summary.
- * Clicking opens the lightbox.
+ * Uses IntersectionObserver to defer image loading until near-viewport.
  */
 export function PhotoFrame({
   photo,
@@ -20,9 +20,29 @@ export function PhotoFrame({
 }) {
   const hasSrc = !!photo.src;
   const [loaded, setLoaded] = useState(false);
+  const [inView, setInView] = useState(false);
+  const frameRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!hasSrc || inView) return;
+    const el = frameRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasSrc, inView]);
 
   return (
     <button
+      ref={frameRef}
       className={`photo-frame group relative w-full cursor-pointer overflow-hidden border border-hairline bg-card p-0 text-left ${aspectClass}`}
       onClick={onClick}
       aria-label={`View ${photo.title}`}
@@ -31,19 +51,20 @@ export function PhotoFrame({
         <>
           {/* Shimmer placeholder — removed once the photo decodes */}
           {!loaded && <div className="skeleton absolute inset-0 overflow-hidden bg-card" aria-hidden="true" />}
-          <img
-            src={photo.src}
-            alt={photo.title}
-            width={photo.width}
-            height={photo.height}
-            loading="lazy"
-            decoding="async"
-            draggable={false}
-            onLoad={() => setLoaded(true)}
-            onError={() => setLoaded(true)}
-            className={`img-blur-up absolute inset-0 h-full w-full object-cover transition-transform duration-300 ${loaded ? "img-loaded" : ""}`}
-            sizes="(min-width: 640px) 33vw, 100vw"
-          />
+          {inView && (
+            <img
+              src={photo.src}
+              alt={photo.title}
+              width={photo.width}
+              height={photo.height}
+              decoding="async"
+              draggable={false}
+              onLoad={() => setLoaded(true)}
+              onError={() => setLoaded(true)}
+              className={`img-blur-up absolute inset-0 h-full w-full object-cover transition-transform duration-300 ${loaded ? "img-loaded" : ""}`}
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
+          )}
         </>
       ) : (
         <div
