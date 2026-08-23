@@ -592,6 +592,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
               <PhotoManager
                 event={selectedEvent}
                 onChange={(photos) => { updateEvent(selectedEvent.slug, { photos }); notify("Photos updated"); }}
+                onCoverChange={(cover) => { updateEvent(selectedEvent.slug, { cover }); notify("Cover updated"); }}
               />
             )}
           </div>
@@ -1303,9 +1304,11 @@ function seqColor(name: string): string {
 function PhotoManager({
   event,
   onChange,
+  onCoverChange,
 }: {
   event: Event;
   onChange: (photos: Photo[]) => void;
+  onCoverChange: (cover: string) => void;
 }) {
   const [photos, setPhotos] = useState<Photo[]>(() => deepClone(event.photos));
   const [editIdx, setEditIdx] = useState<number | null>(null);
@@ -1665,8 +1668,24 @@ function PhotoManager({
               </p>
             </div>
 
+            {/* Cover badge */}
+            {photo.src && (event.cover === photo.src || (!event.cover && idx === 0)) && (
+              <div className="absolute right-1 bottom-1 rounded bg-gold/90 px-1.5 py-0.5 font-mono text-[7px] font-bold uppercase text-sumi">
+                Cover
+              </div>
+            )}
+
             {/* Quick actions */}
             <div className="absolute right-1 top-1 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+              {photo.src && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); onCoverChange(photo.src!); }}
+                  className="flex h-6 w-6 items-center justify-center rounded bg-sumi/80 text-xs text-ink backdrop-blur-sm hover:bg-gold hover:text-sumi"
+                  title="Set as cover"
+                >
+                  ★
+                </button>
+              )}
               <button
                 onClick={(e) => { e.stopPropagation(); move(idx, -1); }}
                 className="flex h-6 w-6 items-center justify-center rounded bg-sumi/80 text-xs text-ink backdrop-blur-sm hover:bg-crimson hover:text-white"
