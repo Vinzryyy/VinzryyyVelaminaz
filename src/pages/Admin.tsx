@@ -131,8 +131,25 @@ export default function Admin() {
   const [pw, setPw] = useState("");
   const [pwError, setPwError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [lockoutSecs, setLockoutSecs] = useState<number | null>(null);
 
   useDocumentHead({ title: "Admin — VinzryyySaga" });
+
+  // Live countdown for lockout timer
+  useEffect(() => {
+    if (lockoutSecs === null || lockoutSecs <= 0) return;
+    const t = setTimeout(() => {
+      const remaining = lockoutSecs - 1;
+      if (remaining <= 0) {
+        setLockoutSecs(null);
+        setPwError(null);
+      } else {
+        setLockoutSecs(remaining);
+        setPwError(`Too many attempts. Try again in ${remaining}s`);
+      }
+    }, 1000);
+    return () => clearTimeout(t);
+  }, [lockoutSecs]);
 
   // Auto-logout on session timeout
   useEffect(() => {
@@ -163,6 +180,7 @@ export default function Admin() {
     if (lock.until > Date.now()) {
       const secs = Math.ceil((lock.until - Date.now()) / 1000);
       setPwError(`Too many attempts. Try again in ${secs}s`);
+      setLockoutSecs(secs);
       return;
     }
 
@@ -173,12 +191,15 @@ export default function Admin() {
       setSessionToken();
       clearLockout();
       setPw("");
+      setLockoutSecs(null);
       setAuthed(true);
     } else {
       recordFailedAttempt();
       const newLock = getLockout();
       if (newLock.until > Date.now()) {
-        setPwError(`Too many attempts. Locked for 2 minutes`);
+        const secs = Math.ceil((newLock.until - Date.now()) / 1000);
+        setPwError(`Too many attempts. Try again in ${secs}s`);
+        setLockoutSecs(secs);
       } else {
         const remaining = MAX_ATTEMPTS - newLock.attempts;
         setPwError(`Wrong password (${remaining} attempt${remaining === 1 ? "" : "s"} left)`);
@@ -1259,7 +1280,7 @@ function PhotoManager({
           </select>
           <button
             onClick={groupSelected}
-            disabled={!groupName.trim()}
+            disabled={!groupName.trim() || selected.size === 0}
             className="rounded bg-crimson px-3 py-1.5 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80 disabled:opacity-30"
           >
             Group
