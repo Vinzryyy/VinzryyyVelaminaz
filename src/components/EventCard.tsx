@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import type { Event } from "@/lib/types";
 import { toKanji, placeholder } from "@/lib/data";
+import { ResponsiveImg } from "./ResponsiveImg";
 
 /**
  * Full-bleed magazine-cover card for the home page event grid.
@@ -24,8 +25,8 @@ export function EventCard({
     >
       {/* Full-bleed cover image */}
       {hasCover ? (
-        <img
-          src={coverSrc}
+        <ResponsiveImg
+          src={coverSrc!}
           alt={event.title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
           loading={index < 3 ? "eager" : "lazy"}

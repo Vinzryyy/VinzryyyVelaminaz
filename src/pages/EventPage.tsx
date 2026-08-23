@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { getEvent, getNextEvent, getPrevEvent } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { FactsPanel } from "@/components/FactsPanel";
 import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { ResponsiveImg } from "@/components/ResponsiveImg";
 import { PhotoGrid } from "@/components/PhotoGrid";
-import { Lightbox } from "@/components/Lightbox";
 import NotFound from "@/pages/NotFound";
+
+const Lightbox = lazy(() =>
+  import("@/components/Lightbox").then((m) => ({ default: m.Lightbox })),
+);
 
 export default function EventPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -21,25 +25,38 @@ export default function EventPage() {
     ogImage: event?.cover ?? event?.photos[0]?.src,
   });
 
+  const coverSrc = event?.cover ?? event?.photos[0]?.src;
+
+  // Preload cover image
+  useEffect(() => {
+    if (!coverSrc) return;
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = coverSrc;
+    document.head.appendChild(link);
+    return () => link.remove();
+  }, [coverSrc]);
+
   if (!event) return <NotFound />;
 
   const prevEvent = getPrevEvent(event.slug);
   const nextEvent = getNextEvent(event.slug);
-
-  const coverSrc = event.cover ?? event.photos[0]?.src;
 
   return (
     <div>
       {/* ── Cover hero ─────────────────────────────────────────── */}
       {coverSrc && (
         <section className="relative flex h-[40vh] min-h-[260px] items-end overflow-hidden sm:h-[50vh] sm:min-h-[320px]">
-          <img
+          <ResponsiveImg
             src={coverSrc}
             alt={event.title}
             width={1920}
             height={1080}
             decoding="async"
+            fetchPriority="high"
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+            sizes="100vw"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
           <div className="relative z-10 w-full px-4 pb-6 sm:px-6 sm:pb-8 md:px-10">
@@ -193,14 +210,20 @@ export default function EventPage() {
         </div>
       </section>
 
-      {/* ── Lightbox ───────────────────────────────────────────── */}
+      {/* ── Lightbox (code-split) ─────────────────────────────── */}
       {lightboxIdx !== null && (
-        <Lightbox
-          event={event}
-          photos={event.photos}
-          startIndex={lightboxIdx}
-          onClose={() => setLightboxIdx(null)}
-        />
+        <Suspense fallback={
+          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-sumi/98">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
+          </div>
+        }>
+          <Lightbox
+            event={event}
+            photos={event.photos}
+            startIndex={lightboxIdx}
+            onClose={() => setLightboxIdx(null)}
+          />
+        </Suspense>
       )}
     </div>
   );

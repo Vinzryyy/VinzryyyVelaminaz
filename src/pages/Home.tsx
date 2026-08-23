@@ -72,6 +72,26 @@ export default function Home() {
     title: "VinzryyySaga — Event Photography",
     description: "Live performance, documentary travel, and quiet portrait work — photographed on location at LaLaport BBCC, Kuala Lumpur.",
   });
+
+  // Preload critical images: hero bg + first 3 event covers
+  useEffect(() => {
+    const srcs = [
+      current.hero,
+      ...events.slice(0, 3).map((e) => e.cover ?? e.photos[0]?.src).filter(Boolean),
+    ] as string[];
+
+    const links = srcs.map((src) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = src;
+      document.head.appendChild(link);
+      return link;
+    });
+
+    return () => links.forEach((l) => l.remove());
+  }, []); // eslint-disable-line -- only on mount
+
   const totalFrames = visibleEvents.reduce((n, e) => n + e.photos.length, 0);
 
   // Handle deferred scroll from Nav links on other pages

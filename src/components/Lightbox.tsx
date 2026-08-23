@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 import type { Photo, Event } from "@/lib/types";
 import { toKanji } from "@/lib/data";
 import { KatanaDivider } from "./KatanaDivider";
+import { ResponsiveImg } from "./ResponsiveImg";
 import { useZoomPan, MIN_ZOOM, MAX_ZOOM } from "@/lib/useZoomPan";
 
 /**
@@ -241,10 +242,10 @@ export function Lightbox({
 
           {/* Image or placeholder */}
           {hasSrc ? (
-            <img
+            <ResponsiveImg
               ref={imgRef}
               key={photo.src}
-              src={photo.src}
+              src={photo.src!}
               alt={photo.title}
               width={photo.width}
               height={photo.height}
@@ -256,6 +257,7 @@ export function Lightbox({
               onDoubleClick={(e) => e.preventDefault()}
               decoding="async"
               draggable={false}
+              sizes="100vw"
               {...handlers}
               style={{
                 transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${zoom})`,
