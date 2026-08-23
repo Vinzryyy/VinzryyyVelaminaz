@@ -1062,10 +1062,42 @@ function PhotoManager({
 
   const save = () => onChange(photos);
 
-  const add = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState<string | null>(null);
+
+  const addEmpty = () => {
     const newIdx = photos.length;
     commit((p) => [...p, emptyPhoto()]);
     setEditIdx(newIdx);
+  };
+
+  const addFromFiles = async (files: FileList | File[]) => {
+    const imageFiles = [...files].filter((f) => f.type.startsWith("image/"));
+    if (imageFiles.length === 0) return;
+
+    setUploading(`Uploading ${imageFiles.length} photo${imageFiles.length > 1 ? "s" : ""}...`);
+    try {
+      const { successful, failed } = await uploadBatch(
+        imageFiles,
+        `gallery/${event.slug}`,
+        (done, total) => setUploading(`Uploading ${done}/${total}...`),
+      );
+      if (successful.length > 0) {
+        const newPhotos = successful.map((r) => ({
+          title: r.publicId.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "",
+          story: "",
+          src: r.secureUrl,
+          width: r.width,
+          height: r.height,
+        }));
+        commit((p) => [...p, ...newPhotos]);
+      }
+      const msg = `Added ${successful.length} photo${successful.length !== 1 ? "s" : ""}`;
+      setUploading(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
+    } catch {
+      setUploading("Upload failed");
+    }
+    setTimeout(() => setUploading(null), 3000);
   };
 
   const remove = (idx: number) => {
@@ -1150,9 +1182,27 @@ function PhotoManager({
           Photos: {event.title}
           <span className="ml-3 font-mono text-sm font-normal text-muted">{photos.length} photos</span>
         </h2>
-        <div className="flex gap-2">
-          <button onClick={add} className="rounded-lg bg-crimson px-4 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80">
+        <div className="flex items-center gap-2">
+          {uploading && (
+            <span className="font-mono text-xs text-crimson">{uploading}</span>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={(e) => { if (e.target.files?.length) addFromFiles(e.target.files); e.target.value = ""; }}
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={!!uploading}
+            className="rounded-lg bg-crimson px-4 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80 disabled:opacity-50"
+          >
             + Add Photo
+          </button>
+          <button onClick={addEmpty} className="rounded-lg border border-hairline px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-crimson/30 hover:text-crimson">
+            + Empty
           </button>
           <button onClick={save} className="rounded-lg border border-crimson bg-transparent px-4 py-2 font-mono text-xs font-semibold text-crimson transition-colors hover:bg-crimson/10">
             Save All
