@@ -45,7 +45,7 @@ export default function App() {
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/events/:slug" element={<EventPage />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/FeniHelismaNaylaDevi" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
