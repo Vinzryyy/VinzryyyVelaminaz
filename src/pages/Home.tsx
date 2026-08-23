@@ -136,63 +136,6 @@ export default function Home() {
 
         {/* Bottom layer: giant name + floating thumbnails */}
         <div className="relative z-10 px-4 pb-14 sm:px-6 sm:pb-16 md:px-10 md:pb-14">
-          {/* Floating portrait thumbnails — hidden on very small screens */}
-          <div className="pointer-events-none absolute inset-x-6 bottom-20 hidden sm:block md:inset-x-10 md:bottom-20">
-            {/* Left thumbnail — slightly tilted */}
-            <div className="absolute bottom-8 left-0 md:bottom-4 md:left-[6%]">
-              <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
-                Event Coverage
-              </p>
-              <div className="relative h-32 w-[104px] -rotate-3 overflow-hidden border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)] md:h-44 md:w-36">
-                <img
-                  src={current.left}
-                  alt=""
-                  width={144}
-                  height={176}
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                {next && (
-                  <img
-                    src={next.left}
-                    alt=""
-                    width={144}
-                    height={176}
-                    decoding="async"
-                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
-                  />
-                )}
-              </div>
-            </div>
-
-            {/* Right thumbnail — slightly tilted opposite */}
-            <div className="absolute bottom-8 right-0 md:bottom-4 md:right-[10%]">
-              <p className="mb-2 text-right text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
-                Visual Storyteller
-              </p>
-              <div className="relative h-32 w-[104px] rotate-2 overflow-hidden border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)] md:h-44 md:w-36">
-                <img
-                  src={current.right}
-                  alt=""
-                  width={144}
-                  height={176}
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                {next && (
-                  <img
-                    src={next.right}
-                    alt=""
-                    width={144}
-                    height={176}
-                    decoding="async"
-                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-
           {/* Giant name text — outlined */}
           <h1 className="hero-name select-none text-center font-display font-bold uppercase leading-[0.85]">
             <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">Vinzryyy</span>
