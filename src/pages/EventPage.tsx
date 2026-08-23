@@ -7,6 +7,7 @@ import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ResponsiveImg } from "@/components/ResponsiveImg";
 import { PhotoGrid } from "@/components/PhotoGrid";
+import { MagazineLayout, FilmstripLayout, MasonryLayout, SpotlightLayout, FullbleedLayout, TimelineLayout } from "@/components/EventLayouts";
 import NotFound from "@/pages/NotFound";
 
 const Lightbox = lazy(() =>
@@ -147,7 +148,27 @@ export default function EventPage() {
       {/* ── Photo grid ─────────────────────────────────────────── */}
       <section className="px-4 pb-14 sm:px-6 sm:pb-20 md:px-10">
         <div className="mx-auto max-w-[1400px]">
-          <PhotoGrid photos={event.photos} onOpen={setLightboxIdx} />
+          {(!event.layout || event.layout === "classic") && (
+            <PhotoGrid photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "magazine" && (
+            <MagazineLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "filmstrip" && (
+            <FilmstripLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "masonry" && (
+            <MasonryLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "spotlight" && (
+            <SpotlightLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "fullbleed" && (
+            <FullbleedLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
+          {event.layout === "timeline" && (
+            <TimelineLayout photos={event.photos} onOpen={setLightboxIdx} />
+          )}
         </div>
       </section>
 

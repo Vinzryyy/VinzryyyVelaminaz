@@ -838,6 +838,23 @@ function EventEditor({
               />
               <span className="font-mono text-xs text-muted">Featured event</span>
             </label>
+
+            <label className="block">
+              <span className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-muted">Page Layout</span>
+              <select
+                value={form.layout ?? "classic"}
+                onChange={(e) => set("layout", (e.target.value || undefined) as Event["layout"])}
+                className="w-full rounded-lg border border-hairline bg-sumi px-3 py-2 font-sans text-sm text-ink outline-none focus:border-crimson/50"
+              >
+                <option value="classic">Classic — 3-col grid with breathers</option>
+                <option value="magazine">Magazine — hero image + 4-col grid</option>
+                <option value="filmstrip">Filmstrip — horizontal scroll</option>
+                <option value="masonry">Masonry — staggered heights</option>
+                <option value="spotlight">Spotlight — one photo + thumbnail strip</option>
+                <option value="fullbleed">Full-bleed — each photo full width</option>
+                <option value="timeline">Timeline — vertical story with photos</option>
+              </select>
+            </label>
           </div>
         </div>
       </div>

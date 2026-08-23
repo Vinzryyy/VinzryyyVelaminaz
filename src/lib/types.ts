@@ -15,6 +15,8 @@ export interface Photo {
   height?: number;
 }
 
+export type EventLayout = "classic" | "magazine" | "filmstrip" | "masonry" | "spotlight" | "fullbleed" | "timeline";
+
 export interface Event {
   slug: string;         // URL segment, e.g. "onstage-jul"
   title: string;
@@ -27,5 +29,6 @@ export interface Event {
   description: string;  // full story on the event page
   featured: boolean;    // full-width card on home
   cover?: string;       // card image; falls back to first photo
+  layout?: EventLayout; // event page layout style (default: classic)
   photos: Photo[];
 }
