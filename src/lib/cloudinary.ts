@@ -43,16 +43,25 @@ export async function uploadToCloudinary(
     throw new Error(`Cloudinary upload failed: ${err}`);
   }
 
-  const data = await res.json();
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    throw new Error("Cloudinary upload failed: invalid response");
+  }
+
+  if (!data.secure_url || !data.public_id) {
+    throw new Error("Cloudinary upload failed: missing required fields");
+  }
 
   return {
-    url: data.url,
+    url: data.url || "",
     secureUrl: data.secure_url,
     publicId: data.public_id,
-    width: data.width,
-    height: data.height,
-    format: data.format,
-    bytes: data.bytes,
+    width: data.width || 0,
+    height: data.height || 0,
+    format: data.format || "",
+    bytes: data.bytes || 0,
   };
 }
 
@@ -63,15 +72,24 @@ export async function uploadToCloudinary(
 export async function uploadBatch(
   files: File[],
   folder?: string,
-  onProgress?: (done: number, total: number, result: CloudinaryResult) => void,
-): Promise<CloudinaryResult[]> {
-  const results: CloudinaryResult[] = [];
+  onProgress?: (done: number, total: number, result: CloudinaryResult | null, error?: string) => void,
+): Promise<{ successful: CloudinaryResult[]; failed: { name: string; error: string }[] }> {
+  const successful: CloudinaryResult[] = [];
+  const failed: { name: string; error: string }[] = [];
+
   for (let i = 0; i < files.length; i++) {
-    const result = await uploadToCloudinary(files[i], folder);
-    results.push(result);
-    onProgress?.(i + 1, files.length, result);
+    try {
+      const result = await uploadToCloudinary(files[i], folder);
+      successful.push(result);
+      onProgress?.(i + 1, files.length, result);
+    } catch (err) {
+      const error = err instanceof Error ? err.message : "Unknown error";
+      failed.push({ name: files[i].name, error });
+      onProgress?.(i + 1, files.length, null, error);
+    }
   }
-  return results;
+
+  return { successful, failed };
 }
 
 /**

@@ -230,8 +230,11 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
-  // Persist on every change
-  useEffect(() => { saveEvents(events); }, [events]);
+  // Persist on every change (debounced to prevent rapid saves)
+  useEffect(() => {
+    const t = setTimeout(() => saveEvents(events), 300);
+    return () => clearTimeout(t);
+  }, [events]);
 
   // Toast auto-dismiss
   useEffect(() => {
@@ -258,9 +261,9 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
   const deleteEvent = useCallback((slug: string) => {
     setEvents((prev) => prev.filter((e) => e.slug !== slug));
-    if (selectedSlug === slug) setSelectedSlug(null);
+    setSelectedSlug((prev) => (prev === slug ? null : prev));
     notify("Event deleted");
-  }, [selectedSlug]);
+  }, []);
 
   const addEvent = useCallback(() => {
     const ev = emptyEvent();
@@ -628,8 +631,8 @@ function EventEditor({
 }) {
   const [form, setForm] = useState<Event>(deepClone(event));
 
-  // Sync when switching events
-  useEffect(() => { setForm(deepClone(event)); }, [event.slug]); // eslint-disable-line
+  // Sync when switching events or photos change externally
+  useEffect(() => { setForm(deepClone(event)); }, [event.slug, event.photos.length]); // eslint-disable-line
 
   const set = <K extends keyof Event>(key: K, value: Event[K]) => {
     setForm((f) => ({ ...f, [key]: value }));
@@ -683,21 +686,24 @@ function EventEditor({
   const gridDrop = useDrop(async (files) => {
     try {
       setConverting(`Uploading ${files.length} image${files.length > 1 ? "s" : ""} to Cloudinary...`);
-      const results = await uploadBatch(
+      const { successful, failed } = await uploadBatch(
         files,
         `gallery/${form.slug}`,
         (done, total) => setConverting(`Uploading ${done}/${total}...`),
       );
-      const newPhotos = results.map((r, i) => ({
-        title: files[i].name.replace(/\.[^.]+$/, ""),
-        story: "",
-        src: r.secureUrl,
-        width: r.width,
-        height: r.height,
-      }));
-      onPhotosChange([...event.photos, ...newPhotos]);
-      const totalBytes = results.reduce((n, r) => n + r.bytes, 0);
-      setConverting(`Added ${results.length} photos (${formatSize(totalBytes)})`);
+      if (successful.length > 0) {
+        const newPhotos = successful.map((r) => ({
+          title: r.publicId.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "",
+          story: "",
+          src: r.secureUrl,
+          width: r.width,
+          height: r.height,
+        }));
+        onPhotosChange([...event.photos, ...newPhotos]);
+      }
+      const totalBytes = successful.reduce((n, r) => n + r.bytes, 0);
+      const msg = `Added ${successful.length} photos (${formatSize(totalBytes)})`;
+      setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
     } catch (err) {
       setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
     }
@@ -1017,21 +1023,30 @@ function PhotoManager({
     }
   }, [event.slug, event.photos]);
 
-  // Commit helper — updates local state AND saves to parent in one go
+  // Commit helper — updates local state AND saves to parent
+  const pendingCommit = useRef<Photo[] | null>(null);
   const commit = useCallback((next: Photo[] | ((prev: Photo[]) => Photo[])) => {
     setPhotos((prev) => {
       const result = typeof next === "function" ? next(prev) : next;
-      // Schedule parent update outside of render
-      queueMicrotask(() => onChange(result));
+      pendingCommit.current = result;
       return result;
     });
-  }, [onChange]);
+  }, []);
+
+  // Flush pending commit after render
+  useEffect(() => {
+    if (pendingCommit.current) {
+      onChange(pendingCommit.current);
+      pendingCommit.current = null;
+    }
+  });
 
   const save = () => onChange(photos);
 
   const add = () => {
+    const newIdx = photos.length;
     commit((p) => [...p, emptyPhoto()]);
-    setEditIdx(photos.length);
+    setEditIdx(newIdx);
   };
 
   const remove = (idx: number) => {

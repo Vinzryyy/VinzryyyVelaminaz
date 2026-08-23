@@ -39,13 +39,15 @@ export function Lightbox({
 
   const prev = useCallback(() => {
     setLoaded(false);
+    reset();
     setIdx((i) => (i - 1 + photos.length) % photos.length);
-  }, [photos.length]);
+  }, [photos.length, reset]);
 
   const next = useCallback(() => {
     setLoaded(false);
+    reset();
     setIdx((i) => (i + 1) % photos.length);
-  }, [photos.length]);
+  }, [photos.length, reset]);
 
   /* ── URL sync ───────────────────────────────────────────────── */
 

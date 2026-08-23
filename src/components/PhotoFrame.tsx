@@ -25,7 +25,7 @@ export function PhotoFrame({
   const frameRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!hasSrc || inView) return;
+    if (!hasSrc) return;
     const el = frameRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -39,7 +39,7 @@ export function PhotoFrame({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, [hasSrc, inView]);
+  }, [hasSrc]);
 
   return (
     <button

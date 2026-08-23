@@ -54,11 +54,13 @@ export function getPageContent(): PageContent {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      // Merge with defaults so new fields are always present
+      // Merge with defaults — filter out null/undefined so defaults survive
+      const strip = (obj: Record<string, unknown>) =>
+        Object.fromEntries(Object.entries(obj).filter(([, v]) => v != null));
       return {
-        hero: { ...defaultContent.hero, ...parsed.hero },
-        profile: { ...defaultContent.profile, ...parsed.profile },
-        contact: { ...defaultContent.contact, ...parsed.contact },
+        hero: { ...defaultContent.hero, ...strip(parsed.hero ?? {}) },
+        profile: { ...defaultContent.profile, ...strip(parsed.profile ?? {}) },
+        contact: { ...defaultContent.contact, ...strip(parsed.contact ?? {}) },
       };
     }
   } catch { /* ignore */ }
