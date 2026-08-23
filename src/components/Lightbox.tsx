@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 import type { Photo, Event } from "@/lib/types";
 import { toKanji } from "@/lib/data";
 import { KatanaDivider } from "./KatanaDivider";
+import { useZoomPan, MIN_ZOOM, MAX_ZOOM } from "@/lib/useZoomPan";
 
 /**
  * Fullscreen photo viewer with info panel, EXIF data, filmstrip,
@@ -29,6 +30,9 @@ export function Lightbox({
 
   const photo = photos[idx];
   const hasSrc = !!photo.src;
+
+  const { zoom, offset, dragging, imgRef, isZoomed, didDrag, zoomTo, toggleZoom, reset, handlers } =
+    useZoomPan(idx);
 
   /* ── Navigation ─────────────────────────────────────────────── */
 
@@ -63,13 +67,19 @@ export function Lightbox({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      // Esc backs out of zoom before it closes the whole lightbox
+      if (e.key === "Escape") { if (isZoomed) reset(); else onClose(); }
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
+      if (e.key === "Home") setIdx(0);
+      if (e.key === "End") setIdx(photos.length - 1);
+      if (e.key === "+" || e.key === "=") zoomTo(zoom + 0.5);
+      if (e.key === "-" || e.key === "_") zoomTo(zoom - 0.5);
+      if (e.key === "0") reset();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, prev, next]);
+  }, [onClose, prev, next, isZoomed, reset, zoom, zoomTo, photos.length]);
 
   /* ── Focus trap ──────────────────────────────────────────────── */
 
@@ -141,19 +151,76 @@ export function Lightbox({
       ref={containerRef}
       tabIndex={-1}
       className="fixed inset-0 z-[100] flex flex-col bg-sumi/98 outline-none backdrop-blur-sm"
-      onClick={onClose}
-      onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+      onClick={() => { if (!didDrag()) onClose(); }}
+      onTouchStart={(e) => {
+        // While zoomed the same gesture means "pan", so don't arm a swipe
+        touchStartX.current = isZoomed || e.touches.length > 1 ? null : e.touches[0].clientX;
+      }}
       onTouchEnd={(e) => {
-        if (touchStartX.current === null) return;
+        if (touchStartX.current === null || isZoomed) { touchStartX.current = null; return; }
         const dx = e.changedTouches[0].clientX - touchStartX.current;
         if (Math.abs(dx) > 50) { if (dx < 0) next(); else prev(); }
         touchStartX.current = null;
       }}
     >
+      {/* ── Progress bar ───────────────────────────────────────── */}
+      <div className="absolute inset-x-0 top-0 z-30 h-0.5 bg-ink/10" aria-hidden="true">
+        <div
+          className="h-full bg-gradient-to-r from-crimson to-gold transition-[width] duration-300 ease-out"
+          style={{ width: `${((idx + 1) / photos.length) * 100}%` }}
+        />
+      </div>
+
       {/* ── Main area: image + info panel ───────────────────────── */}
       <div className="flex flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
         {/* Photo */}
-        <div className="relative flex shrink-0 items-center justify-center p-4 md:flex-1 md:p-10" onClick={onClose}>
+        <div
+          className="relative flex shrink-0 items-center justify-center overflow-hidden p-4 md:flex-1 md:p-10"
+          onClick={() => { if (!didDrag()) onClose(); }}
+        >
+          {/* Frame counter */}
+          <p
+            className="absolute left-4 top-4 z-20 font-mono text-[11px] tracking-[0.2em] text-muted md:left-10 md:top-8"
+            aria-live="polite"
+          >
+            {String(idx + 1).padStart(2, "0")}
+            <span className="text-faint"> / {String(photos.length).padStart(2, "0")}</span>
+          </p>
+
+          {/* Zoom controls */}
+          <div
+            className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1 rounded-full border border-ink/10 bg-sumi/80 px-1 py-1 backdrop-blur-sm md:bottom-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => zoomTo(zoom - 0.5)}
+              disabled={zoom <= MIN_ZOOM}
+              className="flex h-7 w-7 items-center justify-center rounded-full text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink disabled:pointer-events-none disabled:opacity-30"
+              aria-label="Zoom out"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" d="M5 12h14" />
+              </svg>
+            </button>
+            <button
+              onClick={reset}
+              className="min-w-[3.25rem] rounded-full px-2 font-mono text-[10px] text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink"
+              aria-label="Reset zoom"
+            >
+              {Math.round(zoom * 100)}%
+            </button>
+            <button
+              onClick={() => zoomTo(zoom + 0.5)}
+              disabled={zoom >= MAX_ZOOM}
+              className="flex h-7 w-7 items-center justify-center rounded-full text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink disabled:pointer-events-none disabled:opacity-30"
+              aria-label="Zoom in"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" d="M12 5v14M5 12h14" />
+              </svg>
+            </button>
+          </div>
+
           {/* Close */}
           <button
             className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink"
@@ -175,16 +242,31 @@ export function Lightbox({
           {/* Image or placeholder */}
           {hasSrc ? (
             <img
+              ref={imgRef}
               key={photo.src}
               src={photo.src}
               alt={photo.title}
               width={photo.width}
               height={photo.height}
               onLoad={() => setLoaded(true)}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (!didDrag()) toggleZoom({ clientX: e.clientX, clientY: e.clientY });
+              }}
+              onDoubleClick={(e) => e.preventDefault()}
               decoding="async"
               draggable={false}
-              className={`max-h-full max-w-full object-contain shadow-2xl transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
+              {...handlers}
+              style={{
+                transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${zoom})`,
+                transition: dragging
+                  ? "opacity 0.2s ease"
+                  : "transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease",
+                cursor: isZoomed ? (dragging ? "grabbing" : "grab") : "zoom-in",
+                touchAction: "none",
+                willChange: "transform",
+              }}
+              className={`max-h-full max-w-full select-none object-contain shadow-2xl ${loaded ? "opacity-100" : "opacity-0"}`}
             />
           ) : (
             <div
@@ -255,8 +337,13 @@ export function Lightbox({
           )}
 
           <div className="px-5 pb-4">
-            <p className="hidden font-mono text-[9px] text-faint/60 md:block">← → navigate · Esc close</p>
-            <p className="font-mono text-[9px] text-faint/60 md:hidden">Swipe to navigate · Tap outside to close</p>
+            <p className="hidden font-mono text-[9px] leading-5 text-faint/60 md:block">
+              ← → navigate · click or scroll to zoom · drag to pan<br />
+              + − 0 zoom · Home / End jump · Esc close
+            </p>
+            <p className="font-mono text-[9px] leading-5 text-faint/60 md:hidden">
+              Swipe to navigate · tap to zoom · pinch to scale · drag to pan
+            </p>
           </div>
         </aside>
       </div>
