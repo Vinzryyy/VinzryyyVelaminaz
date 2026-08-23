@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getAllEvents } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
+import { getAnalytics } from "@/lib/analytics";
 import type { Event, Photo } from "@/lib/types";
 
 /* ── Auth ────────────────────────────────────────────────────────── */
@@ -289,6 +290,8 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
     return { totalPhotos, groups, featured, noPhotos, noSrc };
   }, [events]);
 
+  const analytics = useMemo(() => getAnalytics(), []);
+
   /* ── Render ────────────────────────────────────────────────────── */
 
   const tabBtn = (t: Tab, label: string) => (
@@ -350,11 +353,12 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
         {/* ── Dashboard ──────────────────────────────────────────── */}
         {tab === "dashboard" && (
           <div className="space-y-8">
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-5">
               <StatCard label="Events" value={events.length} />
               <StatCard label="Total Photos" value={stats.totalPhotos} />
               <StatCard label="Groups" value={stats.groups.length} />
               <StatCard label="Featured" value={stats.featured} />
+              <StatCard label="Page Views" value={analytics.totalViews} />
             </div>
 
             {(stats.noPhotos > 0 || stats.noSrc > 0) && (
@@ -372,6 +376,54 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 )}
               </div>
             )}
+
+            {/* Analytics */}
+            <div className="grid gap-6 md:grid-cols-2">
+              <div>
+                <h3 className="mb-3 font-display text-lg font-bold text-ink">Top Pages</h3>
+                <div className="space-y-1.5">
+                  {analytics.topPages.length === 0 && (
+                    <p className="font-mono text-xs text-muted">No page views yet</p>
+                  )}
+                  {analytics.topPages.map((p) => (
+                    <div key={p.path} className="flex items-center gap-3 rounded-lg bg-card/50 px-3 py-2">
+                      <span className="min-w-0 flex-1 truncate font-mono text-xs text-ink/70">{p.path}</span>
+                      <span className="font-mono text-xs font-semibold text-crimson">{p.views}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h3 className="mb-3 font-display text-lg font-bold text-ink">
+                  Daily Views
+                  <span className="ml-2 font-mono text-sm font-normal text-muted">today: {analytics.todayViews}</span>
+                </h3>
+                <div className="flex h-32 items-end gap-px">
+                  {analytics.dailyViews.length === 0 && (
+                    <p className="font-mono text-xs text-muted">No data yet</p>
+                  )}
+                  {(() => {
+                    const max = Math.max(...analytics.dailyViews.map((d) => d.views), 1);
+                    return analytics.dailyViews.map((d) => (
+                      <div
+                        key={d.date}
+                        className="flex-1 rounded-t bg-crimson/60 transition-all hover:bg-crimson"
+                        style={{ height: `${(d.views / max) * 100}%`, minHeight: "2px" }}
+                        title={`${d.date}: ${d.views} views`}
+                      />
+                    ));
+                  })()}
+                </div>
+                <div className="mt-1 flex justify-between">
+                  {analytics.dailyViews.length > 0 && (
+                    <>
+                      <span className="font-mono text-[9px] text-muted">{analytics.dailyViews[0].date}</span>
+                      <span className="font-mono text-[9px] text-muted">{analytics.dailyViews[analytics.dailyViews.length - 1].date}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
 
             <div>
               <h3 className="mb-3 font-display text-lg font-bold text-ink">Groups</h3>

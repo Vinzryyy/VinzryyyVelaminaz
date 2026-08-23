@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router";
 import { SakuraPetals } from "@/components/SakuraPetals";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { trackPageView } from "@/lib/analytics";
 
 const Home = lazy(() => import("@/pages/Home"));
 const EventPage = lazy(() => import("@/pages/EventPage"));
@@ -27,6 +28,11 @@ export default function App() {
       window.scrollTo(0, 0);
     }
   }, [location.pathname, location.state]);
+
+  // Track page views
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-sumi font-sans text-ink antialiased">

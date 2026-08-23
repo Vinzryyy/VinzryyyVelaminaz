@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npx tsx scripts/generate-rss.ts && tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint ."
   },
