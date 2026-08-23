@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
-import { getAllEvents, ALL_GROUPS } from "@/lib/data";
+import { getAllEvents, ALL_GROUPS, toKanji } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { EventCard } from "@/components/EventCard";
 import { GroupFilter } from "@/components/GroupFilter";
@@ -131,6 +131,13 @@ export default function Home() {
           </ScrollReveal>
         </div>
 
+        {/* Vertical kanji — right side */}
+        <div className="pointer-events-none absolute right-4 top-1/2 z-10 -translate-y-1/2 sm:right-6 md:right-10">
+          <p className="tate font-jp text-sm tracking-[0.5em] text-ink/20 md:text-base" lang="ja" aria-hidden="true">
+            写真記録
+          </p>
+        </div>
+
         {/* Spacer */}
         <div className="flex-1" />
 
@@ -239,13 +246,19 @@ export default function Home() {
       <section id="events" className="px-4 pb-16 pt-8 sm:px-6 sm:pb-24 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
-            <div className="mb-6 flex items-center gap-4">
-              <span className="font-jp text-sm text-gold/40" lang="ja" aria-hidden="true">巻</span>
-              <h2 className="font-display text-2xl font-bold text-ink">Events</h2>
-              <div className="h-px flex-1 bg-hairline" />
-              <span className="font-mono text-[11px] text-faint" aria-live="polite">
-                {visibleEvents.length} events &middot; {totalFrames} frames
-              </span>
+            <div className="mb-6">
+              <div className="flex items-baseline gap-3">
+                <span className="font-jp text-lg text-gold/50" lang="ja" aria-hidden="true">第巻</span>
+                <span className="font-display text-sm tracking-widest text-ink/40">──</span>
+                <h2 className="font-display text-2xl font-bold text-ink">Events</h2>
+              </div>
+              <p className="mt-2 font-jp text-[13px] tracking-wider text-muted" lang="ja" aria-live="polite">
+                <span className="text-gold/60">{toKanji(visibleEvents.length)}</span>
+                <span className="text-ink/40"> events · </span>
+                <span className="text-gold/60">{toKanji(totalFrames)}</span>
+                <span className="text-ink/40"> frames</span>
+              </p>
+              <div className="mt-3 h-px bg-gradient-to-r from-hairline to-transparent" />
             </div>
           </ScrollReveal>
 
