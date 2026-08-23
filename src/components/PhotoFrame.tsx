@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { toKanji, placeholder } from "@/lib/data";
 import type { Photo } from "@/lib/types";
 
@@ -18,6 +19,7 @@ export function PhotoFrame({
   onClick: () => void;
 }) {
   const hasSrc = !!photo.src;
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <button
@@ -26,17 +28,23 @@ export function PhotoFrame({
       aria-label={`View ${photo.title}`}
     >
       {hasSrc ? (
-        <img
-          src={photo.src}
-          alt={photo.title}
-          width={photo.width}
-          height={photo.height}
-          loading="lazy"
-          decoding="async"
-          draggable={false}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-300"
-          sizes="(min-width: 640px) 33vw, 100vw"
-        />
+        <>
+          {/* Shimmer placeholder — removed once the photo decodes */}
+          {!loaded && <div className="skeleton absolute inset-0 overflow-hidden bg-card" aria-hidden="true" />}
+          <img
+            src={photo.src}
+            alt={photo.title}
+            width={photo.width}
+            height={photo.height}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(true)}
+            className={`img-blur-up absolute inset-0 h-full w-full object-cover transition-transform duration-300 ${loaded ? "img-loaded" : ""}`}
+            sizes="(min-width: 640px) 33vw, 100vw"
+          />
+        </>
       ) : (
         <div
           className="absolute inset-0 transition-transform duration-300"

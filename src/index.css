@@ -59,6 +59,48 @@ html, body, #root {
   height: 100%;
 }
 
+/* ── Text selection — sakura tint instead of browser blue ─────── */
+
+::selection {
+  background: rgba(196, 41, 59, 0.35);
+  color: var(--color-ink);
+}
+
+/* ── Scrollbar — dark, matches the sumi ground ────────────────── */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-faint) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-sumi);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-faint);
+  border: 2px solid var(--color-sumi);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/* ── Keyboard focus — visible everywhere, never on mouse click ── */
+
+:focus-visible {
+  outline: 2px solid var(--color-sakura);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+/* The lightbox shell is programmatically focused; it must stay silent */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
 /* ── Hero crossfade ───────────────────────────────────────────── */
 
 @keyframes hero-fade {
@@ -198,26 +240,91 @@ html, body, #root {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Smooth image loading ─────────────────────────────────────── */
+/* ── Smooth image loading — blur-up until decoded ─────────────── */
 
 img {
   transition: opacity 0.3s ease;
 }
 
+/* Grid photos fade + unblur once the browser reports them loaded.
+   `.img-loaded` is set by PhotoFrame's onLoad. */
+.img-blur-up {
+  opacity: 0;
+  filter: blur(12px);
+  transform: scale(1.04);
+  transition: opacity 0.5s ease, filter 0.6s ease, transform 0.6s ease;
+}
+.img-blur-up.img-loaded {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* Skeleton shimmer behind a photo that hasn't loaded yet */
+@keyframes skeleton-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%);  }
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(237, 233, 243, 0.045), transparent);
+  animation: skeleton-sweep 1.6s ease-in-out infinite;
+}
+
 /* ── Reduced motion ───────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .sakura-petal {
     animation: none !important;
     display: none;
   }
+
   .reveal,
   .reveal-stagger > .reveal-child {
     opacity: 1;
     transform: none;
     transition: none;
   }
+
   .page-enter {
     animation: none;
+  }
+
+  /* Continuous / decorative motion — previously still running */
+  .hero-bg,
+  .scroll-hint,
+  .marquee-track,
+  .skeleton::after {
+    animation: none !important;
+  }
+
+  /* Marquee still needs to show its text, just parked */
+  .marquee-track {
+    transform: none;
+  }
+
+  /* Images appear immediately rather than blurring in */
+  .img-blur-up {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  /* Hover flourishes reduced to a plain state change */
+  .photo-frame:hover img,
+  .photo-stack:hover .photo-back,
+  .photo-stack:hover .photo-front {
+    transform: none;
+  }
+
+  .katana-line {
+    transition: none;
   }
 }

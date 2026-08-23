@@ -93,6 +93,7 @@ export default function Home() {
           width={1920}
           height={1080}
           decoding="async"
+          fetchPriority="high"
           className="hero-bg pointer-events-none absolute inset-0 h-full w-full object-cover"
         />
         {next && (
