@@ -296,7 +296,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
     return { totalPhotos, groups, featured, noPhotos, noSrc };
   }, [events]);
 
-  const analytics = useMemo(() => getAnalytics(), []);
+  const analytics = useMemo(() => getAnalytics(), [tab]); // refresh when switching to dashboard
 
   /* ── Render ────────────────────────────────────────────────────── */
 
@@ -747,8 +747,10 @@ function EventEditor({
   };
 
   // Editable text helper — contentEditable span that syncs back
+  // Key includes slug to force React to remount when switching events
   const editable = (key: keyof Event, className: string) => (
     <span
+      key={`${form.slug}-${key}`}
       contentEditable
       suppressContentEditableWarning
       className={`${className} outline-none ring-crimson/30 focus:ring-1 focus:ring-offset-1 focus:ring-offset-sumi`}
@@ -1014,6 +1016,7 @@ function PhotoManager({
 
   // Track which slug we initialized from to avoid resetting on parent re-renders
   const slugRef = useRef(event.slug);
+  const isSelfUpdate = useRef(false);
   useEffect(() => {
     if (event.slug !== slugRef.current) {
       slugRef.current = event.slug;
@@ -1023,23 +1026,15 @@ function PhotoManager({
     }
   }, [event.slug, event.photos]);
 
-  // Commit helper — updates local state AND saves to parent
-  const pendingCommit = useRef<Photo[] | null>(null);
+  // Commit helper — updates local state AND notifies parent
   const commit = useCallback((next: Photo[] | ((prev: Photo[]) => Photo[])) => {
     setPhotos((prev) => {
       const result = typeof next === "function" ? next(prev) : next;
-      pendingCommit.current = result;
+      isSelfUpdate.current = true;
+      onChange(result);
       return result;
     });
-  }, []);
-
-  // Flush pending commit after render
-  useEffect(() => {
-    if (pendingCommit.current) {
-      onChange(pendingCommit.current);
-      pendingCommit.current = null;
-    }
-  });
+  }, [onChange]);
 
   const save = () => onChange(photos);
 
