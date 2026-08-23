@@ -222,6 +222,23 @@ html, body, #root {
   transform: scaleX(1);
 }
 
+/* ── Filmstrip scrollbar ──────────────────────────────────────── */
+
+.filmstrip {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-faint) transparent;
+}
+.filmstrip::-webkit-scrollbar {
+  height: 4px;
+}
+.filmstrip::-webkit-scrollbar-track {
+  background: transparent;
+}
+.filmstrip::-webkit-scrollbar-thumb {
+  background: var(--color-faint);
+  border-radius: 4px;
+}
+
 /* ── Photo hover (desktop only) ───────────────────────────────── */
 
 @media (hover: hover) {
