@@ -3,7 +3,8 @@ import { getAllEvents } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { getAnalytics } from "@/lib/analytics";
 import { getPageContent, savePageContent, resetPageContent, defaultContent, type PageContent } from "@/lib/pageContent";
-import { convertToWebP, formatSize } from "@/lib/imageUtils";
+import { formatSize } from "@/lib/imageUtils";
+import { uploadToCloudinary, uploadBatch } from "@/lib/cloudinary";
 import type { Event, Photo } from "@/lib/types";
 
 /* ── Auth ────────────────────────────────────────────────────────── */
@@ -665,34 +666,41 @@ function EventEditor({
 
   const [converting, setConverting] = useState<string | null>(null);
 
-  // Drop handler for cover image — converts to WebP
+  // Drop handler for cover image — uploads to Cloudinary
   const coverDrop = useDrop(async (files) => {
-    setConverting("Converting cover to WebP...");
-    const { dataUrl, originalSize, newSize } = await convertToWebP(files[0]);
-    set("cover", dataUrl);
-    setConverting(`Cover: ${formatSize(originalSize)} → ${formatSize(newSize)} WebP`);
+    try {
+      setConverting("Uploading cover to Cloudinary...");
+      const result = await uploadToCloudinary(files[0], `gallery/${form.slug}`);
+      set("cover", result.secureUrl);
+      setConverting(`Cover uploaded: ${formatSize(result.bytes)}`);
+    } catch (err) {
+      setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
+    }
     setTimeout(() => setConverting(null), 3000);
   });
 
-  // Drop handler for photo grid — converts all to WebP
+  // Drop handler for photo grid — uploads all to Cloudinary
   const gridDrop = useDrop(async (files) => {
-    setConverting(`Converting ${files.length} image${files.length > 1 ? "s" : ""} to WebP...`);
-    const newPhotos = await Promise.all(
-      files.map(async (f) => {
-        const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(f);
-        return {
-          title: f.name.replace(/\.[^.]+$/, ""),
-          story: "",
-          src: dataUrl,
-          width,
-          height,
-        };
-      }),
-    );
-    onPhotosChange([...event.photos, ...newPhotos]);
-    const totalOrig = files.reduce((n, f) => n + f.size, 0);
-    const totalNew = newPhotos.reduce((n, p) => n + (p.src?.length ?? 0) * 0.75, 0);
-    setConverting(`Added ${files.length}: ${formatSize(totalOrig)} → ${formatSize(totalNew)} WebP`);
+    try {
+      setConverting(`Uploading ${files.length} image${files.length > 1 ? "s" : ""} to Cloudinary...`);
+      const results = await uploadBatch(
+        files,
+        `gallery/${form.slug}`,
+        (done, total) => setConverting(`Uploading ${done}/${total}...`),
+      );
+      const newPhotos = results.map((r, i) => ({
+        title: files[i].name.replace(/\.[^.]+$/, ""),
+        story: "",
+        src: r.secureUrl,
+        width: r.width,
+        height: r.height,
+      }));
+      onPhotosChange([...event.photos, ...newPhotos]);
+      const totalBytes = results.reduce((n, r) => n + r.bytes, 0);
+      setConverting(`Added ${results.length} photos (${formatSize(totalBytes)})`);
+    } catch (err) {
+      setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
+    }
     setTimeout(() => setConverting(null), 3000);
   });
 
@@ -799,7 +807,7 @@ function EventEditor({
             {converting ? (
               <span className="text-crimson">{converting}</span>
             ) : (
-              "Click text to edit · drag images (auto WebP)"
+              "Click text to edit · drag images to upload to Cloudinary"
             )}
           </span>
         </div>
