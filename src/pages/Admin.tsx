@@ -3,6 +3,7 @@ import { getAllEvents } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { getAnalytics } from "@/lib/analytics";
 import { getPageContent, savePageContent, resetPageContent, defaultContent, type PageContent } from "@/lib/pageContent";
+import { convertToWebP, formatSize } from "@/lib/imageUtils";
 import type { Event, Photo } from "@/lib/types";
 
 /* ── Auth ────────────────────────────────────────────────────────── */
@@ -598,13 +599,7 @@ function StatCard({ label, value }: { label: string; value: number }) {
 
 /* ── Event Editor ────────────────────────────────────────────────── */
 
-function fileToDataUrl(file: File): Promise<string> {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.readAsDataURL(file);
-  });
-}
+// Replaced by convertToWebP from imageUtils
 
 function useDrop(onDrop: (files: File[]) => void) {
   const [over, setOver] = useState(false);
@@ -668,22 +663,37 @@ function EventEditor({
 
   const coverSrc = form.cover ?? event.photos[0]?.src;
 
-  // Drop handler for cover image
+  const [converting, setConverting] = useState<string | null>(null);
+
+  // Drop handler for cover image — converts to WebP
   const coverDrop = useDrop(async (files) => {
-    const url = await fileToDataUrl(files[0]);
-    set("cover", url);
+    setConverting("Converting cover to WebP...");
+    const { dataUrl, originalSize, newSize } = await convertToWebP(files[0]);
+    set("cover", dataUrl);
+    setConverting(`Cover: ${formatSize(originalSize)} → ${formatSize(newSize)} WebP`);
+    setTimeout(() => setConverting(null), 3000);
   });
 
-  // Drop handler for photo grid (external files)
+  // Drop handler for photo grid — converts all to WebP
   const gridDrop = useDrop(async (files) => {
+    setConverting(`Converting ${files.length} image${files.length > 1 ? "s" : ""} to WebP...`);
     const newPhotos = await Promise.all(
-      files.map(async (f) => ({
-        title: f.name.replace(/\.[^.]+$/, ""),
-        story: "",
-        src: await fileToDataUrl(f),
-      })),
+      files.map(async (f) => {
+        const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(f);
+        return {
+          title: f.name.replace(/\.[^.]+$/, ""),
+          story: "",
+          src: dataUrl,
+          width,
+          height,
+        };
+      }),
     );
     onPhotosChange([...event.photos, ...newPhotos]);
+    const totalOrig = files.reduce((n, f) => n + f.size, 0);
+    const totalNew = newPhotos.reduce((n, p) => n + (p.src?.length ?? 0) * 0.75, 0);
+    setConverting(`Added ${files.length}: ${formatSize(totalOrig)} → ${formatSize(totalNew)} WebP`);
+    setTimeout(() => setConverting(null), 3000);
   });
 
   // Drag-to-reorder state
@@ -785,7 +795,13 @@ function EventEditor({
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-xl font-bold text-ink">Event Page Preview</h2>
-          <span className="font-mono text-[9px] text-muted">Click text to edit &middot; drag images to upload</span>
+          <span className="font-mono text-[9px] text-muted">
+            {converting ? (
+              <span className="text-crimson">{converting}</span>
+            ) : (
+              "Click text to edit · drag images (auto WebP)"
+            )}
+          </span>
         </div>
 
         <div className="overflow-hidden rounded-lg border border-hairline">

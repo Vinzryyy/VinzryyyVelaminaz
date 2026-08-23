@@ -8,6 +8,8 @@
     "build": "npx tsx scripts/generate-rss.ts && tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
+    "convert:webp": "npx tsx scripts/convert-to-webp.ts",
+    "convert:webp:replace": "npx tsx scripts/convert-to-webp.ts --replace",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -34,6 +36,7 @@
     "eslint-plugin-react-refresh": "^0.5.0",
     "globals": "^17.0.0",
     "jsdom": "^29.1.1",
+    "sharp": "^0.35.3",
     "tailwindcss": "^4.0.0",
     "typescript": "~5.8.0",
     "typescript-eslint": "^8.0.0",
