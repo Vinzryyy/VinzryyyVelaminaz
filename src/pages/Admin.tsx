@@ -1349,15 +1349,17 @@ function PhotoManager({
       pendingPhotos.current = result;
       return result;
     });
+    setFlushTick((t) => t + 1);
   }, []);
 
-  // Flush to parent after render — safe, outside of setState
+  // Flush to parent after commit — runs once per commit cycle
+  const [flushTick, setFlushTick] = useState(0);
   useEffect(() => {
     if (pendingPhotos.current !== null) {
       onChangeRef.current(pendingPhotos.current);
       pendingPhotos.current = null;
     }
-  });
+  }, [flushTick]);
 
   const save = () => onChange(photos);
 

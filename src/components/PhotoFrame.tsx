@@ -22,6 +22,14 @@ export function PhotoFrame({
   const [loaded, setLoaded] = useState(false);
   const [inView, setInView] = useState(false);
   const frameRef = useRef<HTMLButtonElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Handle cached images that load before onLoad attaches
+  useEffect(() => {
+    if (inView && imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
+      setLoaded(true);
+    }
+  }, [inView]);
 
   useEffect(() => {
     if (!hasSrc) return;
@@ -53,9 +61,7 @@ export function PhotoFrame({
           {!loaded && <div className="skeleton absolute inset-0 overflow-hidden bg-card" aria-hidden="true" />}
           {inView && (
             <img
-              ref={(el) => {
-                if (el?.complete && el.naturalWidth > 0 && !loaded) setLoaded(true);
-              }}
+              ref={imgRef}
               src={photo.src}
               alt={photo.title}
               width={photo.width}
