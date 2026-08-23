@@ -638,7 +638,21 @@ function EventEditor({
     setForm((f) => ({ ...f, [key]: value }));
   };
 
+  // Auto-save text fields when form changes (debounced)
+  const formRef = useRef(form);
+  formRef.current = form;
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => {
+    saveTimer.current = setTimeout(() => {
+      const { photos, ...rest } = formRef.current;
+      void photos;
+      onChange(rest);
+    }, 500);
+    return () => clearTimeout(saveTimer.current);
+  }, [form.title, form.slug, form.group, form.date, form.location, form.gear, form.tateText, form.cover, form.subtitle, form.description, form.featured, onChange]);
+
   const save = () => {
+    clearTimeout(saveTimer.current);
     const { photos, ...rest } = form;
     void photos;
     onChange(rest);
@@ -1014,9 +1028,8 @@ function PhotoManager({
   const [groupName, setGroupName] = useState("");
   const [groupDisplay, setGroupDisplay] = useState<Photo["sequenceDisplay"]>("filmstrip");
 
-  // Track which slug we initialized from to avoid resetting on parent re-renders
+  // Reset when switching events
   const slugRef = useRef(event.slug);
-  const isSelfUpdate = useRef(false);
   useEffect(() => {
     if (event.slug !== slugRef.current) {
       slugRef.current = event.slug;
@@ -1024,17 +1037,28 @@ function PhotoManager({
       setEditIdx(null);
       setSelected(new Set());
     }
-  }, [event.slug, event.photos]);
+  }, [event.slug]); // eslint-disable-line -- only reset on slug change
 
-  // Commit helper — updates local state AND notifies parent
+  // Commit helper — updates local state, then notifies parent after render
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+  const pendingPhotos = useRef<Photo[] | null>(null);
+
   const commit = useCallback((next: Photo[] | ((prev: Photo[]) => Photo[])) => {
     setPhotos((prev) => {
       const result = typeof next === "function" ? next(prev) : next;
-      isSelfUpdate.current = true;
-      onChange(result);
+      pendingPhotos.current = result;
       return result;
     });
-  }, [onChange]);
+  }, []);
+
+  // Flush to parent after render — safe, outside of setState
+  useEffect(() => {
+    if (pendingPhotos.current !== null) {
+      onChangeRef.current(pendingPhotos.current);
+      pendingPhotos.current = null;
+    }
+  });
 
   const save = () => onChange(photos);
 
