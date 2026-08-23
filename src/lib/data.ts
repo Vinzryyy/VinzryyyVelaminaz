@@ -1,26 +1,39 @@
-import { events } from "@/content/events";
+import { events as sourceEvents } from "@/content/events";
 import type { Event } from "@/lib/types";
+
+const STORAGE_KEY = "vinzryyy-admin-events";
+
+/** Reads admin-edited events from localStorage, falls back to source file. */
+function liveEvents(): Event[] {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return sourceEvents;
+}
 
 /** Returns all events in display order. */
 export function getAllEvents(): Event[] {
-  return events;
+  return liveEvents();
 }
 
 /** Returns a single event by slug, or undefined if not found. */
 export function getEvent(slug: string): Event | undefined {
-  return events.find((e) => e.slug === slug);
+  return liveEvents().find((e) => e.slug === slug);
 }
 
 /** Returns the next event after the given slug (wraps around). */
 export function getNextEvent(slug: string): Event {
-  const idx = events.findIndex((e) => e.slug === slug);
-  return events[(idx + 1) % events.length];
+  const all = liveEvents();
+  const idx = all.findIndex((e) => e.slug === slug);
+  return all[(idx + 1) % all.length];
 }
 
 /** Returns the previous event before the given slug (wraps around). */
 export function getPrevEvent(slug: string): Event {
-  const idx = events.findIndex((e) => e.slug === slug);
-  return events[(idx - 1 + events.length) % events.length];
+  const all = liveEvents();
+  const idx = all.findIndex((e) => e.slug === slug);
+  return all[(idx - 1 + all.length) % all.length];
 }
 
 /**
