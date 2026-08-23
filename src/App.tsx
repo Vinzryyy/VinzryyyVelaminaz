@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 
 const Home = lazy(() => import("@/pages/Home"));
 const EventPage = lazy(() => import("@/pages/EventPage"));
+const Admin = lazy(() => import("@/pages/Admin"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function PageLoader() {
@@ -44,6 +45,7 @@ export default function App() {
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/events/:slug" element={<EventPage />} />
+              <Route path="/admin" element={<Admin />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
