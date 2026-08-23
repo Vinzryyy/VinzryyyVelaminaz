@@ -31,7 +31,8 @@ export function convertToWebP(file: File): Promise<{ dataUrl: string; width: num
       canvas.width = width;
       canvas.height = height;
 
-      const ctx = canvas.getContext("2d")!;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) { reject(new Error("Canvas 2D context not available")); return; }
       ctx.drawImage(img, 0, 0, width, height);
 
       const dataUrl = canvas.toDataURL("image/webp", WEBP_QUALITY);

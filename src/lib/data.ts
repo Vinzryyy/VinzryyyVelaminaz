@@ -25,14 +25,14 @@ export function getEvent(slug: string): Event | undefined {
 /** Returns the next event after the given slug (wraps around). */
 export function getNextEvent(slug: string): Event {
   const all = liveEvents();
-  const idx = all.findIndex((e) => e.slug === slug);
+  const idx = Math.max(0, all.findIndex((e) => e.slug === slug));
   return all[(idx + 1) % all.length];
 }
 
 /** Returns the previous event before the given slug (wraps around). */
 export function getPrevEvent(slug: string): Event {
   const all = liveEvents();
-  const idx = all.findIndex((e) => e.slug === slug);
+  const idx = Math.max(0, all.findIndex((e) => e.slug === slug));
   return all[(idx - 1 + all.length) % all.length];
 }
 
@@ -52,7 +52,7 @@ export function toKanji(n: number): string {
   const digits = ["〇", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
   return String(n)
     .split("")
-    .map((d) => digits[parseInt(d)])
+    .map((d) => digits[parseInt(d, 10)])
     .join("");
 }
 

@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { toKanji, placeholder } from "@/lib/data";
-import { ResponsiveImg } from "./ResponsiveImg";
 import type { Photo } from "@/lib/types";
 
 /**
@@ -53,8 +52,11 @@ export function PhotoFrame({
           {/* Shimmer placeholder — removed once the photo decodes */}
           {!loaded && <div className="skeleton absolute inset-0 overflow-hidden bg-card" aria-hidden="true" />}
           {inView && (
-            <ResponsiveImg
-              src={photo.src!}
+            <img
+              ref={(el) => {
+                if (el?.complete && el.naturalWidth > 0 && !loaded) setLoaded(true);
+              }}
+              src={photo.src}
               alt={photo.title}
               width={photo.width}
               height={photo.height}

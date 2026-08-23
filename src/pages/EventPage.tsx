@@ -5,7 +5,6 @@ import { useDocumentHead } from "@/lib/useDocumentHead";
 import { FactsPanel } from "@/components/FactsPanel";
 import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { ResponsiveImg } from "@/components/ResponsiveImg";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import type { Event, Photo, EventLayout } from "@/lib/types";
 import { MagazineLayout, FilmstripLayout, MasonryLayout, SpotlightLayout, FullbleedLayout, TimelineLayout, PolaroidLayout, HoneycombLayout, DiagonalLayout, SplitScrollLayout, CarouselLayout, StackedLayout, MosaicLayout, InfiniteLayout, type LayoutProps } from "@/components/EventLayouts";
@@ -50,7 +49,7 @@ export default function EventPage() {
       {/* ── Cover hero ─────────────────────────────────────────── */}
       {coverSrc && (
         <section className="relative flex h-[40vh] min-h-[260px] items-end overflow-hidden sm:h-[50vh] sm:min-h-[320px]">
-          <ResponsiveImg
+          <img
             src={coverSrc}
             alt={event.title}
             width={1920}
