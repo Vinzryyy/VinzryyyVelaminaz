@@ -1098,6 +1098,35 @@ function EventEditor({
                 <option value="infinite">Infinite Scroll — lazy-load parallax grid</option>
               </select>
             </label>
+
+            <div className="flex gap-6">
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={form.disableGrouping ?? false}
+                  onChange={(e) => set("disableGrouping", e.target.checked)}
+                  className="h-4 w-4 rounded border-hairline accent-crimson"
+                />
+                <div>
+                  <span className="font-mono text-xs text-muted">Disable all grouping</span>
+                  <p className="font-mono text-[9px] text-faint">Show every photo in the layout, ignore sequences</p>
+                </div>
+              </label>
+
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={form.groupedInLayout ?? false}
+                  onChange={(e) => set("groupedInLayout", e.target.checked)}
+                  disabled={form.disableGrouping}
+                  className="h-4 w-4 rounded border-hairline accent-crimson disabled:opacity-30"
+                />
+                <div>
+                  <span className={`font-mono text-xs ${form.disableGrouping ? "text-faint" : "text-muted"}`}>Show grouped photos in layout too</span>
+                  <p className="font-mono text-[9px] text-faint">Duplicate sequence photos into the main grid</p>
+                </div>
+              </label>
+            </div>
           </div>
         </div>
       </div>

@@ -29,6 +29,8 @@ export interface Event {
   description: string;  // full story on the event page
   featured: boolean;    // full-width card on home
   cover?: string;       // card image; falls back to first photo
-  layout?: EventLayout; // event page layout style (default: classic)
+  layout?: EventLayout;              // event page layout style (default: classic)
+  groupedInLayout?: boolean;         // also show grouped photos in the main layout grid
+  disableGrouping?: boolean;         // ignore all sequences, show everything in layout
   photos: Photo[];
 }

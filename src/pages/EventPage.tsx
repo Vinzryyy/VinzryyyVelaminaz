@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router";
 import { getEvent, getNextEvent, getPrevEvent } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
@@ -7,7 +7,8 @@ import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ResponsiveImg } from "@/components/ResponsiveImg";
 import { PhotoGrid } from "@/components/PhotoGrid";
-import { MagazineLayout, FilmstripLayout, MasonryLayout, SpotlightLayout, FullbleedLayout, TimelineLayout, PolaroidLayout, HoneycombLayout, DiagonalLayout, SplitScrollLayout, CarouselLayout, StackedLayout, MosaicLayout, InfiniteLayout } from "@/components/EventLayouts";
+import type { Event, Photo, EventLayout } from "@/lib/types";
+import { MagazineLayout, FilmstripLayout, MasonryLayout, SpotlightLayout, FullbleedLayout, TimelineLayout, PolaroidLayout, HoneycombLayout, DiagonalLayout, SplitScrollLayout, CarouselLayout, StackedLayout, MosaicLayout, InfiniteLayout, type LayoutProps } from "@/components/EventLayouts";
 import NotFound from "@/pages/NotFound";
 
 const Lightbox = lazy(() =>
@@ -148,51 +149,7 @@ export default function EventPage() {
       {/* ── Photo grid ─────────────────────────────────────────── */}
       <section className="px-4 pb-14 sm:px-6 sm:pb-20 md:px-10">
         <div className="mx-auto max-w-[1400px]">
-          {(!event.layout || event.layout === "classic") && (
-            <PhotoGrid photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "magazine" && (
-            <MagazineLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "filmstrip" && (
-            <FilmstripLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "masonry" && (
-            <MasonryLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "spotlight" && (
-            <SpotlightLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "fullbleed" && (
-            <FullbleedLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "timeline" && (
-            <TimelineLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "polaroid" && (
-            <PolaroidLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "honeycomb" && (
-            <HoneycombLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "diagonal" && (
-            <DiagonalLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "splitscroll" && (
-            <SplitScrollLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "carousel" && (
-            <CarouselLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "stacked" && (
-            <StackedLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "mosaic" && (
-            <MosaicLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
-          {event.layout === "infinite" && (
-            <InfiniteLayout photos={event.photos} onOpen={setLightboxIdx} />
-          )}
+          <EventPhotos event={event} onOpen={setLightboxIdx} />
         </div>
       </section>
 
@@ -269,6 +226,134 @@ export default function EventPage() {
             onClose={() => setLightboxIdx(null)}
           />
         </Suspense>
+      )}
+    </div>
+  );
+}
+
+/* ── Layout renderer map ─────────────────────────────────────────── */
+
+const LAYOUT_MAP: Record<string, React.ComponentType<LayoutProps>> = {
+  magazine: MagazineLayout,
+  filmstrip: FilmstripLayout,
+  masonry: MasonryLayout,
+  spotlight: SpotlightLayout,
+  fullbleed: FullbleedLayout,
+  timeline: TimelineLayout,
+  polaroid: PolaroidLayout,
+  honeycomb: HoneycombLayout,
+  diagonal: DiagonalLayout,
+  splitscroll: SplitScrollLayout,
+  carousel: CarouselLayout,
+  stacked: StackedLayout,
+  mosaic: MosaicLayout,
+  infinite: InfiniteLayout,
+};
+
+/* ── Sequence detection (mirrors PhotoGrid logic) ────────────────── */
+
+const ROMAN = /\s+(?:[IVXLCDM]+|\d+)$/;
+function seqKey(p: Photo): string | null {
+  if (p.sequence) return p.sequence;
+  const m = p.title.match(ROMAN);
+  return m ? p.title.slice(0, m.index!).trim() : null;
+}
+
+interface SeqGroup { name: string; display: string; indices: number[] }
+
+function findSequences(photos: Photo[]): SeqGroup[] {
+  const groups: SeqGroup[] = [];
+  let i = 0;
+  while (i < photos.length) {
+    const key = seqKey(photos[i]);
+    if (key) {
+      const indices: number[] = [];
+      const display = photos[i].sequenceDisplay ?? "filmstrip";
+      while (i < photos.length && seqKey(photos[i]) === key) {
+        indices.push(i);
+        i++;
+      }
+      if (indices.length >= 2) {
+        groups.push({ name: key, display, indices });
+      }
+    } else {
+      i++;
+    }
+  }
+  return groups;
+}
+
+/* ── Smart photo renderer ────────────────────────────────────────── */
+
+function EventPhotos({ event, onOpen }: { event: Event; onOpen: (idx: number) => void }) {
+  const layout = event.layout ?? "classic";
+  const disableGrouping = event.disableGrouping ?? false;
+  const groupedInLayout = event.groupedInLayout ?? false;
+
+  const { sequences, ungroupedPhotos, ungroupedMap } = useMemo(() => {
+    if (disableGrouping) {
+      return {
+        sequences: [] as SeqGroup[],
+        ungroupedPhotos: event.photos,
+        ungroupedMap: event.photos.map((_, i) => i),
+      };
+    }
+
+    const seqs = findSequences(event.photos);
+    const groupedIndices = new Set(seqs.flatMap((s) => s.indices));
+
+    // Ungrouped: photos not in any sequence
+    const uPhotos: Photo[] = [];
+    const uMap: number[] = [];
+    event.photos.forEach((p, i) => {
+      if (!groupedIndices.has(i) || groupedInLayout) {
+        uPhotos.push(p);
+        uMap.push(i); // map local index → global index for lightbox
+      }
+    });
+
+    return { sequences: seqs, ungroupedPhotos: uPhotos, ungroupedMap: uMap };
+  }, [event.photos, disableGrouping, groupedInLayout]);
+
+  // Render sequences first, then ungrouped in selected layout
+  const LayoutComponent = layout === "classic" ? null : LAYOUT_MAP[layout];
+
+  return (
+    <div className="space-y-8">
+      {/* Sequences */}
+      {sequences.map((seq) => (
+        <PhotoGrid
+          key={seq.name}
+          photos={seq.indices.map((i) => event.photos[i])}
+          onOpen={(localIdx) => onOpen(seq.indices[localIdx])}
+        />
+      ))}
+
+      {/* Ungrouped photos in selected layout */}
+      {ungroupedPhotos.length > 0 && (
+        <>
+          {sequences.length > 0 && ungroupedPhotos.length > 0 && (
+            <div className="flex items-center gap-3 px-1">
+              <div className="h-px flex-1 bg-hairline" />
+              <span className="font-mono text-[10px] text-faint">
+                {ungroupedPhotos.length} ungrouped
+              </span>
+              <div className="h-px flex-1 bg-hairline" />
+            </div>
+          )}
+
+          {LayoutComponent ? (
+            <LayoutComponent
+              photos={ungroupedPhotos}
+              onOpen={(localIdx) => onOpen(ungroupedMap[localIdx])}
+            />
+          ) : (
+            <PhotoGrid
+              photos={ungroupedPhotos}
+              onOpen={(localIdx) => onOpen(ungroupedMap[localIdx])}
+            />
+          )}
+        </>
       )}
     </div>
   );
