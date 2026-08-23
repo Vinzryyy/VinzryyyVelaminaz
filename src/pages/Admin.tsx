@@ -962,6 +962,13 @@ function EventEditor({
 
 /* ── Photo Manager ───────────────────────────────────────────────── */
 
+const SEQ_COLORS: Record<string, string> = {};
+const PALETTE = ["bg-crimson/20 text-crimson", "bg-sakura/20 text-sakura", "bg-gold/20 text-gold", "bg-sky-500/20 text-sky-400", "bg-emerald-500/20 text-emerald-400", "bg-violet-500/20 text-violet-400"];
+function seqColor(name: string): string {
+  if (!SEQ_COLORS[name]) SEQ_COLORS[name] = PALETTE[Object.keys(SEQ_COLORS).length % PALETTE.length];
+  return SEQ_COLORS[name];
+}
+
 function PhotoManager({
   event,
   onChange,
@@ -971,8 +978,11 @@ function PhotoManager({
 }) {
   const [photos, setPhotos] = useState<Photo[]>(deepClone(event.photos));
   const [editIdx, setEditIdx] = useState<number | null>(null);
+  const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [groupName, setGroupName] = useState("");
+  const [groupDisplay, setGroupDisplay] = useState<Photo["sequenceDisplay"]>("filmstrip");
 
-  useEffect(() => { setPhotos(deepClone(event.photos)); setEditIdx(null); }, [event.slug]); // eslint-disable-line
+  useEffect(() => { setPhotos(deepClone(event.photos)); setEditIdx(null); setSelected(new Set()); }, [event.slug]); // eslint-disable-line
 
   const save = () => onChange(photos);
 
@@ -983,6 +993,7 @@ function PhotoManager({
 
   const remove = (idx: number) => {
     setPhotos((p) => p.filter((_, i) => i !== idx));
+    setSelected((s) => { const n = new Set(s); n.delete(idx); return n; });
     setEditIdx(null);
   };
 
@@ -1001,38 +1012,161 @@ function PhotoManager({
     setPhotos((p) => p.map((ph, i) => (i === idx ? { ...ph, ...patch } : ph)));
   };
 
+  const toggleSelect = (idx: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) next.delete(idx); else next.add(idx);
+      return next;
+    });
+  };
+
+  const selectAll = () => setSelected(new Set(photos.map((_, i) => i)));
+  const clearSelection = () => setSelected(new Set());
+
+  const groupSelected = () => {
+    if (!groupName.trim() || selected.size === 0) return;
+    setPhotos((p) => p.map((ph, i) =>
+      selected.has(i) ? { ...ph, sequence: groupName.trim(), sequenceDisplay: groupDisplay } : ph
+    ));
+    setSelected(new Set());
+    setGroupName("");
+  };
+
+  const ungroupSelected = () => {
+    setPhotos((p) => p.map((ph, i) =>
+      selected.has(i) ? { ...ph, sequence: undefined, sequenceDisplay: undefined } : ph
+    ));
+    setSelected(new Set());
+  };
+
+  // Existing sequences
+  const sequences = useMemo(() => {
+    const map = new Map<string, { display: Photo["sequenceDisplay"]; indices: number[] }>();
+    photos.forEach((p, i) => {
+      if (p.sequence) {
+        const existing = map.get(p.sequence);
+        if (existing) existing.indices.push(i);
+        else map.set(p.sequence, { display: p.sequenceDisplay, indices: [i] });
+      }
+    });
+    return map;
+  }, [photos]);
+
   return (
     <div className="space-y-6">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="font-display text-xl font-bold text-ink">
           Photos: {event.title}
           <span className="ml-3 font-mono text-sm font-normal text-muted">{photos.length} photos</span>
         </h2>
         <div className="flex gap-2">
-          <button
-            onClick={add}
-            className="rounded-lg bg-crimson px-4 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80"
-          >
+          <button onClick={add} className="rounded-lg bg-crimson px-4 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80">
             + Add Photo
           </button>
-          <button
-            onClick={save}
-            className="rounded-lg border border-crimson bg-transparent px-4 py-2 font-mono text-xs font-semibold text-crimson transition-colors hover:bg-crimson/10"
-          >
+          <button onClick={save} className="rounded-lg border border-crimson bg-transparent px-4 py-2 font-mono text-xs font-semibold text-crimson transition-colors hover:bg-crimson/10">
             Save All
           </button>
         </div>
       </div>
 
+      {/* Existing sequences overview */}
+      {sequences.size > 0 && (
+        <div className="rounded-lg border border-hairline bg-card/40 p-4">
+          <h3 className="mb-3 font-mono text-[10px] uppercase tracking-wider text-muted">Sequences</h3>
+          <div className="flex flex-wrap gap-2">
+            {[...sequences.entries()].map(([name, { display, indices }]) => (
+              <button
+                key={name}
+                onClick={() => setSelected(new Set(indices))}
+                className={`rounded-full px-3 py-1.5 font-mono text-xs transition-colors ${seqColor(name)}`}
+              >
+                {name}
+                <span className="ml-1.5 opacity-60">{indices.length}</span>
+                <span className="ml-1 text-[9px] opacity-50">
+                  {display === "stack" ? "⊞" : display === "slideshow" ? "▶" : display === "collage" ? "⊟" : "═"}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Selection toolbar */}
+      {selected.size > 0 && (
+        <div className="sticky top-14 z-20 flex flex-wrap items-center gap-3 rounded-lg border border-crimson/30 bg-card p-4 shadow-lg">
+          <span className="font-mono text-xs text-ink">
+            <span className="font-semibold text-crimson">{selected.size}</span> selected
+          </span>
+          <div className="h-5 w-px bg-hairline" />
+
+          <input
+            type="text"
+            value={groupName}
+            onChange={(e) => setGroupName(e.target.value)}
+            placeholder="Group name..."
+            className="w-36 rounded border border-hairline bg-sumi px-2 py-1.5 font-mono text-xs text-ink outline-none focus:border-crimson/50"
+          />
+          <select
+            value={groupDisplay ?? "filmstrip"}
+            onChange={(e) => setGroupDisplay(e.target.value as Photo["sequenceDisplay"])}
+            className="rounded border border-hairline bg-sumi px-2 py-1.5 font-mono text-xs text-ink outline-none focus:border-crimson/50"
+          >
+            <option value="filmstrip">═ Filmstrip</option>
+            <option value="stack">⊞ Stack</option>
+            <option value="slideshow">▶ Slideshow</option>
+            <option value="collage">⊟ Collage</option>
+          </select>
+          <button
+            onClick={groupSelected}
+            disabled={!groupName.trim()}
+            className="rounded bg-crimson px-3 py-1.5 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80 disabled:opacity-30"
+          >
+            Group
+          </button>
+          <button
+            onClick={ungroupSelected}
+            className="rounded border border-hairline px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-crimson/30 hover:text-crimson"
+          >
+            Ungroup
+          </button>
+          <div className="flex-1" />
+          <button onClick={selectAll} className="font-mono text-[10px] text-muted hover:text-ink">Select all</button>
+          <button onClick={clearSelection} className="font-mono text-[10px] text-muted hover:text-ink">Clear</button>
+        </div>
+      )}
+
+      {/* Photo grid */}
       <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {photos.map((photo, idx) => (
           <div
             key={idx}
             className={`group relative cursor-pointer rounded-lg border bg-card/50 p-2 transition-all ${
-              editIdx === idx ? "border-crimson/50 ring-1 ring-crimson/20" : "border-hairline hover:border-hairline/80"
+              selected.has(idx)
+                ? "border-crimson ring-2 ring-crimson/30"
+                : editIdx === idx
+                  ? "border-crimson/50 ring-1 ring-crimson/20"
+                  : "border-hairline hover:border-hairline/80"
             }`}
             onClick={() => setEditIdx(editIdx === idx ? null : idx)}
           >
+            {/* Selection checkbox */}
+            <button
+              onClick={(e) => toggleSelect(idx, e)}
+              className={`absolute left-3 top-3 z-10 flex h-5 w-5 items-center justify-center rounded border backdrop-blur-sm transition-all ${
+                selected.has(idx)
+                  ? "border-crimson bg-crimson text-white"
+                  : "border-white/30 bg-sumi/60 text-transparent hover:border-white/50"
+              }`}
+            >
+              {selected.has(idx) && (
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              )}
+            </button>
+
             {photo.src ? (
               <img src={photo.src} alt={photo.title} className="aspect-[3/2] w-full rounded object-cover" />
             ) : (
@@ -1044,8 +1178,11 @@ function PhotoManager({
               <div className="flex items-center gap-1.5">
                 <p className="min-w-0 flex-1 truncate text-xs font-semibold text-ink">{photo.title || "Untitled"}</p>
                 {photo.sequence && (
-                  <span className="shrink-0 rounded bg-sakura/15 px-1.5 py-0.5 font-mono text-[8px] text-sakura">
+                  <span className={`shrink-0 rounded px-1.5 py-0.5 font-mono text-[8px] ${seqColor(photo.sequence)}`}>
                     {photo.sequence}
+                    <span className="ml-1 text-[7px] opacity-60">
+                      {photo.sequenceDisplay === "stack" ? "⊞" : photo.sequenceDisplay === "slideshow" ? "▶" : photo.sequenceDisplay === "collage" ? "⊟" : "═"}
+                    </span>
                   </span>
                 )}
               </div>
