@@ -984,6 +984,13 @@ function PhotoManager({
 
   useEffect(() => { setPhotos(deepClone(event.photos)); setEditIdx(null); setSelected(new Set()); }, [event.slug]); // eslint-disable-line
 
+  // Auto-save: sync local state to parent on every change
+  const isInitial = useRef(true);
+  useEffect(() => {
+    if (isInitial.current) { isInitial.current = false; return; }
+    onChange(photos);
+  }, [photos]); // eslint-disable-line -- onChange is stable
+
   const save = () => onChange(photos);
 
   const add = () => {
