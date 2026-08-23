@@ -640,66 +640,183 @@ function EventEditor({
     </label>
   );
 
+  const coverSrc = form.cover ?? event.photos[0]?.src;
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="font-display text-xl font-bold text-ink">Edit: {event.title}</h2>
-        <button
-          onClick={save}
-          className="rounded-lg bg-crimson px-6 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80"
-        >
-          Save Changes
-        </button>
-      </div>
+    <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
+      {/* Left: Editor */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="font-display text-xl font-bold text-ink">Edit: {event.title}</h2>
+          <button
+            onClick={save}
+            className="rounded-lg bg-crimson px-6 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80"
+          >
+            Save Changes
+          </button>
+        </div>
 
-      <div className="rounded-lg border border-hairline bg-card/40 p-6">
-        <div className="space-y-4">
-          <div className="flex gap-4">
-            {field("Title", "title", { half: true })}
-            {field("Slug", "slug", { half: true })}
-          </div>
-          <div className="flex gap-4">
-            {field("Group", "group", { half: true })}
-            {field("Date", "date", { half: true })}
-          </div>
-          <div className="flex gap-4">
-            {field("Location", "location", { half: true })}
-            {field("Gear", "gear", { half: true })}
-          </div>
-          <div className="flex gap-4">
-            {field("Tate Text", "tateText", { half: true })}
-            {field("Cover URL", "cover", { half: true })}
-          </div>
-          {field("Subtitle", "subtitle")}
-          {field("Description", "description", { textarea: true })}
+        <div className="rounded-lg border border-hairline bg-card/40 p-6">
+          <div className="space-y-4">
+            <div className="flex gap-4">
+              {field("Title", "title", { half: true })}
+              {field("Slug", "slug", { half: true })}
+            </div>
+            <div className="flex gap-4">
+              {field("Group", "group", { half: true })}
+              {field("Date", "date", { half: true })}
+            </div>
+            <div className="flex gap-4">
+              {field("Location", "location", { half: true })}
+              {field("Gear", "gear", { half: true })}
+            </div>
+            <div className="flex gap-4">
+              {field("Tate Text", "tateText", { half: true })}
+              {field("Cover URL", "cover", { half: true })}
+            </div>
+            {field("Subtitle", "subtitle")}
+            {field("Description", "description", { textarea: true })}
 
-          <label className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              checked={form.featured}
-              onChange={(e) => set("featured", e.target.checked)}
-              className="h-4 w-4 rounded border-hairline accent-crimson"
-            />
-            <span className="font-mono text-xs text-muted">Featured event</span>
-          </label>
+            <label className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                checked={form.featured}
+                onChange={(e) => set("featured", e.target.checked)}
+                className="h-4 w-4 rounded border-hairline accent-crimson"
+              />
+              <span className="font-mono text-xs text-muted">Featured event</span>
+            </label>
+          </div>
         </div>
       </div>
 
-      {/* Live preview */}
-      <div className="rounded-lg border border-hairline bg-card/40 p-6">
-        <h3 className="mb-4 font-mono text-[10px] uppercase tracking-wider text-muted">Preview</h3>
-        <div className="space-y-2">
-          {form.group && (
-            <span className="inline-block rounded-full border border-crimson/30 bg-crimson/10 px-2.5 py-1 font-mono text-[9px] uppercase text-crimson/80">
-              {form.group}
-            </span>
+      {/* Right: Event Page Preview */}
+      <div className="space-y-4">
+        <h2 className="font-display text-xl font-bold text-ink">Event Page Preview</h2>
+
+        <div className="overflow-hidden rounded-lg border border-hairline">
+          {/* Cover hero */}
+          {coverSrc ? (
+            <div className="relative h-48 overflow-hidden">
+              <img src={coverSrc} alt="" className="h-full w-full object-cover" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
+              <div className="absolute bottom-0 left-0 z-10 p-4">
+                <span className="mb-2 inline-block rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono text-[9px] uppercase tracking-widest text-ink/80">
+                  ← All events
+                </span>
+                {form.group && (
+                  <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.35em] text-sakura/60">
+                    {form.group}
+                  </p>
+                )}
+                <h3 className="font-display text-xl font-bold text-ink">
+                  {form.title || "Untitled"}
+                </h3>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-card/60 p-6">
+              <h3 className="font-display text-xl font-bold text-ink">{form.title || "Untitled"}</h3>
+            </div>
           )}
-          <h3 className="font-display text-2xl font-bold text-ink">{form.title || "Untitled"}</h3>
-          <p className="font-mono text-[10px] uppercase tracking-widest text-sakura/60">
-            {form.location || "Location"} &middot; {form.date || "Date"}
-          </p>
-          <p className="text-sm text-muted">{form.subtitle || "No subtitle"}</p>
-          <p className="text-sm leading-7 text-ink/70">{form.description || "No description"}</p>
+
+          {/* Header section */}
+          <div className="border-b border-hairline p-5">
+            <div className="flex gap-4">
+              {/* Tate text */}
+              {form.tateText && (
+                <div className="hidden shrink-0 sm:block">
+                  <span className="tate font-jp text-[10px] tracking-[0.5em] text-gold/30" lang="ja">
+                    {form.tateText}
+                  </span>
+                </div>
+              )}
+              <div className="space-y-3">
+                <p className="font-mono text-[9px] uppercase tracking-[0.35em] text-sakura/60">
+                  {form.location || "Location"} &middot; {form.date || "Date"}
+                </p>
+                <p className="text-sm leading-6 text-muted">
+                  {form.description || "No description"}
+                </p>
+                <div className="h-0.5 w-16 bg-gradient-to-r from-crimson to-gold" />
+              </div>
+            </div>
+          </div>
+
+          {/* Facts panel */}
+          <div className="grid grid-cols-2 gap-px border-b border-hairline bg-hairline">
+            <div className="bg-sumi px-4 py-3">
+              <p className="font-mono text-[8px] uppercase tracking-widest text-faint">Location</p>
+              <p className="mt-0.5 text-xs text-ink/70">{form.location || "—"}</p>
+            </div>
+            <div className="bg-sumi px-4 py-3">
+              <p className="font-mono text-[8px] uppercase tracking-widest text-faint">Date</p>
+              <p className="mt-0.5 text-xs text-ink/70">{form.date || "—"}</p>
+            </div>
+            <div className="bg-sumi px-4 py-3">
+              <p className="font-mono text-[8px] uppercase tracking-widest text-faint">Frames</p>
+              <p className="mt-0.5 text-xs text-ink/70">{event.photos.length}</p>
+            </div>
+            <div className="bg-sumi px-4 py-3">
+              <p className="font-mono text-[8px] uppercase tracking-widest text-faint">Gear</p>
+              <p className="mt-0.5 text-xs text-ink/70">{form.gear || "—"}</p>
+            </div>
+          </div>
+
+          {/* Photo grid preview */}
+          <div className="p-4">
+            <div className="mb-3 flex items-center gap-3">
+              <span className="font-jp text-xs text-gold/40" lang="ja">枠</span>
+              <span className="font-display text-sm font-bold text-ink">All frames</span>
+              <div className="h-px flex-1 bg-hairline" />
+              <span className="font-mono text-[9px] text-faint">{event.photos.length} photographs</span>
+            </div>
+            <div className="grid grid-cols-4 gap-1">
+              {event.photos.slice(0, 8).map((p, i) => (
+                <div key={i} className="aspect-square overflow-hidden rounded-sm bg-card">
+                  {p.src ? (
+                    <img src={p.src} alt="" className="h-full w-full object-cover" />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-faint/20 font-mono text-[8px] text-muted">
+                      {i + 1}
+                    </div>
+                  )}
+                </div>
+              ))}
+              {event.photos.length > 8 && (
+                <div className="flex aspect-square items-center justify-center rounded-sm bg-card/60">
+                  <span className="font-mono text-xs text-muted">+{event.photos.length - 8}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Card preview */}
+          <div className="border-t border-hairline p-4">
+            <p className="mb-2 font-mono text-[8px] uppercase tracking-widest text-faint">Home Card Preview</p>
+            <div className="relative aspect-[3/4] w-40 overflow-hidden rounded-lg border border-hairline">
+              {coverSrc ? (
+                <img src={coverSrc} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <div className="h-full w-full bg-faint/20" />
+              )}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+              <div className="absolute inset-x-0 top-0 flex items-center justify-between p-2">
+                {form.group && (
+                  <span className="rounded-full border border-white/15 bg-black/40 px-1.5 py-0.5 font-mono text-[7px] text-white/80">
+                    {form.group}
+                  </span>
+                )}
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-2">
+                <p className="font-mono text-[7px] text-white/50">
+                  {form.location} &middot; {form.date}
+                </p>
+                <p className="font-display text-[10px] font-bold text-white">{form.title}</p>
+                <p className="line-clamp-1 text-[8px] text-white/50">{form.subtitle}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
