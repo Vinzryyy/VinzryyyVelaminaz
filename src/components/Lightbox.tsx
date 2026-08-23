@@ -175,7 +175,7 @@ export function Lightbox({
       <div className="flex flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
         {/* Photo */}
         <div
-          className="relative flex shrink-0 items-center justify-center overflow-hidden p-4 md:flex-1 md:p-10"
+          className="relative flex min-h-[50vh] flex-1 items-center justify-center overflow-hidden p-2 sm:p-4 md:p-10"
           onClick={() => { if (!didDrag()) onClose(); }}
         >
           {/* Frame counter */}
@@ -284,7 +284,7 @@ export function Lightbox({
           {photos.length > 1 && (
             <>
               <button
-                className="absolute left-4 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-ink/10 text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink"
+                className="absolute left-1 top-1/2 z-10 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full border border-ink/10 text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink sm:left-4 sm:h-10 sm:w-10"
                 onClick={(e) => { e.stopPropagation(); prev(); }}
                 aria-label="Previous photo"
               >
@@ -293,7 +293,7 @@ export function Lightbox({
                 </svg>
               </button>
               <button
-                className="absolute right-14 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full border border-ink/10 text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink md:right-4"
+                className="absolute right-1 top-1/2 z-10 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full border border-ink/10 text-muted transition-colors duration-200 hover:bg-ink/10 hover:text-ink sm:right-14 sm:h-10 sm:w-10 md:right-4"
                 onClick={(e) => { e.stopPropagation(); next(); }}
                 aria-label="Next photo"
               >
@@ -310,24 +310,24 @@ export function Lightbox({
           className="shrink-0 border-t border-hairline bg-card/60 md:w-80 md:overflow-y-auto md:border-l md:border-t-0"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="border-b border-hairline px-5 py-4">
+          <div className="border-b border-hairline px-4 py-2.5 sm:px-5 sm:py-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/70">
               Frame <span lang="ja">{toKanji(idx + 1)}</span> &middot; {event.location}
             </p>
           </div>
 
-          <div className="border-b border-hairline px-5 py-4">
-            <h2 className="font-display text-lg font-bold text-ink/90">{photo.title}</h2>
-            <KatanaDivider active className="my-3 w-16" />
-            {photo.story && <p className="text-sm leading-7 text-muted">{photo.story}</p>}
+          <div className="border-b border-hairline px-4 py-2.5 sm:px-5 sm:py-4">
+            <h2 className="font-display text-base font-bold text-ink/90 sm:text-lg">{photo.title}</h2>
+            <KatanaDivider active className="my-2 w-16 sm:my-3" />
+            {photo.story && <p className="text-sm leading-6 text-muted sm:leading-7">{photo.story}</p>}
           </div>
 
           {exifItems.length > 0 && (
-            <div className="px-5 py-4">
-              <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.3em] text-faint">EXIF Data</p>
-              <div className="grid grid-cols-2 gap-px border border-hairline">
+            <div className="px-4 py-2.5 sm:px-5 sm:py-4">
+              <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.3em] text-faint sm:mb-3">EXIF Data</p>
+              <div className="grid grid-cols-2 gap-px border border-hairline sm:grid-cols-2">
                 {exifItems.map(({ label, value }) => (
-                  <div key={label} className="bg-sumi/50 px-3 py-2.5">
+                  <div key={label} className="bg-sumi/50 px-2.5 py-2 sm:px-3 sm:py-2.5">
                     <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">{label}</p>
                     <p className="mt-0.5 font-mono text-xs text-ink/70">{value}</p>
                   </div>
@@ -336,7 +336,7 @@ export function Lightbox({
             </div>
           )}
 
-          <div className="px-5 pb-4">
+          <div className="px-4 pb-2.5 sm:px-5 sm:pb-4">
             <p className="hidden font-mono text-[9px] leading-5 text-faint/60 md:block">
               ← → navigate · click or scroll to zoom · drag to pan<br />
               + − 0 zoom · Home / End jump · Esc close
@@ -352,14 +352,14 @@ export function Lightbox({
       {photos.length > 1 && (
         <div
           ref={filmstripRef}
-          className="flex shrink-0 gap-1 overflow-x-auto border-t border-hairline bg-sumi/80 p-2 backdrop-blur-sm"
+          className="flex shrink-0 gap-1 overflow-x-auto border-t border-hairline bg-sumi/80 p-1.5 backdrop-blur-sm sm:p-2"
           onClick={(e) => e.stopPropagation()}
         >
           {photos.map((p, i) => (
             <button
               key={i}
               onClick={() => { setLoaded(false); setIdx(i); }}
-              className={`h-14 w-14 shrink-0 overflow-hidden transition-all duration-200 ${
+              className={`h-11 w-11 shrink-0 overflow-hidden transition-all duration-200 sm:h-14 sm:w-14 ${
                 i === idx
                   ? "scale-110 opacity-100 ring-2 ring-crimson ring-offset-1 ring-offset-sumi"
                   : "opacity-40 hover:opacity-70"

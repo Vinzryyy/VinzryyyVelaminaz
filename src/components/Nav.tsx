@@ -43,8 +43,8 @@ export function Nav() {
     >
       {/* Top bar */}
       <div
-        className={`flex items-center justify-between px-6 transition-all duration-300 md:px-10 ${
-          scrolled ? "h-14" : "h-20"
+        className={`flex items-center justify-between px-4 transition-all duration-300 sm:px-6 md:px-10 ${
+          scrolled ? "h-12 sm:h-14" : "h-16 sm:h-20"
         }`}
       >
         {/* Left: Menu (mobile) / Wordmark (desktop) */}

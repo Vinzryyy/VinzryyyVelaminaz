@@ -90,7 +90,7 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative flex h-screen min-h-[600px] flex-col overflow-hidden">
+      <section className="relative flex h-[100svh] min-h-[480px] flex-col overflow-hidden sm:min-h-[600px]">
         {/* Hero background — smooth crossfade + Ken Burns zoom */}
         <img
           key={`bg-cur-${current.hero}`}
@@ -121,9 +121,9 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.5)_100%)]" />
 
         {/* Bio text — top-left, below nav */}
-        <div className="relative z-10 mt-28 px-6 md:mt-32 md:px-10">
+        <div className="relative z-10 mt-20 px-4 sm:mt-28 sm:px-6 md:mt-32 md:px-10">
           <ScrollReveal>
-            <p className="max-w-[280px] font-display text-sm italic leading-6 text-ink/70 md:max-w-sm md:text-base md:leading-7">
+            <p className="max-w-[240px] font-display text-xs italic leading-5 text-ink/70 sm:max-w-[280px] sm:text-sm sm:leading-6 md:max-w-sm md:text-base md:leading-7">
               A fan with a camera, capturing the
               energy and emotion of live events
               — one frame at a time.
@@ -135,9 +135,9 @@ export default function Home() {
         <div className="flex-1" />
 
         {/* Bottom layer: giant name + floating thumbnails */}
-        <div className="relative z-10 px-6 pb-16 md:px-10 md:pb-14">
-          {/* Floating portrait thumbnails */}
-          <div className="pointer-events-none absolute inset-x-6 bottom-20 md:inset-x-10 md:bottom-20">
+        <div className="relative z-10 px-4 pb-14 sm:px-6 sm:pb-16 md:px-10 md:pb-14">
+          {/* Floating portrait thumbnails — hidden on very small screens */}
+          <div className="pointer-events-none absolute inset-x-6 bottom-20 hidden sm:block md:inset-x-10 md:bottom-20">
             {/* Left thumbnail — slightly tilted */}
             <div className="absolute bottom-8 left-0 md:bottom-4 md:left-[6%]">
               <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
@@ -195,8 +195,8 @@ export default function Home() {
 
           {/* Giant name text — outlined */}
           <h1 className="hero-name select-none text-center font-display font-bold uppercase leading-[0.85]">
-            <span className="block text-[13vw] md:text-[10vw]">Vinzryyy</span>
-            <span className="block text-[13vw] md:text-[10vw]">Saga</span>
+            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">Vinzryyy</span>
+            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">Saga</span>
           </h1>
         </div>
 
@@ -212,7 +212,7 @@ export default function Home() {
       </section>
 
       {/* ── Profile section ─────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-sumi px-6 py-24 md:px-10 md:py-36">
+      <section className="relative overflow-hidden bg-sumi px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-36">
         {/* Subtle noise texture overlay */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
         {/* Ambient glow */}
@@ -221,7 +221,7 @@ export default function Home() {
         <div className="mx-auto max-w-[1400px]">
           {/* Section label with decorative line */}
           <ScrollReveal>
-            <div className="mb-20 flex items-center gap-6 md:mb-28">
+            <div className="mb-12 flex items-center gap-6 sm:mb-20 md:mb-28">
               <p className="font-display text-3xl italic text-ink/80 md:text-4xl">
                 Profile
               </p>
@@ -293,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* ── Events section ────────────────────────────────────── */}
-      <section id="events" className="px-6 pb-24 pt-8 md:px-10">
+      <section id="events" className="px-4 pb-16 pt-8 sm:px-6 sm:pb-24 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="mb-6 flex items-center gap-4">
@@ -313,7 +313,7 @@ export default function Home() {
           </ScrollReveal>
 
           {/* Keyed on the filter so cards re-run their entrance animation */}
-          <div key={activeGroup} className="grid gap-5 md:grid-cols-2">
+          <div key={activeGroup} className="grid gap-4 sm:gap-5 md:grid-cols-2">
             {visibleEvents.map((event, i) => (
               <div
                 key={event.slug}
@@ -334,7 +334,7 @@ export default function Home() {
       </section>
 
       {/* ── Contact section ───────────────────────────────────── */}
-      <section id="contact" className="relative border-t border-hairline px-6 py-24 md:px-10 md:py-32">
+      <section id="contact" className="relative border-t border-hairline px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-32">
         {/* Ambient glow */}
         <div className="pointer-events-none absolute left-1/2 top-0 h-[20rem] w-[30rem] -translate-x-1/2 rounded-full bg-crimson/[0.03] blur-[160px]" />
         <div className="mx-auto max-w-[1400px]">

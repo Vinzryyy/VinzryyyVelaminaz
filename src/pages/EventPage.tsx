@@ -32,7 +32,7 @@ export default function EventPage() {
     <div>
       {/* ── Cover hero ─────────────────────────────────────────── */}
       {coverSrc && (
-        <section className="relative flex h-[50vh] min-h-[320px] items-end overflow-hidden">
+        <section className="relative flex h-[40vh] min-h-[260px] items-end overflow-hidden sm:h-[50vh] sm:min-h-[320px]">
           <img
             src={coverSrc}
             alt={event.title}
@@ -42,7 +42,7 @@ export default function EventPage() {
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
-          <div className="relative z-10 w-full px-6 pb-8 md:px-10">
+          <div className="relative z-10 w-full px-4 pb-6 sm:px-6 sm:pb-8 md:px-10">
             <div className="mx-auto max-w-[1400px]">
               <Link
                 to="/"
@@ -59,7 +59,7 @@ export default function EventPage() {
                   {event.group}
                 </p>
               )}
-              <h1 className="font-display text-4xl font-bold leading-[1.05] text-ink md:text-5xl lg:text-6xl">
+              <h1 className="font-display text-2xl font-bold leading-[1.05] text-ink sm:text-4xl md:text-5xl lg:text-6xl">
                 {event.title}
               </h1>
             </div>
@@ -68,7 +68,7 @@ export default function EventPage() {
       )}
 
       {/* ── Header ─────────────────────────────────────────────── */}
-      <section className="px-6 pb-12 pt-10 md:px-10">
+      <section className="px-4 pb-10 pt-8 sm:px-6 sm:pb-12 sm:pt-10 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
             <div className="flex gap-6">
@@ -112,7 +112,7 @@ export default function EventPage() {
       </section>
 
       {/* ── Photo grid section header ──────────────────────────── */}
-      <section className="px-6 pb-6 md:px-10">
+      <section className="px-4 pb-6 sm:px-6 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="flex items-center gap-4">
@@ -128,14 +128,14 @@ export default function EventPage() {
       </section>
 
       {/* ── Photo grid ─────────────────────────────────────────── */}
-      <section className="px-6 pb-20 md:px-10">
+      <section className="px-4 pb-14 sm:px-6 sm:pb-20 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <PhotoGrid photos={event.photos} onOpen={setLightboxIdx} />
         </div>
       </section>
 
       {/* ── Prev / Next event navigation ─────────────────────── */}
-      <section className="border-t border-hairline px-6 py-16 md:px-10">
+      <section className="border-t border-hairline px-4 py-10 sm:px-6 sm:py-16 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -144,7 +144,7 @@ export default function EventPage() {
                 to={`/events/${prevEvent.slug}`}
                 className="group flex items-center gap-4 rounded-lg border border-hairline bg-card/40 p-4 transition-all duration-300 hover:border-hairline/80 hover:bg-card/70"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson sm:h-10 sm:w-10">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
@@ -153,7 +153,7 @@ export default function EventPage() {
                   <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
                     Previous
                   </p>
-                  <h3 className="truncate font-display text-lg font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink">
+                  <h3 className="truncate font-display text-base font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink sm:text-lg">
                     {prevEvent.title}
                   </h3>
                 </div>
@@ -178,11 +178,11 @@ export default function EventPage() {
                   <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
                     Next
                   </p>
-                  <h3 className="truncate font-display text-lg font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink">
+                  <h3 className="truncate font-display text-base font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink sm:text-lg">
                     {nextEvent.title}
                   </h3>
                 </div>
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson sm:h-10 sm:w-10">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>

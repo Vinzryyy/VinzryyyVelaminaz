@@ -4,7 +4,7 @@ export function Footer() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="border-t border-hairline px-6 py-12 md:px-10">
+    <footer className="border-t border-hairline px-4 py-8 sm:px-6 sm:py-12 md:px-10">
       <div className="mx-auto max-w-[1400px]">
         {/* Top row: brand + back to top */}
         <div className="mb-8 flex items-center justify-between">

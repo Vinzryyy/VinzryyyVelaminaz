@@ -28,7 +28,7 @@ export function EventCard({
       {/* Cover image */}
       <div
         className={`relative w-full shrink-0 overflow-hidden ${
-          event.featured ? "h-72 md:h-96" : "h-56 md:h-64"
+          event.featured ? "h-52 sm:h-72 md:h-96" : "h-44 sm:h-56 md:h-64"
         }`}
       >
         {hasCover ? (
