@@ -90,99 +90,123 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative flex h-[100svh] min-h-[600px] flex-col overflow-hidden bg-sumi">
-        {/* Dark background with subtle radial glow */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(196,41,59,0.08)_0%,transparent_70%)]" />
+      <section className="relative flex h-[100svh] min-h-[480px] flex-col overflow-hidden sm:min-h-[600px]">
+        {/* Hero background — smooth crossfade + Ken Burns zoom */}
+        <img
+          key={`bg-cur-${current.hero}`}
+          src={current.hero}
+          alt=""
+          aria-hidden="true"
+          width={1920}
+          height={1080}
+          decoding="async"
+          fetchPriority="high"
+          className="hero-bg pointer-events-none absolute inset-0 h-full w-full object-cover"
+        />
+        {next && (
+          <img
+            key={`bg-nxt-${next.hero}`}
+            src={next.hero}
+            alt=""
+            aria-hidden="true"
+            width={1920}
+            height={1080}
+            decoding="async"
+            className={`hero-bg pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+          />
+        )}
 
-        {/* Giant background name text — semi-transparent behind portrait */}
-        <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
-          <h1 className="hero-name-bg select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-[14vw]" aria-hidden="true">
-            VINZRYYY SAGA
+        {/* Layered overlays — vignette + gradient */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.5)_100%)]" />
+
+        {/* Bio text — top-left, below nav */}
+        <div className="relative z-10 mt-20 px-4 sm:mt-28 sm:px-6 md:mt-32 md:px-10">
+          <ScrollReveal>
+            <p className="max-w-[240px] font-display text-xs italic leading-5 text-ink/70 sm:max-w-[280px] sm:text-sm sm:leading-6 md:max-w-sm md:text-base md:leading-7">
+              A fan with a camera, capturing the
+              energy and emotion of live events
+              — one frame at a time.
+            </p>
+          </ScrollReveal>
+        </div>
+
+        {/* Spacer */}
+        <div className="flex-1" />
+
+        {/* Bottom layer: giant name + floating thumbnails */}
+        <div className="relative z-10 px-4 pb-14 sm:px-6 sm:pb-16 md:px-10 md:pb-14">
+          {/* Floating portrait thumbnails — hidden on very small screens */}
+          <div className="pointer-events-none absolute inset-x-6 bottom-20 hidden sm:block md:inset-x-10 md:bottom-20">
+            {/* Left thumbnail — slightly tilted */}
+            <div className="absolute bottom-8 left-0 md:bottom-4 md:left-[6%]">
+              <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
+                Event Coverage
+              </p>
+              <div className="relative h-32 w-[104px] -rotate-3 overflow-hidden border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)] md:h-44 md:w-36">
+                <img
+                  src={current.left}
+                  alt=""
+                  width={144}
+                  height={176}
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                {next && (
+                  <img
+                    src={next.left}
+                    alt=""
+                    width={144}
+                    height={176}
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Right thumbnail — slightly tilted opposite */}
+            <div className="absolute bottom-8 right-0 md:bottom-4 md:right-[10%]">
+              <p className="mb-2 text-right text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
+                Visual Storyteller
+              </p>
+              <div className="relative h-32 w-[104px] rotate-2 overflow-hidden border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.5)] md:h-44 md:w-36">
+                <img
+                  src={current.right}
+                  alt=""
+                  width={144}
+                  height={176}
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                {next && (
+                  <img
+                    src={next.right}
+                    alt=""
+                    width={144}
+                    height={176}
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Giant name text — outlined */}
+          <h1 className="hero-name select-none text-center font-display font-bold uppercase leading-[0.85]">
+            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">Vinzryyy</span>
+            <span className="block text-[15vw] sm:text-[13vw] md:text-[10vw]">Saga</span>
           </h1>
         </div>
 
-        {/* Center portrait photo — crossfading */}
-        <div className="absolute inset-0 z-[1] flex items-end justify-center">
-          <div className="relative h-[80%] w-[40%] max-w-[500px]">
-            <img
-              key={`portrait-cur-${current.hero}`}
-              src={current.hero}
-              alt="Featured photo"
-              width={500}
-              height={700}
-              decoding="async"
-              fetchPriority="high"
-              className="hero-portrait absolute inset-0 h-full w-full object-cover object-top"
-              style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
-            />
-            {next && (
-              <img
-                key={`portrait-nxt-${next.hero}`}
-                src={next.hero}
-                alt=""
-                aria-hidden="true"
-                width={500}
-                height={700}
-                decoding="async"
-                className={`hero-portrait absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
-                style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}
-              />
-            )}
-          </div>
-        </div>
-
-        {/* Content layer — tagline left, CTA right */}
-        <div className="relative z-10 flex flex-1 flex-col">
-          {/* Spacer for nav */}
-          <div className="h-24" />
-
-          {/* Middle content area */}
-          <div className="flex flex-1 items-end px-10 pb-24">
-            {/* Left: tagline */}
-            <div className="max-w-[340px]">
-              <ScrollReveal>
-                <p className="font-display text-[15px] leading-7 text-ink/70">
-                  A fan with a camera, capturing the
-                  energy and emotion of live events
-                  — one frame at a time.
-                </p>
-              </ScrollReveal>
-            </div>
-
-            {/* Spacer */}
-            <div className="flex-1" />
-
-            {/* Right: CTA button with glow */}
-            <div className="flex items-end pb-2">
-              <ScrollReveal>
-                <a
-                  href="/#events"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("events")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="hero-cta relative inline-block rounded-full border border-ink/30 bg-ink px-8 py-3 font-display text-sm font-semibold text-sumi transition-all duration-300 hover:bg-ink/90 hover:shadow-[0_0_40px_rgba(196,41,59,0.4)]"
-                >
-                  View Events
-                </a>
-              </ScrollReveal>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom ticker marquee — event categories */}
-        <div className="relative z-10 border-t border-white/10 bg-sumi/80 backdrop-blur-sm">
-          <div className="hero-ticker flex w-max">
-            {[...Array(2)].map((_, setIdx) => (
-              <div key={setIdx} className="flex" aria-hidden={setIdx > 0}>
-                {["Event Coverage", "Live Performance", "Fan Meeting", "JKT48", "KLP48", "Quadlips", "Visual Storytelling", "Behind the Scenes"].map((label) => (
-                  <span key={`${setIdx}-${label}`} className="flex items-center gap-3 px-6 py-3">
-                    <span className="h-1.5 w-1.5 rounded-full bg-crimson" />
-                    <span className="whitespace-nowrap font-sans text-sm text-ink/70">{label}</span>
-                  </span>
-                ))}
-              </div>
-            ))}
+        {/* Scroll indicator */}
+        <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center">
+          <div className="scroll-hint flex flex-col items-center gap-1">
+            <span className="text-[9px] uppercase tracking-[0.3em] text-ink/40">Scroll</span>
+            <svg className="h-4 w-4 text-ink/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
           </div>
         </div>
       </section>

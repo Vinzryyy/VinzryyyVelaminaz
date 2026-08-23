@@ -145,42 +145,6 @@ html, body, #root {
   text-shadow: 0 4px 80px rgba(0, 0, 0, 0.6);
 }
 
-/* ── Hero background name (Jaxon Steel style) ────────────────── */
-
-.hero-name-bg {
-  color: rgba(255, 255, 255, 0.06);
-  text-shadow: 0 0 80px rgba(196, 41, 59, 0.15);
-  letter-spacing: 0.04em;
-}
-
-/* ── Hero portrait Ken Burns ─────────────────────────────────── */
-
-.hero-portrait {
-  animation: hero-portrait-drift 28s ease-in-out forwards;
-}
-
-@keyframes hero-portrait-drift {
-  0%   { transform: scale(1); }
-  100% { transform: scale(1.05); }
-}
-
-/* ── Hero CTA glow ───────────────────────────────────────────── */
-
-.hero-cta {
-  box-shadow: 0 0 30px rgba(196, 41, 59, 0.25), 0 0 60px rgba(196, 41, 59, 0.1);
-}
-
-/* ── Hero ticker marquee ─────────────────────────────────────── */
-
-@keyframes ticker-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.hero-ticker {
-  animation: ticker-scroll 30s linear infinite;
-}
-
 /* ── Profile photo stack hover ────────────────────────────────── */
 
 @media (hover: hover) {
@@ -346,8 +310,6 @@ img {
 
   /* Continuous / decorative motion — previously still running */
   .hero-bg,
-  .hero-portrait,
-  .hero-ticker,
   .scroll-hint,
   .marquee-track,
   .skeleton::after {
