@@ -3,6 +3,8 @@ export interface Photo {
   story: string;
   src?: string;        // "/photos/{event-slug}/001.jpg" — optional,
                        // falls back to a generated placeholder gradient
+  sequence?: string;   // manual filmstrip group name — photos with the same
+                       // sequence are rendered as a horizontal scrollable strip
   lens?: string;
   aperture?: string;
   shutter?: string;

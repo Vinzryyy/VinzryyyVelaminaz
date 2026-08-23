@@ -4,17 +4,21 @@ import { PhotoFrame } from "./PhotoFrame";
 
 /* ── Sequence detection ──────────────────────────────────────────
  *
- * Photos whose titles share a name prefix followed by a roman
- * numeral or number (e.g. "Cole I", "Cole II", "Feni IX") are
- * grouped into a filmstrip row.  Mixed titles like "Mashiro & Cole"
- * or "Full Squad" stay in the normal grid.
+ * A photo's filmstrip group is determined by:
+ *   1. An explicit `sequence` field (set via admin), OR
+ *   2. Auto-detection from the title prefix before a trailing
+ *      roman numeral / number (e.g. "Cole I" → "Cole").
+ *
+ * Mixed titles like "Mashiro & Cole" or "Full Squad" stay in
+ * the normal grid.
  * ──────────────────────────────────────────────────────────────── */
 
 const ROMAN = /\s+(?:[IVXLCDM]+|\d+)$/;
 
-function sequenceKey(title: string): string | null {
-  const m = title.match(ROMAN);
-  return m ? title.slice(0, m.index!).trim() : null;
+function sequenceKey(photo: Photo): string | null {
+  if (photo.sequence) return photo.sequence;
+  const m = photo.title.match(ROMAN);
+  return m ? photo.title.slice(0, m.index!).trim() : null;
 }
 
 /* ── Segment types ───────────────────────────────────────────────
@@ -33,12 +37,12 @@ function buildSegments(photos: Photo[]): Segment[] {
   let i = 0;
 
   while (i < photos.length) {
-    const key = sequenceKey(photos[i].title);
+    const key = sequenceKey(photos[i]);
 
     if (key) {
       // Collect consecutive photos with the same sequence key
       const strip: { photo: Photo; globalIdx: number }[] = [];
-      while (i < photos.length && sequenceKey(photos[i].title) === key) {
+      while (i < photos.length && sequenceKey(photos[i]) === key) {
         strip.push({ photo: photos[i], globalIdx: i });
         i++;
       }

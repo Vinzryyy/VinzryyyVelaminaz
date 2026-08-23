@@ -615,7 +615,14 @@ function PhotoManager({
               </div>
             )}
             <div className="mt-2 px-1">
-              <p className="truncate text-xs font-semibold text-ink">{photo.title || "Untitled"}</p>
+              <div className="flex items-center gap-1.5">
+                <p className="min-w-0 flex-1 truncate text-xs font-semibold text-ink">{photo.title || "Untitled"}</p>
+                {photo.sequence && (
+                  <span className="shrink-0 rounded bg-sakura/15 px-1.5 py-0.5 font-mono text-[8px] text-sakura">
+                    {photo.sequence}
+                  </span>
+                )}
+              </div>
               <p className="truncate font-mono text-[9px] text-muted">
                 {[photo.lens, photo.aperture].filter(Boolean).join(" · ") || "No EXIF"}
               </p>
@@ -663,7 +670,10 @@ function PhotoManager({
               <PhotoField label="Title" value={photos[editIdx].title} onChange={(v) => updatePhoto(editIdx, { title: v })} />
               <PhotoField label="Src" value={photos[editIdx].src ?? ""} onChange={(v) => updatePhoto(editIdx, { src: v })} />
             </div>
-            <PhotoField label="Story" value={photos[editIdx].story} onChange={(v) => updatePhoto(editIdx, { story: v })} textarea />
+            <div className="flex gap-3">
+              <PhotoField label="Story" value={photos[editIdx].story} onChange={(v) => updatePhoto(editIdx, { story: v })} />
+              <PhotoField label="Filmstrip Group" value={photos[editIdx].sequence ?? ""} onChange={(v) => updatePhoto(editIdx, { sequence: v || undefined })} />
+            </div>
             <div className="flex gap-3">
               <PhotoField label="Lens" value={photos[editIdx].lens ?? ""} onChange={(v) => updatePhoto(editIdx, { lens: v })} />
               <PhotoField label="Aperture" value={photos[editIdx].aperture ?? ""} onChange={(v) => updatePhoto(editIdx, { aperture: v })} />
