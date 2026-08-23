@@ -976,38 +976,62 @@ function PhotoManager({
   event: Event;
   onChange: (photos: Photo[]) => void;
 }) {
-  const [photos, setPhotos] = useState<Photo[]>(deepClone(event.photos));
+  const [photos, setPhotos] = useState<Photo[]>(() => deepClone(event.photos));
   const [editIdx, setEditIdx] = useState<number | null>(null);
   const [selected, setSelected] = useState<Set<number>>(new Set());
   const [groupName, setGroupName] = useState("");
   const [groupDisplay, setGroupDisplay] = useState<Photo["sequenceDisplay"]>("filmstrip");
 
-  useEffect(() => { setPhotos(deepClone(event.photos)); setEditIdx(null); setSelected(new Set()); }, [event.slug]); // eslint-disable-line
-
-  // Auto-save: sync local state to parent on every change
-  const isInitial = useRef(true);
+  // Track which slug we initialized from to avoid resetting on parent re-renders
+  const slugRef = useRef(event.slug);
   useEffect(() => {
-    if (isInitial.current) { isInitial.current = false; return; }
-    onChange(photos);
-  }, [photos]); // eslint-disable-line -- onChange is stable
+    if (event.slug !== slugRef.current) {
+      slugRef.current = event.slug;
+      setPhotos(deepClone(event.photos));
+      setEditIdx(null);
+      setSelected(new Set());
+    }
+  }, [event.slug, event.photos]);
+
+  // Commit helper — updates local state AND saves to parent in one go
+  const commit = useCallback((next: Photo[] | ((prev: Photo[]) => Photo[])) => {
+    setPhotos((prev) => {
+      const result = typeof next === "function" ? next(prev) : next;
+      // Schedule parent update outside of render
+      queueMicrotask(() => onChange(result));
+      return result;
+    });
+  }, [onChange]);
 
   const save = () => onChange(photos);
 
   const add = () => {
-    setPhotos((p) => [...p, emptyPhoto()]);
+    commit((p) => [...p, emptyPhoto()]);
     setEditIdx(photos.length);
   };
 
   const remove = (idx: number) => {
-    setPhotos((p) => p.filter((_, i) => i !== idx));
-    setSelected((s) => { const n = new Set(s); n.delete(idx); return n; });
-    setEditIdx(null);
+    commit((p) => p.filter((_, i) => i !== idx));
+    // Fix selected indices — shift down indices above deleted
+    setSelected((s) => {
+      const next = new Set<number>();
+      for (const i of s) {
+        if (i < idx) next.add(i);
+        else if (i > idx) next.add(i - 1);
+      }
+      return next;
+    });
+    setEditIdx((prev) => {
+      if (prev === null) return null;
+      if (prev === idx) return null;
+      return prev > idx ? prev - 1 : prev;
+    });
   };
 
   const move = (idx: number, dir: -1 | 1) => {
     const target = idx + dir;
     if (target < 0 || target >= photos.length) return;
-    setPhotos((p) => {
+    commit((p) => {
       const next = [...p];
       [next[idx], next[target]] = [next[target], next[idx]];
       return next;
@@ -1016,7 +1040,7 @@ function PhotoManager({
   };
 
   const updatePhoto = (idx: number, patch: Partial<Photo>) => {
-    setPhotos((p) => p.map((ph, i) => (i === idx ? { ...ph, ...patch } : ph)));
+    commit((p) => p.map((ph, i) => (i === idx ? { ...ph, ...patch } : ph)));
   };
 
   const toggleSelect = (idx: number, e: React.MouseEvent) => {
@@ -1033,7 +1057,7 @@ function PhotoManager({
 
   const groupSelected = () => {
     if (!groupName.trim() || selected.size === 0) return;
-    setPhotos((p) => p.map((ph, i) =>
+    commit((p) => p.map((ph, i) =>
       selected.has(i) ? { ...ph, sequence: groupName.trim(), sequenceDisplay: groupDisplay } : ph
     ));
     setSelected(new Set());
@@ -1041,7 +1065,7 @@ function PhotoManager({
   };
 
   const ungroupSelected = () => {
-    setPhotos((p) => p.map((ph, i) =>
+    commit((p) => p.map((ph, i) =>
       selected.has(i) ? { ...ph, sequence: undefined, sequenceDisplay: undefined } : ph
     ));
     setSelected(new Set());
