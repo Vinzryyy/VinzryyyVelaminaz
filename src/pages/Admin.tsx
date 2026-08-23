@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getAllEvents } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { getAnalytics } from "@/lib/analytics";
@@ -674,7 +674,7 @@ function EventEditor({
     set("cover", url);
   });
 
-  // Drop handler for photo grid
+  // Drop handler for photo grid (external files)
   const gridDrop = useDrop(async (files) => {
     const newPhotos = await Promise.all(
       files.map(async (f) => ({
@@ -685,6 +685,42 @@ function EventEditor({
     );
     onPhotosChange([...event.photos, ...newPhotos]);
   });
+
+  // Drag-to-reorder state
+  const dragIdx = useRef<number | null>(null);
+  const [dropTarget, setDropTarget] = useState<number | null>(null);
+
+  const onReorderDragStart = (idx: number) => (e: React.DragEvent) => {
+    dragIdx.current = idx;
+    e.dataTransfer.effectAllowed = "move";
+    // Set a transparent drag image
+    const el = e.currentTarget as HTMLElement;
+    e.dataTransfer.setDragImage(el, el.offsetWidth / 2, el.offsetHeight / 2);
+  };
+
+  const onReorderDragOver = (idx: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    if (dragIdx.current !== null && dragIdx.current !== idx) {
+      setDropTarget(idx);
+    }
+  };
+
+  const onReorderDrop = (idx: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDropTarget(null);
+    if (dragIdx.current === null || dragIdx.current === idx) return;
+    const photos = [...event.photos];
+    const [moved] = photos.splice(dragIdx.current, 1);
+    photos.splice(idx, 0, moved);
+    dragIdx.current = null;
+    onPhotosChange(photos);
+  };
+
+  const onReorderDragEnd = () => {
+    dragIdx.current = null;
+    setDropTarget(null);
+  };
 
   // Editable text helper — contentEditable span that syncs back
   const editable = (key: keyof Event, className: string) => (
@@ -845,25 +881,47 @@ function EventEditor({
               </div>
             )}
 
-            <div className="grid grid-cols-4 gap-1">
-              {event.photos.slice(0, 8).map((p, i) => (
-                <div key={i} className="aspect-square overflow-hidden rounded-sm bg-card">
+            <div className="grid grid-cols-4 gap-1 sm:grid-cols-5 md:grid-cols-6">
+              {event.photos.map((p, i) => (
+                <div
+                  key={i}
+                  draggable
+                  onDragStart={onReorderDragStart(i)}
+                  onDragOver={onReorderDragOver(i)}
+                  onDrop={onReorderDrop(i)}
+                  onDragEnd={onReorderDragEnd}
+                  className={`group relative aspect-square cursor-grab overflow-hidden rounded-sm bg-card transition-all active:cursor-grabbing ${
+                    dropTarget === i ? "ring-2 ring-crimson scale-105" : ""
+                  }`}
+                  title={`${p.title || `Photo ${i + 1}`} — drag to reorder`}
+                >
                   {p.src ? (
-                    <img src={p.src} alt="" className="h-full w-full object-cover" />
+                    <img src={p.src} alt="" className="h-full w-full object-cover pointer-events-none" />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-faint/20 font-mono text-[8px] text-muted">
                       {i + 1}
                     </div>
                   )}
+                  {/* Index badge */}
+                  <span className="absolute left-0.5 top-0.5 rounded bg-sumi/70 px-1 py-0.5 font-mono text-[7px] text-ink/60 backdrop-blur-sm">
+                    {i + 1}
+                  </span>
+                  {/* Delete button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const photos = event.photos.filter((_, j) => j !== i);
+                      onPhotosChange(photos);
+                    }}
+                    className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded bg-sumi/70 text-[8px] text-ink/60 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 hover:bg-crimson hover:text-white"
+                    title="Remove photo"
+                  >
+                    &times;
+                  </button>
                 </div>
               ))}
-              {event.photos.length > 8 && (
-                <div className="flex aspect-square items-center justify-center rounded-sm bg-card/60">
-                  <span className="font-mono text-xs text-muted">+{event.photos.length - 8}</span>
-                </div>
-              )}
               {event.photos.length === 0 && !gridDrop.over && (
-                <div className="col-span-4 flex items-center justify-center rounded-lg border border-dashed border-hairline py-8">
+                <div className="col-span-full flex items-center justify-center rounded-lg border border-dashed border-hairline py-8">
                   <p className="font-mono text-xs text-muted">Drag & drop photos here</p>
                 </div>
               )}
