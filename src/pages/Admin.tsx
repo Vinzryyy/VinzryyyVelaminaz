@@ -5,15 +5,75 @@ import type { Event, Photo } from "@/lib/types";
 
 /* ── Auth ────────────────────────────────────────────────────────── */
 
-const ADMIN_HASH = "a252c44d";
+const ADMIN_SHA256 = "c250b12c3b4c2a4229f5232d6590ad40b4a6d9957269ddb67eb94c4bffb01465";
 const AUTH_KEY = "vinzryyy-admin-auth";
+const LOCKOUT_KEY = "vinzryyy-admin-lockout";
+const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_DURATION = 2 * 60 * 1000; // 2 minutes
 
-function simpleHash(str: string): string {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) {
-    h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+async function sha256(str: string): Promise<string> {
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+function getSessionToken(): string | null {
+  const data = sessionStorage.getItem(AUTH_KEY);
+  if (!data) return null;
+  try {
+    const { token, expires } = JSON.parse(data);
+    if (Date.now() > expires) {
+      sessionStorage.removeItem(AUTH_KEY);
+      return null;
+    }
+    return token;
+  } catch {
+    sessionStorage.removeItem(AUTH_KEY);
+    return null;
   }
-  return (h >>> 0).toString(16);
+}
+
+function setSessionToken() {
+  const token = crypto.randomUUID();
+  sessionStorage.setItem(
+    AUTH_KEY,
+    JSON.stringify({ token, expires: Date.now() + SESSION_TIMEOUT }),
+  );
+}
+
+function refreshSession() {
+  const data = sessionStorage.getItem(AUTH_KEY);
+  if (!data) return;
+  try {
+    const parsed = JSON.parse(data);
+    parsed.expires = Date.now() + SESSION_TIMEOUT;
+    sessionStorage.setItem(AUTH_KEY, JSON.stringify(parsed));
+  } catch { /* ignore */ }
+}
+
+function getLockout(): { attempts: number; until: number } {
+  try {
+    const data = localStorage.getItem(LOCKOUT_KEY);
+    if (data) return JSON.parse(data);
+  } catch { /* ignore */ }
+  return { attempts: 0, until: 0 };
+}
+
+function recordFailedAttempt() {
+  const lock = getLockout();
+  lock.attempts += 1;
+  if (lock.attempts >= MAX_ATTEMPTS) {
+    lock.until = Date.now() + LOCKOUT_DURATION;
+    lock.attempts = 0;
+  }
+  localStorage.setItem(LOCKOUT_KEY, JSON.stringify(lock));
+}
+
+function clearLockout() {
+  localStorage.removeItem(LOCKOUT_KEY);
 }
 
 /* ── Helpers ─────────────────────────────────────────────────────── */
@@ -63,11 +123,65 @@ type Tab = "dashboard" | "events" | "editor" | "photos" | "export";
 /* ── Component ───────────────────────────────────────────────────── */
 
 export default function Admin() {
-  const [authed, setAuthed] = useState(() => sessionStorage.getItem(AUTH_KEY) === "1");
+  const [authed, setAuthed] = useState(() => !!getSessionToken());
   const [pw, setPw] = useState("");
-  const [pwError, setPwError] = useState(false);
+  const [pwError, setPwError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useDocumentHead({ title: "Admin — VinzryyySaga" });
+
+  // Auto-logout on session timeout
+  useEffect(() => {
+    if (!authed) return;
+    const check = setInterval(() => {
+      if (!getSessionToken()) setAuthed(false);
+    }, 30_000);
+    return () => clearInterval(check);
+  }, [authed]);
+
+  // Refresh session on user activity
+  useEffect(() => {
+    if (!authed) return;
+    const onActivity = () => refreshSession();
+    window.addEventListener("click", onActivity);
+    window.addEventListener("keydown", onActivity);
+    return () => {
+      window.removeEventListener("click", onActivity);
+      window.removeEventListener("keydown", onActivity);
+    };
+  }, [authed]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
+
+    const lock = getLockout();
+    if (lock.until > Date.now()) {
+      const secs = Math.ceil((lock.until - Date.now()) / 1000);
+      setPwError(`Too many attempts. Try again in ${secs}s`);
+      return;
+    }
+
+    setSubmitting(true);
+    const hash = await sha256(pw);
+
+    if (hash === ADMIN_SHA256) {
+      setSessionToken();
+      clearLockout();
+      setPw("");
+      setAuthed(true);
+    } else {
+      recordFailedAttempt();
+      const newLock = getLockout();
+      if (newLock.until > Date.now()) {
+        setPwError(`Too many attempts. Locked for 2 minutes`);
+      } else {
+        const remaining = MAX_ATTEMPTS - newLock.attempts;
+        setPwError(`Wrong password (${remaining} attempt${remaining === 1 ? "" : "s"} left)`);
+      }
+    }
+    setSubmitting(false);
+  };
 
   if (!authed) {
     return (
@@ -75,36 +189,27 @@ export default function Admin() {
         <div className="w-full max-w-sm rounded-xl border border-hairline bg-card p-8">
           <h1 className="mb-1 font-display text-2xl font-bold text-ink">Admin</h1>
           <p className="mb-6 font-mono text-xs text-muted">Enter password to continue</p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (simpleHash(pw) === ADMIN_HASH) {
-                sessionStorage.setItem(AUTH_KEY, "1");
-                setAuthed(true);
-              } else {
-                setPwError(true);
-                setTimeout(() => setPwError(false), 2000);
-              }
-            }}
-          >
+          <form onSubmit={handleLogin}>
             <input
               type="password"
               value={pw}
-              onChange={(e) => setPw(e.target.value)}
+              onChange={(e) => { setPw(e.target.value); setPwError(null); }}
               placeholder="Password"
               autoFocus
+              autoComplete="current-password"
               className={`w-full rounded-lg border bg-sumi px-4 py-3 font-mono text-sm text-ink outline-none transition-colors focus:border-crimson/50 ${
                 pwError ? "border-crimson" : "border-hairline"
               }`}
             />
             {pwError && (
-              <p className="mt-2 font-mono text-xs text-crimson">Wrong password</p>
+              <p className="mt-2 font-mono text-xs text-crimson">{pwError}</p>
             )}
             <button
               type="submit"
-              className="mt-4 w-full rounded-lg bg-crimson py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-crimson/80"
+              disabled={submitting}
+              className="mt-4 w-full rounded-lg bg-crimson py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-crimson/80 disabled:opacity-50"
             >
-              Enter
+              {submitting ? "Verifying..." : "Enter"}
             </button>
           </form>
         </div>
@@ -112,10 +217,10 @@ export default function Admin() {
     );
   }
 
-  return <AdminPanel />;
+  return <AdminPanel onLogout={() => { sessionStorage.removeItem(AUTH_KEY); setAuthed(false); }} />;
 }
 
-function AdminPanel() {
+function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [events, setEvents] = useState<Event[]>(loadEvents);
   const [tab, setTab] = useState<Tab>("dashboard");
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
@@ -217,12 +322,20 @@ function AdminPanel() {
               Client-side event manager &middot; changes saved to localStorage
             </p>
           </div>
-          <button
-            onClick={resetToSource}
-            className="rounded-lg border border-hairline px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-crimson/40 hover:text-crimson"
-          >
-            Reset to source
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={resetToSource}
+              className="rounded-lg border border-hairline px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-crimson/40 hover:text-crimson"
+            >
+              Reset to source
+            </button>
+            <button
+              onClick={onLogout}
+              className="rounded-lg border border-crimson/30 px-4 py-2 font-mono text-xs text-crimson transition-colors hover:bg-crimson/10"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Tab bar */}
