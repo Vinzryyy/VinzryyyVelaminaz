@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router";
 import { SakuraPetals } from "@/components/SakuraPetals";
 import { Nav } from "@/components/Nav";
@@ -10,6 +10,18 @@ const EventPage = lazy(() => import("@/pages/EventPage"));
 const Admin = lazy(() => import("@/pages/Admin"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
+// SHA-256 hash of the admin path (without leading slash) so the URL isn't visible in source
+const ADMIN_PATH_HASH = "967d2fa83ac1a3eb2e824fe723b21ce38581d0db7f9fe80a657af2c2e70fc022";
+
+async function checkAdminPath(path: string): Promise<boolean> {
+  const segment = path.replace(/^\//, "");
+  if (!segment) return false;
+  const data = new TextEncoder().encode(segment);
+  const buf = await crypto.subtle.digest("SHA-256", data);
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  return hex === ADMIN_PATH_HASH;
+}
+
 function PageLoader() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
@@ -20,6 +32,12 @@ function PageLoader() {
 
 export default function App() {
   const location = useLocation();
+  const [isAdminPath, setIsAdminPath] = useState(false);
+
+  // Check if current path is the admin route (hash-verified)
+  useEffect(() => {
+    checkAdminPath(location.pathname).then(setIsAdminPath);
+  }, [location.pathname]);
 
   // Scroll to top on route change (unless Home handles deferred scroll)
   useEffect(() => {
@@ -51,7 +69,7 @@ export default function App() {
             <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/events/:slug" element={<EventPage />} />
-              <Route path="/FeniHelismaNaylaDevi" element={<Admin />} />
+              {isAdminPath && <Route path={location.pathname} element={<Admin />} />}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

@@ -9,7 +9,22 @@ import type { Event, Photo } from "@/lib/types";
 
 /* ── Auth ────────────────────────────────────────────────────────── */
 
-const ADMIN_SHA256 = "c250b12c3b4c2a4229f5232d6590ad40b4a6d9957269ddb67eb94c4bffb01465";
+// Day-rotating password hashes (Mon=0 … Sat=5); Sunday accepts all
+const DAILY_HASHES: string[] = [
+  "c250b12c3b4c2a4229f5232d6590ad40b4a6d9957269ddb67eb94c4bffb01465", // Mon
+  "2be1c838055405910e10bbb1191186eb52911f0a76b5022c7ac34e8c904b2643", // Tue
+  "8ecf7dcf000e21ccd9dd76aee0c7d4d825a5350d7c1fb5e2a779b924337a0621", // Wed
+  "f3b3d81590bf5f89ba1dd431b5d5b5c95ba235da2a1ad7ad23efa3a3ff0dddc9", // Thu
+  "ee754fe93cd7ad96a42ef936645fd7402030f408c0d173bfa8098337188e6163", // Fri
+  "f1cf1e3acc057506d55de1e2e3010f61184737de4a4a2dd827b8f99cd1dd40ab", // Sat
+];
+
+function getValidHashes(): string[] {
+  const day = new Date().getDay(); // 0=Sun,1=Mon…6=Sat
+  if (day === 0) return DAILY_HASHES; // Sunday: all valid
+  return [DAILY_HASHES[day - 1]];
+}
+
 const AUTH_KEY = "vinzryyy-admin-auth";
 const LOCKOUT_KEY = "vinzryyy-admin-lockout";
 const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
@@ -187,7 +202,7 @@ export default function Admin() {
     setSubmitting(true);
     const hash = await sha256(pw);
 
-    if (hash === ADMIN_SHA256) {
+    if (getValidHashes().includes(hash)) {
       setSessionToken();
       clearLockout();
       setPw("");
@@ -898,7 +913,7 @@ function EventEditor({
   // Auto-save text fields when form changes (debounced)
   const formRef = useRef(form);
   formRef.current = form;
-  const saveTimer = useRef<ReturnType<typeof setTimeout>>();
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => {
     saveTimer.current = setTimeout(() => {
       const { photos, ...rest } = formRef.current;

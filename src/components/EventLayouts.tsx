@@ -452,7 +452,7 @@ export function SplitScrollLayout({ photos, onOpen }: LayoutProps) {
 export function CarouselLayout({ photos, onOpen }: LayoutProps) {
   const [idx, setIdx] = useState(0);
   const photo = photos[idx];
-  const timerRef = useRef<number>();
+  const timerRef = useRef<number>(undefined);
 
   const next = useCallback(() => setIdx((i) => (i + 1) % photos.length), [photos.length]);
   const prev = useCallback(() => setIdx((i) => (i - 1 + photos.length) % photos.length), [photos.length]);

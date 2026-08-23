@@ -266,8 +266,7 @@ export function Lightbox({
             <img
               ref={(el) => {
                 // Forward ref to imgRef
-                if (typeof imgRef === "function") imgRef(el);
-                else if (imgRef) (imgRef as React.MutableRefObject<HTMLImageElement | null>).current = el;
+                if (imgRef) (imgRef as React.MutableRefObject<HTMLImageElement | null>).current = el;
                 // Handle cached images — if already complete, mark as loaded
                 if (el?.complete && el.naturalWidth > 0 && !loaded) {
                   setLoaded(true);
