@@ -624,7 +624,151 @@ function StatCard({ label, value }: { label: string; value: number }) {
 
 /* ── Event Editor ────────────────────────────────────────────────── */
 
-// Replaced by convertToWebP from imageUtils
+/* ── Layout Preview (mini version of each layout for editor) ──────── */
+
+function PhotoThumb({
+  photo, index, dropTarget,
+  onDragStart, onDragOver, onDrop, onDragEnd, onDelete,
+  className,
+}: {
+  photo: Photo; index: number; dropTarget: number | null;
+  onDragStart: (i: number) => (e: React.DragEvent) => void;
+  onDragOver: (i: number) => (e: React.DragEvent) => void;
+  onDrop: (i: number) => (e: React.DragEvent) => void;
+  onDragEnd: () => void;
+  onDelete: (i: number) => void;
+  className: string;
+}) {
+  return (
+    <div
+      draggable
+      onDragStart={onDragStart(index)}
+      onDragOver={onDragOver(index)}
+      onDrop={onDrop(index)}
+      onDragEnd={onDragEnd}
+      className={`group relative cursor-grab overflow-hidden rounded-sm bg-card transition-all active:cursor-grabbing ${className} ${
+        dropTarget === index ? "ring-2 ring-crimson scale-105" : ""
+      }`}
+      title={`${photo.title || `Photo ${index + 1}`} — drag to reorder`}
+    >
+      {photo.src ? (
+        <img src={photo.src} alt="" className="h-full w-full object-cover pointer-events-none" />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center bg-faint/20 font-mono text-[8px] text-muted">{index + 1}</div>
+      )}
+      <span className="absolute left-0.5 top-0.5 rounded bg-sumi/70 px-1 py-0.5 font-mono text-[7px] text-ink/60 backdrop-blur-sm">{index + 1}</span>
+      <button
+        onClick={(e) => { e.stopPropagation(); onDelete(index); }}
+        className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded bg-sumi/70 text-[8px] text-ink/60 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 hover:bg-crimson hover:text-white"
+      >&times;</button>
+    </div>
+  );
+}
+
+function LayoutPreview({
+  layout, photos, dropTarget,
+  onReorderDragStart, onReorderDragOver, onReorderDrop, onReorderDragEnd, onDeletePhoto,
+}: {
+  layout: string;
+  photos: Photo[];
+  dropTarget: number | null;
+  onReorderDragStart: (i: number) => (e: React.DragEvent) => void;
+  onReorderDragOver: (i: number) => (e: React.DragEvent) => void;
+  onReorderDrop: (i: number) => (e: React.DragEvent) => void;
+  onReorderDragEnd: () => void;
+  onDeletePhoto: (i: number) => void;
+}) {
+  if (photos.length === 0) return null;
+
+  const thumbProps = { dropTarget, onDragStart: onReorderDragStart, onDragOver: onReorderDragOver, onDrop: onReorderDrop, onDragEnd: onReorderDragEnd, onDelete: onDeletePhoto };
+
+  switch (layout) {
+    case "magazine":
+      return (
+        <div className="space-y-1">
+          <div className="grid gap-1 grid-cols-2">
+            {photos[0] && <PhotoThumb photo={photos[0]} index={0} {...thumbProps} className="aspect-[4/3] col-span-1 row-span-2" />}
+            {photos.slice(1, 3).map((p, i) => (
+              <PhotoThumb key={i + 1} photo={p} index={i + 1} {...thumbProps} className="aspect-[3/2]" />
+            ))}
+          </div>
+          <div className="grid grid-cols-4 gap-1">
+            {photos.slice(3).map((p, i) => (
+              <PhotoThumb key={i + 3} photo={p} index={i + 3} {...thumbProps} className="aspect-square" />
+            ))}
+          </div>
+        </div>
+      );
+
+    case "filmstrip":
+      return (
+        <div className="filmstrip flex gap-1 overflow-x-auto pb-2">
+          {photos.map((p, i) => (
+            <PhotoThumb key={i} photo={p} index={i} {...thumbProps} className="aspect-[2/3] w-20 flex-none" />
+          ))}
+        </div>
+      );
+
+    case "masonry": {
+      const cols: { photo: Photo; idx: number }[][] = [[], [], []];
+      photos.forEach((p, i) => cols[i % 3].push({ photo: p, idx: i }));
+      return (
+        <div className="grid grid-cols-3 gap-1">
+          {cols.map((col, ci) => (
+            <div key={ci} className="flex flex-col gap-1">
+              {col.map(({ photo, idx }) => (
+                <PhotoThumb key={idx} photo={photo} index={idx} {...thumbProps}
+                  className={idx % 3 === 0 ? "aspect-[3/4]" : idx % 3 === 1 ? "aspect-square" : "aspect-[4/3]"} />
+              ))}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    case "spotlight":
+      return (
+        <div className="space-y-2">
+          {photos[0] && <PhotoThumb photo={photos[0]} index={0} {...thumbProps} className="aspect-[3/2] w-full" />}
+          <div className="flex gap-1 overflow-x-auto">
+            {photos.map((p, i) => (
+              <PhotoThumb key={i} photo={p} index={i} {...thumbProps} className="h-12 w-12 flex-none" />
+            ))}
+          </div>
+        </div>
+      );
+
+    case "fullbleed":
+      return (
+        <div className="space-y-1">
+          {photos.map((p, i) => (
+            <PhotoThumb key={i} photo={p} index={i} {...thumbProps} className="aspect-[21/9] w-full" />
+          ))}
+        </div>
+      );
+
+    case "timeline":
+      return (
+        <div className="relative ml-4 border-l-2 border-hairline pl-4">
+          {photos.map((p, i) => (
+            <div key={i} className="relative mb-2 last:mb-0">
+              <div className="absolute -left-[calc(1rem+5px)] top-2 h-2 w-2 rounded-full border-2 border-crimson bg-sumi" />
+              <PhotoThumb photo={p} index={i} {...thumbProps} className="aspect-[16/9] w-full" />
+            </div>
+          ))}
+        </div>
+      );
+
+    default: // classic
+      return (
+        <div className="grid grid-cols-4 gap-1 sm:grid-cols-5 md:grid-cols-6">
+          {photos.map((p, i) => (
+            <PhotoThumb key={i} photo={p} index={i} {...thumbProps} className="aspect-square" />
+          ))}
+        </div>
+      );
+  }
+}
 
 function useDrop(onDrop: (files: File[]) => void) {
   const [over, setOver] = useState(false);
@@ -947,7 +1091,7 @@ function EventEditor({
             </div>
           </div>
 
-          {/* Photo grid — drag & drop zone */}
+          {/* Photo grid — drag & drop zone with layout preview */}
           <div
             {...gridDrop.props}
             className={`p-4 transition-all ${gridDrop.over ? "ring-2 ring-inset ring-crimson" : ""}`}
@@ -955,6 +1099,9 @@ function EventEditor({
             <div className="mb-3 flex items-center gap-3">
               <span className="font-jp text-xs text-gold/40" lang="ja">枠</span>
               <span className="font-display text-sm font-bold text-ink">All frames</span>
+              <span className="rounded bg-crimson/10 px-2 py-0.5 font-mono text-[9px] text-crimson">
+                {form.layout ?? "classic"}
+              </span>
               <div className="h-px flex-1 bg-hairline" />
               <span className="font-mono text-[9px] text-faint">{event.photos.length} photographs</span>
             </div>
@@ -965,51 +1112,23 @@ function EventEditor({
               </div>
             )}
 
-            <div className="grid grid-cols-4 gap-1 sm:grid-cols-5 md:grid-cols-6">
-              {event.photos.map((p, i) => (
-                <div
-                  key={i}
-                  draggable
-                  onDragStart={onReorderDragStart(i)}
-                  onDragOver={onReorderDragOver(i)}
-                  onDrop={onReorderDrop(i)}
-                  onDragEnd={onReorderDragEnd}
-                  className={`group relative aspect-square cursor-grab overflow-hidden rounded-sm bg-card transition-all active:cursor-grabbing ${
-                    dropTarget === i ? "ring-2 ring-crimson scale-105" : ""
-                  }`}
-                  title={`${p.title || `Photo ${i + 1}`} — drag to reorder`}
-                >
-                  {p.src ? (
-                    <img src={p.src} alt="" className="h-full w-full object-cover pointer-events-none" />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-faint/20 font-mono text-[8px] text-muted">
-                      {i + 1}
-                    </div>
-                  )}
-                  {/* Index badge */}
-                  <span className="absolute left-0.5 top-0.5 rounded bg-sumi/70 px-1 py-0.5 font-mono text-[7px] text-ink/60 backdrop-blur-sm">
-                    {i + 1}
-                  </span>
-                  {/* Delete button */}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const photos = event.photos.filter((_, j) => j !== i);
-                      onPhotosChange(photos);
-                    }}
-                    className="absolute right-0.5 top-0.5 flex h-4 w-4 items-center justify-center rounded bg-sumi/70 text-[8px] text-ink/60 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 hover:bg-crimson hover:text-white"
-                    title="Remove photo"
-                  >
-                    &times;
-                  </button>
-                </div>
-              ))}
-              {event.photos.length === 0 && !gridDrop.over && (
-                <div className="col-span-full flex items-center justify-center rounded-lg border border-dashed border-hairline py-8">
-                  <p className="font-mono text-xs text-muted">Drag & drop photos here</p>
-                </div>
-              )}
-            </div>
+            {/* Layout-specific mini preview */}
+            <LayoutPreview
+              layout={form.layout ?? "classic"}
+              photos={event.photos}
+              dropTarget={dropTarget}
+              onReorderDragStart={onReorderDragStart}
+              onReorderDragOver={onReorderDragOver}
+              onReorderDrop={onReorderDrop}
+              onReorderDragEnd={onReorderDragEnd}
+              onDeletePhoto={(i) => onPhotosChange(event.photos.filter((_, j) => j !== i))}
+            />
+
+            {event.photos.length === 0 && !gridDrop.over && (
+              <div className="flex items-center justify-center rounded-lg border border-dashed border-hairline py-8">
+                <p className="font-mono text-xs text-muted">Drag & drop photos here</p>
+              </div>
+            )}
           </div>
 
           {/* Card preview */}
