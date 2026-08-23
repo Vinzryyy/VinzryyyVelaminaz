@@ -1252,19 +1252,69 @@ function PhotoManager({
       {sequences.size > 0 && (
         <div className="rounded-lg border border-hairline bg-card/40 p-4">
           <h3 className="mb-3 font-mono text-[10px] uppercase tracking-wider text-muted">Sequences</h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="space-y-2">
             {[...sequences.entries()].map(([name, { display, indices }]) => (
-              <button
-                key={name}
-                onClick={() => setSelected(new Set(indices))}
-                className={`rounded-full px-3 py-1.5 font-mono text-xs transition-colors ${seqColor(name)}`}
-              >
-                {name}
-                <span className="ml-1.5 opacity-60">{indices.length}</span>
-                <span className="ml-1 text-[9px] opacity-50">
-                  {display === "stack" ? "⊞" : display === "slideshow" ? "▶" : display === "collage" ? "⊟" : "═"}
-                </span>
-              </button>
+              <div key={name} className={`flex items-center gap-2 rounded-lg border border-hairline bg-sumi/50 px-3 py-2`}>
+                {/* Select all in group */}
+                <button
+                  onClick={() => setSelected(new Set(indices))}
+                  className={`shrink-0 rounded-full px-2.5 py-1 font-mono text-xs ${seqColor(name)}`}
+                  title="Select all photos in this group"
+                >
+                  {name}
+                  <span className="ml-1.5 opacity-60">{indices.length}</span>
+                </button>
+
+                {/* Rename */}
+                <input
+                  type="text"
+                  defaultValue={name}
+                  onBlur={(e) => {
+                    const newName = e.target.value.trim();
+                    if (newName && newName !== name) {
+                      commit((p) => p.map((ph) =>
+                        ph.sequence === name ? { ...ph, sequence: newName } : ph
+                      ));
+                    }
+                  }}
+                  onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }}
+                  className="min-w-0 flex-1 rounded border border-hairline bg-transparent px-2 py-1 font-mono text-xs text-ink outline-none focus:border-crimson/50"
+                  title="Rename sequence"
+                />
+
+                {/* Display mode */}
+                <select
+                  value={display ?? "filmstrip"}
+                  onChange={(e) => {
+                    const newDisplay = e.target.value as Photo["sequenceDisplay"];
+                    commit((p) => p.map((ph) =>
+                      ph.sequence === name ? { ...ph, sequenceDisplay: newDisplay } : ph
+                    ));
+                  }}
+                  className="rounded border border-hairline bg-transparent px-2 py-1 font-mono text-[10px] text-ink outline-none focus:border-crimson/50"
+                  title="Change display mode"
+                >
+                  <option value="filmstrip">═ Filmstrip</option>
+                  <option value="stack">⊞ Stack</option>
+                  <option value="slideshow">▶ Slideshow</option>
+                  <option value="collage">⊟ Collage</option>
+                </select>
+
+                {/* Delete sequence (ungroup all) */}
+                <button
+                  onClick={() => {
+                    if (confirm(`Remove sequence "${name}"? Photos will be ungrouped.`)) {
+                      commit((p) => p.map((ph) =>
+                        ph.sequence === name ? { ...ph, sequence: undefined, sequenceDisplay: undefined } : ph
+                      ));
+                    }
+                  }}
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-muted transition-colors hover:bg-crimson/10 hover:text-crimson"
+                  title="Delete sequence"
+                >
+                  &times;
+                </button>
+              </div>
             ))}
           </div>
         </div>
