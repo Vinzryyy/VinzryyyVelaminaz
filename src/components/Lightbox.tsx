@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router";
 import type { Photo, Event } from "@/lib/types";
 import { toKanji } from "@/lib/data";
 import { KatanaDivider } from "./KatanaDivider";
-import { ResponsiveImg } from "./ResponsiveImg";
 import { useZoomPan, MIN_ZOOM, MAX_ZOOM } from "@/lib/useZoomPan";
 
 /**
@@ -23,6 +22,7 @@ export function Lightbox({
 }) {
   const [idx, setIdx] = useState(startIndex);
   const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -39,12 +39,14 @@ export function Lightbox({
 
   const prev = useCallback(() => {
     setLoaded(false);
+    setError(false);
     reset();
     setIdx((i) => (i - 1 + photos.length) % photos.length);
   }, [photos.length, reset]);
 
   const next = useCallback(() => {
     setLoaded(false);
+    setError(false);
     reset();
     setIdx((i) => (i + 1) % photos.length);
   }, [photos.length, reset]);
@@ -243,22 +245,41 @@ export function Lightbox({
           </button>
 
           {/* Spinner */}
-          {hasSrc && !loaded && (
+          {hasSrc && !loaded && !error && (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="h-8 w-8 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
             </div>
           )}
 
+          {/* Error message */}
+          {error && (
+            <div className="absolute inset-0 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+              <div className="text-center">
+                <p className="font-mono text-sm text-crimson">Image failed to load</p>
+                <p className="mt-1 font-mono text-[10px] text-muted break-all px-8">{photo.src}</p>
+              </div>
+            </div>
+          )}
+
           {/* Image or placeholder */}
           {hasSrc ? (
-            <ResponsiveImg
-              ref={imgRef}
+            <img
+              ref={(el) => {
+                // Forward ref to imgRef
+                if (typeof imgRef === "function") imgRef(el);
+                else if (imgRef) (imgRef as React.MutableRefObject<HTMLImageElement | null>).current = el;
+                // Handle cached images — if already complete, mark as loaded
+                if (el?.complete && el.naturalWidth > 0 && !loaded) {
+                  setLoaded(true);
+                }
+              }}
               key={photo.src}
-              src={photo.src!}
+              src={photo.src}
               alt={photo.title}
               width={photo.width}
               height={photo.height}
               onLoad={() => setLoaded(true)}
+              onError={() => { setError(true); setLoaded(true); }}
               onClick={(e) => {
                 e.stopPropagation();
                 if (!didDrag()) toggleZoom({ clientX: e.clientX, clientY: e.clientY });
@@ -266,7 +287,6 @@ export function Lightbox({
               onDoubleClick={(e) => e.preventDefault()}
               decoding="async"
               draggable={false}
-              sizes="100vw"
               {...handlers}
               style={{
                 transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${zoom})`,
@@ -277,7 +297,7 @@ export function Lightbox({
                 touchAction: "none",
                 willChange: "transform",
               }}
-              className={`max-h-full max-w-full select-none object-contain shadow-2xl ${loaded ? "opacity-100" : "opacity-0"}`}
+              className={`max-h-full max-w-full select-none object-contain shadow-2xl ${loaded && !error ? "opacity-100" : "opacity-0"}`}
             />
           ) : (
             <div
