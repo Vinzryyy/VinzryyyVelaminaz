@@ -302,6 +302,41 @@ img {
   animation: skeleton-sweep 1.6s ease-in-out infinite;
 }
 
+/* ── iOS / touch device fixes ─────────────────────────────────── */
+
+/* Prevent iOS Safari auto-zoom on input focus (needs ≥16px) */
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* Remove tap highlight on iOS */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Show hover-hidden elements on touch devices */
+@media (hover: none) {
+  /* Admin quick action buttons */
+  .group .opacity-0 {
+    opacity: 0.7 !important;
+  }
+
+  /* Layout hover overlays */
+  .group-hover\:opacity-100 {
+    opacity: 1;
+  }
+}
+
+/* iOS body scroll lock (used by Lightbox) */
+.body-locked {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+}
+
 /* ── Reduced motion ───────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {

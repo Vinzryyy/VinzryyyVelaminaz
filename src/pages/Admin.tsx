@@ -939,11 +939,12 @@ function EventEditor({
   const coverSrc = form.cover ?? event.photos[0]?.src;
 
   const [converting, setConverting] = useState<string | null>(null);
+  const coverInputRef = useRef<HTMLInputElement>(null);
 
-  // Drop handler for cover image — uploads to Cloudinary
-  const coverDrop = useDrop(async (files) => {
+  // Cover upload handler (shared by drag-drop and file picker)
+  const uploadCover = async (files: File[]) => {
     try {
-      setConverting("Uploading cover to Cloudinary...");
+      setConverting("Uploading cover...");
       const result = await uploadToCloudinary(files[0], `gallery/${form.slug}`);
       set("cover", result.secureUrl);
       setConverting(`Cover uploaded: ${formatSize(result.bytes)}`);
@@ -951,7 +952,9 @@ function EventEditor({
       setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
     }
     setTimeout(() => setConverting(null), 3000);
-  });
+  };
+
+  const coverDrop = useDrop((files) => uploadCover(files));
 
   // Drop handler for photo grid — uploads all to Cloudinary
   const gridDrop = useDrop(async (files) => {
@@ -1146,10 +1149,18 @@ function EventEditor({
         </div>
 
         <div className="overflow-hidden rounded-lg border border-hairline">
-          {/* Cover hero — drag & drop zone */}
+          {/* Cover hero — drag & drop + tap to upload */}
+          <input
+            ref={coverInputRef}
+            type="file"
+            accept="image/*,.jpg,.jpeg,.png,.webp,.heic"
+            className="hidden"
+            onChange={(e) => { if (e.target.files?.length) uploadCover([...e.target.files]); e.target.value = ""; }}
+          />
           <div
             {...coverDrop.props}
-            className={`relative h-48 overflow-hidden transition-all ${coverDrop.over ? "ring-2 ring-inset ring-crimson" : ""}`}
+            onClick={() => coverInputRef.current?.click()}
+            className={`relative h-48 cursor-pointer overflow-hidden transition-all ${coverDrop.over ? "ring-2 ring-inset ring-crimson" : ""}`}
           >
             {coverSrc ? (
               <img src={coverSrc} alt="" className="h-full w-full object-cover" />
@@ -1159,7 +1170,7 @@ function EventEditor({
                   <svg className="mx-auto mb-2 h-8 w-8 text-faint" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <p className="font-mono text-xs text-muted">Drop cover image here</p>
+                  <p className="font-mono text-xs text-muted">Tap or drop cover image</p>
                 </div>
               </div>
             )}
@@ -1255,7 +1266,7 @@ function EventEditor({
 
             {event.photos.length === 0 && !gridDrop.over && (
               <div className="flex items-center justify-center rounded-lg border border-dashed border-hairline py-8">
-                <p className="font-mono text-xs text-muted">Drag & drop photos here</p>
+              <p className="font-mono text-xs text-muted">Tap or drag photos here</p>
               </div>
             )}
           </div>
@@ -1477,7 +1488,7 @@ function PhotoManager({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/*,.jpg,.jpeg,.png,.webp,.heic"
             multiple
             className="hidden"
             onChange={(e) => { if (e.target.files?.length) addFromFiles(e.target.files); e.target.value = ""; }}

@@ -282,15 +282,16 @@ export function PolaroidLayout({ photos, onOpen }: LayoutProps) {
     () => photos.map((_, i) => ((i * 37 + 13) % 25) - 12),
     [photos.length], // eslint-disable-line
   );
+  const [active, setActive] = useState<number | null>(null);
 
   return (
     <div className="flex flex-wrap justify-center gap-6 px-4 py-8">
       {photos.map((p, i) => (
         <button
           key={i}
-          className="group relative transition-transform duration-300 hover:!rotate-0 hover:scale-110 hover:z-10"
-          style={{ transform: `rotate(${angles[i]}deg)` }}
-          onClick={() => onOpen(i)}
+          className={`group relative transition-transform duration-300 hover:!rotate-0 hover:scale-110 hover:z-10 ${active === i ? "!rotate-0 scale-110 z-10" : ""}`}
+          style={{ transform: active === i ? "rotate(0deg) scale(1.1)" : `rotate(${angles[i]}deg)` }}
+          onClick={() => { if (active === i) onOpen(i); else setActive(i); }}
         >
           <div className="rounded bg-white p-2 pb-10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
             <div className="h-40 w-36 overflow-hidden sm:h-48 sm:w-44">
@@ -313,6 +314,8 @@ export function PolaroidLayout({ photos, onOpen }: LayoutProps) {
 /* ── Honeycomb / Hexagon ─────────────────────────────────────────── */
 
 export function HoneycombLayout({ photos, onOpen }: LayoutProps) {
+  const [active, setActive] = useState<number | null>(null);
+
   return (
     <div className="flex flex-wrap justify-center gap-2 px-4 py-6">
       {photos.map((p, i) => {
@@ -320,7 +323,7 @@ export function HoneycombLayout({ photos, onOpen }: LayoutProps) {
         return (
           <button
             key={i}
-            className="group relative overflow-hidden transition-transform duration-300 hover:scale-110 hover:z-10"
+            className={`group relative overflow-hidden transition-transform duration-300 hover:scale-110 hover:z-10 ${active === i ? "scale-110 z-10" : ""}`}
             style={{
               width: "130px",
               height: "150px",
@@ -328,15 +331,15 @@ export function HoneycombLayout({ photos, onOpen }: LayoutProps) {
               marginLeft: isOddRow && i % 4 === 0 ? "68px" : undefined,
               marginTop: i >= 4 ? "-20px" : undefined,
             }}
-            onClick={() => onOpen(i)}
+            onClick={() => { if (active === i) onOpen(i); else setActive(i); }}
           >
             {p.src ? (
               <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
             ) : (
               <div className="h-full w-full" style={{ background: placeholder(i) }} />
             )}
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/40">
-              <span className="font-display text-xs font-bold text-white opacity-0 transition-opacity group-hover:opacity-100">{p.title}</span>
+            <div className={`pointer-events-none absolute inset-0 flex items-center justify-center transition-colors ${active === i ? "bg-black/40" : "bg-black/0 group-hover:bg-black/40"}`}>
+              <span className={`font-display text-xs font-bold text-white transition-opacity ${active === i ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>{p.title}</span>
             </div>
           </button>
         );
@@ -348,17 +351,19 @@ export function HoneycombLayout({ photos, onOpen }: LayoutProps) {
 /* ── Diagonal Slices ─────────────────────────────────────────────── */
 
 export function DiagonalLayout({ photos, onOpen }: LayoutProps) {
+  const [active, setActive] = useState<number | null>(null);
+
   return (
     <div className="flex h-[500px] overflow-hidden">
       {photos.map((p, i) => (
         <button
           key={i}
-          className="group relative flex-1 overflow-hidden transition-all duration-500 hover:flex-[3]"
+          className={`group relative overflow-hidden transition-all duration-500 ${active === i ? "flex-[3]" : "flex-1 hover:flex-[3]"}`}
           style={{
             clipPath: "polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)",
             marginLeft: i > 0 ? "-4%" : undefined,
           }}
-          onClick={() => onOpen(i)}
+          onClick={() => { if (active === i) onOpen(i); else setActive(i); }}
         >
           {p.src ? (
             <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
@@ -463,7 +468,7 @@ export function CarouselLayout({ photos, onOpen }: LayoutProps) {
   if (!photo) return null;
 
   return (
-    <div className="space-y-4" onMouseEnter={pause} onMouseLeave={resume}>
+    <div className="space-y-4" onMouseEnter={pause} onMouseLeave={resume} onTouchStart={pause} onTouchEnd={resume}>
       <div className="relative aspect-[16/9] overflow-hidden rounded-lg border border-hairline bg-card">
         <button className="h-full w-full" onClick={() => onOpen(idx)}>
           {photo.src ? (

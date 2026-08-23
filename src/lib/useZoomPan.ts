@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export const MIN_ZOOM = 1;
 export const MAX_ZOOM = 4;
-const TOGGLE_ZOOM = 2.5;
+const TOGGLE_ZOOM = 1.8;
 const DRAG_SLOP = 3;
 
 interface Point { x: number; y: number; }

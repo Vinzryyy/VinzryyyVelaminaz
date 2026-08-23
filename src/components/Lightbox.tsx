@@ -117,8 +117,15 @@ export function Lightbox({
   /* ── Body scroll lock ───────────────────────────────────────── */
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    // iOS Safari needs position:fixed to truly prevent background scroll
+    const scrollY = window.scrollY;
+    document.body.classList.add("body-locked");
+    document.body.style.top = `-${scrollY}px`;
+    return () => {
+      document.body.classList.remove("body-locked");
+      document.body.style.top = "";
+      window.scrollTo(0, scrollY);
+    };
   }, []);
 
   /* ── Preload neighbors ──────────────────────────────────────── */
