@@ -549,6 +549,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
               <EventEditor
                 event={selectedEvent}
                 onChange={(patch) => { updateEvent(selectedEvent.slug, patch); notify("Saved"); }}
+                onPhotosChange={(photos) => { updateEvent(selectedEvent.slug, { photos }); notify("Photos updated"); }}
               />
             )}
           </div>
@@ -597,12 +598,37 @@ function StatCard({ label, value }: { label: string; value: number }) {
 
 /* ── Event Editor ────────────────────────────────────────────────── */
 
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.readAsDataURL(file);
+  });
+}
+
+function useDrop(onDrop: (files: File[]) => void) {
+  const [over, setOver] = useState(false);
+  const props = {
+    onDragOver: (e: React.DragEvent) => { e.preventDefault(); setOver(true); },
+    onDragLeave: () => setOver(false),
+    onDrop: (e: React.DragEvent) => {
+      e.preventDefault();
+      setOver(false);
+      const files = [...e.dataTransfer.files].filter((f) => f.type.startsWith("image/"));
+      if (files.length) onDrop(files);
+    },
+  };
+  return { over, props };
+}
+
 function EventEditor({
   event,
   onChange,
+  onPhotosChange,
 }: {
   event: Event;
   onChange: (patch: Partial<Event>) => void;
+  onPhotosChange: (photos: Photo[]) => void;
 }) {
   const [form, setForm] = useState<Event>(deepClone(event));
 
@@ -641,6 +667,35 @@ function EventEditor({
   );
 
   const coverSrc = form.cover ?? event.photos[0]?.src;
+
+  // Drop handler for cover image
+  const coverDrop = useDrop(async (files) => {
+    const url = await fileToDataUrl(files[0]);
+    set("cover", url);
+  });
+
+  // Drop handler for photo grid
+  const gridDrop = useDrop(async (files) => {
+    const newPhotos = await Promise.all(
+      files.map(async (f) => ({
+        title: f.name.replace(/\.[^.]+$/, ""),
+        story: "",
+        src: await fileToDataUrl(f),
+      })),
+    );
+    onPhotosChange([...event.photos, ...newPhotos]);
+  });
+
+  // Editable text helper — contentEditable span that syncs back
+  const editable = (key: keyof Event, className: string) => (
+    <span
+      contentEditable
+      suppressContentEditableWarning
+      className={`${className} outline-none ring-crimson/30 focus:ring-1 focus:ring-offset-1 focus:ring-offset-sumi`}
+      onBlur={(e) => set(key, (e.target.textContent ?? "") as Event[typeof key])}
+      dangerouslySetInnerHTML={{ __html: (form[key] as string) || "" }}
+    />
+  );
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
@@ -690,54 +745,63 @@ function EventEditor({
         </div>
       </div>
 
-      {/* Right: Event Page Preview */}
+      {/* Right: Interactive Event Page Preview */}
       <div className="space-y-4">
-        <h2 className="font-display text-xl font-bold text-ink">Event Page Preview</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="font-display text-xl font-bold text-ink">Event Page Preview</h2>
+          <span className="font-mono text-[9px] text-muted">Click text to edit &middot; drag images to upload</span>
+        </div>
 
         <div className="overflow-hidden rounded-lg border border-hairline">
-          {/* Cover hero */}
-          {coverSrc ? (
-            <div className="relative h-48 overflow-hidden">
+          {/* Cover hero — drag & drop zone */}
+          <div
+            {...coverDrop.props}
+            className={`relative h-48 overflow-hidden transition-all ${coverDrop.over ? "ring-2 ring-inset ring-crimson" : ""}`}
+          >
+            {coverSrc ? (
               <img src={coverSrc} alt="" className="h-full w-full object-cover" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 z-10 p-4">
-                <span className="mb-2 inline-block rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono text-[9px] uppercase tracking-widest text-ink/80">
-                  ← All events
-                </span>
-                {form.group && (
-                  <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.35em] text-sakura/60">
-                    {form.group}
-                  </p>
-                )}
-                <h3 className="font-display text-xl font-bold text-ink">
-                  {form.title || "Untitled"}
-                </h3>
+            ) : (
+              <div className="flex h-full w-full items-center justify-center bg-card/60">
+                <div className="text-center">
+                  <svg className="mx-auto mb-2 h-8 w-8 text-faint" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <p className="font-mono text-xs text-muted">Drop cover image here</p>
+                </div>
               </div>
+            )}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
+            {coverDrop.over && (
+              <div className="absolute inset-0 flex items-center justify-center bg-crimson/20 backdrop-blur-sm">
+                <p className="font-mono text-sm font-semibold text-white">Drop to set cover</p>
+              </div>
+            )}
+            <div className="absolute bottom-0 left-0 z-10 p-4">
+              <span className="mb-2 inline-block rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono text-[9px] uppercase tracking-widest text-ink/80">
+                ← All events
+              </span>
+              {form.group && (
+                <p className="mb-1 font-mono text-[9px] uppercase tracking-[0.35em] text-sakura/60">
+                  {form.group}
+                </p>
+              )}
+              {editable("title", "block font-display text-xl font-bold text-ink")}
             </div>
-          ) : (
-            <div className="bg-card/60 p-6">
-              <h3 className="font-display text-xl font-bold text-ink">{form.title || "Untitled"}</h3>
-            </div>
-          )}
+          </div>
 
-          {/* Header section */}
+          {/* Header section — editable */}
           <div className="border-b border-hairline p-5">
             <div className="flex gap-4">
-              {/* Tate text */}
               {form.tateText && (
                 <div className="hidden shrink-0 sm:block">
-                  <span className="tate font-jp text-[10px] tracking-[0.5em] text-gold/30" lang="ja">
-                    {form.tateText}
-                  </span>
+                  {editable("tateText", "tate font-jp text-[10px] tracking-[0.5em] text-gold/30")}
                 </div>
               )}
               <div className="space-y-3">
                 <p className="font-mono text-[9px] uppercase tracking-[0.35em] text-sakura/60">
-                  {form.location || "Location"} &middot; {form.date || "Date"}
+                  {editable("location", "text-sakura/60")} &middot; {editable("date", "text-sakura/60")}
                 </p>
-                <p className="text-sm leading-6 text-muted">
-                  {form.description || "No description"}
-                </p>
+                {editable("description", "block text-sm leading-6 text-muted")}
                 <div className="h-0.5 w-16 bg-gradient-to-r from-crimson to-gold" />
               </div>
             </div>
@@ -763,14 +827,24 @@ function EventEditor({
             </div>
           </div>
 
-          {/* Photo grid preview */}
-          <div className="p-4">
+          {/* Photo grid — drag & drop zone */}
+          <div
+            {...gridDrop.props}
+            className={`p-4 transition-all ${gridDrop.over ? "ring-2 ring-inset ring-crimson" : ""}`}
+          >
             <div className="mb-3 flex items-center gap-3">
               <span className="font-jp text-xs text-gold/40" lang="ja">枠</span>
               <span className="font-display text-sm font-bold text-ink">All frames</span>
               <div className="h-px flex-1 bg-hairline" />
               <span className="font-mono text-[9px] text-faint">{event.photos.length} photographs</span>
             </div>
+
+            {gridDrop.over && (
+              <div className="mb-3 flex items-center justify-center rounded-lg border-2 border-dashed border-crimson/40 bg-crimson/5 py-6">
+                <p className="font-mono text-sm text-crimson">Drop photos to add</p>
+              </div>
+            )}
+
             <div className="grid grid-cols-4 gap-1">
               {event.photos.slice(0, 8).map((p, i) => (
                 <div key={i} className="aspect-square overflow-hidden rounded-sm bg-card">
@@ -786,6 +860,11 @@ function EventEditor({
               {event.photos.length > 8 && (
                 <div className="flex aspect-square items-center justify-center rounded-sm bg-card/60">
                   <span className="font-mono text-xs text-muted">+{event.photos.length - 8}</span>
+                </div>
+              )}
+              {event.photos.length === 0 && !gridDrop.over && (
+                <div className="col-span-4 flex items-center justify-center rounded-lg border border-dashed border-hairline py-8">
+                  <p className="font-mono text-xs text-muted">Drag & drop photos here</p>
                 </div>
               )}
             </div>
