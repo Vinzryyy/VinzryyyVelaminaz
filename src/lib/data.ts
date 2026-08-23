@@ -42,3 +42,20 @@ export function toKanji(n: number): string {
     .map((d) => digits[parseInt(d)])
     .join("");
 }
+
+/** Sentinel for "no group filter applied". */
+export const ALL_GROUPS = "All";
+
+/** Distinct group names in first-appearance order, prefixed with ALL_GROUPS. */
+export function getGroupNames(list: Event[]): string[] {
+  const seen: string[] = [];
+  for (const e of list) {
+    if (e.group && !seen.includes(e.group)) seen.push(e.group);
+  }
+  return [ALL_GROUPS, ...seen];
+}
+
+/** Counts events in a group; ALL_GROUPS counts everything. */
+export function countForGroup(list: Event[], group: string): number {
+  return group === ALL_GROUPS ? list.length : list.filter((e) => e.group === group).length;
+}

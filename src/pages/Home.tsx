@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router";
-import { getAllEvents } from "@/lib/data";
+import { getAllEvents, ALL_GROUPS } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { EventCard } from "@/components/EventCard";
+import { GroupFilter } from "@/components/GroupFilter";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 function pickRandom<T>(arr: T[], count: number): T[] {
@@ -61,11 +62,17 @@ export default function Home() {
 
   const { current, next, fading } = useCrossfade(allPhotos, 25_000, 2000);
 
+  const [activeGroup, setActiveGroup] = useState<string>(ALL_GROUPS);
+  const visibleEvents = useMemo(
+    () => (activeGroup === ALL_GROUPS ? events : events.filter((e) => e.group === activeGroup)),
+    [events, activeGroup]
+  );
+
   useDocumentHead({
     title: "VinzryyySaga — Event Photography",
     description: "Live performance, documentary travel, and quiet portrait work — photographed on location across Indonesia.",
   });
-  const totalFrames = events.reduce((n, e) => n + e.photos.length, 0);
+  const totalFrames = visibleEvents.reduce((n, e) => n + e.photos.length, 0);
 
   // Handle deferred scroll from Nav links on other pages
   useEffect(() => {
@@ -289,25 +296,40 @@ export default function Home() {
       <section id="events" className="px-6 pb-24 pt-8 md:px-10">
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
-            <div className="mb-10 flex items-center gap-4">
+            <div className="mb-6 flex items-center gap-4">
               <span className="font-jp text-sm text-gold/40" lang="ja" aria-hidden="true">巻</span>
               <h2 className="font-display text-2xl font-bold text-ink">Events</h2>
               <div className="h-px flex-1 bg-hairline" />
-              <span className="font-mono text-[11px] text-faint">
-                {events.length} events &middot; {totalFrames} frames
+              <span className="font-mono text-[11px] text-faint" aria-live="polite">
+                {visibleEvents.length} events &middot; {totalFrames} frames
               </span>
             </div>
           </ScrollReveal>
 
-          <ScrollReveal stagger>
-            <div className="grid gap-5 md:grid-cols-2">
-              {events.map((event, i) => (
-                <div key={event.slug} className="reveal-child">
-                  <EventCard event={event} index={i} />
-                </div>
-              ))}
+          <ScrollReveal>
+            <div className="mb-10">
+              <GroupFilter events={events} active={activeGroup} onChange={setActiveGroup} />
             </div>
           </ScrollReveal>
+
+          {/* Keyed on the filter so cards re-run their entrance animation */}
+          <div key={activeGroup} className="grid gap-5 md:grid-cols-2">
+            {visibleEvents.map((event, i) => (
+              <div
+                key={event.slug}
+                className="card-pop"
+                style={{ animationDelay: `${Math.min(i, 7) * 60}ms` }}
+              >
+                <EventCard event={event} index={i} />
+              </div>
+            ))}
+          </div>
+
+          {visibleEvents.length === 0 && (
+            <p className="py-16 text-center font-mono text-sm text-faint">
+              No events in this group yet.
+            </p>
+          )}
         </div>
       </section>
 
