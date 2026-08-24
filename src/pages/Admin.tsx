@@ -3,8 +3,6 @@ import { getAllEvents } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { getAnalytics } from "@/lib/analytics";
 import { getPageContent, savePageContent, resetPageContent, defaultContent, type PageContent } from "@/lib/pageContent";
-import { formatSize } from "@/lib/imageUtils";
-import { uploadToCloudinary, uploadBatch } from "@/lib/cloudinary";
 import type { Event, Photo } from "@/lib/types";
 
 /* ── Auth ────────────────────────────────────────────────────────── */
@@ -914,6 +912,14 @@ function LayoutPreview({
   }
 }
 
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.readAsDataURL(file);
+  });
+}
+
 function useDrop(onDrop: (files: File[]) => void) {
   const [over, setOver] = useState(false);
   const props = {
@@ -995,45 +1001,22 @@ function EventEditor({
 
   // Cover upload handler (shared by drag-drop and file picker)
   const uploadCover = async (files: File[]) => {
-    try {
-      setConverting("Uploading cover...");
-      const result = await uploadToCloudinary(files[0], `gallery/${form.slug}`);
-      set("cover", result.secureUrl);
-      setConverting(`Cover uploaded: ${formatSize(result.bytes)}`);
-    } catch (err) {
-      setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
-    }
-    setTimeout(() => setConverting(null), 3000);
+    const url = await fileToDataUrl(files[0]);
+    set("cover", url);
   };
 
   const coverDrop = useDrop((files) => uploadCover(files));
 
-  // Drop handler for photo grid — uploads all to Cloudinary
+  // Drop handler for photo grid
   const gridDrop = useDrop(async (files) => {
-    try {
-      setConverting(`Uploading ${files.length} image${files.length > 1 ? "s" : ""} to Cloudinary...`);
-      const { successful, failed } = await uploadBatch(
-        files,
-        `gallery/${form.slug}`,
-        (done, total) => setConverting(`Uploading ${done}/${total}...`),
-      );
-      if (successful.length > 0) {
-        const newPhotos = successful.map((r) => ({
-          title: r.publicId.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "",
-          story: "",
-          src: r.secureUrl,
-          width: r.width,
-          height: r.height,
-        }));
-        onPhotosChange([...event.photos, ...newPhotos]);
-      }
-      const totalBytes = successful.reduce((n, r) => n + r.bytes, 0);
-      const msg = `Added ${successful.length} photos (${formatSize(totalBytes)})`;
-      setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
-    } catch (err) {
-      setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
-    }
-    setTimeout(() => setConverting(null), 3000);
+    const newPhotos = await Promise.all(
+      files.map(async (f) => ({
+        title: f.name.replace(/\.[^.]+$/, ""),
+        story: "",
+        src: await fileToDataUrl(f),
+      })),
+    );
+    onPhotosChange([...event.photos, ...newPhotos]);
   });
 
   // File picker for photo grid (works on iPad unlike drag-drop)
@@ -1293,35 +1276,17 @@ function EventEditor({
             accept="image/*"
             multiple
             className="absolute h-0 w-0 overflow-hidden opacity-0"
-            onChange={(e) => {
+            onChange={async (e) => {
               if (e.target.files?.length) {
                 const files = [...e.target.files];
-                (async () => {
-                  try {
-                    setConverting(`Uploading ${files.length} image${files.length > 1 ? "s" : ""}...`);
-                    const { successful, failed } = await uploadBatch(
-                      files,
-                      `gallery/${form.slug}`,
-                      (done, total) => setConverting(`Uploading ${done}/${total}...`),
-                    );
-                    if (successful.length > 0) {
-                      const newPhotos = successful.map((r) => ({
-                        title: r.publicId.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "",
-                        story: "",
-                        src: r.secureUrl,
-                        width: r.width,
-                        height: r.height,
-                      }));
-                      onPhotosChange([...event.photos, ...newPhotos]);
-                    }
-                    const totalBytes = successful.reduce((n, r) => n + r.bytes, 0);
-                    const msg = `Added ${successful.length} photos (${formatSize(totalBytes)})`;
-                    setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
-                  } catch {
-                    setConverting("Upload failed");
-                  }
-                  setTimeout(() => setConverting(null), 3000);
-                })();
+                const newPhotos = await Promise.all(
+                  files.map(async (f) => ({
+                    title: f.name.replace(/\.[^.]+$/, ""),
+                    story: "",
+                    src: await fileToDataUrl(f),
+                  })),
+                );
+                onPhotosChange([...event.photos, ...newPhotos]);
               }
               e.target.value = "";
             }}
@@ -1481,27 +1446,19 @@ function PhotoManager({
     const imageFiles = [...files].filter((f) => f.type.startsWith("image/") || imageExts.test(f.name) || !f.type);
     if (imageFiles.length === 0) return;
 
-    setUploading(`Uploading ${imageFiles.length} photo${imageFiles.length > 1 ? "s" : ""}...`);
+    setUploading(`Adding ${imageFiles.length} photo${imageFiles.length > 1 ? "s" : ""}...`);
     try {
-      const { successful, failed } = await uploadBatch(
-        imageFiles,
-        `gallery/${event.slug}`,
-        (done, total) => setUploading(`Uploading ${done}/${total}...`),
-      );
-      if (successful.length > 0) {
-        const newPhotos = successful.map((r) => ({
-          title: r.publicId.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "",
+      const newPhotos = await Promise.all(
+        imageFiles.map(async (f) => ({
+          title: f.name.replace(/\.[^.]+$/, ""),
           story: "",
-          src: r.secureUrl,
-          width: r.width,
-          height: r.height,
-        }));
-        commit((p) => [...p, ...newPhotos]);
-      }
-      const msg = `Added ${successful.length} photo${successful.length !== 1 ? "s" : ""}`;
-      setUploading(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
+          src: await fileToDataUrl(f),
+        })),
+      );
+      commit((p) => [...p, ...newPhotos]);
+      setUploading(`Added ${newPhotos.length} photo${newPhotos.length !== 1 ? "s" : ""}`);
     } catch {
-      setUploading("Upload failed");
+      setUploading("Failed to read files");
     }
     setTimeout(() => setUploading(null), 3000);
   };
