@@ -16,7 +16,7 @@ export const events: Event[] = [
       {
         "title": "Cole I",
         "story": "Opening number. The spot hit and Cole owned it.",
-        "src": "/gallery/quadlips-performance-day1/Cole1.webp",
+        "src": "https://i.ibb.co/zW6cj1VK/Cole1.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/500",
@@ -25,7 +25,7 @@ export const events: Event[] = [
       {
         "title": "Cole II",
         "story": "Between songs, a quiet breath before the next cue.",
-        "src": "/gallery/quadlips-performance-day1/cole2.webp",
+        "src": "https://i.ibb.co/pvFfTKkw/cole2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -34,7 +34,7 @@ export const events: Event[] = [
       {
         "title": "Cole III",
         "story": "The monitor light caught her mid-phrase.",
-        "src": "/gallery/quadlips-performance-day1/cole3.webp",
+        "src": "https://i.ibb.co/b5dLkMM8/cole3.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/320",
@@ -43,7 +43,7 @@ export const events: Event[] = [
       {
         "title": "Cole IV",
         "story": "Encore energy — nothing held back.",
-        "src": "/gallery/quadlips-performance-day1/cole4.webp",
+        "src": "https://i.ibb.co/6Jygtc0f/cole4.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/500",
@@ -52,7 +52,7 @@ export const events: Event[] = [
       {
         "title": "Fame I",
         "story": "Fame stepped into the crimson wash and the crowd roared.",
-        "src": "/gallery/quadlips-performance-day1/Fame1.webp",
+        "src": "https://i.ibb.co/Q3JcgW07/Fame1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -61,7 +61,7 @@ export const events: Event[] = [
       {
         "title": "Fame II",
         "story": "A stolen glance between verses.",
-        "src": "/gallery/quadlips-performance-day1/Fame2.webp",
+        "src": "https://i.ibb.co/Kzxm6T2z/Fame2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -70,7 +70,7 @@ export const events: Event[] = [
       {
         "title": "Fame III",
         "story": "Stage right, amber flood. She hit the note perfectly.",
-        "src": "/gallery/quadlips-performance-day1/fame3.webp",
+        "src": "https://i.ibb.co/kgZgMN4G/fame3.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/320",
@@ -79,7 +79,7 @@ export const events: Event[] = [
       {
         "title": "Fame IV",
         "story": "The side-light carved her silhouette against the LED wall.",
-        "src": "/gallery/quadlips-performance-day1/fame4.webp",
+        "src": "https://i.ibb.co/xSSdnLnz/fame4.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/400",
@@ -88,7 +88,7 @@ export const events: Event[] = [
       {
         "title": "Fame V",
         "story": "End of the bridge — just her and the reverb.",
-        "src": "/gallery/quadlips-performance-day1/fame5.webp",
+        "src": "https://i.ibb.co/S79ckdP2/fame5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -97,7 +97,7 @@ export const events: Event[] = [
       {
         "title": "Feni I",
         "story": "Feni opened her solo with that look. The whole floor went quiet.",
-        "src": "/gallery/quadlips-performance-day1/Feni1.webp",
+        "src": "https://i.ibb.co/NgMxNd69/Feni1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -106,7 +106,7 @@ export const events: Event[] = [
       {
         "title": "Feni II",
         "story": "Between the chorus and the drop, a half-second of stillness.",
-        "src": "/gallery/quadlips-performance-day1/Feni2.webp",
+        "src": "https://i.ibb.co/FqKWg5wM/Feni2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -115,7 +115,7 @@ export const events: Event[] = [
       {
         "title": "Feni III",
         "story": "Blue wash. She found the camera for one beat.",
-        "src": "/gallery/quadlips-performance-day1/Feni3.webp",
+        "src": "https://i.ibb.co/354G5bP5/Feni3.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/320",
@@ -124,7 +124,7 @@ export const events: Event[] = [
       {
         "title": "Feni IV",
         "story": "The choreography hit its peak and so did the light.",
-        "src": "/gallery/quadlips-performance-day1/Feni4.webp",
+        "src": "https://i.ibb.co/RTpZCYbP/Feni4.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/500",
@@ -133,7 +133,7 @@ export const events: Event[] = [
       {
         "title": "Feni V",
         "story": "Backlit by the crowd's phone lights.",
-        "src": "/gallery/quadlips-performance-day1/Feni5.webp",
+        "src": "https://i.ibb.co/7xJtQcYf/Feni5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -142,7 +142,7 @@ export const events: Event[] = [
       {
         "title": "Feni VI",
         "story": "She turned upstage and the rim light did the rest.",
-        "src": "/gallery/quadlips-performance-day1/Feni6.webp",
+        "src": "https://i.ibb.co/gM8mdxTK/Feni6.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/400",
@@ -151,7 +151,7 @@ export const events: Event[] = [
       {
         "title": "Feni VII",
         "story": "Solo spotlight. Nothing else existed.",
-        "src": "/gallery/quadlips-performance-day1/Feni7.webp",
+        "src": "https://i.ibb.co/LXChSHp3/Feni7.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -160,7 +160,7 @@ export const events: Event[] = [
       {
         "title": "Feni VIII",
         "story": "Mid-dance, arms extended. The framing wrote itself.",
-        "src": "/gallery/quadlips-performance-day1/Feni8.webp",
+        "src": "https://i.ibb.co/fYbd6GJW/Feni8.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/320",
@@ -169,7 +169,7 @@ export const events: Event[] = [
       {
         "title": "Feni IX",
         "story": "Warm side-light and sweat. That's live performance.",
-        "src": "/gallery/quadlips-performance-day1/feni9.webp",
+        "src": "https://i.ibb.co/R4D9R75m/feni9.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -178,7 +178,7 @@ export const events: Event[] = [
       {
         "title": "Feni X",
         "story": "Last song energy — she gave everything.",
-        "src": "/gallery/quadlips-performance-day1/feni10.webp",
+        "src": "https://i.ibb.co/XMwLxnN/feni10.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/500",
@@ -187,7 +187,7 @@ export const events: Event[] = [
       {
         "title": "Feni XI",
         "story": "The encore bow. Gratitude in every line.",
-        "src": "/gallery/quadlips-performance-day1/feni11.webp",
+        "src": "https://i.ibb.co/nsHMdbcz/feni11.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -196,7 +196,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro I",
         "story": "Mashiro caught the blue wash perfectly.",
-        "src": "/gallery/quadlips-performance-day1/mashiro1.webp",
+        "src": "https://i.ibb.co/YTbm0k0H/mashiro1.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/400",
@@ -205,7 +205,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro & Feni",
         "story": "A duet moment — their harmonies matched the light.",
-        "src": "/gallery/quadlips-performance-day1/mashiro2feni.webp",
+        "src": "https://i.ibb.co/wFqhdRqX/mashiro2feni.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/320",
@@ -214,7 +214,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro III",
         "story": "Solo verse, center stage. The crowd held its breath.",
-        "src": "/gallery/quadlips-performance-day1/mashiro3.webp",
+        "src": "https://i.ibb.co/ynycnpJn/mashiro3.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -223,7 +223,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro IV",
         "story": "The amber flood from stage left.",
-        "src": "/gallery/quadlips-performance-day1/mashiro4.webp",
+        "src": "https://i.ibb.co/Ng3zNKq4/mashiro4.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/400",
@@ -232,7 +232,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro V",
         "story": "Between choruses — a smile meant for the front row.",
-        "src": "/gallery/quadlips-performance-day1/mashiro5.webp",
+        "src": "https://i.ibb.co/q3mHfZNy/mashiro5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -241,7 +241,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro VI",
         "story": "Closing number. Everything was gold.",
-        "src": "/gallery/quadlips-performance-day1/mashiro6.webp",
+        "src": "https://i.ibb.co/hx7yqNs0/mashiro6.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/500",
@@ -250,7 +250,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro & Cole",
         "story": "A choreography sync that lasted exactly two beats.",
-        "src": "/gallery/quadlips-performance-day1/mashirocole.webp",
+        "src": "https://i.ibb.co/JRr5FMjC/mashirocole.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/400",
@@ -259,7 +259,7 @@ export const events: Event[] = [
       {
         "title": "Full Squad",
         "story": "All four. Final formation. The crowd was on their feet.",
-        "src": "/gallery/quadlips-performance-day1/Quadlips Full Squad.webp",
+        "src": "https://i.ibb.co/vvxjQsvY/Quadlips-Full-Squad.webp",
         "lens": "RF 24-70mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/250",
@@ -444,112 +444,112 @@ export const events: Event[] = [
       {
         "title": "IMG_7380",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7380-1787561731440.webp",
+        "src": "https://i.ibb.co/sdRDbqtc/IMG-7380-1787561731440.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7382",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7382-1787561737316.webp",
+        "src": "https://i.ibb.co/Df6L01Kf/IMG-7382-1787561737316.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7383",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7383-1787561743111.webp",
+        "src": "https://i.ibb.co/20PfT9gK/IMG-7383-1787561743111.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7384",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7384-1787561748573.webp",
+        "src": "https://i.ibb.co/jPj817p5/IMG-7384-1787561748573.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7388",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7388-1787561753494.webp",
+        "src": "https://i.ibb.co/wZbrSJMz/IMG-7388-1787561753494.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7394",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7394-1787561758297.webp",
+        "src": "https://i.ibb.co/M5cw9Xf1/IMG-7394-1787561758297.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7396",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7396-1787561763318.webp",
+        "src": "https://i.ibb.co/DH93RTgW/IMG-7396-1787561763318.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7397",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7397-1787561768213.webp",
+        "src": "https://i.ibb.co/dJxxDcjp/IMG-7397-1787561768213.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7401",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7401-1787561772805.webp",
+        "src": "https://i.ibb.co/23THpK7r/IMG-7401-1787561772805.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7403",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7403-1787561779550.webp",
+        "src": "https://i.ibb.co/pjxcxnh3/IMG-7403-1787561779550.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7404",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7404-1787561784455.webp",
+        "src": "https://i.ibb.co/BKB3xt0N/IMG-7404-1787561784455.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7409",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7409-1787561789699.webp",
+        "src": "https://i.ibb.co/tTRVHPhf/IMG-7409-1787561789699.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7410",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7410-1787561793904.webp",
+        "src": "https://i.ibb.co/HMgNt9x/IMG-7410-1787561793904.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7416",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7416-1787561798939.webp",
+        "src": "https://i.ibb.co/cKT1122h/IMG-7416-1787561798939.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7420",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7420-1787561804445.webp",
+        "src": "https://i.ibb.co/S4Y9TDpP/IMG-7420-1787561804445.png",
         "width": 1920,
         "height": 1280
       },
       {
         "title": "IMG_7422",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7422-1787561812053.webp",
+        "src": "https://i.ibb.co/kgGsJJkg/IMG-7422-1787561812053.png",
         "width": 1920,
         "height": 1280
       }
@@ -571,7 +571,7 @@ export const events: Event[] = [
       {
         "title": "Cole",
         "story": "She leaned in for a fan's question and the frame composed itself.",
-        "src": "/gallery/quadlips-don-bon-day1/cole.webp",
+        "src": "https://i.ibb.co/LDTwhJBJ/cole.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -580,7 +580,7 @@ export const events: Event[] = [
       {
         "title": "Cole II",
         "story": "Between fans — a quiet reset.",
-        "src": "/gallery/quadlips-don-bon-day1/cole2.webp",
+        "src": "https://i.ibb.co/93rR1sx8/cole2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -589,7 +589,7 @@ export const events: Event[] = [
       {
         "title": "Fame",
         "story": "Fame's energy doesn't dim off stage. It just gets warmer.",
-        "src": "/gallery/quadlips-don-bon-day1/fame.webp",
+        "src": "https://i.ibb.co/Kc7Mp52M/fame.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -598,7 +598,7 @@ export const events: Event[] = [
       {
         "title": "Fame II",
         "story": "Mid-laugh. The best portraits happen when they forget you're there.",
-        "src": "/gallery/quadlips-don-bon-day1/fame2.webp",
+        "src": "https://i.ibb.co/hJBndQQ4/fame2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -607,7 +607,7 @@ export const events: Event[] = [
       {
         "title": "Fame III",
         "story": "She signed something and looked up. One frame.",
-        "src": "/gallery/quadlips-don-bon-day1/fame3.webp",
+        "src": "https://i.ibb.co/Pss22gsm/fame3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -616,7 +616,7 @@ export const events: Event[] = [
       {
         "title": "Feni",
         "story": "Feni in the overhead light — harsh, honest, beautiful.",
-        "src": "/gallery/quadlips-don-bon-day1/Feni.webp",
+        "src": "https://i.ibb.co/F42dsHhK/Feni.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -625,7 +625,7 @@ export const events: Event[] = [
       {
         "title": "Feni II",
         "story": "Listening. She gives every fan her full attention.",
-        "src": "/gallery/quadlips-don-bon-day1/feni2.webp",
+        "src": "https://i.ibb.co/kgVj3Y3v/feni2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -634,7 +634,7 @@ export const events: Event[] = [
       {
         "title": "Feni III",
         "story": "A candid between interactions.",
-        "src": "/gallery/quadlips-don-bon-day1/feni3.webp",
+        "src": "https://i.ibb.co/qY4kZ7q6/feni3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -643,7 +643,7 @@ export const events: Event[] = [
       {
         "title": "Feni IV",
         "story": "She caught me shooting and smiled. I kept the shutter down.",
-        "src": "/gallery/quadlips-don-bon-day1/feni4.webp",
+        "src": "https://i.ibb.co/DHtFf2Wm/feni4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -652,7 +652,7 @@ export const events: Event[] = [
       {
         "title": "Feni V",
         "story": "Side profile in the fluorescent wash.",
-        "src": "/gallery/quadlips-don-bon-day1/feni5.webp",
+        "src": "https://i.ibb.co/NgGdYt1q/feni5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -661,7 +661,7 @@ export const events: Event[] = [
       {
         "title": "Feni VI",
         "story": "The last fan of the session. She made it count.",
-        "src": "/gallery/quadlips-don-bon-day1/feni6.webp",
+        "src": "https://i.ibb.co/0ptQ5V8D/feni6.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -670,7 +670,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro",
         "story": "Mashiro in the gap between tables. Quiet composure.",
-        "src": "/gallery/quadlips-don-bon-day1/mashiro.webp",
+        "src": "https://i.ibb.co/cXhwswFH/mashiro.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -679,7 +679,7 @@ export const events: Event[] = [
       {
         "title": "Full Team",
         "story": "All four at the signing table. A rare still moment.",
-        "src": "/gallery/quadlips-don-bon-day1/Quadlips full team.webp",
+        "src": "https://i.ibb.co/rKVgjV2b/Quadlips-full-team.webp",
         "lens": "RF 24-70mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/200",
@@ -702,7 +702,7 @@ export const events: Event[] = [
       {
         "title": "Fame",
         "story": "Fame against the bookshelf backdrop. Retail light, editorial frame.",
-        "src": "/gallery/quadlips-kkv/Fame.webp",
+        "src": "https://i.ibb.co/xtCgNpC1/Fame.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -711,7 +711,7 @@ export const events: Event[] = [
       {
         "title": "Fame II",
         "story": "She turned and the overhead strip light became a hair light.",
-        "src": "/gallery/quadlips-kkv/Fame2.webp",
+        "src": "https://i.ibb.co/DDKtvc8C/Fame2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -720,7 +720,7 @@ export const events: Event[] = [
       {
         "title": "Feni",
         "story": "Feni in the aisle. The depth of field melted everything else.",
-        "src": "/gallery/quadlips-kkv/Feni.webp",
+        "src": "https://i.ibb.co/Z6KggSvx/Feni.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -729,7 +729,7 @@ export const events: Event[] = [
       {
         "title": "Feni II",
         "story": "A quiet moment between fans.",
-        "src": "/gallery/quadlips-kkv/feni1.webp",
+        "src": "https://i.ibb.co/kgKSZgvx/feni1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -738,7 +738,7 @@ export const events: Event[] = [
       {
         "title": "Feni III",
         "story": "She picked up a book and the frame happened.",
-        "src": "/gallery/quadlips-kkv/feni2.webp",
+        "src": "https://i.ibb.co/zWhShvxD/feni2.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -747,7 +747,7 @@ export const events: Event[] = [
       {
         "title": "Feni IV",
         "story": "Candid in the warm zone near the window display.",
-        "src": "/gallery/quadlips-kkv/Feni3.webp",
+        "src": "https://i.ibb.co/s0pXHK3/Feni3.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -756,7 +756,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro",
         "story": "Mashiro found the one pocket of good light in the store.",
-        "src": "/gallery/quadlips-kkv/Mashiro.webp",
+        "src": "https://i.ibb.co/G3r0M8w4/Mashiro.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -765,7 +765,7 @@ export const events: Event[] = [
       {
         "title": "Mashiro II",
         "story": "Half-smile, half-shadow. The retail aisle as a portrait studio.",
-        "src": "/gallery/quadlips-kkv/Mashiro2.webp",
+        "src": "https://i.ibb.co/Ldbgnqcf/Mashiro2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -788,7 +788,7 @@ export const events: Event[] = [
       {
         "title": "Amanda",
         "story": "Amanda opened the set. The spot was pure white and she filled the frame.",
-        "src": "/gallery/klp48-performance-day1/amanda.webp",
+        "src": "https://i.ibb.co/fz6ZSv2w/amanda.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/500",
@@ -797,7 +797,7 @@ export const events: Event[] = [
       {
         "title": "Devi",
         "story": "Devi in the blue wash — her solo brought the crowd to a hush.",
-        "src": "/gallery/klp48-performance-day1/devi.webp",
+        "src": "https://i.ibb.co/d4K33yhb/devi.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -806,7 +806,7 @@ export const events: Event[] = [
       {
         "title": "Devi II",
         "story": "Between songs, backlit by the LED wall.",
-        "src": "/gallery/klp48-performance-day1/Devi1.webp",
+        "src": "https://i.ibb.co/6R1LpsNn/Devi1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -815,7 +815,7 @@ export const events: Event[] = [
       {
         "title": "Khalies",
         "story": "Khalies hit the final note and the lights went gold.",
-        "src": "/gallery/klp48-performance-day1/Khalies.webp",
+        "src": "https://i.ibb.co/zHHdcbpN/Khalies.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/320",
@@ -838,7 +838,7 @@ export const events: Event[] = [
       {
         "title": "Devi",
         "story": "Acoustic encore. One spot, one voice, the whole atrium holding its breath.",
-        "src": "/gallery/klp48-performance-day2/Devi.webp",
+        "src": "https://i.ibb.co/HLPWhW0Q/Devi.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -847,7 +847,7 @@ export const events: Event[] = [
       {
         "title": "Khalies",
         "story": "Khalies closed the night. The last note hung in the atrium for a full second.",
-        "src": "/gallery/klp48-performance-day2/khalies.webp",
+        "src": "https://i.ibb.co/s9Yj6hz0/khalies.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -870,7 +870,7 @@ export const events: Event[] = [
       {
         "title": "Devi",
         "story": "Devi at the signing table. She makes fluorescent light look editorial.",
-        "src": "/gallery/klp48-kkv/devi.webp",
+        "src": "https://i.ibb.co/B82zyLK/devi.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -879,7 +879,7 @@ export const events: Event[] = [
       {
         "title": "Devi II",
         "story": "Between fans — adjusting a bracelet, unaware of the camera.",
-        "src": "/gallery/klp48-kkv/devi2.webp",
+        "src": "https://i.ibb.co/Y4jDHWSm/devi2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -888,7 +888,7 @@ export const events: Event[] = [
       {
         "title": "Devi III",
         "story": "She looked up from signing and the frame was there.",
-        "src": "/gallery/klp48-kkv/Devi3.webp",
+        "src": "https://i.ibb.co/LBmDLc5/Devi3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -897,7 +897,7 @@ export const events: Event[] = [
       {
         "title": "Devi IV",
         "story": "Profile shot in the aisle light.",
-        "src": "/gallery/klp48-kkv/Devi4.webp",
+        "src": "https://i.ibb.co/pjvWXXNX/Devi4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -906,7 +906,7 @@ export const events: Event[] = [
       {
         "title": "Devi V",
         "story": "Laughing at something a fan said. The best candids.",
-        "src": "/gallery/klp48-kkv/Devi5.webp",
+        "src": "https://i.ibb.co/9m6Nrbdw/Devi5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -915,7 +915,7 @@ export const events: Event[] = [
       {
         "title": "Devi VI",
         "story": "Warm overhead, shallow depth. The shelf bokeh almost glows.",
-        "src": "/gallery/klp48-kkv/devi6.webp",
+        "src": "https://i.ibb.co/Kcg6KC00/devi6.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -924,7 +924,7 @@ export const events: Event[] = [
       {
         "title": "Devi VII",
         "story": "Last signing of the afternoon. She was tired but still present.",
-        "src": "/gallery/klp48-kkv/devi7.webp",
+        "src": "https://i.ibb.co/V08cKwZ4/devi7.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -933,7 +933,7 @@ export const events: Event[] = [
       {
         "title": "Khalies",
         "story": "Khalies in the store entrance light — a different palette.",
-        "src": "/gallery/klp48-kkv/Khalies.webp",
+        "src": "https://i.ibb.co/RpFpphpN/Khalies.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -942,7 +942,7 @@ export const events: Event[] = [
       {
         "title": "Khalies II",
         "story": "She paused between conversations and the frame held.",
-        "src": "/gallery/klp48-kkv/Khalies2.webp",
+        "src": "https://i.ibb.co/JwfrCJDr/Khalies2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -951,7 +951,7 @@ export const events: Event[] = [
       {
         "title": "Khalies III",
         "story": "Three-quarter angle in the retail wash.",
-        "src": "/gallery/klp48-kkv/Khalies3.webp",
+        "src": "https://i.ibb.co/yn0h16Wc/Khalies3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -960,7 +960,7 @@ export const events: Event[] = [
       {
         "title": "Khalies & Isabel",
         "story": "A shared moment at the table. They matched each other's energy.",
-        "src": "/gallery/klp48-kkv/Khaliesisabel.webp",
+        "src": "https://i.ibb.co/fYPmbFZM/Khaliesisabel.webp",
         "lens": "RF 24-70mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/200",
@@ -969,7 +969,7 @@ export const events: Event[] = [
       {
         "title": "Khalies & Isabel II",
         "story": "Closer. The overhead light softened between them.",
-        "src": "/gallery/klp48-kkv/KhaliesIsabel2.webp",
+        "src": "https://i.ibb.co/DHy7CyKp/Khalies-Isabel2.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -978,7 +978,7 @@ export const events: Event[] = [
       {
         "title": "Yishyan",
         "story": "Yishyan found the pocket of daylight near the window.",
-        "src": "/gallery/klp48-kkv/Yishyan.webp",
+        "src": "https://i.ibb.co/rGVv3pt1/Yishyan.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -987,7 +987,7 @@ export const events: Event[] = [
       {
         "title": "Yishyan II",
         "story": "She turned toward the shelf and the rim light appeared.",
-        "src": "/gallery/klp48-kkv/Yishyan2.webp",
+        "src": "https://i.ibb.co/LdT2Tqz1/Yishyan2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -996,7 +996,7 @@ export const events: Event[] = [
       {
         "title": "Yishyan III",
         "story": "Candid between fans. Natural light from the storefront.",
-        "src": "/gallery/klp48-kkv/Yishyan3.webp",
+        "src": "https://i.ibb.co/Y7pz0YSs/Yishyan3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1005,7 +1005,7 @@ export const events: Event[] = [
       {
         "title": "Yishyan IV",
         "story": "Reading something off her phone. The light was perfect and she didn't know.",
-        "src": "/gallery/klp48-kkv/Yishyan4.webp",
+        "src": "https://i.ibb.co/n81FQVt4/Yishyan4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1014,7 +1014,7 @@ export const events: Event[] = [
       {
         "title": "Yishyan V",
         "story": "Last shot of the session. She smiled and the shutter closed.",
-        "src": "/gallery/klp48-kkv/Yishyan5.webp",
+        "src": "https://i.ibb.co/24gdghH/Yishyan5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1037,7 +1037,7 @@ export const events: Event[] = [
       {
         "title": "Anin",
         "story": "Anin stepped through arrivals and the fans erupted. I got one clean frame.",
-        "src": "/gallery/jkt48-klia/anin.webp",
+        "src": "https://i.ibb.co/MjXhKdM/anin.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1046,7 +1046,7 @@ export const events: Event[] = [
       {
         "title": "Feni",
         "story": "Feni in the arrivals corridor. Airport light, editorial result.",
-        "src": "/gallery/jkt48-klia/feni.webp",
+        "src": "https://i.ibb.co/nMX2RVxX/feni.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -1055,7 +1055,7 @@ export const events: Event[] = [
       {
         "title": "Feni II",
         "story": "She paused to wave and the overhead strip became a hair light.",
-        "src": "/gallery/jkt48-klia/feni1.webp",
+        "src": "https://i.ibb.co/hx34mRd5/feni1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -1064,7 +1064,7 @@ export const events: Event[] = [
       {
         "title": "Feni III",
         "story": "Walking through the gate — motion blur in the background, sharp eyes.",
-        "src": "/gallery/jkt48-klia/feni2.webp",
+        "src": "https://i.ibb.co/bgw402Pj/feni2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/320",
@@ -1073,7 +1073,7 @@ export const events: Event[] = [
       {
         "title": "Feni IV",
         "story": "Candid while checking her phone. The light from the screen filled her face.",
-        "src": "/gallery/jkt48-klia/feni3.webp",
+        "src": "https://i.ibb.co/C3BKQK4w/feni3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -1082,7 +1082,7 @@ export const events: Event[] = [
       {
         "title": "Feni V",
         "story": "Looking back over her shoulder as she walked to the van.",
-        "src": "/gallery/jkt48-klia/feni4.webp",
+        "src": "https://i.ibb.co/svXR5pDQ/feni4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -1091,7 +1091,7 @@ export const events: Event[] = [
       {
         "title": "Feni VI",
         "story": "Last frame before she disappeared into the vehicle. One look.",
-        "src": "/gallery/jkt48-klia/feni5.webp",
+        "src": "https://i.ibb.co/LdHD1LVc/feni5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -1100,7 +1100,7 @@ export const events: Event[] = [
       {
         "title": "Fiony",
         "story": "Fiony emerged and immediately found the fans. The energy shifted.",
-        "src": "/gallery/jkt48-klia/fiony.webp",
+        "src": "https://i.ibb.co/yn2QX3hJ/fiony.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1109,7 +1109,7 @@ export const events: Event[] = [
       {
         "title": "Fiony II",
         "story": "Mid-stride through arrivals. The floor reflections doubled the light.",
-        "src": "/gallery/jkt48-klia/fiony1.webp",
+        "src": "https://i.ibb.co/cXDQdPvJ/fiony1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1118,7 +1118,7 @@ export const events: Event[] = [
       {
         "title": "Fiony III",
         "story": "She stopped to sign something and the queue folded around her.",
-        "src": "/gallery/jkt48-klia/fiony2.webp",
+        "src": "https://i.ibb.co/4ZSj2bsp/fiony2.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -1127,7 +1127,7 @@ export const events: Event[] = [
       {
         "title": "Fiony IV",
         "story": "Profile in the gate light.",
-        "src": "/gallery/jkt48-klia/fiony3.webp",
+        "src": "https://i.ibb.co/0RLRXDfv/fiony3.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1136,7 +1136,7 @@ export const events: Event[] = [
       {
         "title": "Fiony V",
         "story": "Laughing with a fan. The best frames are the unplanned ones.",
-        "src": "/gallery/jkt48-klia/fiony4.webp",
+        "src": "https://i.ibb.co/Mx3w69Ch/fiony4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1145,7 +1145,7 @@ export const events: Event[] = [
       {
         "title": "Fiony VI",
         "story": "The last clear shot before security moved everyone along.",
-        "src": "/gallery/jkt48-klia/fiony5.webp",
+        "src": "https://i.ibb.co/ZpqkQ50v/fiony5.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -1154,7 +1154,7 @@ export const events: Event[] = [
       {
         "title": "Fiony VII",
         "story": "Through the crowd, one more frame. She was already looking at the camera.",
-        "src": "/gallery/jkt48-klia/Fiony6.webp",
+        "src": "https://i.ibb.co/G4DJ3Lkj/Fiony6.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/500",
@@ -1163,7 +1163,7 @@ export const events: Event[] = [
       {
         "title": "Indah",
         "story": "Indah in the corridor. The softest light in the whole terminal.",
-        "src": "/gallery/jkt48-klia/indah.webp",
+        "src": "https://i.ibb.co/DD4gTSTT/indah.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1172,7 +1172,7 @@ export const events: Event[] = [
       {
         "title": "Indah II",
         "story": "She smiled and kept walking. Clean background, clean frame.",
-        "src": "/gallery/jkt48-klia/indah1.webp",
+        "src": "https://i.ibb.co/1Gn3RFvS/indah1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1181,7 +1181,7 @@ export const events: Event[] = [
       {
         "title": "Levi",
         "story": "Levi spotted me first. She pointed and laughed. I shot anyway.",
-        "src": "/gallery/jkt48-klia/levi.webp",
+        "src": "https://i.ibb.co/DPCDsgV4/levi.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1190,7 +1190,7 @@ export const events: Event[] = [
       {
         "title": "Lyn & Anin",
         "story": "Walking out together. Two frames in the same pool of overhead light.",
-        "src": "/gallery/jkt48-klia/lyn anin.webp",
+        "src": "https://i.ibb.co/Qjz23cDQ/lyn-anin.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -1213,7 +1213,7 @@ export const events: Event[] = [
       {
         "title": "Anin I",
         "story": "Anin leaned in and the light landed perfectly.",
-        "src": "/gallery/jkt48-don-bon-day1/anin1.webp",
+        "src": "https://i.ibb.co/JX2HGsk/anin1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1222,7 +1222,7 @@ export const events: Event[] = [
       {
         "title": "Anin II",
         "story": "A genuine laugh. The shutter was already down.",
-        "src": "/gallery/jkt48-don-bon-day1/anin2.webp",
+        "src": "https://i.ibb.co/TBmBkSgp/anin2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1231,7 +1231,7 @@ export const events: Event[] = [
       {
         "title": "Anin III",
         "story": "She signed a postcard without looking down.",
-        "src": "/gallery/jkt48-don-bon-day1/anin3.webp",
+        "src": "https://i.ibb.co/TDhD3BQM/anin3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -1240,7 +1240,7 @@ export const events: Event[] = [
       {
         "title": "Anin IV",
         "story": "Between fans. A moment of quiet composure.",
-        "src": "/gallery/jkt48-don-bon-day1/anin4.webp",
+        "src": "https://i.ibb.co/Ld0M82dY/anin4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1249,7 +1249,7 @@ export const events: Event[] = [
       {
         "title": "Erin I",
         "story": "Erin's first fan meet in KL. She was nervous but it didn't show.",
-        "src": "/gallery/jkt48-don-bon-day1/erin1.webp",
+        "src": "https://i.ibb.co/39sr2CYg/erin1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1258,7 +1258,7 @@ export const events: Event[] = [
       {
         "title": "Erin II",
         "story": "Mid-conversation. The overhead light softened on her face.",
-        "src": "/gallery/jkt48-don-bon-day1/erin2.webp",
+        "src": "https://i.ibb.co/mrCYrpmF/erin2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1267,7 +1267,7 @@ export const events: Event[] = [
       {
         "title": "Erin III",
         "story": "She looked up from the table and the frame was there.",
-        "src": "/gallery/jkt48-don-bon-day1/erin3.webp",
+        "src": "https://i.ibb.co/DgtfK8vd/erin3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/250",
@@ -1276,7 +1276,7 @@ export const events: Event[] = [
       {
         "title": "Erin IV",
         "story": "Profile in the warm zone. Fluorescent never looked this good.",
-        "src": "/gallery/jkt48-don-bon-day1/erin4.webp",
+        "src": "https://i.ibb.co/zTM2xxcF/erin4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1285,7 +1285,7 @@ export const events: Event[] = [
       {
         "title": "Fiony",
         "story": "Fiony brings a different energy to fan meets — louder, brighter, closer.",
-        "src": "/gallery/jkt48-don-bon-day1/Fiony1.webp",
+        "src": "https://i.ibb.co/xtRdw3qD/Fiony1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -1308,7 +1308,7 @@ export const events: Event[] = [
       {
         "title": "Fiony",
         "story": "Window light mixed with fluorescent. She didn't notice the difference but the camera did.",
-        "src": "/gallery/jkt48-don-bon-day2/fiony.webp",
+        "src": "https://i.ibb.co/VWbY2QBn/fiony.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/400",
@@ -1317,7 +1317,7 @@ export const events: Event[] = [
       {
         "title": "Fiony II",
         "story": "Last fan of the day. She gave the same energy as the first.",
-        "src": "/gallery/jkt48-don-bon-day2/fiony2.webp",
+        "src": "https://i.ibb.co/s9td8z8J/fiony2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/320",
@@ -1340,7 +1340,7 @@ export const events: Event[] = [
       {
         "title": "Fiony & Lulu",
         "story": "The duet. They found each other's rhythm and the light found them.",
-        "src": "/gallery/jkt48-stage-day1/fiony lulu.webp",
+        "src": "https://i.ibb.co/gFdsf5MB/fiony-lulu.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/320",
@@ -1349,7 +1349,7 @@ export const events: Event[] = [
       {
         "title": "Fiony",
         "story": "Solo spotlight. She closed her eyes and sang to the upper floors.",
-        "src": "/gallery/jkt48-stage-day1/fiony.webp",
+        "src": "https://i.ibb.co/S71LKgWD/fiony.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
@@ -1358,7 +1358,7 @@ export const events: Event[] = [
       {
         "title": "Lulu",
         "story": "Lulu in the blue wash. She held the note and the whole atrium held its breath.",
-        "src": "/gallery/jkt48-stage-day1/lulu.webp",
+        "src": "https://i.ibb.co/2Y3FVTzR/lulu.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
@@ -1367,7 +1367,7 @@ export const events: Event[] = [
       {
         "title": "Oline",
         "story": "Oline took center stage and the light turned gold. One frame.",
-        "src": "/gallery/jkt48-stage-day1/oline.webp",
+        "src": "https://i.ibb.co/GZSdwPD/oline.webp",
         "lens": "RF 70-200mm f/2.8L",
         "aperture": "f/2.8",
         "shutter": "1/400",
