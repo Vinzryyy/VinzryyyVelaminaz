@@ -1036,6 +1036,9 @@ function EventEditor({
     setTimeout(() => setConverting(null), 3000);
   });
 
+  // File picker for photo grid (works on iPad unlike drag-drop)
+  const gridFileRef = useRef<HTMLInputElement>(null);
+
   // Drag-to-reorder state
   const dragIdx = useRef<number | null>(null);
   const [dropTarget, setDropTarget] = useState<number | null>(null);
@@ -1284,6 +1287,45 @@ function EventEditor({
           </div>
 
           {/* Photo grid — drag & drop zone with layout preview */}
+          <input
+            ref={gridFileRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={(e) => {
+              if (e.target.files?.length) {
+                const files = [...e.target.files];
+                (async () => {
+                  try {
+                    setConverting(`Uploading ${files.length} image${files.length > 1 ? "s" : ""}...`);
+                    const { successful, failed } = await uploadBatch(
+                      files,
+                      `gallery/${form.slug}`,
+                      (done, total) => setConverting(`Uploading ${done}/${total}...`),
+                    );
+                    if (successful.length > 0) {
+                      const newPhotos = successful.map((r) => ({
+                        title: r.publicId.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "",
+                        story: "",
+                        src: r.secureUrl,
+                        width: r.width,
+                        height: r.height,
+                      }));
+                      onPhotosChange([...event.photos, ...newPhotos]);
+                    }
+                    const totalBytes = successful.reduce((n, r) => n + r.bytes, 0);
+                    const msg = `Added ${successful.length} photos (${formatSize(totalBytes)})`;
+                    setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
+                  } catch {
+                    setConverting("Upload failed");
+                  }
+                  setTimeout(() => setConverting(null), 3000);
+                })();
+              }
+              e.target.value = "";
+            }}
+          />
           <div
             {...gridDrop.props}
             className={`p-4 transition-all ${gridDrop.over ? "ring-2 ring-inset ring-crimson" : ""}`}
@@ -1295,6 +1337,12 @@ function EventEditor({
                 {form.layout ?? "classic"}
               </span>
               <div className="h-px flex-1 bg-hairline" />
+              <button
+                onClick={() => gridFileRef.current?.click()}
+                className="rounded bg-crimson/10 px-2 py-0.5 font-mono text-[9px] text-crimson transition-colors hover:bg-crimson/20"
+              >
+                + Add Photos
+              </button>
               <span className="font-mono text-[9px] text-faint">{event.photos.length} photographs</span>
             </div>
 
@@ -1317,8 +1365,11 @@ function EventEditor({
             />
 
             {event.photos.length === 0 && !gridDrop.over && (
-              <div className="flex items-center justify-center rounded-lg border border-dashed border-hairline py-8">
-              <p className="font-mono text-xs text-muted">Tap or drag photos here</p>
+              <div
+                onClick={() => gridFileRef.current?.click()}
+                className="flex cursor-pointer items-center justify-center rounded-lg border border-dashed border-hairline py-8 transition-colors hover:border-crimson/40"
+              >
+                <p className="font-mono text-xs text-muted">Tap to add photos or drag & drop</p>
               </div>
             )}
           </div>
