@@ -277,7 +277,7 @@ export const events: Event[] = [
     "gear": "Canon EOS R5",
     "subtitle": "Night two — Feni in the warm closing light.",
     "description": "The second night was quieter backstage but louder out front. Feni carried the encore with a vocal performance that silenced the atrium. These three frames are from the last fifteen minutes.",
-    "featured": false,
+    "featured": true,
     "photos": [
       {
         "title": "Feni — Encore I",
@@ -305,8 +305,171 @@ export const events: Event[] = [
         "aperture": "f/1.4",
         "shutter": "1/320",
         "iso": 3200
+      },
+      {
+        "title": "lwisl1zl62ke3h2fadxz",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534586/gallery/quadlips-performance-day2/lwisl1zl62ke3h2fadxz.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Mashiro",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "xnucb4qrvswlakaxgiyq",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534594/gallery/quadlips-performance-day2/xnucb4qrvswlakaxgiyq.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Mashiro",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "surhhtuwurhkftrg2bzt",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534602/gallery/quadlips-performance-day2/surhhtuwurhkftrg2bzt.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Mashiro",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "ozprffhf6teyscjmhhdy",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534610/gallery/quadlips-performance-day2/ozprffhf6teyscjmhhdy.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "w0rk1fwstyhq8fnu8f2l",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534616/gallery/quadlips-performance-day2/w0rk1fwstyhq8fnu8f2l.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "byfq9fucpknbawbk1blz",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534623/gallery/quadlips-performance-day2/byfq9fucpknbawbk1blz.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "fi10zbstjfl6y9bhsymz",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534632/gallery/quadlips-performance-day2/fi10zbstjfl6y9bhsymz.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "ujpfoc60yixca5qkrywh",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534641/gallery/quadlips-performance-day2/ujpfoc60yixca5qkrywh.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "pvchszapefewdp9ockms",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534650/gallery/quadlips-performance-day2/pvchszapefewdp9ockms.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "yk0fjdlfmfuwlcw9rrbv",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534662/gallery/quadlips-performance-day2/yk0fjdlfmfuwlcw9rrbv.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "vj5iklsc3j9g33d2grd2",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534677/gallery/quadlips-performance-day2/vj5iklsc3j9g33d2grd2.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "jufps99f4ubpcp6e7ptw",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534684/gallery/quadlips-performance-day2/jufps99f4ubpcp6e7ptw.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "agfoeho8l8vphpvanqjb",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534688/gallery/quadlips-performance-day2/agfoeho8l8vphpvanqjb.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "yl0kjldrgla0vwftxyli",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534692/gallery/quadlips-performance-day2/yl0kjldrgla0vwftxyli.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "c4edtab47sgbr6lr9p7q",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534696/gallery/quadlips-performance-day2/c4edtab47sgbr6lr9p7q.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "liuilrdtn6ug1bhdbemj",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534702/gallery/quadlips-performance-day2/liuilrdtn6ug1bhdbemj.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Fame",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "nk639apt2otztdnmqln1",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534708/gallery/quadlips-performance-day2/nk639apt2otztdnmqln1.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Fame",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "hanuj3pdkgntrbkjgbvy",
+        "story": "",
+        "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534713/gallery/quadlips-performance-day2/hanuj3pdkgntrbkjgbvy.jpg",
+        "width": 2160,
+        "height": 2700,
+        "sequence": "Fame",
+        "sequenceDisplay": "filmstrip"
       }
-    ]
+    ],
+    "disableGrouping": true
   },
   {
     "slug": "quadlips-don-bon-day1",
