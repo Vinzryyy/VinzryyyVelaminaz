@@ -1037,7 +1037,7 @@ function EventEditor({
       }
       const totalSaved = successful.reduce((n, r) => n + (r.originalSize - r.newSize), 0);
       const msg = `Added ${successful.length} photos (saved ${formatSize(totalSaved)})`;
-      setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
+      setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed: ${failed[0].error}` : msg);
     } catch (err) {
       setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
     }
@@ -1323,11 +1323,11 @@ function EventEditor({
                       onPhotosChange([...event.photos, ...newPhotos]);
                     }
                     const msg = `Added ${successful.length} photos`;
-                    setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
-                  } catch {
-                    setConverting("Upload failed");
+                    setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed: ${failed[0].error}` : msg);
+                  } catch (err) {
+                    setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
                   }
-                  setTimeout(() => setConverting(null), 3000);
+                  setTimeout(() => setConverting(null), 10000);
                 })();
               }
               e.target.value = "";
@@ -1506,11 +1506,11 @@ function PhotoManager({
         commit((p) => [...p, ...newPhotos]);
       }
       const msg = `Added ${successful.length} photo${successful.length !== 1 ? "s" : ""}`;
-      setUploading(failed.length > 0 ? `${msg} · ${failed.length} failed` : msg);
-    } catch {
-      setUploading("Upload failed");
+      setUploading(failed.length > 0 ? `${msg} · ${failed.length} failed: ${failed[0].error}` : msg);
+    } catch (err) {
+      setUploading(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
     }
-    setTimeout(() => setUploading(null), 3000);
+    setTimeout(() => setUploading(null), 10000);
   };
 
   const remove = (idx: number) => {
