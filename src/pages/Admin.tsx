@@ -266,10 +266,23 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
-  // Persist on every change (debounced to prevent rapid saves)
+  const [publishState, setPublishState] = useState<"idle" | "publishing" | "done" | "error">("idle");
+
+  // Persist locally on every change (fast, 300ms debounce)
   useEffect(() => {
     const t = setTimeout(() => saveEvents(events), 300);
     return () => clearTimeout(t);
+  }, [events]);
+
+  const handlePublish = useCallback(() => {
+    if (!localStorage.getItem(GH_TOKEN_KEY)) {
+      notify("Add your GitHub token in the Export tab first");
+      return;
+    }
+    setPublishState("publishing");
+    publishToGitHub(events)
+      .then(() => { setPublishState("done"); notify("Published — site will redeploy"); })
+      .catch(() => { setPublishState("error"); notify("Publish failed"); });
   }, [events]);
 
   // Toast auto-dismiss
@@ -364,7 +377,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
           <div>
             <h1 className="font-display text-3xl font-bold text-ink">Admin</h1>
             <p className="mt-1 font-mono text-xs text-muted">
-              Client-side event manager &middot; changes saved to localStorage
+              Client-side event manager
             </p>
           </div>
           <div className="flex gap-2">
@@ -396,6 +409,26 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
         {/* ── Dashboard ──────────────────────────────────────────── */}
         {tab === "dashboard" && (
           <div className="space-y-8">
+            {/* Publish */}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handlePublish}
+                disabled={publishState === "publishing"}
+                className="rounded-lg bg-crimson px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-crimson/80 disabled:opacity-50"
+              >
+                {publishState === "publishing" ? "Publishing..." : "Save & Publish"}
+              </button>
+              <span className="font-mono text-xs text-muted">
+                {publishState === "done" ? (
+                  <span className="text-emerald-400">Published — site will redeploy</span>
+                ) : publishState === "error" ? (
+                  <span className="text-crimson">Publish failed — check token in Export tab</span>
+                ) : (
+                  "Push all changes live"
+                )}
+              </span>
+            </div>
+
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-5">
               <StatCard label="Events" value={events.length} />
               <StatCard label="Total Photos" value={stats.totalPhotos} />
@@ -1467,9 +1500,14 @@ function PhotoManager({
 
   const groupSelected = () => {
     if (!groupName.trim() || selected.size === 0) return;
-    commit((p) => p.map((ph, i) =>
-      selected.has(i) ? { ...ph, sequence: groupName.trim(), sequenceDisplay: groupDisplay } : ph
-    ));
+    const name = groupName.trim();
+    // Count how many photos already have this sequence name
+    let counter = photos.filter((p) => p.sequence === name).length;
+    commit((p) => p.map((ph, i) => {
+      if (!selected.has(i)) return ph;
+      counter++;
+      return { ...ph, title: `${name} (${counter})`, sequence: name, sequenceDisplay: groupDisplay };
+    }));
     setSelected(new Set());
     setGroupName("");
   };
@@ -1987,11 +2025,54 @@ function PageEditor({ onNotify }: { onNotify: (msg: string) => void }) {
   );
 }
 
-/* ── Export Panel ─────────────────────────────────────────────────── */
+/* ── GitHub Publish ──────────────────────────────────────────────── */
 
 const GH_TOKEN_KEY = "vinzryyy-gh-token";
 const GH_REPO = "Vinzryyy/VinzryyyVelaminaz";
 const GH_FILE_PATH = "src/content/events.ts";
+
+function eventsToCode(events: Event[]): string {
+  return [
+    `import type { Event } from "@/lib/types";`,
+    ``,
+    `export const events: Event[] = ${JSON.stringify(events, null, 2)};`,
+  ].join("\n");
+}
+
+async function publishToGitHub(events: Event[]): Promise<void> {
+  const token = localStorage.getItem(GH_TOKEN_KEY);
+  if (!token) throw new Error("No GitHub token configured");
+
+  const code = eventsToCode(events);
+
+  // 1. Get current file SHA
+  const getRes = await fetch(
+    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
+    { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } },
+  );
+  if (!getRes.ok) {
+    const err = await getRes.json().catch(() => ({}));
+    throw new Error(err.message || `GitHub API error ${getRes.status}`);
+  }
+  const { sha } = await getRes.json();
+
+  // 2. Commit updated file
+  const content = btoa(unescape(encodeURIComponent(code)));
+  const putRes = await fetch(
+    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
+    {
+      method: "PUT",
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json", "Content-Type": "application/json" },
+      body: JSON.stringify({ message: "update events data from admin panel", content, sha }),
+    },
+  );
+  if (!putRes.ok) {
+    const err = await putRes.json().catch(() => ({}));
+    throw new Error(err.message || `GitHub API error ${putRes.status}`);
+  }
+}
+
+/* ── Export Panel ─────────────────────────────────────────────────── */
 
 function ExportPanel({
   events,
@@ -2007,15 +2088,7 @@ function ExportPanel({
   const [publishing, setPublishing] = useState(false);
   const [publishStatus, setPublishStatus] = useState<string | null>(null);
 
-  const code = useMemo(() => {
-    const lines = [
-      `import type { Event } from "@/lib/types";`,
-      ``,
-      `export const events: Event[] = ${JSON.stringify(events, null, 2)};`,
-    ];
-    return lines.join("\n");
-  }, [events]);
-
+  const code = useMemo(() => eventsToCode(events), [events]);
   const json = useMemo(() => JSON.stringify(events, null, 2), [events]);
 
   const copy = (text: string, label: string) => {
@@ -2034,48 +2107,12 @@ function ExportPanel({
       return;
     }
     setPublishing(true);
-    setPublishStatus("Fetching current file...");
+    setPublishStatus("Publishing to GitHub...");
 
     try {
-      // 1. Get current file SHA (required for update)
-      const getRes = await fetch(
-        `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
-        { headers: { Authorization: `Bearer ${ghToken}`, Accept: "application/vnd.github.v3+json" } },
-      );
-
-      if (!getRes.ok) {
-        const err = await getRes.json().catch(() => ({}));
-        throw new Error(err.message || `GitHub API error ${getRes.status}`);
-      }
-
-      const { sha } = await getRes.json();
-
-      // 2. Commit the updated file
-      setPublishStatus("Publishing to GitHub...");
-      const content = btoa(unescape(encodeURIComponent(code)));
-
-      const putRes = await fetch(
-        `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
-        {
-          method: "PUT",
-          headers: { Authorization: `Bearer ${ghToken}`, Accept: "application/vnd.github.v3+json", "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: `update events data from admin panel`,
-            content,
-            sha,
-          }),
-        },
-      );
-
-      if (!putRes.ok) {
-        const err = await putRes.json().catch(() => ({}));
-        throw new Error(err.message || `GitHub API error ${putRes.status}`);
-      }
-
+      await publishToGitHub(events);
       setPublishStatus("Published! Vercel will redeploy automatically.");
       onNotify("Published to GitHub — site will redeploy");
-
-      // Reset admin state to source so auto-save doesn't re-write stale data
       onPublished();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Unknown error";
