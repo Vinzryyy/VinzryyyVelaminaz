@@ -280,33 +280,6 @@ export const events: Event[] = [
     "featured": true,
     "photos": [
       {
-        "title": "Feni — Encore I",
-        "story": "She stepped forward into the single spot and the crowd went silent.",
-        "src": "/gallery/quadlips-performance-day2/feni.webp",
-        "lens": "RF 85mm f/1.2L",
-        "aperture": "f/1.2",
-        "shutter": "1/500",
-        "iso": 2500
-      },
-      {
-        "title": "Feni — Encore II",
-        "story": "The warm wash rose and she closed her eyes.",
-        "src": "/gallery/quadlips-performance-day2/feni1.webp",
-        "lens": "RF 85mm f/1.2L",
-        "aperture": "f/1.4",
-        "shutter": "1/400",
-        "iso": 3200
-      },
-      {
-        "title": "Feni — Final Bow",
-        "story": "Last frame of the night. She bowed and the lights went out.",
-        "src": "/gallery/quadlips-performance-day2/feni2.webp",
-        "lens": "RF 85mm f/1.2L",
-        "aperture": "f/1.4",
-        "shutter": "1/320",
-        "iso": 3200
-      },
-      {
         "title": "lwisl1zl62ke3h2fadxz",
         "story": "",
         "src": "https://res.cloudinary.com/ycgduhsb/image/upload/v1787534586/gallery/quadlips-performance-day2/lwisl1zl62ke3h2fadxz.jpg",
