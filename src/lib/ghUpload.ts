@@ -14,9 +14,11 @@ export interface UploadResult {
 }
 
 const GH_API = "https://api.github.com";
-const REPO = import.meta.env.VITE_GH_REPO || "Vinzryyy/VinzryyyVelaminaz";
-const BRANCH = import.meta.env.VITE_GH_BRANCH || "main";
-const TOKEN = import.meta.env.VITE_GH_TOKEN || "";
+const REPO = "Vinzryyy/VinzryyyVelaminaz";
+const BRANCH = "main";
+
+declare const __GH_TOKEN__: string;
+const TOKEN = typeof __GH_TOKEN__ !== "undefined" ? __GH_TOKEN__ : (import.meta.env.VITE_GH_TOKEN || "");
 
 /**
  * Commits a base64 file to the GitHub repo via the Contents API.

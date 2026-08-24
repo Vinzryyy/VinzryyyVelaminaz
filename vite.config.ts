@@ -72,6 +72,7 @@ function localUploadPlugin() {
 export default defineConfig({
   define: {
     __BUILD_ID__: JSON.stringify(BUILD_ID),
+    __GH_TOKEN__: JSON.stringify(process.env.VITE_GH_TOKEN || ""),
   },
   plugins: [react(), tailwindcss(), swBuildIdPlugin(), localUploadPlugin()],
   resolve: {
