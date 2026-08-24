@@ -440,6 +440,118 @@ export const events: Event[] = [
         "height": 2700,
         "sequence": "Fame",
         "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "IMG_7380",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7380-1787561731440.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7382",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7382-1787561737316.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7383",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7383-1787561743111.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7384",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7384-1787561748573.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7388",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7388-1787561753494.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7394",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7394-1787561758297.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7396",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7396-1787561763318.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7397",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7397-1787561768213.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7401",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7401-1787561772805.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7403",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7403-1787561779550.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7404",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7404-1787561784455.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7409",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7409-1787561789699.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7410",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7410-1787561793904.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7416",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7416-1787561798939.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7420",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7420-1787561804445.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7422",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7422-1787561812053.webp",
+        "width": 1920,
+        "height": 1280
       }
     ],
     "disableGrouping": true
