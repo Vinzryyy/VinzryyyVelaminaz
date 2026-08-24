@@ -1,11 +1,11 @@
 /**
- * Upload images to GitHub repo as WebP files.
- * Converts to WebP in-browser, then commits via GitHub API.
+ * Upload images via imgBB (free image hosting).
+ * Converts to WebP in-browser, then uploads to imgBB for a permanent URL.
  */
 import { convertToWebP } from "./imageUtils";
 
-const GH_REPO = "Vinzryyy/VinzryyyVelaminaz";
-const GH_TOKEN_KEY = "vinzryyy-gh-token";
+const IMGBB_API_KEY = "9b818f8b919df959fe54a04e31e73311";
+const IMGBB_URL = "https://api.imgbb.com/1/upload";
 
 export interface UploadResult {
   url: string;
@@ -15,58 +15,49 @@ export interface UploadResult {
   newSize: number;
 }
 
-function getToken(): string {
-  const token = localStorage.getItem(GH_TOKEN_KEY);
-  if (!token) throw new Error("No GitHub token configured — set it in the Export tab");
-  return token;
-}
-
 /**
- * Converts image to WebP, commits to GitHub repo, returns the served URL.
+ * Converts image to WebP, uploads to imgBB, returns the permanent URL.
  */
 export async function uploadPhoto(
   file: File,
-  folder: string,
+  _folder?: string,
 ): Promise<UploadResult> {
-  const token = getToken();
-
-  // Convert to WebP
+  // Convert to WebP first
   const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(file);
 
   // Extract base64 content (remove data:image/webp;base64, prefix)
   const base64 = dataUrl.split(",")[1];
 
-  // Generate unique filename
+  // Generate a name
   const name = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
-  const timestamp = Date.now();
-  const filePath = `public/${folder}/${name}-${timestamp}.webp`;
 
-  // Commit file to GitHub
-  const res = await fetch(
-    `https://api.github.com/repos/${GH_REPO}/contents/${filePath}`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/vnd.github.v3+json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `upload: ${folder}/${name}.webp`,
-        content: base64,
-      }),
-    },
-  );
+  // Upload to imgBB
+  const formData = new FormData();
+  formData.append("key", IMGBB_API_KEY);
+  formData.append("image", base64);
+  formData.append("name", name);
+
+  const res = await fetch(IMGBB_URL, {
+    method: "POST",
+    body: formData,
+  });
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `GitHub upload failed (${res.status})`);
+    throw new Error(`imgBB upload failed (${res.status})`);
   }
 
-  // The file will be served from the site root (public/ is the static dir)
-  const url = `/${folder}/${name}-${timestamp}.webp`;
+  const json = await res.json();
+  if (!json.success) {
+    throw new Error(json.error?.message || "imgBB upload failed");
+  }
 
-  return { url, width, height, originalSize, newSize };
+  return {
+    url: json.data.url,
+    width,
+    height,
+    originalSize,
+    newSize,
+  };
 }
 
 /**
@@ -74,7 +65,7 @@ export async function uploadPhoto(
  */
 export async function uploadBatch(
   files: File[],
-  folder: string,
+  folder?: string,
   onProgress?: (done: number, total: number) => void,
 ): Promise<{ successful: UploadResult[]; failed: { name: string; error: string }[] }> {
   const successful: UploadResult[] = [];
