@@ -538,6 +538,174 @@ export const events: Event[] = [
         "src": "/gallery/quadlips-performance-day2/IMG_7409-1787565213629.webp",
         "width": 1920,
         "height": 1280
+      },
+      {
+        "title": "IMG_7410",
+        "story": "",
+        "src": "https://i.ibb.co/xS9Rn4qj/gallery-quadlips-performance-day2-IMG-7410.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7416",
+        "story": "",
+        "src": "https://i.ibb.co/MydNVh3K/gallery-quadlips-performance-day2-IMG-7416.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7422",
+        "story": "",
+        "src": "https://i.ibb.co/ynhpQ0yd/gallery-quadlips-performance-day2-IMG-7422.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7425",
+        "story": "",
+        "src": "https://i.ibb.co/7tYrffVz/gallery-quadlips-performance-day2-IMG-7425.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7431",
+        "story": "",
+        "src": "https://i.ibb.co/bTcCt0z/gallery-quadlips-performance-day2-IMG-7431.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7433",
+        "story": "",
+        "src": "https://i.ibb.co/PvQ2Ct87/gallery-quadlips-performance-day2-IMG-7433.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7443",
+        "story": "",
+        "src": "https://i.ibb.co/WWkrhKqx/gallery-quadlips-performance-day2-IMG-7443.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7440",
+        "story": "",
+        "src": "https://i.ibb.co/fd8JrWq6/gallery-quadlips-performance-day2-IMG-7440.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7444",
+        "story": "",
+        "src": "https://i.ibb.co/sd6G8Yhh/gallery-quadlips-performance-day2-IMG-7444.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7445",
+        "story": "",
+        "src": "https://i.ibb.co/dNtYpzK/gallery-quadlips-performance-day2-IMG-7445.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7447",
+        "story": "",
+        "src": "https://i.ibb.co/dwwLtKGP/gallery-quadlips-performance-day2-IMG-7447.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7449",
+        "story": "",
+        "src": "https://i.ibb.co/Nd5YvGwB/gallery-quadlips-performance-day2-IMG-7449.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7450",
+        "story": "",
+        "src": "https://i.ibb.co/5hCG7TY5/gallery-quadlips-performance-day2-IMG-7450.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7451",
+        "story": "",
+        "src": "https://i.ibb.co/Hpnc6x6Y/gallery-quadlips-performance-day2-IMG-7451.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7453",
+        "story": "",
+        "src": "https://i.ibb.co/xSZhSPr8/gallery-quadlips-performance-day2-IMG-7453.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7452",
+        "story": "",
+        "src": "https://i.ibb.co/ymFXxzyZ/gallery-quadlips-performance-day2-IMG-7452.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7459",
+        "story": "",
+        "src": "https://i.ibb.co/Kp0cvRGG/gallery-quadlips-performance-day2-IMG-7459.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7464",
+        "story": "",
+        "src": "https://i.ibb.co/hx2pgkm3/gallery-quadlips-performance-day2-IMG-7464.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7466",
+        "story": "",
+        "src": "https://i.ibb.co/h1L2gBnn/gallery-quadlips-performance-day2-IMG-7466.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7468",
+        "story": "",
+        "src": "https://i.ibb.co/twCdpBZV/gallery-quadlips-performance-day2-IMG-7468.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7476",
+        "story": "",
+        "src": "https://i.ibb.co/bRrswSP9/gallery-quadlips-performance-day2-IMG-7476.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7477",
+        "story": "",
+        "src": "https://i.ibb.co/zHnQHJ1C/gallery-quadlips-performance-day2-IMG-7477.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7481",
+        "story": "",
+        "src": "https://i.ibb.co/W4RTyPxv/gallery-quadlips-performance-day2-IMG-7481.png",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7482",
+        "story": "",
+        "src": "https://i.ibb.co/bgPyJKDR/gallery-quadlips-performance-day2-IMG-7482.png",
+        "width": 1920,
+        "height": 1280
       }
     ],
     "disableGrouping": true
