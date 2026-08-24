@@ -1,7 +1,19 @@
 import { events as sourceEvents } from "@/content/events";
 import type { Event } from "@/lib/types";
 
+declare const __BUILD_ID__: string;
+
 const STORAGE_KEY = "vinzryyy-admin-events";
+const BUILD_KEY = "vinzryyy-build-id";
+
+// Auto-clear stale localStorage when a new build deploys
+try {
+  const prev = localStorage.getItem(BUILD_KEY);
+  if (prev && prev !== __BUILD_ID__) {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+  localStorage.setItem(BUILD_KEY, __BUILD_ID__);
+} catch { /* ignore */ }
 
 /** Reads admin-edited events from localStorage, falls back to source file. */
 function liveEvents(): Event[] {

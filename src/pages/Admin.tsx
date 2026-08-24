@@ -620,7 +620,11 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
         {/* ── Export ──────────────────────────────────────────────── */}
         {tab === "export" && (
-          <ExportPanel events={events} onNotify={notify} />
+          <ExportPanel events={events} onNotify={notify} onPublished={() => {
+            localStorage.removeItem(STORAGE_KEY);
+            setEvents(deepClone(getAllEvents()));
+            setSelectedSlug(null);
+          }} />
         )}
       </div>
     </div>
@@ -1992,9 +1996,11 @@ const GH_FILE_PATH = "src/content/events.ts";
 function ExportPanel({
   events,
   onNotify,
+  onPublished,
 }: {
   events: Event[];
   onNotify: (msg: string) => void;
+  onPublished: () => void;
 }) {
   const [ghToken, setGhToken] = useState(() => localStorage.getItem(GH_TOKEN_KEY) ?? "");
   const [showToken, setShowToken] = useState(false);
@@ -2069,8 +2075,8 @@ function ExportPanel({
       setPublishStatus("Published! Vercel will redeploy automatically.");
       onNotify("Published to GitHub — site will redeploy");
 
-      // Clear localStorage draft since source is now up to date
-      localStorage.removeItem(STORAGE_KEY);
+      // Reset admin state to source so auto-save doesn't re-write stale data
+      onPublished();
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Unknown error";
       setPublishStatus(`Error: ${msg}`);

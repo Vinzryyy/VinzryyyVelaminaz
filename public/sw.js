@@ -3,7 +3,8 @@
  * Enables offline viewing of previously visited galleries.
  */
 
-const CACHE_NAME = "vinzryyy-v1";
+const CACHE_VERSION = "%%BUILD_ID%%"; // replaced at build time
+const CACHE_NAME = `vinzryyy-${CACHE_VERSION}`;
 const STATIC_ASSETS = ["/", "/favicon.svg", "/manifest.json"];
 
 /* ── Install — pre-cache shell ───────────────────────────────────── */
