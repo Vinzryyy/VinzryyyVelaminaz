@@ -20,7 +20,8 @@ export interface UploadResult {
  */
 export async function uploadPhoto(
   file: File,
-  _folder?: string,
+  folder?: string,
+  photoName?: string,
 ): Promise<UploadResult> {
   // Convert to WebP first
   const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(file);
@@ -28,8 +29,12 @@ export async function uploadPhoto(
   // Extract base64 content (remove data:image/webp;base64, prefix)
   const base64 = dataUrl.split(",")[1];
 
-  // Generate a name
-  const name = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
+  // Use provided name, or fall back to event-slug + original filename
+  const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
+  const prefix = folder ? folder.replace(/[^a-zA-Z0-9_-]/g, "_") : "";
+  const name = photoName
+    ? photoName.replace(/[^a-zA-Z0-9_-]/g, "_")
+    : prefix ? `${prefix}_${baseName}` : baseName;
 
   // Upload to imgBB
   const formData = new FormData();
@@ -73,7 +78,7 @@ export async function uploadBatch(
 
   for (let i = 0; i < files.length; i++) {
     try {
-      const result = await uploadPhoto(files[i], folder);
+      const result = await uploadPhoto(files[i], folder, undefined);
       successful.push(result);
     } catch (err) {
       const error = err instanceof Error ? err.message : "Unknown error";
