@@ -1,11 +1,8 @@
 /**
- * Upload images via imgBB (free image hosting).
- * Converts to WebP in-browser, then uploads to imgBB for a permanent URL.
+ * Upload images to local gallery.
+ * Converts to WebP in-browser, then saves to public/gallery/ via dev server.
  */
 import { convertToWebP } from "./imageUtils";
-
-const IMGBB_API_KEY = "9b818f8b919df959fe54a04e31e73311";
-const IMGBB_URL = "https://api.imgbb.com/1/upload";
 
 export interface UploadResult {
   url: string;
@@ -16,48 +13,42 @@ export interface UploadResult {
 }
 
 /**
- * Converts image to WebP, uploads to imgBB, returns the permanent URL.
+ * Converts image to WebP and saves to public/gallery/{folder}/{name}.webp.
  */
 export async function uploadPhoto(
   file: File,
   folder?: string,
   photoName?: string,
 ): Promise<UploadResult> {
-  // Convert to WebP first
   const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(file);
 
   // Extract base64 content (remove data:image/webp;base64, prefix)
   const base64 = dataUrl.split(",")[1];
 
-  // Use provided name, or fall back to event-slug + original filename
+  // Build a clean filename
   const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
-  const prefix = folder ? folder.replace(/[^a-zA-Z0-9_-]/g, "_") : "";
   const name = photoName
     ? photoName.replace(/[^a-zA-Z0-9_-]/g, "_")
-    : prefix ? `${prefix}_${baseName}` : baseName;
+    : baseName;
 
-  // Upload to imgBB
-  const formData = new FormData();
-  formData.append("key", IMGBB_API_KEY);
-  formData.append("image", base64);
-  formData.append("name", name);
+  // Strip leading "gallery/" from folder if present — the server adds it
+  const subFolder = (folder ?? "").replace(/^gallery\//, "");
 
-  const res = await fetch(IMGBB_URL, {
+  const res = await fetch("/api/upload", {
     method: "POST",
-    body: formData,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ base64, folder: subFolder, name }),
   });
 
   if (!res.ok) {
-    throw new Error(`imgBB upload failed (${res.status})`);
+    const err = await res.json().catch(() => ({ error: "Upload failed" }));
+    throw new Error(err.error || `Upload failed (${res.status})`);
   }
 
-  const json = await res.json();
-  if (!json.success) {
-    throw new Error(json.error?.message || "imgBB upload failed");
-  }
+  const { url } = await res.json();
 
   return {
-    url: json.data.url,
+    url,
     width,
     height,
     originalSize,
