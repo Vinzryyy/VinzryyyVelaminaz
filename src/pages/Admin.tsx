@@ -282,13 +282,13 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
     setPublishState("publishing");
     publishToGitHub(events)
       .then(() => { setPublishState("done"); notify("Published — site will redeploy"); })
-      .catch(() => { setPublishState("error"); notify("Publish failed"); });
+      .catch((err) => { setPublishState("error"); notify(`Publish failed: ${err instanceof Error ? err.message : "unknown error"}`); });
   }, [events]);
 
   // Toast auto-dismiss
   useEffect(() => {
     if (!toast) return;
-    const t = setTimeout(() => setToast(null), 2500);
+    const t = setTimeout(() => setToast(null), toast.startsWith("Publish failed") ? 8000 : 2500);
     return () => clearTimeout(t);
   }, [toast]);
 
@@ -2056,8 +2056,11 @@ async function publishToGitHub(events: Event[]): Promise<void> {
   }
   const { sha } = await getRes.json();
 
-  // 2. Commit updated file
-  const content = btoa(unescape(encodeURIComponent(code)));
+  // 2. Commit updated file (use TextEncoder for safe UTF-8 → base64)
+  const bytes = new TextEncoder().encode(code);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  const content = btoa(binary);
   const putRes = await fetch(
     `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
     {
