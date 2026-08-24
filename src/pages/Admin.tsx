@@ -1041,7 +1041,7 @@ function EventEditor({
     } catch (err) {
       setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
     }
-    setTimeout(() => setConverting(null), 3000);
+    setTimeout(() => setConverting(null), 8000);
   });
 
   // File picker for photo grid (works on iPad unlike drag-drop)

@@ -23,14 +23,22 @@ const TOKEN = import.meta.env.VITE_GH_TOKEN || "";
  * Returns the public URL path (e.g. /gallery/slug/name.webp).
  */
 async function uploadToGitHub(base64: string, filePath: string): Promise<string> {
+  if (!TOKEN) {
+    throw new Error("GitHub token not configured (VITE_GH_TOKEN is empty)");
+  }
+
   // Check if file already exists (need its SHA to overwrite)
   let sha: string | undefined;
-  const getRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
-    headers: { Authorization: `Bearer ${TOKEN}` },
-  });
-  if (getRes.ok) {
-    const existing = await getRes.json();
-    sha = existing.sha;
+  try {
+    const getRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
+      headers: { Authorization: `Bearer ${TOKEN}`, Accept: "application/vnd.github.v3+json" },
+    });
+    if (getRes.ok) {
+      const existing = await getRes.json();
+      sha = existing.sha;
+    }
+  } catch {
+    // File doesn't exist yet, that's fine
   }
 
   const body: Record<string, string> = {
@@ -44,6 +52,7 @@ async function uploadToGitHub(base64: string, filePath: string): Promise<string>
     method: "PUT",
     headers: {
       Authorization: `Bearer ${TOKEN}`,
+      Accept: "application/vnd.github.v3+json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
@@ -51,7 +60,8 @@ async function uploadToGitHub(base64: string, filePath: string): Promise<string>
 
   if (!putRes.ok) {
     const err = await putRes.json().catch(() => ({}));
-    throw new Error((err as { message?: string }).message || `GitHub API error (${putRes.status})`);
+    const msg = (err as { message?: string }).message || `HTTP ${putRes.status}`;
+    throw new Error(`GitHub upload failed: ${msg}`);
   }
 
   // public/gallery/slug/name.webp -> /gallery/slug/name.webp
