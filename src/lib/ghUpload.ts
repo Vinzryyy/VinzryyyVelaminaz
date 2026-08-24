@@ -1,6 +1,7 @@
 /**
- * Upload images to local gallery.
- * Converts to WebP in-browser, then saves to public/gallery/ via dev server.
+ * Upload images to gallery.
+ * - Dev: saves to public/gallery/ via Vite dev server endpoint
+ * - Production: commits to GitHub repo via Contents API
  */
 import { convertToWebP } from "./imageUtils";
 
@@ -12,8 +13,72 @@ export interface UploadResult {
   newSize: number;
 }
 
+const GH_API = "https://api.github.com";
+const REPO = import.meta.env.VITE_GH_REPO || "Vinzryyy/VinzryyyVelaminaz";
+const BRANCH = import.meta.env.VITE_GH_BRANCH || "main";
+const TOKEN = import.meta.env.VITE_GH_TOKEN || "";
+
 /**
- * Converts image to WebP and saves to public/gallery/{folder}/{name}.webp.
+ * Commits a base64 file to the GitHub repo via the Contents API.
+ * Returns the public URL path (e.g. /gallery/slug/name.webp).
+ */
+async function uploadToGitHub(base64: string, filePath: string): Promise<string> {
+  // Check if file already exists (need its SHA to overwrite)
+  let sha: string | undefined;
+  const getRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
+    headers: { Authorization: `Bearer ${TOKEN}` },
+  });
+  if (getRes.ok) {
+    const existing = await getRes.json();
+    sha = existing.sha;
+  }
+
+  const body: Record<string, string> = {
+    message: `gallery: add ${filePath.split("/").pop()}`,
+    content: base64,
+    branch: BRANCH,
+  };
+  if (sha) body.sha = sha;
+
+  const putRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!putRes.ok) {
+    const err = await putRes.json().catch(() => ({}));
+    throw new Error((err as { message?: string }).message || `GitHub API error (${putRes.status})`);
+  }
+
+  // public/gallery/slug/name.webp -> /gallery/slug/name.webp
+  return "/" + filePath.replace(/^public\//, "");
+}
+
+/**
+ * Saves a file via the Vite dev server endpoint (dev only).
+ */
+async function uploadToLocal(base64: string, folder: string, name: string): Promise<string> {
+  const res = await fetch("/api/upload", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ base64, folder, name }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: "Upload failed" }));
+    throw new Error((err as { error?: string }).error || `Upload failed (${res.status})`);
+  }
+
+  const { url } = await res.json();
+  return url;
+}
+
+/**
+ * Converts image to WebP and uploads via GitHub API (prod) or local server (dev).
  */
 export async function uploadPhoto(
   file: File,
@@ -21,39 +86,24 @@ export async function uploadPhoto(
   photoName?: string,
 ): Promise<UploadResult> {
   const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(file);
-
-  // Extract base64 content (remove data:image/webp;base64, prefix)
   const base64 = dataUrl.split(",")[1];
 
-  // Build a clean filename
   const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
   const name = photoName
     ? photoName.replace(/[^a-zA-Z0-9_-]/g, "_")
     : baseName;
 
-  // Strip leading "gallery/" from folder if present — the server adds it
   const subFolder = (folder ?? "").replace(/^gallery\//, "");
 
-  const res = await fetch("/api/upload", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ base64, folder: subFolder, name }),
-  });
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: "Upload failed" }));
-    throw new Error(err.error || `Upload failed (${res.status})`);
+  let url: string;
+  if (import.meta.env.DEV) {
+    url = await uploadToLocal(base64, subFolder, name);
+  } else {
+    const filePath = `public/gallery/${subFolder}/${name}.webp`;
+    url = await uploadToGitHub(base64, filePath);
   }
 
-  const { url } = await res.json();
-
-  return {
-    url,
-    width,
-    height,
-    originalSize,
-    newSize,
-  };
+  return { url, width, height, originalSize, newSize };
 }
 
 /**
