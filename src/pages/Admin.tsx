@@ -1985,6 +1985,10 @@ function PageEditor({ onNotify }: { onNotify: (msg: string) => void }) {
 
 /* ── Export Panel ─────────────────────────────────────────────────── */
 
+const GH_TOKEN_KEY = "vinzryyy-gh-token";
+const GH_REPO = "Vinzryyy/VinzryyyVelaminaz";
+const GH_FILE_PATH = "src/content/events.ts";
+
 function ExportPanel({
   events,
   onNotify,
@@ -1992,6 +1996,11 @@ function ExportPanel({
   events: Event[];
   onNotify: (msg: string) => void;
 }) {
+  const [ghToken, setGhToken] = useState(() => localStorage.getItem(GH_TOKEN_KEY) ?? "");
+  const [showToken, setShowToken] = useState(false);
+  const [publishing, setPublishing] = useState(false);
+  const [publishStatus, setPublishStatus] = useState<string | null>(null);
+
   const code = useMemo(() => {
     const lines = [
       `import type { Event } from "@/lib/types";`,
@@ -2007,14 +2016,127 @@ function ExportPanel({
     navigator.clipboard.writeText(text).then(() => onNotify(`${label} copied to clipboard`));
   };
 
+  const saveToken = (token: string) => {
+    setGhToken(token);
+    if (token) localStorage.setItem(GH_TOKEN_KEY, token);
+    else localStorage.removeItem(GH_TOKEN_KEY);
+  };
+
+  const publish = async () => {
+    if (!ghToken) {
+      setPublishStatus("Enter your GitHub token first");
+      return;
+    }
+    setPublishing(true);
+    setPublishStatus("Fetching current file...");
+
+    try {
+      // 1. Get current file SHA (required for update)
+      const getRes = await fetch(
+        `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
+        { headers: { Authorization: `Bearer ${ghToken}`, Accept: "application/vnd.github.v3+json" } },
+      );
+
+      if (!getRes.ok) {
+        const err = await getRes.json().catch(() => ({}));
+        throw new Error(err.message || `GitHub API error ${getRes.status}`);
+      }
+
+      const { sha } = await getRes.json();
+
+      // 2. Commit the updated file
+      setPublishStatus("Publishing to GitHub...");
+      const content = btoa(unescape(encodeURIComponent(code)));
+
+      const putRes = await fetch(
+        `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${ghToken}`, Accept: "application/vnd.github.v3+json", "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: `update events data from admin panel`,
+            content,
+            sha,
+          }),
+        },
+      );
+
+      if (!putRes.ok) {
+        const err = await putRes.json().catch(() => ({}));
+        throw new Error(err.message || `GitHub API error ${putRes.status}`);
+      }
+
+      setPublishStatus("Published! Vercel will redeploy automatically.");
+      onNotify("Published to GitHub — site will redeploy");
+
+      // Clear localStorage draft since source is now up to date
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setPublishStatus(`Error: ${msg}`);
+    } finally {
+      setPublishing(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
-      <h2 className="font-display text-xl font-bold text-ink">Export</h2>
-      <p className="font-mono text-xs text-muted">
-        Copy the generated code and paste it into <code className="text-sakura">src/content/events.ts</code> to apply your changes.
-      </p>
+      <h2 className="font-display text-xl font-bold text-ink">Export &amp; Publish</h2>
 
+      {/* ── Publish to GitHub ── */}
+      <div className="rounded-lg border border-crimson/30 bg-crimson/5 p-5 space-y-4">
+        <h3 className="font-display text-sm font-bold text-ink">Publish to GitHub</h3>
+        <p className="font-mono text-xs text-muted">
+          Commits your changes directly to the repo. Vercel will redeploy automatically so every device sees the update.
+        </p>
+
+        <div className="space-y-3">
+          <div>
+            <label className="mb-1 block font-mono text-[10px] uppercase tracking-widest text-muted">
+              GitHub Personal Access Token
+            </label>
+            <div className="flex gap-2">
+              <input
+                type={showToken ? "text" : "password"}
+                value={ghToken}
+                onChange={(e) => saveToken(e.target.value)}
+                placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                className="flex-1 rounded-lg border border-hairline bg-sumi px-3 py-2 font-mono text-xs text-ink outline-none transition-colors focus:border-crimson/50"
+              />
+              <button
+                onClick={() => setShowToken(!showToken)}
+                className="rounded-lg border border-hairline px-3 py-2 font-mono text-[10px] text-muted hover:text-ink"
+              >
+                {showToken ? "Hide" : "Show"}
+              </button>
+            </div>
+            <p className="mt-1 font-mono text-[10px] text-muted/60">
+              Needs <code className="text-sakura">repo</code> scope. Saved locally in this browser.
+            </p>
+          </div>
+
+          <button
+            onClick={publish}
+            disabled={publishing || !ghToken}
+            className="rounded-lg bg-crimson px-6 py-3 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-crimson/80 disabled:opacity-50"
+          >
+            {publishing ? "Publishing..." : "Publish to GitHub"}
+          </button>
+
+          {publishStatus && (
+            <p className={`font-mono text-xs ${publishStatus.startsWith("Error") ? "text-crimson" : publishStatus.startsWith("Published") ? "text-emerald-400" : "text-muted"}`}>
+              {publishStatus}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* ── Manual export ── */}
       <div className="space-y-4">
+        <h3 className="font-display text-sm font-bold text-ink">Manual Export</h3>
+        <p className="font-mono text-xs text-muted">
+          Or copy the code manually and paste into <code className="text-sakura">src/content/events.ts</code>.
+        </p>
         <div className="flex gap-2">
           <button
             onClick={() => copy(code, "TypeScript")}
