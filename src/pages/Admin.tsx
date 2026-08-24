@@ -1208,7 +1208,7 @@ function EventEditor({
           <input
             ref={coverInputRef}
             type="file"
-            accept="image/*,.jpg,.jpeg,.png,.webp,.heic"
+            accept="image/*"
             className="hidden"
             onChange={(e) => { if (e.target.files?.length) uploadCover([...e.target.files]); e.target.value = ""; }}
           />
@@ -1476,7 +1476,9 @@ function PhotoManager({
   };
 
   const addFromFiles = async (files: FileList | File[]) => {
-    const imageFiles = [...files].filter((f) => f.type.startsWith("image/"));
+    // Accept files with image MIME type OR common image extensions (iOS may not set MIME type)
+    const imageExts = /\.(jpe?g|png|gif|webp|heic|heif|avif|tiff?|bmp|svg)$/i;
+    const imageFiles = [...files].filter((f) => f.type.startsWith("image/") || imageExts.test(f.name) || !f.type);
     if (imageFiles.length === 0) return;
 
     setUploading(`Uploading ${imageFiles.length} photo${imageFiles.length > 1 ? "s" : ""}...`);
@@ -1598,7 +1600,7 @@ function PhotoManager({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*,.jpg,.jpeg,.png,.webp,.heic"
+            accept="image/*"
             multiple
             className="hidden"
             onChange={(e) => { if (e.target.files?.length) addFromFiles(e.target.files); e.target.value = ""; }}
