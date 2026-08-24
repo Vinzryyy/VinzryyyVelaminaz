@@ -1209,7 +1209,7 @@ function EventEditor({
             ref={coverInputRef}
             type="file"
             accept="image/*"
-            className="hidden"
+            className="absolute h-0 w-0 overflow-hidden opacity-0"
             onChange={(e) => { if (e.target.files?.length) uploadCover([...e.target.files]); e.target.value = ""; }}
           />
           <div
@@ -1292,7 +1292,7 @@ function EventEditor({
             type="file"
             accept="image/*"
             multiple
-            className="hidden"
+            className="absolute h-0 w-0 overflow-hidden opacity-0"
             onChange={(e) => {
               if (e.target.files?.length) {
                 const files = [...e.target.files];
@@ -1602,7 +1602,7 @@ function PhotoManager({
             type="file"
             accept="image/*"
             multiple
-            className="hidden"
+            className="absolute h-0 w-0 overflow-hidden opacity-0"
             onChange={(e) => { if (e.target.files?.length) addFromFiles(e.target.files); e.target.value = ""; }}
           />
           <button
