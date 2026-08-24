@@ -17,23 +17,27 @@ const GH_API = "https://api.github.com";
 const REPO = "Vinzryyy/VinzryyyVelaminaz";
 const BRANCH = "main";
 
-declare const __GH_TOKEN__: string;
-const TOKEN = typeof __GH_TOKEN__ !== "undefined" ? __GH_TOKEN__ : (import.meta.env.VITE_GH_TOKEN || "");
+// Token stored in localStorage by admin login — see Admin.tsx
+function getGhToken(): string {
+  try { return localStorage.getItem("vinzryyy-gh-token") || ""; }
+  catch { return ""; }
+}
 
 /**
  * Commits a base64 file to the GitHub repo via the Contents API.
  * Returns the public URL path (e.g. /gallery/slug/name.webp).
  */
 async function uploadToGitHub(base64: string, filePath: string): Promise<string> {
-  if (!TOKEN) {
-    throw new Error("GitHub token not configured (VITE_GH_TOKEN is empty)");
+  const token = getGhToken();
+  if (!token) {
+    throw new Error("GitHub token not configured — enter it in admin settings");
   }
 
   // Check if file already exists (need its SHA to overwrite)
   let sha: string | undefined;
   try {
     const getRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
-      headers: { Authorization: `Bearer ${TOKEN}`, Accept: "application/vnd.github.v3+json" },
+      headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" },
     });
     if (getRes.ok) {
       const existing = await getRes.json();
@@ -53,7 +57,7 @@ async function uploadToGitHub(base64: string, filePath: string): Promise<string>
   const putRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}`, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${TOKEN}`,
+      Authorization: `Bearer ${token}`,
       Accept: "application/vnd.github.v3+json",
       "Content-Type": "application/json",
     },
