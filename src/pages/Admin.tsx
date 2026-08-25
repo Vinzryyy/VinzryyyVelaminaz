@@ -930,7 +930,8 @@ function useDrop(onDrop: (files: File[]) => void) {
     onDrop: (e: React.DragEvent) => {
       e.preventDefault();
       setOver(false);
-      const files = [...e.dataTransfer.files].filter((f) => f.type.startsWith("image/"));
+      const imageExts = /\.(jpe?g|png|gif|webp|heic|heif|avif|tiff?|bmp|svg)$/i;
+      const files = [...e.dataTransfer.files].filter((f) => f.type.startsWith("image/") || imageExts.test(f.name) || !f.type);
       if (files.length) onDrop(files);
     },
   };
@@ -1023,11 +1024,11 @@ function EventEditor({
       const { successful, failed } = await uploadBatch(
         files,
         `gallery/${form.slug}`,
-        (done, total) => setConverting(`Uploading ${done}/${total}...`),
+        (done, total, name) => setConverting(`Uploading ${done}/${total} — ${name}`),
       );
       if (successful.length > 0) {
-        const newPhotos = successful.map((r, i) => ({
-          title: files[i]?.name.replace(/\.[^.]+$/, "") ?? "",
+        const newPhotos = successful.map((r) => ({
+          title: r.fileName.replace(/\.[^.]+$/, ""),
           story: "",
           src: r.url,
           width: r.width,
@@ -1310,11 +1311,11 @@ function EventEditor({
                     const { successful, failed } = await uploadBatch(
                       files,
                       `gallery/${form.slug}`,
-                      (done, total) => setConverting(`Uploading ${done}/${total}...`),
+                      (done, total, name) => setConverting(`Uploading ${done}/${total} — ${name}`),
                     );
                     if (successful.length > 0) {
-                      const newPhotos = successful.map((r, i) => ({
-                        title: files[i]?.name.replace(/\.[^.]+$/, "") ?? "",
+                      const newPhotos = successful.map((r) => ({
+                        title: r.fileName.replace(/\.[^.]+$/, ""),
                         story: "",
                         src: r.url,
                         width: r.width,
@@ -1493,11 +1494,11 @@ function PhotoManager({
       const { successful, failed } = await uploadBatch(
         imageFiles,
         `gallery/${event.slug}`,
-        (done, total) => setUploading(`Uploading ${done}/${total}...`),
+        (done, total, name) => setUploading(`Uploading ${done}/${total} — ${name}`),
       );
       if (successful.length > 0) {
-        const newPhotos = successful.map((r, i) => ({
-          title: imageFiles[i]?.name.replace(/\.[^.]+$/, "") ?? "",
+        const newPhotos = successful.map((r) => ({
+          title: r.fileName.replace(/\.[^.]+$/, ""),
           story: "",
           src: r.url,
           width: r.width,

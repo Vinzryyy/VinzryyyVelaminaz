@@ -2,11 +2,14 @@
  * Upload images to gallery.
  * - Dev: saves to public/gallery/ via Vite dev server endpoint
  * - Production: commits to GitHub repo via Contents API
+ *
+ * Handles retries, deduplication, and per-file error tracking.
  */
 import { convertToWebP } from "./imageUtils";
 
 export interface UploadResult {
   url: string;
+  fileName: string;       // original file name (for correct title mapping)
   width: number;
   height: number;
   originalSize: number;
@@ -16,22 +19,42 @@ export interface UploadResult {
 const GH_API = "https://api.github.com";
 const REPO = "Vinzryyy/VinzryyyVelaminaz";
 const BRANCH = "main";
+const MAX_RETRIES = 2;
+const RETRY_DELAY = 2000; // ms
+const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB raw — after conversion usually <3MB
+const COMMIT_DELAY = 800; // ms between GitHub commits to avoid 409 conflicts
 
-// Token stored in localStorage by admin login — see Admin.tsx
 function getGhToken(): string {
   try { return localStorage.getItem("vinzryyy-gh-token") || ""; }
   catch { return ""; }
 }
 
+function sleep(ms: number) { return new Promise((r) => setTimeout(r, ms)); }
+
+/**
+ * Retry wrapper — retries on network/5xx errors, not on 4xx.
+ */
+async function withRetry<T>(fn: () => Promise<T>, retries = MAX_RETRIES): Promise<T> {
+  let lastError: Error | undefined;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      const is4xx = lastError.message.includes("HTTP 4");
+      if (is4xx || attempt === retries) throw lastError;
+      await sleep(RETRY_DELAY * (attempt + 1));
+    }
+  }
+  throw lastError;
+}
+
 /**
  * Commits a base64 file to the GitHub repo via the Contents API.
- * Returns the public URL path (e.g. /gallery/slug/name.webp).
  */
 async function uploadToGitHub(base64: string, filePath: string): Promise<string> {
   const token = getGhToken();
-  if (!token) {
-    throw new Error("GitHub token not configured — enter it in admin settings");
-  }
+  if (!token) throw new Error("GitHub token not configured — enter it in admin settings");
 
   // Check if file already exists (need its SHA to overwrite)
   let sha: string | undefined;
@@ -70,7 +93,6 @@ async function uploadToGitHub(base64: string, filePath: string): Promise<string>
     throw new Error(`GitHub upload failed: ${msg}`);
   }
 
-  // public/gallery/slug/name.webp -> /gallery/slug/name.webp
   return "/" + filePath.replace(/^public\//, "");
 }
 
@@ -94,54 +116,83 @@ async function uploadToLocal(base64: string, folder: string, name: string): Prom
 }
 
 /**
+ * Generates a unique file name by appending a short timestamp suffix.
+ * Prevents overwrites when iPad sends multiple files with the same name.
+ */
+function uniqueName(baseName: string, usedNames: Set<string>): string {
+  let name = baseName;
+  if (usedNames.has(name)) {
+    name = `${baseName}-${Date.now()}`;
+  }
+  usedNames.add(name);
+  return name;
+}
+
+/**
  * Converts image to WebP and uploads via GitHub API (prod) or local server (dev).
  */
 export async function uploadPhoto(
   file: File,
   folder?: string,
   photoName?: string,
+  usedNames?: Set<string>,
 ): Promise<UploadResult> {
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error(`${file.name} is too large (${Math.round(file.size / 1024 / 1024)}MB, max ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
+  }
+
   const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(file);
   const base64 = dataUrl.split(",")[1];
 
   const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
-  const name = photoName
+  let name = photoName
     ? photoName.replace(/[^a-zA-Z0-9_-]/g, "_")
     : baseName;
 
+  // Deduplicate within batch
+  if (usedNames) name = uniqueName(name, usedNames);
+
   const subFolder = (folder ?? "").replace(/^gallery\//, "");
+  // Always use .webp extension for consistency — browsers detect format by content, not extension
+  const filePath = `public/gallery/${subFolder}/${name}.webp`;
 
   let url: string;
   if (import.meta.env.DEV) {
     url = await uploadToLocal(base64, subFolder, name);
   } else {
-    const filePath = `public/gallery/${subFolder}/${name}.webp`;
-    url = await uploadToGitHub(base64, filePath);
+    url = await withRetry(() => uploadToGitHub(base64, filePath));
   }
 
-  return { url, width, height, originalSize, newSize };
+  return { url, fileName: file.name, width, height, originalSize, newSize };
 }
 
 /**
- * Uploads multiple files with progress tracking.
+ * Uploads multiple files with progress tracking, retries, and deduplication.
  */
 export async function uploadBatch(
   files: File[],
   folder?: string,
-  onProgress?: (done: number, total: number) => void,
+  onProgress?: (done: number, total: number, currentFile: string) => void,
 ): Promise<{ successful: UploadResult[]; failed: { name: string; error: string }[] }> {
   const successful: UploadResult[] = [];
   const failed: { name: string; error: string }[] = [];
+  const usedNames = new Set<string>();
+
+  const isProd = !import.meta.env.DEV;
 
   for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    onProgress?.(i, files.length, file.name);
     try {
-      const result = await uploadPhoto(files[i], folder, undefined);
+      const result = await uploadPhoto(file, folder, undefined, usedNames);
       successful.push(result);
+      // Space out GitHub commits to avoid 409 conflicts from rapid sequential commits
+      if (isProd && i < files.length - 1) await sleep(COMMIT_DELAY);
     } catch (err) {
       const error = err instanceof Error ? err.message : "Unknown error";
-      failed.push({ name: files[i].name, error });
+      failed.push({ name: file.name, error });
     }
-    onProgress?.(i + 1, files.length);
+    onProgress?.(i + 1, files.length, file.name);
   }
 
   return { successful, failed };
