@@ -4,7 +4,7 @@ import { useDocumentHead } from "@/lib/useDocumentHead";
 import { getAnalytics } from "@/lib/analytics";
 import { getPageContent, savePageContent, resetPageContent, defaultContent, type PageContent } from "@/lib/pageContent";
 import { formatSize } from "@/lib/imageUtils";
-import { uploadPhoto, uploadBatch } from "@/lib/ghUpload";
+import { uploadPhoto, uploadBatch, commitBatchToGitHub } from "@/lib/ghUpload";
 import type { Event, Photo } from "@/lib/types";
 
 /* ── Auth ────────────────────────────────────────────────────────── */
@@ -2101,39 +2101,11 @@ function eventsToCode(events: Event[]): string {
 }
 
 async function publishToGitHub(events: Event[]): Promise<void> {
-  const token = localStorage.getItem(GH_TOKEN_KEY);
-  if (!token) throw new Error("No GitHub token configured");
-
   const code = eventsToCode(events);
-
-  // 1. Get current file SHA
-  const getRes = await fetch(
-    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
-    { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } },
+  await commitBatchToGitHub(
+    [{ path: GH_FILE_PATH, content: code }],
+    "update events data from admin panel",
   );
-  if (!getRes.ok) {
-    const err = await getRes.json().catch(() => ({}));
-    throw new Error(err.message || `GitHub API error ${getRes.status}`);
-  }
-  const { sha } = await getRes.json();
-
-  // 2. Commit updated file (use TextEncoder for safe UTF-8 → base64)
-  const bytes = new TextEncoder().encode(code);
-  let binary = "";
-  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-  const content = btoa(binary);
-  const putRes = await fetch(
-    `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE_PATH}`,
-    {
-      method: "PUT",
-      headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json", "Content-Type": "application/json" },
-      body: JSON.stringify({ message: "update events data from admin panel", content, sha }),
-    },
-  );
-  if (!putRes.ok) {
-    const err = await putRes.json().catch(() => ({}));
-    throw new Error(err.message || `GitHub API error ${putRes.status}`);
-  }
 }
 
 /* ── Export Panel ─────────────────────────────────────────────────── */

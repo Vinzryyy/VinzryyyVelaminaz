@@ -1,9 +1,8 @@
 /**
  * Upload images to gallery.
  * - Dev: saves to public/gallery/ via Vite dev server endpoint
- * - Production: commits to GitHub repo via Contents API
- *
- * Handles retries, deduplication, and per-file error tracking.
+ * - Production: batches all files into a SINGLE Git commit via the Trees API,
+ *   so only one Vercel deploy is triggered per upload session.
  */
 import { convertToWebP } from "./imageUtils";
 
@@ -20,9 +19,8 @@ const GH_API = "https://api.github.com";
 const REPO = "Vinzryyy/VinzryyyVelaminaz";
 const BRANCH = "main";
 const MAX_RETRIES = 2;
-const RETRY_DELAY = 2000; // ms
-const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB raw — after conversion usually <3MB
-const COMMIT_DELAY = 800; // ms between GitHub commits to avoid 409 conflicts
+const RETRY_DELAY = 2000;
+const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
 function getGhToken(): string {
   try { return localStorage.getItem("vinzryyy-gh-token") || ""; }
@@ -31,9 +29,10 @@ function getGhToken(): string {
 
 function sleep(ms: number) { return new Promise((r) => setTimeout(r, ms)); }
 
-/**
- * Retry wrapper — retries on network/5xx errors, not on 4xx.
- */
+function ghHeaders(token: string): Record<string, string> {
+  return { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json", "Content-Type": "application/json" };
+}
+
 async function withRetry<T>(fn: () => Promise<T>, retries = MAX_RETRIES): Promise<T> {
   let lastError: Error | undefined;
   for (let attempt = 0; attempt <= retries; attempt++) {
@@ -49,56 +48,88 @@ async function withRetry<T>(fn: () => Promise<T>, retries = MAX_RETRIES): Promis
   throw lastError;
 }
 
-/**
- * Commits a base64 file to the GitHub repo via the Contents API.
- */
-async function uploadToGitHub(base64: string, filePath: string): Promise<string> {
-  const token = getGhToken();
-  if (!token) throw new Error("GitHub token not configured — enter it in admin settings");
+/* ── Git Trees API: single commit for all files ───────────────── */
 
-  // Check if file already exists (need its SHA to overwrite)
-  let sha: string | undefined;
-  try {
-    const getRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}?ref=${BRANCH}`, {
-      headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" },
-    });
-    if (getRes.ok) {
-      const existing = await getRes.json();
-      sha = existing.sha;
-    }
-  } catch {
-    // File doesn't exist yet, that's fine
-  }
-
-  const body: Record<string, string> = {
-    message: `gallery: add ${filePath.split("/").pop()}`,
-    content: base64,
-    branch: BRANCH,
-  };
-  if (sha) body.sha = sha;
-
-  const putRes = await fetch(`${GH_API}/repos/${REPO}/contents/${filePath}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github.v3+json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!putRes.ok) {
-    const err = await putRes.json().catch(() => ({}));
-    const msg = (err as { message?: string }).message || `HTTP ${putRes.status}`;
-    throw new Error(`GitHub upload failed: ${msg}`);
-  }
-
-  return "/" + filePath.replace(/^public\//, "");
+interface TreeEntry {
+  path: string;
+  content?: string;     // for text files
+  base64?: string;      // for binary files
 }
 
 /**
- * Saves a file via the Vite dev server endpoint (dev only).
+ * Commits multiple files in a SINGLE commit using the Git Trees API.
+ * This triggers only ONE Vercel deploy, no matter how many files.
  */
+async function commitBatchToGitHub(entries: TreeEntry[], message: string): Promise<void> {
+  const token = getGhToken();
+  if (!token) throw new Error("GitHub token not configured — enter it in admin settings");
+  const headers = ghHeaders(token);
+
+  // 1. Get latest commit SHA on the branch
+  const refRes = await fetch(`${GH_API}/repos/${REPO}/git/ref/heads/${BRANCH}`, { headers });
+  if (!refRes.ok) throw new Error(`Failed to get branch ref: HTTP ${refRes.status}`);
+  const refData = await refRes.json();
+  const latestCommitSha: string = refData.object.sha;
+
+  // 2. Get the tree SHA of that commit
+  const commitRes = await fetch(`${GH_API}/repos/${REPO}/git/commits/${latestCommitSha}`, { headers });
+  if (!commitRes.ok) throw new Error(`Failed to get commit: HTTP ${commitRes.status}`);
+  const commitData = await commitRes.json();
+  const baseTreeSha: string = commitData.tree.sha;
+
+  // 3. Create blobs for binary files, build tree entries
+  const treeItems: { path: string; mode: string; type: string; sha?: string; content?: string }[] = [];
+
+  for (const entry of entries) {
+    if (entry.base64) {
+      // Binary file — create a blob first
+      const blobRes = await fetch(`${GH_API}/repos/${REPO}/git/blobs`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ content: entry.base64, encoding: "base64" }),
+      });
+      if (!blobRes.ok) throw new Error(`Failed to create blob for ${entry.path}: HTTP ${blobRes.status}`);
+      const blobData = await blobRes.json();
+      treeItems.push({ path: entry.path, mode: "100644", type: "blob", sha: blobData.sha });
+    } else if (entry.content != null) {
+      // Text file — can be inlined
+      treeItems.push({ path: entry.path, mode: "100644", type: "blob", content: entry.content });
+    }
+  }
+
+  // 4. Create a new tree
+  const treeRes = await fetch(`${GH_API}/repos/${REPO}/git/trees`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ base_tree: baseTreeSha, tree: treeItems }),
+  });
+  if (!treeRes.ok) throw new Error(`Failed to create tree: HTTP ${treeRes.status}`);
+  const treeData = await treeRes.json();
+
+  // 5. Create the commit
+  const newCommitRes = await fetch(`${GH_API}/repos/${REPO}/git/commits`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      message,
+      tree: treeData.sha,
+      parents: [latestCommitSha],
+    }),
+  });
+  if (!newCommitRes.ok) throw new Error(`Failed to create commit: HTTP ${newCommitRes.status}`);
+  const newCommitData = await newCommitRes.json();
+
+  // 6. Update the branch ref to point to new commit
+  const updateRes = await fetch(`${GH_API}/repos/${REPO}/git/refs/heads/${BRANCH}`, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify({ sha: newCommitData.sha }),
+  });
+  if (!updateRes.ok) throw new Error(`Failed to update branch: HTTP ${updateRes.status}`);
+}
+
+/* ── Local dev upload ─────────────────────────────────────────── */
+
 async function uploadToLocal(base64: string, folder: string, name: string): Promise<string> {
   const res = await fetch("/api/upload", {
     method: "POST",
@@ -115,10 +146,8 @@ async function uploadToLocal(base64: string, folder: string, name: string): Prom
   return url;
 }
 
-/**
- * Generates a unique file name by appending a short timestamp suffix.
- * Prevents overwrites when iPad sends multiple files with the same name.
- */
+/* ── Name deduplication ───────────────────────────────────────── */
+
 function uniqueName(baseName: string, usedNames: Set<string>): string {
   let name = baseName;
   if (usedNames.has(name)) {
@@ -128,15 +157,25 @@ function uniqueName(baseName: string, usedNames: Set<string>): string {
   return name;
 }
 
-/**
- * Converts image to WebP and uploads via GitHub API (prod) or local server (dev).
- */
-export async function uploadPhoto(
+/* ── Convert a single file (shared by dev & prod) ─────────────── */
+
+interface ConvertedFile {
+  base64: string;
+  filePath: string;
+  url: string;
+  fileName: string;
+  width: number;
+  height: number;
+  originalSize: number;
+  newSize: number;
+}
+
+async function convertFile(
   file: File,
-  folder?: string,
+  folder: string,
+  usedNames: Set<string>,
   photoName?: string,
-  usedNames?: Set<string>,
-): Promise<UploadResult> {
+): Promise<ConvertedFile> {
   if (file.size > MAX_FILE_SIZE) {
     throw new Error(`${file.name} is too large (${Math.round(file.size / 1024 / 1024)}MB, max ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
   }
@@ -148,27 +187,44 @@ export async function uploadPhoto(
   let name = photoName
     ? photoName.replace(/[^a-zA-Z0-9_-]/g, "_")
     : baseName;
+  name = uniqueName(name, usedNames);
 
-  // Deduplicate within batch
-  if (usedNames) name = uniqueName(name, usedNames);
-
-  const subFolder = (folder ?? "").replace(/^gallery\//, "");
-  // Always use .webp extension for consistency — browsers detect format by content, not extension
+  const subFolder = folder.replace(/^gallery\//, "");
   const filePath = `public/gallery/${subFolder}/${name}.webp`;
+  const url = "/" + filePath.replace(/^public\//, "");
 
-  let url: string;
-  if (import.meta.env.DEV) {
-    url = await uploadToLocal(base64, subFolder, name);
-  } else {
-    url = await withRetry(() => uploadToGitHub(base64, filePath));
-  }
-
-  return { url, fileName: file.name, width, height, originalSize, newSize };
+  return { base64, filePath, url, fileName: file.name, width, height, originalSize, newSize };
 }
 
-/**
- * Uploads multiple files with progress tracking, retries, and deduplication.
- */
+/* ── Single photo upload (dev only, prod uses batch) ──────────── */
+
+export async function uploadPhoto(
+  file: File,
+  folder?: string,
+  photoName?: string,
+): Promise<UploadResult> {
+  const usedNames = new Set<string>();
+  const subFolder = folder ?? "";
+
+  if (import.meta.env.DEV) {
+    const converted = await convertFile(file, subFolder, usedNames, photoName);
+    const folderName = subFolder.replace(/^gallery\//, "");
+    const name = converted.filePath.split("/").pop()!.replace(/\.webp$/, "");
+    const url = await uploadToLocal(converted.base64, folderName, name);
+    return { url, fileName: converted.fileName, width: converted.width, height: converted.height, originalSize: converted.originalSize, newSize: converted.newSize };
+  }
+
+  // Prod: single-file commit
+  const converted = await convertFile(file, subFolder, usedNames, photoName);
+  await withRetry(() => commitBatchToGitHub(
+    [{ path: converted.filePath, base64: converted.base64 }],
+    `gallery: add ${converted.filePath.split("/").pop()}`,
+  ));
+  return { url: converted.url, fileName: converted.fileName, width: converted.width, height: converted.height, originalSize: converted.originalSize, newSize: converted.newSize };
+}
+
+/* ── Batch upload: converts all, then ONE commit ──────────────── */
+
 export async function uploadBatch(
   files: File[],
   folder?: string,
@@ -177,23 +233,76 @@ export async function uploadBatch(
   const successful: UploadResult[] = [];
   const failed: { name: string; error: string }[] = [];
   const usedNames = new Set<string>();
+  const subFolder = folder ?? "";
 
-  const isProd = !import.meta.env.DEV;
-
+  // Phase 1: Convert all files locally (no network yet for prod)
+  const converted: ConvertedFile[] = [];
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    onProgress?.(i, files.length, file.name);
+    onProgress?.(i, files.length, `Converting ${file.name}...`);
     try {
-      const result = await uploadPhoto(file, folder, undefined, usedNames);
-      successful.push(result);
-      // Space out GitHub commits to avoid 409 conflicts from rapid sequential commits
-      if (isProd && i < files.length - 1) await sleep(COMMIT_DELAY);
+      const result = await convertFile(file, subFolder, usedNames);
+      converted.push(result);
     } catch (err) {
       const error = err instanceof Error ? err.message : "Unknown error";
       failed.push({ name: file.name, error });
     }
-    onProgress?.(i + 1, files.length, file.name);
   }
 
+  if (converted.length === 0) {
+    onProgress?.(files.length, files.length, "Done");
+    return { successful, failed };
+  }
+
+  // Phase 2: Upload
+  if (import.meta.env.DEV) {
+    // Dev: upload one by one to local server
+    for (let i = 0; i < converted.length; i++) {
+      const c = converted[i];
+      onProgress?.(i, converted.length, `Uploading ${c.fileName}...`);
+      try {
+        const folderName = subFolder.replace(/^gallery\//, "");
+        const name = c.filePath.split("/").pop()!.replace(/\.webp$/, "");
+        const url = await uploadToLocal(c.base64, folderName, name);
+        successful.push({ url, fileName: c.fileName, width: c.width, height: c.height, originalSize: c.originalSize, newSize: c.newSize });
+      } catch (err) {
+        const error = err instanceof Error ? err.message : "Unknown error";
+        failed.push({ name: c.fileName, error });
+      }
+    }
+  } else {
+    // Prod: ONE single commit with all images
+    onProgress?.(converted.length, files.length, "Committing to GitHub...");
+    try {
+      const entries: TreeEntry[] = converted.map((c) => ({
+        path: c.filePath,
+        base64: c.base64,
+      }));
+      const count = converted.length;
+      const message = count === 1
+        ? `gallery: add ${converted[0].filePath.split("/").pop()}`
+        : `gallery: add ${count} photos`;
+
+      await withRetry(() => commitBatchToGitHub(entries, message));
+
+      // All succeeded
+      for (const c of converted) {
+        successful.push({ url: c.url, fileName: c.fileName, width: c.width, height: c.height, originalSize: c.originalSize, newSize: c.newSize });
+      }
+    } catch (err) {
+      // Entire batch failed
+      const error = err instanceof Error ? err.message : "Unknown error";
+      for (const c of converted) {
+        failed.push({ name: c.fileName, error });
+      }
+    }
+  }
+
+  onProgress?.(files.length, files.length, "Done");
   return { successful, failed };
 }
+
+/* ── Batch commit helper (used by publishToGitHub) ────────────── */
+
+export { commitBatchToGitHub };
+export type { TreeEntry };
