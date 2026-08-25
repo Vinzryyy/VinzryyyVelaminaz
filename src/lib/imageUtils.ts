@@ -3,17 +3,37 @@
  * Converts uploaded images to WebP using Canvas API.
  */
 
+import heic2any from "heic2any";
+
 const MAX_DIMENSION = 1920;
 const WEBP_QUALITY = 0.85;
 
+function isHeic(file: File): boolean {
+  const name = file.name.toLowerCase();
+  return name.endsWith(".heic") || name.endsWith(".heif") ||
+    file.type === "image/heic" || file.type === "image/heif";
+}
+
 /**
- * Converts a File (PNG/JPG/etc.) to a WebP data URL.
+ * If the file is HEIC/HEIF, convert it to a JPEG Blob first
+ * so the browser Image element can decode it.
+ */
+async function ensureBrowserDecodable(file: File): Promise<Blob> {
+  if (!isHeic(file)) return file;
+  const blob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.92 });
+  return Array.isArray(blob) ? blob[0] : blob;
+}
+
+/**
+ * Converts a File (PNG/JPG/HEIC/etc.) to a WebP data URL.
  * Also resizes if larger than MAX_DIMENSION on either side.
  */
-export function convertToWebP(file: File): Promise<{ dataUrl: string; width: number; height: number; originalSize: number; newSize: number }> {
+export async function convertToWebP(file: File): Promise<{ dataUrl: string; width: number; height: number; originalSize: number; newSize: number }> {
+  const decodable = await ensureBrowserDecodable(file);
+
   return new Promise((resolve, reject) => {
     const img = new Image();
-    const url = URL.createObjectURL(file);
+    const url = URL.createObjectURL(decodable);
 
     img.onload = () => {
       URL.revokeObjectURL(url);
