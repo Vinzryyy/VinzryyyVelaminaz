@@ -818,6 +818,34 @@ export const events: Event[] = [
         "src": "/gallery/quadlips-performance-day2/IMG_7534.webp",
         "width": 1920,
         "height": 1280
+      },
+      {
+        "title": "IMG_7542",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7542.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7544",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7544.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7545",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7545.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7539",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7539.webp",
+        "width": 1920,
+        "height": 1280
       }
     ],
     "disableGrouping": true
