@@ -757,13 +757,6 @@ export const events: Event[] = [
         "height": 1280
       },
       {
-        "title": "IMG_7496",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7496.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
         "title": "IMG_7505",
         "story": "",
         "src": "/gallery/quadlips-performance-day2/IMG_7505.webp",
@@ -771,16 +764,9 @@ export const events: Event[] = [
         "height": 1280
       },
       {
-        "title": "IMG_7507",
+        "title": "IMG_7511",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7507.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
-        "title": "IMG_7513",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7513.webp",
+        "src": "/gallery/quadlips-performance-day2/IMG_7511.webp",
         "width": 1920,
         "height": 1280
       },
@@ -792,9 +778,9 @@ export const events: Event[] = [
         "height": 1280
       },
       {
-        "title": "IMG_7511",
+        "title": "IMG_7513",
         "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7511.webp",
+        "src": "/gallery/quadlips-performance-day2/IMG_7513.webp",
         "width": 1920,
         "height": 1280
       },
@@ -820,13 +806,6 @@ export const events: Event[] = [
         "height": 1280
       },
       {
-        "title": "IMG_7517",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7517.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
         "title": "IMG_7521",
         "story": "",
         "src": "/gallery/quadlips-performance-day2/IMG_7521.webp",
@@ -834,51 +813,9 @@ export const events: Event[] = [
         "height": 1280
       },
       {
-        "title": "IMG_7544",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7544.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
-        "title": "IMG_7542",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7542.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
         "title": "IMG_7534",
         "story": "",
         "src": "/gallery/quadlips-performance-day2/IMG_7534.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
-        "title": "IMG_7546",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7546.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
-        "title": "IMG_7548",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7548.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
-        "title": "IMG_7550",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7550.webp",
-        "width": 1920,
-        "height": 1280
-      },
-      {
-        "title": "IMG_7547",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7547.webp",
         "width": 1920,
         "height": 1280
       }
