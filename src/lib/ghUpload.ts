@@ -57,10 +57,26 @@ interface TreeEntry {
 }
 
 /**
+ * Mutex to serialize all GitHub commits so concurrent uploads don't
+ * race on the branch ref and produce empty commits.
+ */
+let commitQueue: Promise<void> = Promise.resolve();
+
+/**
  * Commits multiple files in a SINGLE commit using the Git Trees API.
  * This triggers only ONE Vercel deploy, no matter how many files.
+ * Serialized via commitQueue to prevent race conditions.
  */
 async function commitBatchToGitHub(entries: TreeEntry[], message: string): Promise<void> {
+  // Chain onto the queue so only one commit runs at a time
+  const result = commitQueue.then(() => doCommitBatch(entries, message));
+  commitQueue = result.catch(() => {});   // swallow so queue continues after failures
+  return result;
+}
+
+async function doCommitBatch(entries: TreeEntry[], message: string): Promise<void> {
+  if (entries.length === 0) throw new Error("Nothing to commit — entries array is empty");
+
   const token = getGhToken();
   if (!token) throw new Error("GitHub token not configured — enter it in admin settings");
   const headers = ghHeaders(token);
@@ -97,6 +113,11 @@ async function commitBatchToGitHub(entries: TreeEntry[], message: string): Promi
     }
   }
 
+  // Guard: never create an empty commit
+  if (treeItems.length === 0) {
+    throw new Error("No valid tree entries — all files were skipped (missing base64/content)");
+  }
+
   // 4. Create a new tree
   const treeRes = await fetch(`${GH_API}/repos/${REPO}/git/trees`, {
     method: "POST",
@@ -105,6 +126,11 @@ async function commitBatchToGitHub(entries: TreeEntry[], message: string): Promi
   });
   if (!treeRes.ok) throw new Error(`Failed to create tree: HTTP ${treeRes.status}`);
   const treeData = await treeRes.json();
+
+  // Guard: if the new tree SHA equals the base, nothing actually changed
+  if (treeData.sha === baseTreeSha) {
+    throw new Error("Tree unchanged — files may already exist at the same paths with identical content");
+  }
 
   // 5. Create the commit
   const newCommitRes = await fetch(`${GH_API}/repos/${REPO}/git/commits`, {
