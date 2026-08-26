@@ -889,13 +889,6 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       },
-      {
-        "title": "IMG_7550",
-        "story": "",
-        "src": "/gallery/quadlips-performance-day2/IMG_7550.webp",
-        "width": 1920,
-        "height": 1280
-      }
     ],
     "disableGrouping": true
   },
