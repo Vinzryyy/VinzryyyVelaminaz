@@ -846,6 +846,55 @@ export const events: Event[] = [
         "src": "/gallery/quadlips-performance-day2/IMG_7539.webp",
         "width": 1920,
         "height": 1280
+      },
+      {
+        "title": "IMG_7546",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7546.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7548",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7548.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7550",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7550.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7553",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7553.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7555",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7555.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7552",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7552.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7550",
+        "story": "",
+        "src": "/gallery/quadlips-performance-day2/IMG_7550.webp",
+        "width": 1920,
+        "height": 1280
       }
     ],
     "disableGrouping": true
