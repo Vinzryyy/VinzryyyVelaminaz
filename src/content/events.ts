@@ -2114,6 +2114,580 @@ export const events: Event[] = [
         "aperture": "f/2.8",
         "shutter": "1/400",
         "iso": 3200
+      },
+      {
+        "title": "SCRL_0065",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0065.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0064",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0064.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0063",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0063.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0062",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0062.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0061",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0061.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0060",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0060.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0059",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0059.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0058",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0058.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0041",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0041.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0040",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0040.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0039",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0039.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0038",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0038.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0037",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/SCRL_0037.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "IMG_7275",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7275.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7271",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7271.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7267",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7267.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7263",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7263.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7262",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7262.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7261",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7261.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7260",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7260.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7259",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7259.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7254",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7254.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7257",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7257.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7252",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7252.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7249",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7249.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7243",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7243.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7239",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7239.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7237",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7237.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7236",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7236.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7234",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7234.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7232",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7232.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7226",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7226.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7228",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7228.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7229",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7229.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7230",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7230.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7231",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7231.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7225",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7225.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7223",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7223.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7222",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7222.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7222",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7222-1787707781975.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7221",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7221.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7206",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7206.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7214",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7214.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7212",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7212.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7208",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7208.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7217",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7217.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7205",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7205.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7203",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7203.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_7202",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7202.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_7199",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7199.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_7197",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7197.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_7195",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7195.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_7192",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7192.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7187",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7187.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7186",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7186.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7183",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7183.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7177",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7177.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7176",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7176.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7174",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7174.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7170",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7170.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7168",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7168.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7166",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7166.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7165",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7165.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7162",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7162.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7160",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7160.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7159",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7159.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7151",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7151.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7158",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7158.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7156",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7156.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7155",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7155.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7152",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7152.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7135",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7135.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7141",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7141.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7150",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7150.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7146",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7146.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7139",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7139.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7138",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7138.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7145",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7145.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7143",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7143.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7137",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7137.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7136",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7136.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_7142",
+        "story": "",
+        "src": "/gallery/jkt48-stage-day1/IMG_7142.webp",
+        "width": 1920,
+        "height": 1280
       }
     ]
   }
