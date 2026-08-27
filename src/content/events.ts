@@ -2064,6 +2064,90 @@ export const events: Event[] = [
         "aperture": "f/1.4",
         "shutter": "1/320",
         "iso": 1200
+      },
+      {
+        "title": "SCRL_0036",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0036.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0035",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0035.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0034",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0034.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0033",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0033.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0032",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0032.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0031",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0031.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0030",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0030.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0029",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0029.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0028",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0028.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0027",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0027.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0026",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0026.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0025",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0025.webp",
+        "width": 1536,
+        "height": 1920
       }
     ]
   },
