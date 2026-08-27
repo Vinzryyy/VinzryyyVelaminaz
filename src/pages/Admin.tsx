@@ -268,11 +268,27 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
   const [publishState, setPublishState] = useState<"idle" | "publishing" | "done" | "error">("idle");
 
+  // When true, the next events state change will auto-publish events.ts to GitHub
+  const pendingAutoPublish = useRef(false);
+
   // Persist locally on every change (fast, 300ms debounce)
+  // Also auto-publish to GitHub if a photo upload just completed
   useEffect(() => {
     const t = setTimeout(() => saveEvents(events), 300);
+
+    if (pendingAutoPublish.current && localStorage.getItem(GH_TOKEN_KEY)) {
+      pendingAutoPublish.current = false;
+      setPublishState("publishing");
+      publishToGitHub(events)
+        .then(() => { setPublishState("done"); notify("Auto-published — site will redeploy"); })
+        .catch((err) => { setPublishState("error"); notify(`Auto-publish failed: ${err instanceof Error ? err.message : "unknown error"}`); });
+    }
+
     return () => clearTimeout(t);
   }, [events]);
+
+  // Called by upload handlers to trigger auto-publish after state updates
+  const scheduleAutoPublish = useCallback(() => { pendingAutoPublish.current = true; }, []);
 
   const handlePublish = useCallback(() => {
     if (!localStorage.getItem(GH_TOKEN_KEY)) {
@@ -624,6 +640,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 event={selectedEvent}
                 onChange={(patch) => { updateEvent(selectedEvent.slug, patch); notify("Saved"); }}
                 onPhotosChange={(photos) => { updateEvent(selectedEvent.slug, { photos }); notify("Photos updated"); }}
+                onAutoPublish={scheduleAutoPublish}
               />
             )}
           </div>
@@ -641,6 +658,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 event={selectedEvent}
                 onChange={(photos) => { updateEvent(selectedEvent.slug, { photos }); notify("Photos updated"); }}
                 onCoverChange={(cover) => { updateEvent(selectedEvent.slug, { cover }); notify("Cover updated"); }}
+                onAutoPublish={scheduleAutoPublish}
               />
             )}
           </div>
@@ -942,10 +960,12 @@ function EventEditor({
   event,
   onChange,
   onPhotosChange,
+  onAutoPublish,
 }: {
   event: Event;
   onChange: (patch: Partial<Event>) => void;
   onPhotosChange: (photos: Photo[]) => void;
+  onAutoPublish?: () => void;
 }) {
   const [form, setForm] = useState<Event>(deepClone(event));
 
@@ -1008,6 +1028,7 @@ function EventEditor({
       setConverting("Converting & uploading cover...");
       const result = await uploadPhoto(files[0], `gallery/${form.slug}`);
       set("cover", result.url);
+      onAutoPublish?.();
       setConverting(`Cover uploaded: ${formatSize(result.originalSize)} → ${formatSize(result.newSize)} WebP`);
     } catch (err) {
       setConverting(`Upload failed: ${err instanceof Error ? err.message : "unknown error"}`);
@@ -1035,6 +1056,7 @@ function EventEditor({
           height: r.height,
         }));
         onPhotosChange([...event.photos, ...newPhotos]);
+        onAutoPublish?.();
       }
       const totalSaved = successful.reduce((n, r) => n + (r.originalSize - r.newSize), 0);
       const msg = `Added ${successful.length} photos (saved ${formatSize(totalSaved)})`;
@@ -1322,6 +1344,7 @@ function EventEditor({
                         height: r.height,
                       }));
                       onPhotosChange([...event.photos, ...newPhotos]);
+                      onAutoPublish?.();
                     }
                     const msg = `Added ${successful.length} photos`;
                     setConverting(failed.length > 0 ? `${msg} · ${failed.length} failed: ${failed[0].error}` : msg);
@@ -1427,10 +1450,12 @@ function PhotoManager({
   event,
   onChange,
   onCoverChange,
+  onAutoPublish,
 }: {
   event: Event;
   onChange: (photos: Photo[]) => void;
   onCoverChange: (cover: string) => void;
+  onAutoPublish?: () => void;
 }) {
   const [photos, setPhotos] = useState<Photo[]>(() => deepClone(event.photos));
   const [editIdx, setEditIdx] = useState<number | null>(null);
@@ -1505,6 +1530,7 @@ function PhotoManager({
           height: r.height,
         }));
         commit((p) => [...p, ...newPhotos]);
+        onAutoPublish?.();
       }
       const msg = `Added ${successful.length} photo${successful.length !== 1 ? "s" : ""}`;
       setUploading(failed.length > 0 ? `${msg} · ${failed.length} failed: ${failed[0].error}` : msg);
