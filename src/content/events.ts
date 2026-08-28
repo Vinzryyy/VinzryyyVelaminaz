@@ -2868,102 +2868,130 @@ export const events: Event[] = [
         "iso": 3200
       },
       {
-        "title": "SCRL_0065",
+        "title": "Jkt48 (1)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0065.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0064",
+        "title": "Jkt48 (2)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0064.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0063",
+        "title": "Jkt48 (3)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0063.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0062",
+        "title": "Jkt48 (4)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0062.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0061",
+        "title": "Jkt48 (5)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0061.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0060",
+        "title": "Jkt48 (6)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0060.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0059",
+        "title": "Jkt48 (7)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0059.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0058",
+        "title": "Jkt48 (8)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0058.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Jkt48",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0041",
+        "title": "Fiony (1)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0041.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fiony",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0040",
+        "title": "Fiony (2)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0040.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fiony",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0039",
+        "title": "Fiony (3)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0039.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fiony",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0038",
+        "title": "Fiony (4)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0038.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fiony",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0037",
+        "title": "Fiony (5)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/SCRL_0037.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fiony",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "IMG_7275",
+        "title": "Fiony (6)",
         "story": "",
         "src": "/gallery/jkt48-stage-day1/IMG_7275.webp",
         "width": 1920,
-        "height": 1280
+        "height": 1280,
+        "sequence": "Fiony",
+        "sequenceDisplay": "filmstrip"
       },
       {
         "title": "IMG_7271",
