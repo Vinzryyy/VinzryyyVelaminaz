@@ -2196,7 +2196,8 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/quadlips-kkv/IMG_6543.webp"
   },
   {
     "slug": "klp48-performance-day1",
@@ -3530,7 +3531,8 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/jkt48-don-bon-day2/IMG_6808.webp"
   },
   {
     "slug": "jkt48-stage-day1",
@@ -4182,6 +4184,7 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/jkt48-stage-day1/IMG_7271.webp"
   }
 ];
