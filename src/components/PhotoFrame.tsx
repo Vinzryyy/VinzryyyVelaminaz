@@ -20,6 +20,7 @@ export function PhotoFrame({
 }) {
   const hasSrc = !!photo.src;
   const [loaded, setLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
   const [inView, setInView] = useState(false);
   const frameRef = useRef<HTMLButtonElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -58,8 +59,22 @@ export function PhotoFrame({
       {hasSrc ? (
         <>
           {/* Shimmer placeholder — removed once the photo decodes */}
-          {!loaded && <div className="skeleton absolute inset-0 overflow-hidden bg-card" aria-hidden="true" />}
-          {inView && (
+          {!loaded && !errored && <div className="skeleton absolute inset-0 overflow-hidden bg-card" aria-hidden="true" />}
+          {/* Error state with retry */}
+          {errored && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-card">
+              <svg className="mb-2 h-5 w-5 text-faint" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+              <button
+                onClick={(e) => { e.stopPropagation(); setErrored(false); setLoaded(false); }}
+                className="font-mono text-[9px] text-muted transition-colors hover:text-crimson"
+              >
+                Retry
+              </button>
+            </div>
+          )}
+          {inView && !errored && (
             <img
               ref={imgRef}
               src={photo.src}
@@ -69,7 +84,7 @@ export function PhotoFrame({
               decoding="async"
               draggable={false}
               onLoad={() => setLoaded(true)}
-              onError={() => setLoaded(true)}
+              onError={() => { setErrored(true); setLoaded(true); }}
               className={`img-blur-up absolute inset-0 h-full w-full object-cover transition-transform duration-300 ${loaded ? "img-loaded" : ""}`}
               sizes="(min-width: 640px) 33vw, 100vw"
             />
