@@ -41,8 +41,9 @@ export function EventCard({
         />
       )}
 
-      {/* Gradient overlays */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+      {/* Gradient overlays — bottom darkens more on hover */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
 
       {/* Top bar — group tag + kanji count */}
@@ -62,24 +63,24 @@ export function EventCard({
         </span>
       </div>
 
-      {/* Bottom text overlay */}
+      {/* Bottom text overlay — staggered reveal on hover */}
       <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-2 p-5">
-        <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/50">
+        <p className="translate-y-2 font-mono text-[9px] uppercase tracking-[0.3em] text-white/50 opacity-70 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           {event.location} &middot; {event.date}
         </p>
 
-        <h3 className="font-display text-lg font-bold leading-tight text-white transition-colors duration-200">
+        <h3 className="translate-y-2 font-display text-lg font-bold leading-tight text-white transition-all duration-300 delay-[50ms] group-hover:translate-y-0">
           {event.title}
         </h3>
 
-        <p className="line-clamp-2 text-[13px] leading-relaxed text-white/50">
+        <p className="translate-y-2 line-clamp-2 text-[13px] leading-relaxed text-white/50 opacity-70 transition-all duration-300 delay-[100ms] group-hover:translate-y-0 group-hover:opacity-100">
           {event.subtitle}
         </p>
 
         {/* Bottom accent line + view prompt */}
         <div className="mt-1 flex items-center gap-3">
-          <div className="h-px flex-1 bg-gradient-to-r from-crimson/60 to-transparent" />
-          <span className="translate-x-2 font-mono text-[10px] tracking-wider text-white/40 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+          <div className="h-px flex-1 origin-left scale-x-75 bg-gradient-to-r from-crimson/60 to-transparent transition-transform duration-500 delay-[150ms] group-hover:scale-x-100" />
+          <span className="translate-x-2 font-mono text-[10px] tracking-wider text-white/40 opacity-0 transition-all duration-300 delay-[200ms] group-hover:translate-x-0 group-hover:opacity-100">
             View &rarr;
           </span>
         </div>
