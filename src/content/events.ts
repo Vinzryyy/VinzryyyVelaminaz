@@ -1673,6 +1673,41 @@ export const events: Event[] = [
         "src": "/gallery/quadlips-kkv/IMG_6661.webp",
         "width": 1280,
         "height": 1920
+      },
+      {
+        "title": "SCRL_0090",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0090.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0089",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0089.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0088",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0088.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0087",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0087.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0086",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0086.webp",
+        "width": 1440,
+        "height": 1920
       }
     ]
   },
