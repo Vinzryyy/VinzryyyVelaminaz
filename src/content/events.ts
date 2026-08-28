@@ -2,6 +2,160 @@ import type { Event } from "@/lib/types";
 
 export const events: Event[] = [
   {
+    "slug": "JKT48DonOboriDay2",
+    "title": "JKT48 Stage Day 2",
+    "group": "JKT48",
+    "tateText": "",
+    "location": "LaLaport BBCC, Kuala Lumpur",
+    "date": "August 2026",
+    "gear": "Canon Eos R8",
+    "subtitle": "",
+    "description": "JKT48's stage show at LaLaport BBCC Day2 — closer and more intimate than an arena date. Fiony and Lulu shared a duet moment that stopped the room, and Oline's solo was pure presence. Four frames from a night that deserved forty.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "IMG_6331",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6331.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6332",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6332.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6334",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6334.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6336",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6336.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6338",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6338.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6295",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6295.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6296",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6296.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6297",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6297.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6302",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6302.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6300",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6300.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6299",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6299.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6298",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6298.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6317",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6317.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6316",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6316.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6313",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6313.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6312",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6312.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6310",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6310.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6319",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6319.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6321",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6321.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6326",
+        "story": "",
+        "src": "/gallery/JKT48DonOboriDay2/IMG_6326.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ]
+  },
+  {
     "slug": "quadlips-performance-day1",
     "title": "Quadlips Performance Day 1",
     "group": "Quadlips",
@@ -3839,7 +3993,7 @@ export const events: Event[] = [
     "gear": "Canon EOS R5",
     "subtitle": "Fiony, Lulu, and Oline on stage in KL.",
     "description": "JKT48's stage show at LaLaport BBCC — closer and more intimate than an arena date. Fiony and Lulu shared a duet moment that stopped the room, and Oline's solo was pure presence. Four frames from a night that deserved forty.",
-    "featured": false,
+    "featured": true,
     "photos": [
       {
         "title": "Fiony & Lulu",
