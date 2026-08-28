@@ -2417,6 +2417,174 @@ export const events: Event[] = [
         "src": "/gallery/jkt48-don-bon-day2/IMG_6897.webp",
         "width": 1280,
         "height": 1920
+      },
+      {
+        "title": "IMG_6895",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6895.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6893",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6893.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6892",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6892.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6891",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6891.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6887",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6887.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6888",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6888.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6881",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6881.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6882",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6882.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6883",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6883.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6885",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6885.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6875",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6875.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6870",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6870.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6859",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6859.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6864",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6864.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6857",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6857.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6855",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6855.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6853",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6853.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6850",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6850.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6848",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6848.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6844",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6844.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6851",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6851.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6846",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6846.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6843",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6843.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6842",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/IMG_6842.webp",
+        "width": 1920,
+        "height": 1280
       }
     ]
   },
