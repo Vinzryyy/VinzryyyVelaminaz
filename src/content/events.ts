@@ -1747,31 +1747,67 @@ export const events: Event[] = [
         "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0097",
+        "title": "Fame (1)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0097.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fame",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0096",
+        "title": "Fame (2)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0096.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fame",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0095",
+        "title": "Fame (3)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0095.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Fame",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0094",
+        "title": "Fame (4)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0094.webp",
         "width": 1536,
+        "height": 1920,
+        "sequence": "Fame",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "SCRL_0101",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0101.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0100",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0100.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0099",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0099.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0098",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0098.webp",
+        "width": 1440,
         "height": 1920
       }
     ]
