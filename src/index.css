@@ -249,6 +249,11 @@ html, body, #root {
 .filmstrip {
   scrollbar-width: thin;
   scrollbar-color: var(--color-faint) transparent;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.filmstrip > * {
+  scroll-snap-align: center;
 }
 .filmstrip::-webkit-scrollbar {
   height: 4px;
