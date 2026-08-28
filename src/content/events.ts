@@ -153,7 +153,8 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/JKT48DonOboriDay2/IMG_6299.webp"
   },
   {
     "slug": "quadlips-performance-day1",
