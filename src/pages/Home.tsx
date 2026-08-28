@@ -365,7 +365,7 @@ export default function Home() {
               <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.35em] text-sakura/60">
                 {content.contact.label}
               </p>
-              <h2 className="font-display text-3xl font-bold text-ink md:text-4xl">
+              <h2 className="fluid-display-md font-display font-bold text-ink">
                 {content.contact.heading}
               </h2>
               <p className="mt-5 text-sm leading-7 text-muted">

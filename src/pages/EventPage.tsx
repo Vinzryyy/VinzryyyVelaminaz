@@ -93,7 +93,7 @@ export default function EventPage() {
                   {event.group}
                 </p>
               )}
-              <h1 className="font-display text-2xl font-bold leading-[1.05] text-ink sm:text-4xl md:text-5xl lg:text-6xl">
+              <h1 className="fluid-display-lg font-display font-bold text-ink">
                 {event.title}
               </h1>
             </div>
@@ -122,7 +122,7 @@ export default function EventPage() {
 
                 {!coverSrc && (
                   <ScrollReveal>
-                    <h1 className="font-display text-4xl font-bold leading-[1.05] text-ink md:text-5xl">
+                    <h1 className="fluid-display-lg font-display font-bold text-ink">
                       {event.title}
                     </h1>
                   </ScrollReveal>

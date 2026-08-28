@@ -65,6 +65,24 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  /* Fluid base font size: 15px at 375px → 17px at 1280px */
+  font-size: clamp(0.9375rem, 0.875rem + 0.22vw, 1.0625rem);
+}
+
+/* ── Fluid typography helpers ────────────────────────────────── */
+
+/* Fluid display headings — smooth scaling without breakpoint jumps */
+.fluid-display-lg {
+  font-size: clamp(1.75rem, 1rem + 3.5vw, 3.5rem);
+  line-height: 1.05;
+}
+.fluid-display-md {
+  font-size: clamp(1.5rem, 1rem + 2.2vw, 2.5rem);
+  line-height: 1.1;
+}
+.fluid-display-sm {
+  font-size: clamp(1.125rem, 0.875rem + 1.1vw, 1.5rem);
+  line-height: 1.2;
 }
 
 html, body, #root {
