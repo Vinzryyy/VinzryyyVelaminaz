@@ -2148,6 +2148,111 @@ export const events: Event[] = [
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0025.webp",
         "width": 1536,
         "height": 1920
+      },
+      {
+        "title": "SCRL_0024",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0024.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0023",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0023.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0022",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0022.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0021",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0021.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0020",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0020.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0014",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0014.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0013",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0013.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0012",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0012.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0011",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0011.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0010",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0010.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0009",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0009.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0008",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0008.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0007",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0007.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0006",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0006.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0005",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day2/SCRL_0005.webp",
+        "width": 1536,
+        "height": 1920
       }
     ]
   },
