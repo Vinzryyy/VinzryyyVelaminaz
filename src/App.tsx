@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Routes, Route, useLocation } from "react-router";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SakuraPetals } from "@/components/SakuraPetals";
@@ -35,24 +35,41 @@ function PageLoader() {
 export default function App() {
   const location = useLocation();
   const [isAdminPath, setIsAdminPath] = useState(false);
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionStage, setTransitionStage] = useState<"enter" | "exit">("enter");
+  const pageRef = useRef<HTMLDivElement>(null);
 
   // Check if current path is the admin route (hash-verified)
   useEffect(() => {
     checkAdminPath(location.pathname).then(setIsAdminPath);
   }, [location.pathname]);
 
+  // Page transition: exit old page, then enter new page
+  useEffect(() => {
+    if (location.pathname !== displayLocation.pathname) {
+      setTransitionStage("exit");
+      const timer = setTimeout(() => {
+        setDisplayLocation(location);
+        setTransitionStage("enter");
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [location, displayLocation.pathname]);
+
   // Scroll to top on route change (unless Home handles deferred scroll)
   useEffect(() => {
-    const state = location.state as { scrollTo?: string } | null;
+    const state = displayLocation.state as { scrollTo?: string } | null;
     if (!state?.scrollTo) {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname, location.state]);
+  }, [displayLocation.pathname, displayLocation.state]);
 
   // Track page views
   useEffect(() => {
-    trackPageView(location.pathname);
-  }, [location.pathname]);
+    trackPageView(displayLocation.pathname);
+  }, [displayLocation.pathname]);
+
+  const transitionClass = transitionStage === "enter" ? "page-enter" : "page-exit";
 
   return (
     <div className="min-h-screen bg-sumi font-sans text-ink antialiased">
@@ -67,12 +84,11 @@ export default function App() {
       <main id="main-content">
         <ErrorBoundary>
           <Suspense fallback={<PageLoader />}>
-            {/* key on pathname triggers page-enter animation on route change */}
-            <div key={location.pathname} className="page-enter">
-              <Routes location={location}>
+            <div ref={pageRef} key={displayLocation.pathname} className={transitionClass}>
+              <Routes location={displayLocation}>
                 <Route path="/" element={<Home />} />
                 <Route path="/events/:slug" element={<EventPage />} />
-                {isAdminPath && <Route path={location.pathname} element={<Admin />} />}
+                {isAdminPath && <Route path={displayLocation.pathname} element={<Admin />} />}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
