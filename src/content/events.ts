@@ -1783,32 +1783,257 @@ export const events: Event[] = [
         "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0101",
+        "title": "Mashiro (1)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0101.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Mashiro",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0100",
+        "title": "Mashiro (2)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0100.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Mashiro",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0099",
+        "title": "Mashiro (3)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0099.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Mashiro",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0098",
+        "title": "Mashiro (4)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0098.webp",
         "width": 1440,
+        "height": 1920,
+        "sequence": "Mashiro",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "IMG_6658",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6658.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6650",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6650.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6648",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6648.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6646",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6646.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6644",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6644.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6642",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6642.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6641",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6641.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6637",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6637.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6633",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6633.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6632",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6632.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6630",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6630.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6629",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6629.webp",
+        "width": 1280,
         "height": 1920
+      },
+      {
+        "title": "IMG_6626",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6626.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6625",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6625.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6623",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6623.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6619",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6619.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6615",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6615.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6611",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6611.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6621",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6621.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6607",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6607.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6605",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6605.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6602",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6602.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6601",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6601.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6599",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6599.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6596",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6596.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6595",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6595.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6594",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6594.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6592",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6592.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6591",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6591.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6589",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6589.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6588",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6588.webp",
+        "width": 1920,
+        "height": 1280
       }
     ]
   },
