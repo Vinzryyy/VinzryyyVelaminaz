@@ -284,6 +284,16 @@ html, body, #root {
   border-radius: 4px;
 }
 
+/* ── CSS containment for rendering performance ───────────────── */
+
+.photo-frame {
+  contain: layout paint;
+}
+
+.card-pop {
+  contain: layout style;
+}
+
 /* ── Photo hover (desktop only) ───────────────────────────────── */
 
 @media (hover: hover) {
