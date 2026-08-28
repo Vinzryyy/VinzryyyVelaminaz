@@ -24,6 +24,7 @@ export function Lightbox({
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [showHint, setShowHint] = useState(() => !sessionStorage.getItem("lb-hint-seen"));
+  const lastTapRef = useRef(0);
   const touchStartX = useRef<number | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -304,6 +305,19 @@ export function Lightbox({
               decoding="async"
               draggable={false}
               {...handlers}
+              onTouchEnd={(e) => {
+                handlers.onTouchEnd(e);
+                const now = Date.now();
+                if (now - lastTapRef.current < 300) {
+                  e.preventDefault();
+                  dismissHint();
+                  const touch = e.changedTouches[0];
+                  toggleZoom({ clientX: touch.clientX, clientY: touch.clientY });
+                  lastTapRef.current = 0;
+                } else {
+                  lastTapRef.current = now;
+                }
+              }}
               style={{
                 transform: `translate3d(${offset.x}px, ${offset.y}px, 0) scale(${zoom})`,
                 transition: dragging
