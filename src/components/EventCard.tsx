@@ -20,7 +20,7 @@ export function EventCard({
   return (
     <Link
       to={`/events/${event.slug}`}
-      className="group relative block aspect-[3/4] overflow-hidden rounded-lg border border-hairline transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:shadow-[0_16px_56px_rgba(0,0,0,0.5)]"
+      className="group relative block aspect-[3/4] overflow-hidden rounded-lg border border-hairline transition-all duration-300 hover:-translate-y-1 hover:border-crimson/25 hover:shadow-[0_16px_56px_rgba(0,0,0,0.5),0_0_40px_rgba(196,41,59,0.08)]"
     >
       {/* Full-bleed cover image */}
       {hasCover ? (
