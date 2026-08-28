@@ -1675,38 +1675,69 @@ export const events: Event[] = [
         "height": 1920
       },
       {
-        "title": "SCRL_0090",
+        "title": "Feni (1)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0090.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0089",
+        "title": "Feni (2)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0089.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0088",
+        "title": "Feni (3)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0088.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0087",
+        "title": "Feni (4)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0087.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0086",
+        "title": "Feni (5)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0086.webp",
         "width": 1440,
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "SCRL_0093",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0093.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0092",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0092.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0091",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0091.webp",
+        "width": 1536,
         "height": 1920
       }
     ]
