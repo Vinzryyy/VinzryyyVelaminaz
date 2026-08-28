@@ -119,11 +119,28 @@ export default function Home() {
     }
   }, [location.state]);
 
+  // Parallax: shift hero background on scroll
+  const [parallaxY, setParallaxY] = useState(0);
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          setParallaxY(window.scrollY * 0.35);
+          ticking = false;
+        });
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="relative flex h-[100svh] min-h-[480px] flex-col overflow-hidden sm:min-h-[600px]">
-        {/* Hero background — smooth crossfade + Ken Burns zoom */}
+        {/* Hero background — smooth crossfade + Ken Burns zoom + parallax */}
         <img
           key={`bg-cur-${current.hero}`}
           src={current.hero}
@@ -133,7 +150,8 @@ export default function Home() {
           height={1080}
           decoding="async"
           fetchPriority="high"
-          className="hero-bg pointer-events-none absolute inset-0 h-full w-full object-cover"
+          className="hero-bg pointer-events-none absolute inset-0 h-[120%] w-full object-cover"
+          style={{ transform: `translateY(-${parallaxY}px)`, willChange: "transform" }}
         />
         {next && (
           <img
@@ -144,7 +162,8 @@ export default function Home() {
             width={1920}
             height={1080}
             decoding="async"
-            className={`hero-bg pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+            className={`hero-bg pointer-events-none absolute inset-0 h-[120%] w-full object-cover transition-opacity duration-[2000ms] ease-in-out ${fading ? "opacity-100" : "opacity-0"}`}
+            style={{ transform: `translateY(-${parallaxY}px)`, willChange: "transform" }}
           />
         )}
 
