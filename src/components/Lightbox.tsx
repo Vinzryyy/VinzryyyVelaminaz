@@ -23,6 +23,7 @@ export function Lightbox({
   const [idx, setIdx] = useState(startIndex);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const [showHint, setShowHint] = useState(() => !sessionStorage.getItem("lb-hint-seen"));
   const touchStartX = useRef<number | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,21 +36,37 @@ export function Lightbox({
   const { zoom, offset, dragging, imgRef, isZoomed, didDrag, zoomTo, toggleZoom, reset, handlers } =
     useZoomPan(idx);
 
+  const dismissHint = useCallback(() => {
+    if (showHint) {
+      setShowHint(false);
+      sessionStorage.setItem("lb-hint-seen", "1");
+    }
+  }, [showHint]);
+
+  // Auto-dismiss hint after 3 seconds
+  useEffect(() => {
+    if (!showHint) return;
+    const t = setTimeout(dismissHint, 3000);
+    return () => clearTimeout(t);
+  }, [showHint, dismissHint]);
+
   /* ── Navigation ─────────────────────────────────────────────── */
 
   const prev = useCallback(() => {
+    dismissHint();
     setLoaded(false);
     setError(false);
     reset();
     setIdx((i) => (i - 1 + photos.length) % photos.length);
-  }, [photos.length, reset]);
+  }, [photos.length, reset, dismissHint]);
 
   const next = useCallback(() => {
+    dismissHint();
     setLoaded(false);
     setError(false);
     reset();
     setIdx((i) => (i + 1) % photos.length);
-  }, [photos.length, reset]);
+  }, [photos.length, reset, dismissHint]);
 
   /* ── URL sync ───────────────────────────────────────────────── */
 
@@ -307,6 +324,23 @@ export function Lightbox({
               onClick={(e) => e.stopPropagation()}
             >
               <span className="font-jp text-2xl text-gold/30" lang="ja" aria-hidden="true">{toKanji(idx + 1)}</span>
+            </div>
+          )}
+
+          {/* Gesture hint (first visit only) */}
+          {showHint && loaded && (
+            <div
+              className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
+              style={{ animation: "fade-up 0.4s ease-out, page-fade-out 0.3s ease 2.7s forwards" }}
+            >
+              <div className="rounded-full border border-ink/10 bg-sumi/80 px-5 py-2.5 backdrop-blur-sm">
+                <p className="hidden font-mono text-[11px] text-muted md:block">
+                  Click to zoom &middot; Scroll to scale &middot; Arrow keys to navigate
+                </p>
+                <p className="font-mono text-[11px] text-muted md:hidden">
+                  Tap to zoom &middot; Swipe to navigate
+                </p>
+              </div>
             </div>
           )}
 
