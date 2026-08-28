@@ -162,7 +162,7 @@ export function Lightbox({
     <div
       ref={containerRef}
       tabIndex={-1}
-      className="fixed inset-0 z-[100] flex flex-col bg-sumi/98 outline-none backdrop-blur-sm"
+      className="lightbox-enter fixed inset-0 z-[100] flex flex-col bg-sumi/98 outline-none backdrop-blur-sm"
       onClick={() => { if (!didDrag()) onClose(); }}
       onTouchStart={(e) => {
         // While zoomed the same gesture means "pan", so don't arm a swipe

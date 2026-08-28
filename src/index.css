@@ -301,6 +301,25 @@ html, body, #root {
   to   { opacity: 0; transform: translateY(-8px); }
 }
 
+/* ── Lightbox entrance ────────────────────────────────────────── */
+
+.lightbox-enter {
+  animation: lightbox-slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes lightbox-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    backdrop-filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    backdrop-filter: blur(4px);
+  }
+}
+
 /* ── Smooth image loading — blur-up until decoded ─────────────── */
 
 img {
@@ -392,7 +411,8 @@ button, a, [role="button"] {
   }
 
   .page-enter,
-  .page-exit {
+  .page-exit,
+  .lightbox-enter {
     animation: none;
   }
 
