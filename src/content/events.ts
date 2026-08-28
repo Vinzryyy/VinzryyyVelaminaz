@@ -1720,23 +1720,57 @@ export const events: Event[] = [
         "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0093",
+        "title": "Cole (1)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0093.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0092",
+        "title": "Cole (2)",
         "story": "",
         "src": "/gallery/quadlips-kkv/SCRL_0092.webp",
+        "width": 1536,
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "Cole (3)",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0091.webp",
+        "width": 1536,
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
+      },
+      {
+        "title": "SCRL_0097",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0097.webp",
         "width": 1536,
         "height": 1920
       },
       {
-        "title": "SCRL_0091",
+        "title": "SCRL_0096",
         "story": "",
-        "src": "/gallery/quadlips-kkv/SCRL_0091.webp",
+        "src": "/gallery/quadlips-kkv/SCRL_0096.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0095",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0095.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "SCRL_0094",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/SCRL_0094.webp",
         "width": 1536,
         "height": 1920
       }
