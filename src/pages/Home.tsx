@@ -65,10 +65,20 @@ export default function Home() {
   const content = useMemo(() => getPageContent(), []);
 
   const [activeGroup, setActiveGroup] = useState<string>(ALL_GROUPS);
+  const [filterTransition, setFilterTransition] = useState(false);
   const visibleEvents = useMemo(
     () => (activeGroup === ALL_GROUPS ? events : events.filter((e) => e.group === activeGroup)),
     [events, activeGroup]
   );
+
+  const handleGroupChange = useCallback((group: string) => {
+    if (group === activeGroup) return;
+    setFilterTransition(true);
+    setTimeout(() => {
+      setActiveGroup(group);
+      setFilterTransition(false);
+    }, 200);
+  }, [activeGroup]);
 
   useDocumentHead({
     title: "VinzryyySaga — Event Photography",
@@ -277,7 +287,7 @@ export default function Home() {
 
           <ScrollReveal>
             <div className="mb-10">
-              <GroupFilter events={events} active={activeGroup} onChange={setActiveGroup} />
+              <GroupFilter events={events} active={activeGroup} onChange={handleGroupChange} />
             </div>
           </ScrollReveal>
 
@@ -287,7 +297,7 @@ export default function Home() {
             const full = visibleEvents.slice(0, visibleEvents.length - tail);
             const remainder = visibleEvents.slice(visibleEvents.length - tail);
             return (
-              <div key={activeGroup} className="space-y-4 sm:space-y-5">
+              <div key={activeGroup} className={`space-y-4 sm:space-y-5 transition-opacity duration-200 ${filterTransition ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"}`} style={{ transition: "opacity 0.2s ease, transform 0.2s ease" }}>
                 {full.length > 0 && (
                   <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
                     {full.map((event, i) => (
