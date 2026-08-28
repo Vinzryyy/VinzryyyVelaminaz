@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SakuraPetals } from "@/components/SakuraPetals";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -63,17 +64,19 @@ export default function App() {
       <SakuraPetals />
       <Nav />
       <main id="main-content">
-        <Suspense fallback={<PageLoader />}>
-          {/* key on pathname triggers page-enter animation on route change */}
-          <div key={location.pathname} className="page-enter">
-            <Routes location={location}>
-              <Route path="/" element={<Home />} />
-              <Route path="/events/:slug" element={<EventPage />} />
-              {isAdminPath && <Route path={location.pathname} element={<Admin />} />}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<PageLoader />}>
+            {/* key on pathname triggers page-enter animation on route change */}
+            <div key={location.pathname} className="page-enter">
+              <Routes location={location}>
+                <Route path="/" element={<Home />} />
+                <Route path="/events/:slug" element={<EventPage />} />
+                {isAdminPath && <Route path={location.pathname} element={<Admin />} />}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <Footer />
     </div>
