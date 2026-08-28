@@ -201,7 +201,7 @@ export default function Home() {
 
           {/* Content: text left, photo right */}
           <div className="grid items-center gap-16 md:grid-cols-[1fr_320px] lg:grid-cols-[1fr_380px]">
-            <ScrollReveal>
+            <ScrollReveal direction="left">
               <div className="space-y-6">
                 <p className="max-w-2xl text-sm leading-7 text-ink/70 md:text-[15px] md:leading-8" style={{ textAlign: "justify" }}>
                   {content.profile.bio}
@@ -213,7 +213,7 @@ export default function Home() {
             </ScrollReveal>
 
             {/* Tilted stacked photo with hover interaction */}
-            <ScrollReveal>
+            <ScrollReveal direction="right">
               <div className="photo-stack relative mx-auto h-80 w-60 md:mx-0 md:h-[360px] md:w-72">
                 {/* Back photo — tilted */}
                 <div className="photo-back absolute inset-0 rotate-6 overflow-hidden border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.4)] transition-transform duration-500">

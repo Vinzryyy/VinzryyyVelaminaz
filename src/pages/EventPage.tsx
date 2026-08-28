@@ -138,7 +138,7 @@ export default function EventPage() {
               </div>
             </div>
 
-            <ScrollReveal>
+            <ScrollReveal direction="right">
               <FactsPanel event={event} />
             </ScrollReveal>
           </div>

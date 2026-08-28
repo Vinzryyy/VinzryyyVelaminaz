@@ -190,6 +190,28 @@ html, body, #root {
   transform: translateY(0);
 }
 
+/* Direction variants */
+.reveal.reveal-left {
+  transform: translateX(-32px);
+}
+.reveal.reveal-left.is-visible {
+  transform: translateX(0);
+}
+
+.reveal.reveal-right {
+  transform: translateX(32px);
+}
+.reveal.reveal-right.is-visible {
+  transform: translateX(0);
+}
+
+.reveal.reveal-scale {
+  transform: scale(0.92);
+}
+.reveal.reveal-scale.is-visible {
+  transform: scale(1);
+}
+
 /* ── Staggered children reveal ────────────────────────────────── */
 
 .reveal-stagger > .reveal-child {
@@ -360,6 +382,9 @@ button, a, [role="button"] {
   }
 
   .reveal,
+  .reveal.reveal-left,
+  .reveal.reveal-right,
+  .reveal.reveal-scale,
   .reveal-stagger > .reveal-child {
     opacity: 1;
     transform: none;
