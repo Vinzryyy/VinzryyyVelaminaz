@@ -47,14 +47,28 @@ export function Nav() {
           scrolled ? "h-12 sm:h-14" : "h-16 sm:h-20"
         }`}
       >
-        {/* Left: Menu (mobile) / Wordmark (desktop) */}
+        {/* Left: Hamburger (mobile) / Wordmark (desktop) */}
         <button
-          className={`${italicLink} md:hidden`}
+          className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] md:hidden"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
         >
-          {menuOpen ? "Close" : "Menu"}
+          <span
+            className={`block h-[1.5px] w-5 bg-ink/80 transition-all duration-300 ${
+              menuOpen ? "translate-y-[6.5px] rotate-45" : ""
+            }`}
+          />
+          <span
+            className={`block h-[1.5px] w-5 bg-ink/80 transition-all duration-300 ${
+              menuOpen ? "scale-x-0 opacity-0" : ""
+            }`}
+          />
+          <span
+            className={`block h-[1.5px] w-5 bg-ink/80 transition-all duration-300 ${
+              menuOpen ? "-translate-y-[6.5px] -rotate-45" : ""
+            }`}
+          />
         </button>
         <Link
           to="/"
