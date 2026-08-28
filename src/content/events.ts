@@ -2740,7 +2740,8 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/klp48-kkv/Devi3.webp"
   },
   {
     "slug": "jkt48-klia",
