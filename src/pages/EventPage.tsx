@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState, useRef } from "react";
 import { Link, useParams } from "react-router";
 import { getEvent, getNextEvent, getPrevEvent } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
@@ -20,10 +20,26 @@ export default function EventPage() {
 
   const event = slug ? getEvent(slug) : undefined;
 
+  const jsonLd = useRef(event ? {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.title,
+    description: event.subtitle,
+    location: { "@type": "Place", name: event.location },
+    image: event.cover ?? event.photos[0]?.src
+      ? `https://vinzryyysaga.com${event.cover ?? event.photos[0]?.src}`
+      : undefined,
+    url: `https://vinzryyysaga.com/events/${event.slug}`,
+    organizer: { "@type": "Person", name: "Vinzryyy" },
+    performer: event.group ? { "@type": "PerformingGroup", name: event.group } : undefined,
+    numberOfItems: event.photos.length,
+  } : undefined).current;
+
   useDocumentHead({
     title: event ? `${event.title} — VinzryyySaga` : "Not Found — VinzryyySaga",
     description: event?.subtitle,
     ogImage: event?.cover ?? event?.photos[0]?.src,
+    jsonLd,
   });
 
   const coverSrc = event?.cover ?? event?.photos[0]?.src;

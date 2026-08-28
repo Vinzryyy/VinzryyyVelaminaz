@@ -2,10 +2,15 @@ import { useEffect } from "react";
 
 const TAG_ATTR = "data-dynamic-head";
 
+interface JsonLd {
+  [key: string]: unknown;
+}
+
 interface HeadOptions {
   title: string;
   description?: string;
   ogImage?: string;
+  jsonLd?: JsonLd;
 }
 
 /**
@@ -13,7 +18,7 @@ interface HeadOptions {
  * Uses a data attribute to find and remove all previous dynamic tags
  * before inserting new ones, avoiding leaks on fast navigations.
  */
-export function useDocumentHead({ title, description, ogImage }: HeadOptions) {
+export function useDocumentHead({ title, description, ogImage, jsonLd }: HeadOptions) {
   useEffect(() => {
     // Remove any previously injected dynamic tags
     document.head.querySelectorAll(`[${TAG_ATTR}]`).forEach((el) => el.remove());
@@ -60,8 +65,16 @@ export function useDocumentHead({ title, description, ogImage }: HeadOptions) {
     setMeta("twitter:card", ogImage ? "summary_large_image" : "summary");
     setMeta("twitter:title", title);
 
+    // JSON-LD structured data
+    if (jsonLd) {
+      const script = document.createElement("script");
+      script.setAttribute("type", "application/ld+json");
+      script.textContent = JSON.stringify(jsonLd);
+      addTag(script);
+    }
+
     return () => {
       document.head.querySelectorAll(`[${TAG_ATTR}]`).forEach((el) => el.remove());
     };
-  }, [title, description, ogImage]);
+  }, [title, description, ogImage, jsonLd]);
 }
