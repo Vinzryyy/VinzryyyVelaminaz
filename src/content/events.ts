@@ -1512,6 +1512,167 @@ export const events: Event[] = [
         "aperture": "f/1.4",
         "shutter": "1/320",
         "iso": 1600
+      },
+      {
+        "title": "IMG_0608",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_0608.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_0605",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_0605.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_0602",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_0602.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6470",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6470.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6688",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6688.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6687",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6687.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6685",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6685.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6683",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6683.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6682",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6682.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6682",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6682-1787895476847.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6680",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6680.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6678",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6678.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6676",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6676.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6674",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6674.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6672",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6672.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6671",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6671.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6668",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6668.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6667",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6667.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6665",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6665.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6664",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6664.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6663",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6663.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6662",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6662.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6661",
+        "story": "",
+        "src": "/gallery/quadlips-kkv/IMG_6661.webp",
+        "width": 1280,
+        "height": 1920
       }
     ]
   },
