@@ -81,3 +81,89 @@ export function getAnalytics(): AnalyticsSummary {
 
   return { totalViews, todayViews, topPages, dailyViews };
 }
+
+/* ── Web Vitals (Core Web Vitals via PerformanceObserver) ──────── */
+
+const VITALS_KEY = "vinzryyy-vitals";
+
+export interface VitalEntry {
+  name: string;
+  value: number;
+  date: string;
+}
+
+function loadVitals(): VitalEntry[] {
+  try {
+    const data = localStorage.getItem(VITALS_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveVital(name: string, value: number) {
+  const vitals = loadVitals();
+  vitals.push({ name, value: Math.round(value), date: today() });
+  // Keep last 90 entries per metric
+  const counts: Record<string, number> = {};
+  const trimmed = vitals.filter((v) => {
+    counts[v.name] = (counts[v.name] ?? 0) + 1;
+    return counts[v.name] <= 90;
+  });
+  localStorage.setItem(VITALS_KEY, JSON.stringify(trimmed));
+}
+
+export function getVitalsSummary(): Record<string, { avg: number; latest: number; count: number }> {
+  const vitals = loadVitals();
+  const grouped: Record<string, number[]> = {};
+  for (const v of vitals) {
+    (grouped[v.name] ??= []).push(v.value);
+  }
+  const summary: Record<string, { avg: number; latest: number; count: number }> = {};
+  for (const [name, values] of Object.entries(grouped)) {
+    summary[name] = {
+      avg: Math.round(values.reduce((a, b) => a + b, 0) / values.length),
+      latest: values[values.length - 1],
+      count: values.length,
+    };
+  }
+  return summary;
+}
+
+/**
+ * Observes Core Web Vitals (LCP, CLS, INP) using PerformanceObserver.
+ * Call once at app startup.
+ */
+export function observeWebVitals() {
+  if (typeof PerformanceObserver === "undefined") return;
+
+  // LCP (Largest Contentful Paint)
+  try {
+    new PerformanceObserver((list) => {
+      const entries = list.getEntries();
+      const last = entries[entries.length - 1];
+      if (last) saveVital("LCP", last.startTime);
+    }).observe({ type: "largest-contentful-paint", buffered: true });
+  } catch { /* unsupported */ }
+
+  // CLS (Cumulative Layout Shift)
+  try {
+    let clsValue = 0;
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries()) {
+        if (!(entry as PerformanceEntry & { hadRecentInput?: boolean }).hadRecentInput) {
+          clsValue += (entry as PerformanceEntry & { value: number }).value;
+        }
+      }
+      saveVital("CLS", clsValue * 1000); // store as ms-scale for readability
+    }).observe({ type: "layout-shift", buffered: true });
+  } catch { /* unsupported */ }
+
+  // FCP (First Contentful Paint)
+  try {
+    new PerformanceObserver((list) => {
+      const entry = list.getEntries()[0];
+      if (entry) saveVital("FCP", entry.startTime);
+    }).observe({ type: "paint", buffered: true });
+  } catch { /* unsupported */ }
+}

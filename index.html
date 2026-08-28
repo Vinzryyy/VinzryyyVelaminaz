@@ -13,14 +13,29 @@
     <meta name="twitter:site" content="@VinzryyySaga" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Critical fonts: preloaded for faster LCP -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap"
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Fraunces:wght@700&display=swap"
+      as="style"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=Fraunces:wght@700&display=swap"
       rel="stylesheet"
+    />
+    <!-- Secondary font weights: loaded async to avoid render-blocking -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;500&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
     <!-- Noto Serif JP subsetted to only the ~30 kanji actually used -->
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap&text=%E3%80%87%E4%B8%80%E4%BA%8C%E4%B8%89%E5%9B%9B%E4%BA%94%E5%85%AD%E4%B8%83%E5%85%AB%E4%B9%9D%E7%AC%AC%E5%8D%B7%E8%88%9E%E5%8F%B0%E6%9C%9D%E7%B8%81%E8%A1%97%E7%A9%BA%E6%B8%AF%E5%86%99%E7%9C%9F%E9%9B%86%E8%A8%98%E9%8C%B2%E6%9E%A0%E4%BE%8D%E6%A1%9C%E5%8D%81%E5%85%89"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
   </head>
   <body>

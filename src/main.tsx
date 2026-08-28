@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import "@/index.css";
 import App from "@/App";
+import { observeWebVitals } from "@/lib/analytics";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -11,6 +12,9 @@ createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </StrictMode>
 );
+
+// Track Core Web Vitals (LCP, CLS, FCP) locally
+observeWebVitals();
 
 // Register service worker for offline gallery viewing
 if ("serviceWorker" in navigator) {

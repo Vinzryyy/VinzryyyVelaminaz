@@ -4,7 +4,8 @@
  * Mounted once in the root layout.
  */
 
-const PETAL_COUNT = 14;
+const PETAL_COUNT_DESKTOP = 14;
+const PETAL_COUNT_MOBILE = 6;
 const PETAL_PATH = "M10 1 C12 5, 18 8, 10 18 C2 8, 8 5, 10 1Z";
 
 function makePetal(i: number) {
@@ -20,7 +21,9 @@ function makePetal(i: number) {
   };
 }
 
-const petals = Array.from({ length: PETAL_COUNT }, (_, i) => makePetal(i));
+const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+const petalCount = isMobile ? PETAL_COUNT_MOBILE : PETAL_COUNT_DESKTOP;
+const petals = Array.from({ length: petalCount }, (_, i) => makePetal(i));
 
 export function SakuraPetals() {
   return (

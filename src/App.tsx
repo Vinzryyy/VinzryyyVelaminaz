@@ -4,6 +4,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SakuraPetals } from "@/components/SakuraPetals";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { trackPageView } from "@/lib/analytics";
 
 const Home = lazy(() => import("@/pages/Home"));
@@ -79,6 +80,7 @@ export default function App() {
         </ErrorBoundary>
       </main>
       <Footer />
+      <InstallPrompt />
     </div>
   );
 }
