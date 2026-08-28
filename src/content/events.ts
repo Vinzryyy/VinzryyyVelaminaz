@@ -2045,7 +2045,7 @@ export const events: Event[] = [
     "gear": "Canon EOS R5",
     "subtitle": "Day two — Fiony in the last light of the session.",
     "description": "Second day of the Don Bon series. Fiony carried the afternoon session with her usual energy. Two frames from the final hour when the light through the venue windows mixed with the overheads.",
-    "featured": false,
+    "featured": true,
     "photos": [
       {
         "title": "Fiony",
@@ -2174,109 +2174,139 @@ export const events: Event[] = [
         "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0024",
+        "title": "Cole (1)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0024.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0023",
+        "title": "Cole (2)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0023.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0022",
+        "title": "Cole (3)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0022.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0021",
+        "title": "Cole (4)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0021.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0020",
+        "title": "Cole (5)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0020.webp",
         "width": 1440,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Cole",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0014",
+        "title": "Feni (1)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0014.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0013",
+        "title": "Feni (2)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0013.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0012",
+        "title": "Feni (3)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0012.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0011",
+        "title": "Feni (4)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0011.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0010",
+        "title": "Feni (5)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0010.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0009",
+        "title": "Feni (6)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0009.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0008",
+        "title": "Feni (7)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0008.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0007",
+        "title": "Feni (8)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0007.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0006",
+        "title": "Feni (9)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0006.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
-        "title": "SCRL_0005",
+        "title": "Feni (10)",
         "story": "",
         "src": "/gallery/jkt48-don-bon-day2/SCRL_0005.webp",
         "width": 1536,
-        "height": 1920
+        "height": 1920,
+        "sequence": "Feni",
+        "sequenceDisplay": "filmstrip"
       },
       {
         "title": "IMG_6946",
