@@ -2288,7 +2288,7 @@ export const events: Event[] = [
     "tateText": "第七巻 · 街",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
+    "gear": "Canon EOS R8",
     "subtitle": "In-store signing with Devi, Khalies, Isabel, and Yishyan.",
     "description": "KLP48 took over the KKV store for an afternoon signing session. Devi, Khalies, Isabel, and Yishyan spent three hours meeting fans in the tight aisles between bookshelves. The overhead lighting was unforgiving, but shooting wide open turned it into something workable.",
     "featured": true,
@@ -2445,6 +2445,188 @@ export const events: Event[] = [
         "aperture": "f/1.4",
         "shutter": "1/320",
         "iso": 1000
+      },
+      {
+        "title": "IMG_6465",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6465.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6463",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6463.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6461",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6461.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6457",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6457.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6455",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6455.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6454",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6454.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6452",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6452.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6447",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6447.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6446",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6446.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6443",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6443.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6441",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6441.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6438",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6438.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6432",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6432.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6435",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6435.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6433",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6433.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6431",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6431.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6424",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6424.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6418",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6418.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6426",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6426.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6430",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6430.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6428",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6428.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6422",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6422.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6414",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6414.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6413",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6413.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6401",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6401.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6393",
+        "story": "",
+        "src": "/gallery/klp48-kkv/IMG_6393.webp",
+        "width": 1920,
+        "height": 1280
       }
     ]
   },
