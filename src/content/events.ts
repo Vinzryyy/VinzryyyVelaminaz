@@ -3788,9 +3788,9 @@ export const events: Event[] = [
     "tateText": "第十巻 · 縁",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
-    "subtitle": "Day two — Quadlips in the last light of the session.",
-    "description": "Second day of the Don Bon series. Quadlips carried the afternoon session with her usual energy. Two frames from the final hour when the light through the venue windows mixed with the overheads.",
+    "gear": "Canon EOS R8",
+    "subtitle": "Day two — Quadlips, where glass light met the last hour.",
+    "description": "The Don Bon series returns for its second act. Quadlips owned the afternoon, her movement cutting through the venue’s windowed glow. These 104 frames hold the final hour, when overheads and daylight fused into a single fleeting palette.",
     "featured": true,
     "photos": [
       {
@@ -4585,9 +4585,9 @@ export const events: Event[] = [
     "tateText": "第十一巻 · 舞台",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
-    "subtitle": "Fiony, Lulu, and Oline on stage in KL.",
-    "description": "JKT48's stage show at LaLaport BBCC — closer and more intimate than an arena date. Fiony and Lulu shared a duet moment that stopped the room, and Oline's solo was pure presence. Four frames from a night that deserved forty.",
+    "gear": "Canon EOS R8",
+    "subtitle": "Eighty-six frames of a night that breathed.",
+    "description": "JKT48 at LaLaport BBCC — a stage closer than memory allows. Fiony and Lulu's duet held the room in amber, while Oline's solo burned through the lens. Four shots, but the night bled past the frame.",
     "featured": true,
     "photos": [
       {
@@ -5229,6 +5229,6 @@ export const events: Event[] = [
         "height": 1280
       }
     ],
-    "cover": "/gallery/jkt48-stage-day1/IMG_7271.webp"
+    "cover": "/gallery/jkt48-stage-day1/IMG_7275.webp"
   }
 ];
