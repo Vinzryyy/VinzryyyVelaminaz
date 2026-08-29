@@ -14,12 +14,14 @@ export function EventEditor({
   onChange,
   onPhotosChange,
   onAutoPublish,
+  onPushUndo,
 }: {
   event: Event;
   eventIndex?: number;
   onChange: (patch: Partial<Event>) => void;
   onPhotosChange: (photos: Photo[]) => void;
   onAutoPublish?: () => void;
+  onPushUndo?: (label: string) => void;
 }) {
   const [form, setForm] = useState<Event>(deepClone(event));
 
@@ -88,6 +90,7 @@ export function EventEditor({
     setAiLoading(label);
     setAiError(null);
     try {
+      onPushUndo?.(`AI ${label}`);
       apply(await fn());
     } catch (err) {
       setAiError(err instanceof Error ? err.message : "Generation failed");

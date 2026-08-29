@@ -163,6 +163,120 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
 
   const [publishState, setPublishState] = useState<"idle" | "publishing" | "done" | "error">("idle");
 
+  /* ── Undo system ──────────────────────────────────────────────── */
+  const undoStack = useRef<{ events: Event[]; label: string }[]>([]);
+  const pushUndo = useCallback((label: string) => {
+    undoStack.current = [{ events: deepClone(events), label }, ...undoStack.current.slice(0, 19)];
+  }, [events]);
+  const undo = useCallback(() => {
+    const snapshot = undoStack.current.shift();
+    if (!snapshot) return;
+    setEvents(snapshot.events);
+    notify(`Undone: ${snapshot.label}`);
+  }, []);
+  const canUndo = undoStack.current.length > 0;
+
+  /* ── Search & filter ──────────────────────────────────────────── */
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterGroup, setFilterGroup] = useState<string>("all");
+
+  const filteredEvents = useMemo(() => {
+    let list = events;
+    if (filterGroup !== "all") {
+      list = list.filter((e) => (e.group || "") === filterGroup);
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter((e) =>
+        e.title.toLowerCase().includes(q) ||
+        e.slug.toLowerCase().includes(q) ||
+        (e.group || "").toLowerCase().includes(q) ||
+        e.location.toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }, [events, searchQuery, filterGroup]);
+
+  /* ── Bulk selection ───────────────────────────────────────────── */
+  const [bulkSelected, setBulkSelected] = useState<Set<string>>(new Set());
+
+  const toggleBulkSelect = useCallback((slug: string) => {
+    setBulkSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) next.delete(slug); else next.add(slug);
+      return next;
+    });
+  }, []);
+
+  const bulkSelectAll = useCallback(() => {
+    setBulkSelected(new Set(filteredEvents.map((e) => e.slug)));
+  }, [filteredEvents]);
+
+  const bulkClear = useCallback(() => setBulkSelected(new Set()), []);
+
+  const bulkDelete = useCallback(() => {
+    if (bulkSelected.size === 0) return;
+    if (!confirm(`Delete ${bulkSelected.size} event(s)?`)) return;
+    pushUndo(`delete ${bulkSelected.size} events`);
+    setEvents((prev) => prev.filter((e) => !bulkSelected.has(e.slug)));
+    setSelectedSlug((prev) => (prev && bulkSelected.has(prev) ? null : prev));
+    setBulkSelected(new Set());
+    notify(`Deleted ${bulkSelected.size} event(s)`);
+  }, [bulkSelected, pushUndo]);
+
+  const bulkToggleFeatured = useCallback((featured: boolean) => {
+    if (bulkSelected.size === 0) return;
+    pushUndo(`${featured ? "feature" : "unfeature"} ${bulkSelected.size} events`);
+    setEvents((prev) => prev.map((e) => bulkSelected.has(e.slug) ? { ...e, featured } : e));
+    setBulkSelected(new Set());
+    notify(`${featured ? "Featured" : "Unfeatured"} ${bulkSelected.size} event(s)`);
+  }, [bulkSelected, pushUndo]);
+
+  const bulkSetGroup = useCallback((group: string) => {
+    if (bulkSelected.size === 0) return;
+    pushUndo(`change group on ${bulkSelected.size} events`);
+    setEvents((prev) => prev.map((e) => bulkSelected.has(e.slug) ? { ...e, group } : e));
+    setBulkSelected(new Set());
+    notify(`Set group "${group}" on ${bulkSelected.size} event(s)`);
+  }, [bulkSelected, pushUndo]);
+
+  const [bulkGroupInput, setBulkGroupInput] = useState("");
+
+  /* ── Drag reorder events ──────────────────────────────────────── */
+  const dragEvtIdx = useRef<number | null>(null);
+  const [dragOverIdx, setDragOverIdx] = useState<number | null>(null);
+
+  const onEventDragStart = useCallback((idx: number) => (e: React.DragEvent) => {
+    dragEvtIdx.current = idx;
+    e.dataTransfer.effectAllowed = "move";
+  }, []);
+
+  const onEventDragOver = useCallback((idx: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    if (dragEvtIdx.current !== null && dragEvtIdx.current !== idx) {
+      setDragOverIdx(idx);
+    }
+  }, []);
+
+  const onEventDrop = useCallback((idx: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOverIdx(null);
+    if (dragEvtIdx.current === null || dragEvtIdx.current === idx) return;
+    pushUndo("reorder events");
+    setEvents((prev) => {
+      const next = [...prev];
+      const [moved] = next.splice(dragEvtIdx.current!, 1);
+      next.splice(idx, 0, moved);
+      return next;
+    });
+    dragEvtIdx.current = null;
+  }, [pushUndo]);
+
+  const onEventDragEnd = useCallback(() => {
+    dragEvtIdx.current = null;
+    setDragOverIdx(null);
+  }, []);
+
   // When true, the next events state change will auto-publish events.ts to GitHub
   const pendingAutoPublish = useRef(false);
 
@@ -220,10 +334,11 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
   );
 
   const deleteEvent = useCallback((slug: string) => {
+    pushUndo("delete event");
     setEvents((prev) => prev.filter((e) => e.slug !== slug));
     setSelectedSlug((prev) => (prev === slug ? null : prev));
     notify("Event deleted");
-  }, []);
+  }, [pushUndo]);
 
   const addEvent = useCallback(() => {
     const ev = emptyEvent();
@@ -309,6 +424,15 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
             </p>
           </div>
           <div className="flex gap-2">
+            {canUndo && (
+              <button
+                onClick={undo}
+                className="rounded-lg border border-gold/30 bg-gold/10 px-4 py-2 font-mono text-xs font-semibold text-gold transition-colors hover:bg-gold/20"
+                title={`Undo: ${undoStack.current[0]?.label}`}
+              >
+                Undo
+              </button>
+            )}
             <button
               onClick={resetToSource}
               className="rounded-lg border border-hairline px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-crimson/40 hover:text-crimson"
@@ -474,22 +598,155 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
         {/* ── Events list ────────────────────────────────────────── */}
         {tab === "events" && (
           <div className="space-y-4">
+            {/* Header row */}
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-xl font-bold text-ink">All Events ({events.length})</h2>
-              <button
-                onClick={addEvent}
-                className="rounded-lg bg-crimson px-4 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80"
-              >
-                + New Event
-              </button>
+              <h2 className="font-display text-xl font-bold text-ink">
+                All Events ({filteredEvents.length}{filteredEvents.length !== events.length ? ` / ${events.length}` : ""})
+              </h2>
+              <div className="flex items-center gap-2">
+                {canUndo && (
+                  <button
+                    onClick={undo}
+                    className="rounded-lg border border-gold/30 bg-gold/10 px-4 py-2 font-mono text-xs font-semibold text-gold transition-colors hover:bg-gold/20"
+                  >
+                    Undo
+                  </button>
+                )}
+                <button
+                  onClick={addEvent}
+                  className="rounded-lg bg-crimson px-4 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-crimson/80"
+                >
+                  + New Event
+                </button>
+              </div>
             </div>
 
+            {/* Search & filter bar */}
+            <div className="flex flex-wrap items-center gap-3">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search events..."
+                className="w-56 rounded-lg border border-hairline bg-sumi px-3 py-2 font-mono text-xs text-ink outline-none transition-colors focus:border-crimson/50"
+              />
+              <select
+                value={filterGroup}
+                onChange={(e) => setFilterGroup(e.target.value)}
+                className="rounded-lg border border-hairline bg-sumi px-3 py-2 font-mono text-xs text-ink outline-none focus:border-crimson/50"
+              >
+                <option value="all">All groups</option>
+                {stats.groups.map((g) => (
+                  <option key={g} value={g}>{g}</option>
+                ))}
+              </select>
+              {(searchQuery || filterGroup !== "all") && (
+                <button
+                  onClick={() => { setSearchQuery(""); setFilterGroup("all"); }}
+                  className="font-mono text-[10px] text-muted hover:text-crimson"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+
+            {/* Bulk selection toolbar */}
+            {bulkSelected.size > 0 && (
+              <div className="sticky top-14 z-20 flex flex-wrap items-center gap-3 rounded-lg border border-crimson/30 bg-card p-4 shadow-lg">
+                <span className="font-mono text-xs text-ink">
+                  <span className="font-semibold text-crimson">{bulkSelected.size}</span> selected
+                </span>
+                <div className="h-5 w-px bg-hairline" />
+                <button
+                  onClick={() => bulkToggleFeatured(true)}
+                  className="rounded border border-gold/30 bg-gold/10 px-3 py-1.5 font-mono text-[10px] text-gold transition-colors hover:bg-gold/20"
+                >
+                  Feature
+                </button>
+                <button
+                  onClick={() => bulkToggleFeatured(false)}
+                  className="rounded border border-hairline px-3 py-1.5 font-mono text-[10px] text-muted transition-colors hover:text-ink"
+                >
+                  Unfeature
+                </button>
+                <div className="h-5 w-px bg-hairline" />
+                <input
+                  type="text"
+                  value={bulkGroupInput}
+                  onChange={(e) => setBulkGroupInput(e.target.value)}
+                  placeholder="Group name..."
+                  className="w-32 rounded border border-hairline bg-sumi px-2 py-1.5 font-mono text-xs text-ink outline-none focus:border-crimson/50"
+                />
+                <button
+                  onClick={() => { if (bulkGroupInput.trim()) { bulkSetGroup(bulkGroupInput.trim()); setBulkGroupInput(""); } }}
+                  disabled={!bulkGroupInput.trim()}
+                  className="rounded bg-crimson px-3 py-1.5 font-mono text-[10px] font-semibold text-white transition-colors hover:bg-crimson/80 disabled:opacity-30"
+                >
+                  Set Group
+                </button>
+                <div className="h-5 w-px bg-hairline" />
+                <button
+                  onClick={bulkDelete}
+                  className="rounded border border-crimson px-3 py-1.5 font-mono text-[10px] text-crimson transition-colors hover:bg-crimson/10"
+                >
+                  Delete
+                </button>
+                <div className="flex-1" />
+                <button onClick={bulkSelectAll} className="font-mono text-[10px] text-muted hover:text-ink">Select all</button>
+                <button onClick={bulkClear} className="font-mono text-[10px] text-muted hover:text-ink">Clear</button>
+              </div>
+            )}
+
+            {/* Event rows */}
             <div className="space-y-2">
-              {events.map((e) => (
+              {filteredEvents.map((e) => {
+                const realIdx = events.findIndex((ev) => ev.slug === e.slug);
+                return (
                 <div
                   key={e.slug}
-                  className="flex items-center gap-4 rounded-lg border border-hairline bg-card/50 p-4 transition-colors hover:bg-card"
+                  draggable
+                  onDragStart={onEventDragStart(realIdx)}
+                  onDragOver={onEventDragOver(realIdx)}
+                  onDrop={onEventDrop(realIdx)}
+                  onDragEnd={onEventDragEnd}
+                  className={`flex items-center gap-4 rounded-lg border p-4 transition-all ${
+                    dragOverIdx === realIdx
+                      ? "border-crimson bg-crimson/5"
+                      : "border-hairline bg-card/50 hover:bg-card"
+                  }`}
                 >
+                  {/* Bulk checkbox */}
+                  <button
+                    onClick={() => toggleBulkSelect(e.slug)}
+                    className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-all ${
+                      bulkSelected.has(e.slug)
+                        ? "border-crimson bg-crimson text-white"
+                        : "border-hairline text-transparent hover:border-muted"
+                    }`}
+                  >
+                    {bulkSelected.has(e.slug) && (
+                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Drag handle */}
+                  <div className="flex shrink-0 cursor-grab flex-col gap-0.5 text-muted/40 active:cursor-grabbing" title="Drag to reorder">
+                    <div className="flex gap-0.5">
+                      <div className="h-1 w-1 rounded-full bg-current" />
+                      <div className="h-1 w-1 rounded-full bg-current" />
+                    </div>
+                    <div className="flex gap-0.5">
+                      <div className="h-1 w-1 rounded-full bg-current" />
+                      <div className="h-1 w-1 rounded-full bg-current" />
+                    </div>
+                    <div className="flex gap-0.5">
+                      <div className="h-1 w-1 rounded-full bg-current" />
+                      <div className="h-1 w-1 rounded-full bg-current" />
+                    </div>
+                  </div>
+
                   {e.photos[0]?.src ? (
                     <img src={e.photos[0].src} alt="" className="h-14 w-14 rounded object-cover" />
                   ) : (
@@ -541,7 +798,13 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                     </button>
                   </div>
                 </div>
-              ))}
+                );
+              })}
+              {filteredEvents.length === 0 && (
+                <div className="py-12 text-center">
+                  <p className="font-mono text-sm text-muted">No events match your search</p>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -560,6 +823,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 onChange={(patch) => { updateEvent(selectedEvent.slug, patch); notify("Saved"); }}
                 onPhotosChange={(photos) => { updateEvent(selectedEvent.slug, { photos }); notify("Photos updated"); }}
                 onAutoPublish={scheduleAutoPublish}
+                onPushUndo={pushUndo}
               />
             )}
           </div>
