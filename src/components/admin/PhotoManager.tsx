@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { uploadBatch } from "@/lib/ghUpload";
 import type { Event, Photo } from "@/lib/types";
 import { deepClone, emptyPhoto } from "@/components/admin/adminHelpers";
-import { batchDescribePhotos, getProvider } from "@/lib/aiGenerate";
+import { batchDescribePhotos, autoTagPhotos, suggestCover, autoGroupSequences, arrangePhotos, getProvider } from "@/lib/aiGenerate";
 
 /* ── Sequence Colors ─────────────────────────────────────────────── */
 
@@ -141,6 +141,102 @@ export function PhotoManager({
     }
   };
 
+  // AI Vision: Auto-tag
+  const [aiVision, setAiVision] = useState<string | null>(null);
+
+  const handleAutoTag = async () => {
+    const withSrc = photos.map((p, i) => ({ src: p.src || "", title: p.title, index: i })).filter((p) => p.src);
+    if (withSrc.length === 0) return;
+    setAiVision("Analyzing photos...");
+    try {
+      const tags = await autoTagPhotos({
+        title: event.title, group: event.group || "", date: event.date || "",
+        location: event.location || "", gear: event.gear || "", photoCount: photos.length,
+        photos: withSrc,
+      });
+      commit((prev) => {
+        const next = [...prev];
+        for (const t of tags) {
+          if (t.index >= 0 && t.index < next.length) {
+            const existing = next[t.index].story || "";
+            const tagLine = `[${t.tags.join(", ")}]`;
+            next[t.index] = { ...next[t.index], story: existing ? `${existing}\n${tagLine}` : tagLine };
+          }
+        }
+        return next;
+      });
+      setAiVision(`Tagged ${tags.length} photos`);
+    } catch (err) {
+      setAiVision(`Tag failed: ${err instanceof Error ? err.message : "unknown"}`);
+    }
+    setTimeout(() => setAiVision(null), 5000);
+  };
+
+  // AI Vision: Suggest cover
+  const handleSuggestCover = async () => {
+    const withSrc = photos.map((p, i) => ({ src: p.src || "", title: p.title, index: i })).filter((p) => p.src);
+    if (withSrc.length === 0) return;
+    setAiVision("Picking best cover...");
+    try {
+      const pick = await suggestCover({
+        title: event.title, group: event.group || "", date: event.date || "",
+        location: event.location || "", gear: event.gear || "", photoCount: photos.length,
+        photos: withSrc,
+      });
+      const photo = photos[pick];
+      if (photo?.src) {
+        onCoverChange(photo.src);
+        setAiVision(`Cover set: #${pick + 1} "${photo.title}"`);
+      } else {
+        setAiVision("AI picked an invalid photo — try again");
+      }
+    } catch (err) {
+      setAiVision(`Cover suggest failed: ${err instanceof Error ? err.message : "unknown"}`);
+    }
+    setTimeout(() => setAiVision(null), 5000);
+  };
+
+  // AI Vision: Auto-group sequences
+  const handleAutoGroup = async () => {
+    const withSrc = photos.map((p, i) => ({ src: p.src || "", title: p.title, index: i })).filter((p) => p.src);
+    if (withSrc.length < 3) return;
+    setAiVision("Detecting sequences...");
+    try {
+      const groups = await autoGroupSequences({
+        title: event.title, group: event.group || "", date: event.date || "",
+        location: event.location || "", gear: event.gear || "", photoCount: photos.length,
+        photos: withSrc,
+      });
+      if (groups.length === 0) {
+        setAiVision("No sequences detected");
+      } else {
+        commit((prev) => {
+          const next = [...prev];
+          for (const g of groups) {
+            for (const idx of g.indices) {
+              if (idx >= 0 && idx < next.length) {
+                next[idx] = { ...next[idx], sequence: g.name, sequenceDisplay: "filmstrip" };
+              }
+            }
+          }
+          return next;
+        });
+        setAiVision(`Created ${groups.length} sequence(s): ${groups.map((g) => g.name).join(", ")}`);
+      }
+    } catch (err) {
+      setAiVision(`Grouping failed: ${err instanceof Error ? err.message : "unknown"}`);
+    }
+    setTimeout(() => setAiVision(null), 6000);
+  };
+
+  // Arrange: sequences first, then regular photos
+  const handleArrange = () => {
+    const order = arrangePhotos(photos);
+    commit(order.map((i) => photos[i]));
+    setUploading("Arranged: sequences first, then regular photos");
+    setTimeout(() => setUploading(null), 3000);
+  };
+
   const addEmpty = () => {
     const newIdx = photos.length;
     commit((p) => [...p, emptyPhoto()]);
@@ -161,8 +257,9 @@ export function PhotoManager({
         (done, total, name) => setUploading(`Uploading ${done}/${total} — ${name}`),
       );
       if (successful.length > 0) {
-        const newPhotos = successful.map((r) => ({
-          title: r.fileName.replace(/\.[^.]+$/, ""),
+        const existingCount = photos.length;
+        const newPhotos = successful.map((r, i) => ({
+          title: `${event.title} (${existingCount + i + 1})`,
           story: "",
           src: r.url,
           width: r.width,
@@ -294,13 +391,53 @@ export function PhotoManager({
             className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 font-mono text-xs font-semibold text-emerald-400 transition-colors hover:bg-emerald-400/20 disabled:opacity-50"
             title={`Generate titles & stories for all photos via ${getProvider()}`}
           >
-            {aiDescribing ? "Describing..." : "AI Describe All"}
+            {aiDescribing ? "Describing..." : "AI Describe"}
           </button>
           <button onClick={save} className="rounded-lg border border-crimson bg-transparent px-4 py-2 font-mono text-xs font-semibold text-crimson transition-colors hover:bg-crimson/10">
             Save All
           </button>
         </div>
       </div>
+
+      {/* AI Vision toolbar */}
+      {photos.length > 0 && (
+        <div className="flex flex-wrap items-center gap-2 rounded-lg border border-violet-400/20 bg-violet-400/5 p-3">
+          <span className="font-mono text-[9px] uppercase tracking-widest text-violet-400/60">AI Vision</span>
+          <div className="h-4 w-px bg-hairline" />
+          <button
+            onClick={handleAutoTag}
+            disabled={!!aiVision}
+            className="rounded border border-violet-400/30 bg-violet-400/10 px-3 py-1.5 font-mono text-[10px] text-violet-400 transition-colors hover:bg-violet-400/20 disabled:opacity-50"
+          >
+            {aiVision?.startsWith("Analyzing") ? "Tagging..." : "Auto-tag"}
+          </button>
+          <button
+            onClick={handleSuggestCover}
+            disabled={!!aiVision}
+            className="rounded border border-gold/30 bg-gold/10 px-3 py-1.5 font-mono text-[10px] text-gold transition-colors hover:bg-gold/20 disabled:opacity-50"
+          >
+            {aiVision?.startsWith("Picking") ? "Picking..." : "Suggest Cover"}
+          </button>
+          <button
+            onClick={handleAutoGroup}
+            disabled={!!aiVision || photos.length < 3}
+            className="rounded border border-sky-400/30 bg-sky-400/10 px-3 py-1.5 font-mono text-[10px] text-sky-400 transition-colors hover:bg-sky-400/20 disabled:opacity-50"
+          >
+            {aiVision?.startsWith("Detecting") ? "Grouping..." : "Auto-group"}
+          </button>
+          <div className="h-4 w-px bg-hairline" />
+          <button
+            onClick={handleArrange}
+            className="rounded border border-hairline px-3 py-1.5 font-mono text-[10px] text-muted transition-colors hover:border-crimson/30 hover:text-crimson"
+          >
+            Arrange (strips first)
+          </button>
+          {aiVision && (
+            <span className="font-mono text-[10px] text-violet-400">{aiVision}</span>
+          )}
+          <span className="ml-auto font-mono text-[9px] text-faint">via {getProvider()}</span>
+        </div>
+      )}
 
       {/* Existing sequences overview */}
       {sequences.size > 0 && (

@@ -43,10 +43,16 @@ export function slugify(title: string): string {
 
 /* ── Shared API caller ─────────────────────────────────────────── */
 
-async function callAI(prompt: string, temperature = 0.7): Promise<string> {
+type Message = { role: "user"; content: string | Array<{ type: "text"; text: string } | { type: "image_url"; image_url: { url: string; detail?: "low" | "high" } }> };
+
+async function callAI(prompt: string | Message[], temperature = 0.7, maxTokens = 400): Promise<string> {
   const provider = getProvider();
   const key = getApiKey(provider);
   if (!key) throw new Error(`No API key set for ${provider}. Add it in the Export tab.`);
+
+  const messages: Message[] = typeof prompt === "string"
+    ? [{ role: "user", content: prompt }]
+    : prompt;
 
   const res = await fetch(ENDPOINTS[provider], {
     method: "POST",
@@ -56,9 +62,9 @@ async function callAI(prompt: string, temperature = 0.7): Promise<string> {
     },
     body: JSON.stringify({
       model: MODELS[provider],
-      messages: [{ role: "user", content: prompt }],
+      messages,
       temperature,
-      max_tokens: 400,
+      max_tokens: maxTokens,
     }),
   });
 
@@ -273,4 +279,152 @@ Reply ONLY with valid JSON, no markdown:
 
   const raw = await callAI(prompt, 0.3);
   return parseJSON<TranslationResult>(raw);
+}
+
+/* ── Vision: Auto-tag photos ──────────────────────────────────── */
+
+export interface PhotoTag {
+  index: number;
+  tags: string[];  // e.g. ["solo", "stage", "closeup", "crowd", "wide-shot"]
+}
+
+export async function autoTagPhotos(ctx: EventContext & {
+  photos: { src: string; title: string }[];
+}): Promise<PhotoTag[]> {
+  if (ctx.photos.length === 0) return [];
+
+  const CHUNK = 8; // vision tokens are expensive, process in small batches
+  const results: PhotoTag[] = [];
+
+  for (let start = 0; start < ctx.photos.length; start += CHUNK) {
+    const chunk = ctx.photos.slice(start, start + CHUNK);
+
+    const content: Message["content"] = [
+      {
+        type: "text" as const,
+        text: `You are tagging concert/event photos for a photography gallery. For each photo, provide 2-5 short tags from this vocabulary:
+
+Subjects: solo, duo, group, crowd, wide-shot, closeup, portrait, full-body, side-profile, back-shot
+Moments: performing, singing, dancing, talking, waving, posing, candid, interaction, entrance, exit
+Stage: stage, backstage, audience, venue, lighting, spotlight, silhouette
+Mood: energetic, emotional, intimate, dramatic, joyful, intense, serene
+
+Event: ${ctx.title} (${ctx.group || "unknown"})
+
+Analyze each photo and return ONLY valid JSON array:
+[{"index": ${start + 1}, "tags": ["tag1", "tag2"]}, ...]`,
+      },
+      ...chunk.map((p, i) => ([
+        { type: "text" as const, text: `Photo ${start + i + 1}: "${p.title}"` },
+        { type: "image_url" as const, image_url: { url: p.src, detail: "low" as const } },
+      ])).flat(),
+    ];
+
+    const raw = await callAI([{ role: "user", content }], 0.3, 600);
+    const parsed = parseJSON<PhotoTag[]>(raw);
+    results.push(...parsed.map((p) => ({ ...p, index: p.index - 1 })));
+  }
+
+  return results;
+}
+
+/* ── Vision: Suggest cover ────────────────────────────────────── */
+
+export async function suggestCover(ctx: EventContext & {
+  photos: { src: string; title: string; index: number }[];
+}): Promise<number> {
+  // Send up to 12 photos for comparison (sampled evenly if more)
+  const sample = ctx.photos.length <= 12
+    ? ctx.photos
+    : ctx.photos.filter((_, i) => i % Math.ceil(ctx.photos.length / 12) === 0).slice(0, 12);
+
+  const content: Message["content"] = [
+    {
+      type: "text" as const,
+      text: `You are selecting the best cover photo for a photography event gallery page. Pick the ONE photo with:
+- Best composition and visual impact
+- Clear subject (not blurry or too dark)
+- Works well cropped to 3:4 portrait aspect ratio
+- Represents the event well
+
+Event: ${ctx.title} (${ctx.group || "unknown"}) at ${ctx.location || "unknown"}
+
+Return ONLY the photo number as JSON:
+{"pick": <number>}`,
+    },
+    ...sample.map((p) => ([
+      { type: "text" as const, text: `Photo ${p.index + 1}: "${p.title}"` },
+      { type: "image_url" as const, image_url: { url: p.src, detail: "low" as const } },
+    ])).flat(),
+  ];
+
+  const raw = await callAI([{ role: "user", content }], 0.2, 100);
+  const parsed = parseJSON<{ pick: number }>(raw);
+  return parsed.pick - 1; // convert to 0-based
+}
+
+/* ── Vision: Auto-group sequences ─────────────────────────────── */
+
+export interface SequenceGroup {
+  name: string;
+  indices: number[];  // 0-based
+}
+
+export async function autoGroupSequences(ctx: EventContext & {
+  photos: { src: string; title: string }[];
+}): Promise<SequenceGroup[]> {
+  if (ctx.photos.length < 3) return [];
+
+  // Send thumbnails in chunks for grouping
+  const CHUNK = 16;
+  const allGroups: SequenceGroup[] = [];
+
+  for (let start = 0; start < ctx.photos.length; start += CHUNK) {
+    const chunk = ctx.photos.slice(start, start + CHUNK);
+
+    const content: Message["content"] = [
+      {
+        type: "text" as const,
+        text: `You are grouping concert/event photos into sequences for a gallery. Photos that are visually similar (same moment, same angle, burst shots, same outfit/pose with slight variations) should be grouped together.
+
+Rules:
+- Only group photos that are clearly from the same moment/burst
+- A group needs at least 2 photos
+- Not every photo needs to be in a group — solo shots should be left ungrouped
+- Name each group descriptively (e.g. "Stage Solo", "Crowd Wave", "Encore Bow")
+- Use the photo numbers as shown
+
+Event: ${ctx.title} (${ctx.group || "unknown"})
+
+Return ONLY valid JSON array of groups (empty array if no clear groups):
+[{"name": "Group Name", "indices": [${start + 1}, ${start + 2}]}, ...]`,
+    },
+      ...chunk.map((p, i) => ([
+        { type: "text" as const, text: `Photo ${start + i + 1}: "${p.title}"` },
+        { type: "image_url" as const, image_url: { url: p.src, detail: "low" as const } },
+      ])).flat(),
+    ];
+
+    const raw = await callAI([{ role: "user", content }], 0.3, 800);
+    const parsed = parseJSON<SequenceGroup[]>(raw);
+    allGroups.push(...parsed.map((g) => ({
+      ...g,
+      indices: g.indices.map((i) => i - 1), // convert to 0-based
+    })));
+  }
+
+  return allGroups;
+}
+
+/* ── Photo arrangement helper (no AI) ─────────────────────────── */
+
+export function arrangePhotos(photos: { sequence?: string }[]): number[] {
+  // Returns sorted indices: sequenced photos first, then non-sequenced
+  const sequenced: number[] = [];
+  const regular: number[] = [];
+  photos.forEach((p, i) => {
+    if (p.sequence) sequenced.push(i);
+    else regular.push(i);
+  });
+  return [...sequenced, ...regular];
 }

@@ -156,8 +156,9 @@ export function EventEditor({
         (done, total, name) => setConverting(`Uploading ${done}/${total} — ${name}`),
       );
       if (successful.length > 0) {
-        const newPhotos = successful.map((r) => ({
-          title: r.fileName.replace(/\.[^.]+$/, ""),
+        const existingCount = event.photos.length;
+        const newPhotos = successful.map((r, i) => ({
+          title: `${form.title} (${existingCount + i + 1})`,
           story: "",
           src: r.url,
           width: r.width,
@@ -503,8 +504,9 @@ export function EventEditor({
                       (done, total, name) => setConverting(`Uploading ${done}/${total} — ${name}`),
                     );
                     if (successful.length > 0) {
-                      const newPhotos = successful.map((r) => ({
-                        title: r.fileName.replace(/\.[^.]+$/, ""),
+                      const existingCount = event.photos.length;
+                      const newPhotos = successful.map((r, i) => ({
+                        title: `${form.title} (${existingCount + i + 1})`,
                         story: "",
                         src: r.url,
                         width: r.width,
