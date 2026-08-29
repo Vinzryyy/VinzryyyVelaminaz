@@ -4,7 +4,7 @@ import { formatSize } from "@/lib/imageUtils";
 import type { Event, Photo } from "@/lib/types";
 import { deepClone, useDrop } from "@/components/admin/adminHelpers";
 import { LayoutPreview } from "@/components/admin/LayoutPreview";
-import { generateDescription, generateTateText, generateSEO, getProvider } from "@/lib/aiGenerate";
+import { generateDescription, generateTateText, generateSEO, slugify, translateContent, getProvider, type TranslationLang } from "@/lib/aiGenerate";
 
 /* ── Event Editor ────────────────────────────────────────────────── */
 
@@ -113,6 +113,17 @@ export function EventEditor({
     subtitle: form.subtitle || undefined,
     description: form.description || undefined,
   }), (r) => { set("seoTitle", r.seoTitle); set("seoDescription", r.seoDescription); });
+
+  const handleSlugify = () => {
+    const slug = slugify(form.title);
+    if (slug) set("slug", slug);
+  };
+
+  const handleTranslate = (lang: TranslationLang) => runAI(`translate-${lang}`, () => translateContent({
+    subtitle: form.subtitle,
+    description: form.description,
+    lang,
+  }), (r) => { set("subtitle", r.subtitle); set("description", r.description); });
 
   const coverSrc = form.cover ?? event.photos[0]?.src;
 
@@ -232,9 +243,18 @@ export function EventEditor({
 
         <div className="rounded-lg border border-hairline bg-card/40 p-6">
           <div className="space-y-4">
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-end">
               {field("Title", "title", { half: true })}
-              {field("Slug", "slug", { half: true })}
+              <div className="flex flex-1 items-end gap-1.5">
+                <div className="flex-1">{field("Slug", "slug")}</div>
+                <button
+                  onClick={handleSlugify}
+                  className="mb-0.5 shrink-0 rounded border border-violet-400/30 bg-violet-400/10 px-2.5 py-2 font-mono text-[9px] text-violet-400 transition-colors hover:bg-violet-400/20"
+                  title="Auto-generate slug from title"
+                >
+                  Auto
+                </button>
+              </div>
             </div>
             <div className="flex gap-4">
               {field("Group", "group", { half: true })}
@@ -272,6 +292,21 @@ export function EventEditor({
                 className="rounded-lg border border-sky-400/30 bg-sky-400/10 px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-sky-400 transition-colors hover:bg-sky-400/20 disabled:opacity-50"
               >
                 {aiLoading === "seo" ? "Generating..." : "AI SEO Meta"}
+              </button>
+              <div className="h-5 w-px bg-hairline" />
+              <button
+                onClick={() => handleTranslate("ja")}
+                disabled={!!aiLoading || (!form.subtitle && !form.description)}
+                className="rounded-lg border border-gold/30 bg-gold/10 px-3 py-2 font-mono text-[10px] font-semibold text-gold transition-colors hover:bg-gold/20 disabled:opacity-50"
+              >
+                {aiLoading === "translate-ja" ? "..." : "JA"}
+              </button>
+              <button
+                onClick={() => handleTranslate("ms")}
+                disabled={!!aiLoading || (!form.subtitle && !form.description)}
+                className="rounded-lg border border-gold/30 bg-gold/10 px-3 py-2 font-mono text-[10px] font-semibold text-gold transition-colors hover:bg-gold/20 disabled:opacity-50"
+              >
+                {aiLoading === "translate-ms" ? "..." : "MS"}
               </button>
               <span className="font-mono text-[9px] text-faint">via {getProvider()}</span>
               {aiError && (

@@ -30,6 +30,17 @@ const MODELS: Record<AIProvider, string> = {
   deepseek: "deepseek-chat",
 };
 
+/* ── Slug generator (no AI) ───────────────────────────────────── */
+
+export function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}
+
 /* ── Shared API caller ─────────────────────────────────────────── */
 
 async function callAI(prompt: string, temperature = 0.7): Promise<string> {
@@ -176,4 +187,90 @@ Reply ONLY with valid JSON, no markdown:
 
   const raw = await callAI(prompt, 0.5);
   return parseJSON<SEOResult>(raw);
+}
+
+/* ── Batch Photo Descriptions ─────────────────────────────────── */
+
+interface PhotoStory {
+  index: number;
+  title: string;
+  story: string;
+}
+
+export async function batchDescribePhotos(ctx: EventContext & {
+  photos: { title: string; sequence?: string; src?: string }[];
+}): Promise<PhotoStory[]> {
+  if (ctx.photos.length === 0) return [];
+
+  // Process in chunks of 20 to stay within token limits
+  const CHUNK = 20;
+  const results: PhotoStory[] = [];
+
+  for (let start = 0; start < ctx.photos.length; start += CHUNK) {
+    const chunk = ctx.photos.slice(start, start + CHUNK);
+    const photoList = chunk
+      .map((p, i) => {
+        const idx = start + i;
+        const seq = p.sequence ? ` [sequence: ${p.sequence}]` : "";
+        return `  ${idx + 1}. "${p.title}"${seq}`;
+      })
+      .join("\n");
+
+    const prompt = `You are writing short photo stories for a photography event gallery called VinzryyySaga. The tone is cinematic, intimate, and observational — like margin notes in a photographer's journal.
+
+Event context:
+${eventContext(ctx)}
+
+For each photo below, generate:
+- A cleaned-up title (remove file extensions, underscores, timestamps — make it human-readable, keep it short)
+- A story (1-2 sentences, 15-30 words, evocative and specific to the moment)
+
+Photos:
+${photoList}
+
+Reply ONLY with valid JSON array, no markdown:
+[{"index": 1, "title": "...", "story": "..."}, ...]`;
+
+    const raw = await callAI(prompt, 0.7);
+    const parsed = parseJSON<PhotoStory[]>(raw);
+    results.push(...parsed.map((p) => ({ ...p, index: p.index - 1 })));
+  }
+
+  return results;
+}
+
+/* ── Translation ──────────────────────────────────────────────── */
+
+export type TranslationLang = "ja" | "ms";
+
+interface TranslationResult {
+  subtitle: string;
+  description: string;
+}
+
+const LANG_NAMES: Record<TranslationLang, string> = {
+  ja: "Japanese",
+  ms: "Malay",
+};
+
+export async function translateContent(ctx: {
+  subtitle: string;
+  description: string;
+  lang: TranslationLang;
+}): Promise<TranslationResult> {
+  const langName = LANG_NAMES[ctx.lang];
+
+  const prompt = `Translate the following photography event text into ${langName}. Keep the tone cinematic, poetic, and concise. Do not add or remove meaning — just translate naturally.
+
+Subtitle (translate this):
+${ctx.subtitle}
+
+Description (translate this):
+${ctx.description}
+
+Reply ONLY with valid JSON, no markdown:
+{"subtitle": "...", "description": "..."}`;
+
+  const raw = await callAI(prompt, 0.3);
+  return parseJSON<TranslationResult>(raw);
 }

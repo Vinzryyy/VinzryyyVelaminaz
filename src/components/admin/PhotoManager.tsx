@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { uploadBatch } from "@/lib/ghUpload";
 import type { Event, Photo } from "@/lib/types";
 import { deepClone, emptyPhoto } from "@/components/admin/adminHelpers";
+import { batchDescribePhotos, getProvider } from "@/lib/aiGenerate";
 
 /* ── Sequence Colors ─────────────────────────────────────────────── */
 
@@ -104,6 +105,41 @@ export function PhotoManager({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<string | null>(null);
+
+  // AI batch describe
+  const [aiDescribing, setAiDescribing] = useState(false);
+
+  const handleBatchDescribe = async () => {
+    if (photos.length === 0) return;
+    setAiDescribing(true);
+    try {
+      const results = await batchDescribePhotos({
+        title: event.title,
+        group: event.group || "",
+        date: event.date || "",
+        location: event.location || "",
+        gear: event.gear || "",
+        photoCount: photos.length,
+        photos: photos.map((p) => ({ title: p.title, sequence: p.sequence, src: p.src })),
+      });
+      commit((prev) => {
+        const next = [...prev];
+        for (const r of results) {
+          if (r.index >= 0 && r.index < next.length) {
+            next[r.index] = { ...next[r.index], title: r.title, story: r.story };
+          }
+        }
+        return next;
+      });
+      setUploading(`Generated stories for ${results.length} photos`);
+      setTimeout(() => setUploading(null), 4000);
+    } catch (err) {
+      setUploading(`AI failed: ${err instanceof Error ? err.message : "unknown error"}`);
+      setTimeout(() => setUploading(null), 6000);
+    } finally {
+      setAiDescribing(false);
+    }
+  };
 
   const addEmpty = () => {
     const newIdx = photos.length;
@@ -251,6 +287,14 @@ export function PhotoManager({
           </button>
           <button onClick={addEmpty} className="rounded-lg border border-hairline px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-crimson/30 hover:text-crimson">
             + Empty
+          </button>
+          <button
+            onClick={handleBatchDescribe}
+            disabled={aiDescribing || photos.length === 0}
+            className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 font-mono text-xs font-semibold text-emerald-400 transition-colors hover:bg-emerald-400/20 disabled:opacity-50"
+            title={`Generate titles & stories for all photos via ${getProvider()}`}
+          >
+            {aiDescribing ? "Describing..." : "AI Describe All"}
           </button>
           <button onClick={save} className="rounded-lg border border-crimson bg-transparent px-4 py-2 font-mono text-xs font-semibold text-crimson transition-colors hover:bg-crimson/10">
             Save All
