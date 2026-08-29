@@ -4,6 +4,7 @@ import { formatSize } from "@/lib/imageUtils";
 import type { Event, Photo } from "@/lib/types";
 import { deepClone, useDrop } from "@/components/admin/adminHelpers";
 import { LayoutPreview } from "@/components/admin/LayoutPreview";
+import { generateDescription, getProvider } from "@/lib/aiGenerate";
 
 /* ── Event Editor ────────────────────────────────────────────────── */
 
@@ -67,6 +68,33 @@ export function EventEditor({
       )}
     </label>
   );
+
+  // AI description generation
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    setAiLoading(true);
+    setAiError(null);
+    try {
+      const result = await generateDescription({
+        title: form.title,
+        group: form.group || "",
+        date: form.date || "",
+        location: form.location || "",
+        gear: form.gear || "",
+        photoCount: event.photos.length,
+        existingSubtitle: form.subtitle || undefined,
+        existingDescription: form.description || undefined,
+      });
+      set("subtitle", result.subtitle);
+      set("description", result.description);
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : "Generation failed");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const coverSrc = form.cover ?? event.photos[0]?.src;
 
@@ -204,6 +232,20 @@ export function EventEditor({
             </div>
             {field("Subtitle", "subtitle")}
             {field("Description", "description", { textarea: true })}
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleGenerate}
+                disabled={aiLoading}
+                className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-400 transition-colors hover:bg-emerald-400/20 disabled:opacity-50"
+              >
+                {aiLoading ? "Generating..." : `Generate with AI (${getProvider()})`}
+              </button>
+              {aiError && (
+                <span className="font-mono text-[10px] text-crimson">{aiError}</span>
+              )}
+              <span className="font-mono text-[9px] text-faint">Writes subtitle & description</span>
+            </div>
 
             <label className="flex items-center gap-3">
               <input

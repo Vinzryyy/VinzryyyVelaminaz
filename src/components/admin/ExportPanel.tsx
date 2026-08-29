@@ -1,6 +1,14 @@
 import { useMemo, useState } from "react";
 import type { Event } from "@/lib/types";
 import { eventsToCode, GH_TOKEN_KEY, publishToGitHub } from "@/components/admin/adminHelpers";
+import {
+  AI_OPENAI_KEY,
+  AI_DEEPSEEK_KEY,
+  AI_PROVIDER_KEY,
+  type AIProvider,
+  getProvider,
+  setProvider,
+} from "@/lib/aiGenerate";
 
 /* ── Export Panel ─────────────────────────────────────────────────── */
 
@@ -17,6 +25,25 @@ export function ExportPanel({
   const [showToken, setShowToken] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [publishStatus, setPublishStatus] = useState<string | null>(null);
+
+  // AI API keys
+  const [aiProvider, setAiProvider] = useState<AIProvider>(getProvider);
+  const [openaiKey, setOpenaiKey] = useState(() => localStorage.getItem(AI_OPENAI_KEY) ?? "");
+  const [deepseekKey, setDeepseekKey] = useState(() => localStorage.getItem(AI_DEEPSEEK_KEY) ?? "");
+  const [showAiKeys, setShowAiKeys] = useState(false);
+
+  const saveAiKey = (provider: "openai" | "deepseek", key: string) => {
+    const storageKey = provider === "openai" ? AI_OPENAI_KEY : AI_DEEPSEEK_KEY;
+    if (provider === "openai") setOpenaiKey(key);
+    else setDeepseekKey(key);
+    if (key) localStorage.setItem(storageKey, key);
+    else localStorage.removeItem(storageKey);
+  };
+
+  const switchProvider = (p: AIProvider) => {
+    setAiProvider(p);
+    setProvider(p);
+  };
 
   const code = useMemo(() => eventsToCode(events), [events]);
   const json = useMemo(() => JSON.stringify(events, null, 2), [events]);
@@ -101,6 +128,85 @@ export function ExportPanel({
               {publishStatus}
             </p>
           )}
+        </div>
+      </div>
+
+      {/* ── AI API Keys ── */}
+      <div className="rounded-lg border border-emerald-400/30 bg-emerald-400/5 p-5 space-y-4">
+        <h3 className="font-display text-sm font-bold text-ink">AI Description Generator</h3>
+        <p className="font-mono text-xs text-muted">
+          Add your API keys to enable AI-generated subtitles and descriptions in the Editor.
+        </p>
+
+        <div className="space-y-3">
+          <div>
+            <label className="mb-1 block font-mono text-[10px] uppercase tracking-widest text-muted">
+              Active Provider
+            </label>
+            <div className="flex gap-2">
+              <button
+                onClick={() => switchProvider("deepseek")}
+                className={`rounded-lg px-4 py-2 font-mono text-[10px] font-semibold transition-colors ${
+                  aiProvider === "deepseek"
+                    ? "bg-emerald-400/20 text-emerald-400 border border-emerald-400/40"
+                    : "border border-hairline text-muted hover:text-ink"
+                }`}
+              >
+                DeepSeek
+              </button>
+              <button
+                onClick={() => switchProvider("openai")}
+                className={`rounded-lg px-4 py-2 font-mono text-[10px] font-semibold transition-colors ${
+                  aiProvider === "openai"
+                    ? "bg-emerald-400/20 text-emerald-400 border border-emerald-400/40"
+                    : "border border-hairline text-muted hover:text-ink"
+                }`}
+              >
+                OpenAI
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-1 block font-mono text-[10px] uppercase tracking-widest text-muted">
+              DeepSeek API Key
+            </label>
+            <div className="flex gap-2">
+              <input
+                type={showAiKeys ? "text" : "password"}
+                value={deepseekKey}
+                onChange={(e) => saveAiKey("deepseek", e.target.value)}
+                placeholder="sk-xxxxxxxxxxxxxxxxxxxx"
+                className="flex-1 rounded-lg border border-hairline bg-sumi px-3 py-2 font-mono text-xs text-ink outline-none transition-colors focus:border-emerald-400/50"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-1 block font-mono text-[10px] uppercase tracking-widest text-muted">
+              OpenAI API Key
+            </label>
+            <div className="flex gap-2">
+              <input
+                type={showAiKeys ? "text" : "password"}
+                value={openaiKey}
+                onChange={(e) => saveAiKey("openai", e.target.value)}
+                placeholder="sk-xxxxxxxxxxxxxxxxxxxx"
+                className="flex-1 rounded-lg border border-hairline bg-sumi px-3 py-2 font-mono text-xs text-ink outline-none transition-colors focus:border-emerald-400/50"
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={() => setShowAiKeys(!showAiKeys)}
+            className="rounded-lg border border-hairline px-3 py-2 font-mono text-[10px] text-muted hover:text-ink"
+          >
+            {showAiKeys ? "Hide keys" : "Show keys"}
+          </button>
+
+          <p className="font-mono text-[10px] text-muted/60">
+            Keys are saved locally in this browser. Use the <span className="text-emerald-400">Generate with AI</span> button in the Editor tab.
+          </p>
         </div>
       </div>
 
