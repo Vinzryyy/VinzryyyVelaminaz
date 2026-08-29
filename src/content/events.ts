@@ -1722,7 +1722,8 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/quadlips-don-bon-day1/feni3.webp"
   },
   {
     "slug": "quadlips-kkv",
