@@ -182,6 +182,10 @@ export function EventEditor({
           src: r.url,
           width: r.width,
           height: r.height,
+          lens: r.exif?.lens,
+          aperture: r.exif?.aperture,
+          shutter: r.exif?.shutter,
+          iso: r.exif?.iso,
         }));
         onPhotosChange([...event.photos, ...newPhotos]);
         onAutoPublish?.();
@@ -588,6 +592,10 @@ export function EventEditor({
                         src: r.url,
                         width: r.width,
                         height: r.height,
+                        lens: r.exif?.lens,
+                        aperture: r.exif?.aperture,
+                        shutter: r.exif?.shutter,
+                        iso: r.exif?.iso,
                       }));
                       onPhotosChange([...event.photos, ...newPhotos]);
                       onAutoPublish?.();

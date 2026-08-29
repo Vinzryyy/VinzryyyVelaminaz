@@ -3,6 +3,7 @@ import { uploadBatch } from "@/lib/ghUpload";
 import type { Event, Photo } from "@/lib/types";
 import { deepClone, emptyPhoto } from "@/components/admin/adminHelpers";
 import { batchDescribePhotos, autoTagPhotos, suggestCover, autoGroupSequences, arrangePhotos, getProvider } from "@/lib/aiGenerate";
+import { getWatermarkEnabled, getWatermarkText, WATERMARK_KEY, WATERMARK_TEXT_KEY } from "@/lib/imageUtils";
 
 /* ── Sequence Colors ─────────────────────────────────────────────── */
 
@@ -105,6 +106,20 @@ export function PhotoManager({
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<string | null>(null);
+
+  // Watermark settings
+  const [wmEnabled, setWmEnabled] = useState(getWatermarkEnabled);
+  const [wmText, setWmText] = useState(getWatermarkText);
+
+  const toggleWatermark = (on: boolean) => {
+    setWmEnabled(on);
+    localStorage.setItem(WATERMARK_KEY, String(on));
+  };
+
+  const updateWmText = (text: string) => {
+    setWmText(text);
+    localStorage.setItem(WATERMARK_TEXT_KEY, text);
+  };
 
   // AI batch describe
   const [aiDescribing, setAiDescribing] = useState(false);
@@ -249,6 +264,11 @@ export function PhotoManager({
     const imageFiles = [...files].filter((f) => f.type.startsWith("image/") || imageExts.test(f.name) || !f.type);
     if (imageFiles.length === 0) return;
 
+    // Duplicate detection: check dimensions against existing photos
+    const existingDims = new Set(
+      photos.filter((p) => p.width && p.height).map((p) => `${p.width}x${p.height}`)
+    );
+
     setUploading(`Converting & uploading ${imageFiles.length} photo${imageFiles.length > 1 ? "s" : ""}...`);
     try {
       const { successful, failed } = await uploadBatch(
@@ -256,7 +276,34 @@ export function PhotoManager({
         `gallery/${event.slug}`,
         (done, total, name) => setUploading(`Uploading ${done}/${total} — ${name}`),
       );
-      if (successful.length > 0) {
+
+      // Check for potential duplicates
+      const dupes = successful.filter((r) => existingDims.has(`${r.width}x${r.height}`));
+
+      if (dupes.length > 0 && !confirm(
+        `${dupes.length} photo(s) have the same dimensions as existing photos (possible duplicates):\n${dupes.map((d) => `• ${d.fileName} (${d.width}×${d.height})`).join("\n")}\n\nAdd them anyway?`
+      )) {
+        setUploading(`Cancelled — ${dupes.length} potential duplicate(s) skipped`);
+        // Only add non-duplicates
+        const nonDupes = successful.filter((r) => !existingDims.has(`${r.width}x${r.height}`));
+        if (nonDupes.length > 0) {
+          const existingCount = photos.length;
+          const newPhotos = nonDupes.map((r, i) => ({
+            title: `${event.title} (${existingCount + i + 1})`,
+            story: "",
+            src: r.url,
+            width: r.width,
+            height: r.height,
+            lens: r.exif?.lens,
+            aperture: r.exif?.aperture,
+            shutter: r.exif?.shutter,
+            iso: r.exif?.iso,
+          }));
+          commit((p) => [...p, ...newPhotos]);
+          onAutoPublish?.();
+          setUploading(`Added ${nonDupes.length} photo(s), skipped ${dupes.length} duplicate(s)`);
+        }
+      } else if (successful.length > 0) {
         const existingCount = photos.length;
         const newPhotos = successful.map((r, i) => ({
           title: `${event.title} (${existingCount + i + 1})`,
@@ -264,6 +311,10 @@ export function PhotoManager({
           src: r.url,
           width: r.width,
           height: r.height,
+          lens: r.exif?.lens,
+          aperture: r.exif?.aperture,
+          shutter: r.exif?.shutter,
+          iso: r.exif?.iso,
         }));
         commit((p) => [...p, ...newPhotos]);
         onAutoPublish?.();
@@ -397,6 +448,29 @@ export function PhotoManager({
             Save All
           </button>
         </div>
+      </div>
+
+      {/* Upload settings: watermark + EXIF */}
+      <div className="flex flex-wrap items-center gap-3 rounded-lg border border-hairline bg-card/30 p-3">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={wmEnabled}
+            onChange={(e) => toggleWatermark(e.target.checked)}
+            className="h-3.5 w-3.5 rounded border-hairline accent-crimson"
+          />
+          <span className="font-mono text-[10px] text-muted">Watermark</span>
+        </label>
+        {wmEnabled && (
+          <input
+            type="text"
+            value={wmText}
+            onChange={(e) => updateWmText(e.target.value)}
+            className="w-40 rounded border border-hairline bg-sumi px-2 py-1 font-mono text-[10px] text-ink outline-none focus:border-crimson/50"
+          />
+        )}
+        <div className="h-4 w-px bg-hairline" />
+        <span className="font-mono text-[9px] text-faint">EXIF auto-fill: lens, aperture, shutter, ISO extracted on upload</span>
       </div>
 
       {/* AI Vision toolbar */}

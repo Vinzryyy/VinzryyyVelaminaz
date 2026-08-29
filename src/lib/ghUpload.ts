@@ -4,7 +4,7 @@
  * - Production: batches all files into a SINGLE Git commit via the Trees API,
  *   so only one Vercel deploy is triggered per upload session.
  */
-import { convertToWebP } from "./imageUtils";
+import { convertToWebP, extractExif, getWatermarkEnabled, getWatermarkText, type ExifData } from "./imageUtils";
 
 export interface UploadResult {
   url: string;
@@ -13,6 +13,7 @@ export interface UploadResult {
   height: number;
   originalSize: number;
   newSize: number;
+  exif?: ExifData;
 }
 
 const GH_API = "https://api.github.com";
@@ -194,6 +195,7 @@ interface ConvertedFile {
   height: number;
   originalSize: number;
   newSize: number;
+  exif?: ExifData;
 }
 
 async function convertFile(
@@ -206,7 +208,12 @@ async function convertFile(
     throw new Error(`${file.name} is too large (${Math.round(file.size / 1024 / 1024)}MB, max ${MAX_FILE_SIZE / 1024 / 1024}MB)`);
   }
 
-  const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(file);
+  // Extract EXIF before conversion (conversion strips it)
+  const exif = await extractExif(file);
+
+  // Apply watermark if enabled
+  const watermark = getWatermarkEnabled() ? getWatermarkText() : undefined;
+  const { dataUrl, width, height, originalSize, newSize } = await convertToWebP(file, watermark);
   const base64 = dataUrl.split(",")[1];
 
   const baseName = file.name.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
@@ -219,7 +226,7 @@ async function convertFile(
   const filePath = `public/gallery/${subFolder}/${name}.webp`;
   const url = "/" + filePath.replace(/^public\//, "");
 
-  return { base64, filePath, url, fileName: file.name, width, height, originalSize, newSize };
+  return { base64, filePath, url, fileName: file.name, width, height, originalSize, newSize, exif };
 }
 
 /* ── Single photo upload (dev only, prod uses batch) ──────────── */
@@ -237,7 +244,7 @@ export async function uploadPhoto(
     const folderName = subFolder.replace(/^gallery\//, "");
     const name = converted.filePath.split("/").pop()!.replace(/\.webp$/, "");
     const url = await uploadToLocal(converted.base64, folderName, name);
-    return { url, fileName: converted.fileName, width: converted.width, height: converted.height, originalSize: converted.originalSize, newSize: converted.newSize };
+    return { url, fileName: converted.fileName, width: converted.width, height: converted.height, originalSize: converted.originalSize, newSize: converted.newSize, exif: converted.exif };
   }
 
   // Prod: single-file commit
@@ -246,7 +253,7 @@ export async function uploadPhoto(
     [{ path: converted.filePath, base64: converted.base64 }],
     `gallery: add ${converted.filePath.split("/").pop()}`,
   ));
-  return { url: converted.url, fileName: converted.fileName, width: converted.width, height: converted.height, originalSize: converted.originalSize, newSize: converted.newSize };
+  return { url: converted.url, fileName: converted.fileName, width: converted.width, height: converted.height, originalSize: converted.originalSize, newSize: converted.newSize, exif: converted.exif };
 }
 
 /* ── Batch upload: converts all, then ONE commit ──────────────── */
@@ -290,7 +297,7 @@ export async function uploadBatch(
         const folderName = subFolder.replace(/^gallery\//, "");
         const name = c.filePath.split("/").pop()!.replace(/\.webp$/, "");
         const url = await uploadToLocal(c.base64, folderName, name);
-        successful.push({ url, fileName: c.fileName, width: c.width, height: c.height, originalSize: c.originalSize, newSize: c.newSize });
+        successful.push({ url, fileName: c.fileName, width: c.width, height: c.height, originalSize: c.originalSize, newSize: c.newSize, exif: c.exif });
       } catch (err) {
         const error = err instanceof Error ? err.message : "Unknown error";
         failed.push({ name: c.fileName, error });
@@ -313,7 +320,7 @@ export async function uploadBatch(
 
       // All succeeded
       for (const c of converted) {
-        successful.push({ url: c.url, fileName: c.fileName, width: c.width, height: c.height, originalSize: c.originalSize, newSize: c.newSize });
+        successful.push({ url: c.url, fileName: c.fileName, width: c.width, height: c.height, originalSize: c.originalSize, newSize: c.newSize, exif: c.exif });
       }
     } catch (err) {
       // Entire batch failed
