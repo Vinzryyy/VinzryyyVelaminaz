@@ -235,6 +235,23 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
     notify("Event created");
   }, []);
 
+  const copyEvent = useCallback((source: Event) => {
+    const copy = deepClone(source);
+    copy.slug = `${source.slug}-copy-${Date.now()}`;
+    copy.title = `${source.title} (Copy)`;
+    copy.photos = [];
+    copy.cover = undefined;
+    setEvents((prev) => {
+      const idx = prev.findIndex((e) => e.slug === source.slug);
+      const next = [...prev];
+      next.splice(idx + 1, 0, copy);
+      return next;
+    });
+    setSelectedSlug(copy.slug);
+    setTab("editor");
+    notify("Event copied — update title, slug & add photos");
+  }, []);
+
   const resetToSource = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
     setEvents(deepClone(getAllEvents()));
@@ -507,6 +524,12 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                       className="rounded border border-hairline px-3 py-1.5 font-mono text-[10px] text-muted transition-colors hover:border-sakura/30 hover:text-sakura"
                     >
                       Photos
+                    </button>
+                    <button
+                      onClick={() => copyEvent(e)}
+                      className="rounded border border-hairline px-3 py-1.5 font-mono text-[10px] text-muted transition-colors hover:border-emerald-400/30 hover:text-emerald-400"
+                    >
+                      Copy
                     </button>
                     <button
                       onClick={() => {
