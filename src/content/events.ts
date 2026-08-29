@@ -154,7 +154,7 @@ export const events: Event[] = [
         "height": 1280
       }
     ],
-    "cover": "/gallery/JKT48DonOboriDay2/IMG_6299.webp"
+    "cover": "/gallery/JKT48DonOboriDay2/IMG_6332.webp"
   },
   {
     "slug": "quadlips-performance-day1",
@@ -420,7 +420,8 @@ export const events: Event[] = [
         "shutter": "1/250",
         "iso": 4000
       }
-    ]
+    ],
+    "cover": "/gallery/quadlips-performance-day1/Quadlips Full Squad.webp"
   },
   {
     "slug": "quadlips-performance-day2",
@@ -1460,7 +1461,7 @@ export const events: Event[] = [
     "tateText": "第三巻 · 縁",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
+    "gear": "Canon EOS R8",
     "subtitle": "Fan meet energy — Cole, Fame, Feni, and Mashiro up close.",
     "description": "The Don Bon fan meeting series puts the members at arm's length. No barricade, no pit — just eye contact and conversation. The light was harsh fluorescent overhead, so I shot wide open and let the backgrounds melt.",
     "featured": false,
@@ -3700,7 +3701,7 @@ export const events: Event[] = [
     "photos": [
       {
         "title": "Anin I",
-        "story": "Anin leaned in and the light landed perfectly.",
+        "story": "Stage lights catch her mid-laugh, a fleeting spark before the next beat drops.",
         "src": "/gallery/jkt48-don-bon-day1/anin1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -3709,7 +3710,7 @@ export const events: Event[] = [
       },
       {
         "title": "Anin II",
-        "story": "A genuine laugh. The shutter was already down.",
+        "story": "She glances sideways, hair swaying, as if sharing a secret with the crowd.",
         "src": "/gallery/jkt48-don-bon-day1/anin2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
@@ -3718,7 +3719,7 @@ export const events: Event[] = [
       },
       {
         "title": "Anin III",
-        "story": "She signed a postcard without looking down.",
+        "story": "A hand raised, fingers tracing the air — a silent verse in the choreography.",
         "src": "/gallery/jkt48-don-bon-day1/anin3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
@@ -3727,7 +3728,7 @@ export const events: Event[] = [
       },
       {
         "title": "Anin IV",
-        "story": "Between fans. A moment of quiet composure.",
+        "story": "In the pause between songs, her eyes find the lens, holding the moment still.",
         "src": "/gallery/jkt48-don-bon-day1/anin4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
@@ -3736,7 +3737,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin I",
-        "story": "Erin's first fan meet in KL. She was nervous but it didn't show.",
+        "story": "Her ponytail whips as she turns, a burst of motion frozen in amber light.",
         "src": "/gallery/jkt48-don-bon-day1/erin1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -3745,7 +3746,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin II",
-        "story": "Mid-conversation. The overhead light softened on her face.",
+        "story": "She mouths the lyrics, half-smiling, lost in the rhythm of the night.",
         "src": "/gallery/jkt48-don-bon-day1/erin2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
@@ -3754,7 +3755,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin III",
-        "story": "She looked up from the table and the frame was there.",
+        "story": "A low angle catches her silhouette against the screen, a dancer made of shadow.",
         "src": "/gallery/jkt48-don-bon-day1/erin3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
@@ -3763,7 +3764,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin IV",
-        "story": "Profile in the warm zone. Fluorescent never looked this good.",
+        "story": "She waves to the back rows, a small gesture that bridges the distance.",
         "src": "/gallery/jkt48-don-bon-day1/erin4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -3772,7 +3773,7 @@ export const events: Event[] = [
       },
       {
         "title": "Fiony",
-        "story": "Fiony brings a different energy to fan meets — louder, brighter, closer.",
+        "story": "Center stage, she holds the final note — the crowd's roar becomes her echo.",
         "src": "/gallery/jkt48-don-bon-day1/Fiony1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
