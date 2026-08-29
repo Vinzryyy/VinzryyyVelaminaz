@@ -2752,7 +2752,8 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/klp48-performance-day1/IMG_6208.webp"
   },
   {
     "slug": "klp48-performance-day2",
