@@ -2904,7 +2904,7 @@ export const events: Event[] = [
     "tateText": "第六巻 · 舞台",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
+    "gear": "Canon EOS R8",
     "subtitle": "Night two — Devi and Khalies close the weekend.",
     "description": "The second and final night. Tighter setlist, louder crowd, better light. Devi and Khalies carried the encore with a stripped-down acoustic arrangement that silenced the entire atrium.",
     "featured": false,
