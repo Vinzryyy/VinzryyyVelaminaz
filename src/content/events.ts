@@ -1581,8 +1581,149 @@ export const events: Event[] = [
         "aperture": "f/2.8",
         "shutter": "1/200",
         "iso": 2000
+      },
+      {
+        "title": "IMG_6102",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6102.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6101",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6101.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6100",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6100.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6077",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6077.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6076",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6076.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6075",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6075.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6072",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6072.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6071",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6071.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6069",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6069.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6068",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6068.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6067",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6067.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6065",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6065.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6062",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6062.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6060",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6060.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6059",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6059.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6057",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6057.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6055",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6055.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6053",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6053.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6050",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6050.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6048",
+        "story": "",
+        "src": "/gallery/quadlips-don-bon-day1/IMG_6048.webp",
+        "width": 1920,
+        "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/quadlips-don-bon-day1/feni3.webp"
   },
   {
     "slug": "quadlips-kkv",
@@ -2401,8 +2542,359 @@ export const events: Event[] = [
         "aperture": "f/2.8",
         "shutter": "1/320",
         "iso": 3200
+      },
+      {
+        "title": "IMG_6293",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6293.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6289",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6289.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6250",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6250.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6241",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6241.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6234",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6234.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6230",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6230.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6224",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6224.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6219",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6219.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6215",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6215.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6214",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6214.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6212",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6212.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6209",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6209.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6209",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6209-1787973876528.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6208",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6208.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6205",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6205.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6205",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6205-1787973877436.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6202",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6202.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6201",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6201.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6198",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6198.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6196",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6196.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6195",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6195.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6188",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6188.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6187",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6187.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6186",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6186.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6185",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6185.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6182",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6182.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6181",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6181.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6180",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6180.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6179",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6179.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6177",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6177.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6175",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6175.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6174",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6174.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6173",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6173.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6165",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6165.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6164",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6164.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6160",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6160.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6158",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6158.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6139",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6139.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6138",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6138.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6133",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6133.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6132",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6132.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6130",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6130.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6126",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6126.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6124",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6124.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6125",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6125.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6122",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6122.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6119",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6119.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6118",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6118.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_6113",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6113.webp",
+        "width": 1080,
+        "height": 1920
+      },
+      {
+        "title": "IMG_6109",
+        "story": "",
+        "src": "/gallery/klp48-performance-day1/IMG_6109.webp",
+        "width": 1920,
+        "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/klp48-performance-day1/IMG_6208.webp"
   },
   {
     "slug": "klp48-performance-day2",
@@ -3071,8 +3563,128 @@ export const events: Event[] = [
         "aperture": "f/1.4",
         "shutter": "1/250",
         "iso": 2500
+      },
+      {
+        "title": "IMG_5991",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5991.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5990",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5990.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5986",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5986.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5838",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5838.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5835",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5835.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5833",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5833.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5831",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5831.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5829",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5829.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5827",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5827.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5824",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5824.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5838",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5838-1787974688847.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5811",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5811.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5808",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5808.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5855",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5855.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5857",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5857.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5848",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5848.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5820",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5820.webp",
+        "width": 1920,
+        "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/jkt48-klia/indah1.webp"
   },
   {
     "slug": "jkt48-don-bon-day1",
@@ -3170,35 +3782,17 @@ export const events: Event[] = [
     ]
   },
   {
-    "slug": "jkt48-don-bon-day2",
-    "title": "JKT48 Don Bon Day 2",
-    "group": "JKT48",
+    "slug": "Quadlips-don-bon-day2",
+    "title": "Quadlips Don Odoru Day 2",
+    "group": "Quadlips",
     "tateText": "第十巻 · 縁",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
     "gear": "Canon EOS R5",
-    "subtitle": "Day two — Fiony in the last light of the session.",
-    "description": "Second day of the Don Bon series. Fiony carried the afternoon session with her usual energy. Two frames from the final hour when the light through the venue windows mixed with the overheads.",
+    "subtitle": "Day two — Quadlips in the last light of the session.",
+    "description": "Second day of the Don Bon series. Quadlips carried the afternoon session with her usual energy. Two frames from the final hour when the light through the venue windows mixed with the overheads.",
     "featured": true,
     "photos": [
-      {
-        "title": "Fiony",
-        "story": "Window light mixed with fluorescent. She didn't notice the difference but the camera did.",
-        "src": "/gallery/jkt48-don-bon-day2/fiony.webp",
-        "lens": "RF 85mm f/1.2L",
-        "aperture": "f/1.2",
-        "shutter": "1/400",
-        "iso": 1000
-      },
-      {
-        "title": "Fiony II",
-        "story": "Last fan of the day. She gave the same energy as the first.",
-        "src": "/gallery/jkt48-don-bon-day2/fiony2.webp",
-        "lens": "RF 85mm f/1.2L",
-        "aperture": "f/1.4",
-        "shutter": "1/320",
-        "iso": 1200
-      },
       {
         "title": "Mashiro (1)",
         "story": "",
@@ -3982,7 +4576,7 @@ export const events: Event[] = [
         "height": 1280
       }
     ],
-    "cover": "/gallery/jkt48-don-bon-day2/IMG_6808.webp"
+    "cover": "/gallery/jkt48-don-bon-day2/IMG_6829.webp"
   },
   {
     "slug": "jkt48-stage-day1",
