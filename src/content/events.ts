@@ -3683,7 +3683,8 @@ export const events: Event[] = [
         "width": 1920,
         "height": 1280
       }
-    ]
+    ],
+    "cover": "/gallery/jkt48-klia/indah1.webp"
   },
   {
     "slug": "jkt48-don-bon-day1",
