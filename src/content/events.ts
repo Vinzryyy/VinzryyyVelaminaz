@@ -3139,7 +3139,8 @@ export const events: Event[] = [
         "shutter": "1/400",
         "iso": 5000
       }
-    ]
+    ],
+    "cover": "/gallery/klp48-performance-day2/khalies.webp"
   },
   {
     "slug": "klp48-kkv",
