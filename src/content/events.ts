@@ -2911,7 +2911,7 @@ export const events: Event[] = [
     "photos": [
       {
         "title": "Devi",
-        "story": "Acoustic encore. One spot, one voice, the whole atrium holding its breath.",
+        "story": "Under the hot stage lights, Devi's smile flickers like a neon sign, catching a breath between choreography and the roar of the crowd.",
         "src": "/gallery/klp48-performance-day2/Devi.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -2920,12 +2920,224 @@ export const events: Event[] = [
       },
       {
         "title": "Khalies",
-        "story": "Khalies closed the night. The last note hung in the atrium for a full second.",
+        "story": "Khalies turns mid-song, sweat tracing her temple, eyes locking onto a single fan in the dark — a private moment inside the noise.",
         "src": "/gallery/klp48-performance-day2/khalies.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
         "iso": 3200
+      },
+      {
+        "title": "KLP48 Performance Day 2 (3)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5768.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48 Performance Day 2 (4)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5767.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48 Performance Day 2 (5)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5783.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (6)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5779.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 2500
+      },
+      {
+        "title": "KLP48 Performance Day 2 (7)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5777.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 3200
+      },
+      {
+        "title": "KLP48 Performance Day 2 (8)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5774.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (9)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5773.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (10)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5772.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (11)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5771.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (12)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5770.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (13)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5768-1787995959197.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 10000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (14)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5767-1787995959442.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 10000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (15)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5766.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (16)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5765.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (17)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5764.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (18)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5763.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (19)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5762.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (20)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5761.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 2500
+      },
+      {
+        "title": "KLP48 Performance Day 2 (21)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5760.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (22)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5759.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 5000
       }
     ]
   },
