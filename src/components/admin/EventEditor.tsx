@@ -4,7 +4,7 @@ import { formatSize } from "@/lib/imageUtils";
 import type { Event, Photo } from "@/lib/types";
 import { deepClone, useDrop } from "@/components/admin/adminHelpers";
 import { LayoutPreview } from "@/components/admin/LayoutPreview";
-import { generateDescription, generateTateText, generateSEO, slugify, translateContent, getProvider, type TranslationLang } from "@/lib/aiGenerate";
+import { generateDescription, generateTateText, generateSEO, slugify, translateContent, rewriteTone, adjustLength, getProvider, type TranslationLang, type WritingTone, type LengthMode } from "@/lib/aiGenerate";
 
 /* ── Event Editor ────────────────────────────────────────────────── */
 
@@ -123,6 +123,18 @@ export function EventEditor({
     subtitle: form.subtitle,
     description: form.description,
     lang,
+  }), (r) => { set("subtitle", r.subtitle); set("description", r.description); });
+
+  const handleRewriteTone = (tone: WritingTone) => runAI(`tone-${tone}`, () => rewriteTone({
+    subtitle: form.subtitle,
+    description: form.description,
+    tone,
+  }), (r) => { set("subtitle", r.subtitle); set("description", r.description); });
+
+  const handleAdjustLength = (mode: LengthMode) => runAI(`length-${mode}`, () => adjustLength({
+    subtitle: form.subtitle,
+    description: form.description,
+    mode,
   }), (r) => { set("subtitle", r.subtitle); set("description", r.description); });
 
   const coverSrc = form.cover ?? event.photos[0]?.src;
@@ -314,6 +326,39 @@ export function EventEditor({
                 <span className="font-mono text-[10px] text-crimson">{aiError}</span>
               )}
             </div>
+
+            {/* Tone & Length controls */}
+            {(form.subtitle || form.description) && (
+              <div className="flex flex-wrap items-center gap-2 rounded-lg border border-hairline bg-card/30 p-3">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-muted/60">Tone</span>
+                {(["formal", "casual", "poetic"] as const).map((tone) => (
+                  <button
+                    key={tone}
+                    onClick={() => handleRewriteTone(tone)}
+                    disabled={!!aiLoading}
+                    className="rounded border border-violet-400/30 bg-violet-400/10 px-2.5 py-1.5 font-mono text-[10px] capitalize text-violet-400 transition-colors hover:bg-violet-400/20 disabled:opacity-50"
+                  >
+                    {aiLoading === `tone-${tone}` ? "..." : tone}
+                  </button>
+                ))}
+                <div className="h-4 w-px bg-hairline" />
+                <span className="font-mono text-[9px] uppercase tracking-widest text-muted/60">Length</span>
+                <button
+                  onClick={() => handleAdjustLength("shorten")}
+                  disabled={!!aiLoading}
+                  className="rounded border border-orange-400/30 bg-orange-400/10 px-2.5 py-1.5 font-mono text-[10px] text-orange-400 transition-colors hover:bg-orange-400/20 disabled:opacity-50"
+                >
+                  {aiLoading === "length-shorten" ? "..." : "Shorter"}
+                </button>
+                <button
+                  onClick={() => handleAdjustLength("expand")}
+                  disabled={!!aiLoading}
+                  className="rounded border border-orange-400/30 bg-orange-400/10 px-2.5 py-1.5 font-mono text-[10px] text-orange-400 transition-colors hover:bg-orange-400/20 disabled:opacity-50"
+                >
+                  {aiLoading === "length-expand" ? "..." : "Longer"}
+                </button>
+              </div>
+            )}
 
             {/* SEO fields */}
             <div className="rounded-lg border border-sky-400/20 bg-sky-400/5 p-4 space-y-3">

@@ -281,6 +281,68 @@ Reply ONLY with valid JSON, no markdown:
   return parseJSON<TranslationResult>(raw);
 }
 
+/* ── Rewrite Tone ─────────────────────────────────────────────── */
+
+export type WritingTone = "formal" | "casual" | "poetic";
+
+const TONE_INSTRUCTIONS: Record<WritingTone, string> = {
+  formal: "Rewrite in a formal, professional tone — clean, authoritative, and polished. Suitable for a press release or portfolio presentation.",
+  casual: "Rewrite in a casual, conversational tone — relaxed, friendly, and approachable. Like talking to a friend about the shoot.",
+  poetic: "Rewrite in a cinematic, poetic tone — evocative, atmospheric, and lyrical. Like a photographer's journal entry at 2am.",
+};
+
+export async function rewriteTone(ctx: {
+  subtitle: string;
+  description: string;
+  tone: WritingTone;
+}): Promise<{ subtitle: string; description: string }> {
+  const prompt = `${TONE_INSTRUCTIONS[ctx.tone]}
+
+Keep the same meaning and facts. Do not add new information. Match the original length roughly.
+
+Subtitle:
+${ctx.subtitle}
+
+Description:
+${ctx.description}
+
+Reply ONLY with valid JSON, no markdown:
+{"subtitle": "...", "description": "..."}`;
+
+  const raw = await callAI(prompt, 0.6);
+  return parseJSON<{ subtitle: string; description: string }>(raw);
+}
+
+/* ── Shorten / Expand ─────────────────────────────────────────── */
+
+export type LengthMode = "shorten" | "expand";
+
+export async function adjustLength(ctx: {
+  subtitle: string;
+  description: string;
+  mode: LengthMode;
+}): Promise<{ subtitle: string; description: string }> {
+  const instruction = ctx.mode === "shorten"
+    ? "Make the text significantly shorter and more concise. Cut filler, merge sentences, keep only the essential meaning. Aim for roughly half the original word count."
+    : "Expand the text with more vivid detail, atmosphere, and sensory language. Add context about the moment, the energy, or the setting. Roughly double the word count without adding fabricated facts.";
+
+  const prompt = `${instruction}
+
+Keep the same tone and style. Do not change the core meaning.
+
+Subtitle (${ctx.mode}):
+${ctx.subtitle}
+
+Description (${ctx.mode}):
+${ctx.description}
+
+Reply ONLY with valid JSON, no markdown:
+{"subtitle": "...", "description": "..."}`;
+
+  const raw = await callAI(prompt, 0.6);
+  return parseJSON<{ subtitle: string; description: string }>(raw);
+}
+
 /* ── Vision: Auto-tag photos ──────────────────────────────────── */
 
 export interface PhotoTag {
