@@ -4,17 +4,19 @@ import { formatSize } from "@/lib/imageUtils";
 import type { Event, Photo } from "@/lib/types";
 import { deepClone, useDrop } from "@/components/admin/adminHelpers";
 import { LayoutPreview } from "@/components/admin/LayoutPreview";
-import { generateDescription, getProvider } from "@/lib/aiGenerate";
+import { generateDescription, generateTateText, generateSEO, getProvider } from "@/lib/aiGenerate";
 
 /* ── Event Editor ────────────────────────────────────────────────── */
 
 export function EventEditor({
   event,
+  eventIndex = 0,
   onChange,
   onPhotosChange,
   onAutoPublish,
 }: {
   event: Event;
+  eventIndex?: number;
   onChange: (patch: Partial<Event>) => void;
   onPhotosChange: (photos: Photo[]) => void;
   onAutoPublish?: () => void;
@@ -39,7 +41,7 @@ export function EventEditor({
       onChange(rest);
     }, 500);
     return () => clearTimeout(saveTimer.current);
-  }, [form.title, form.slug, form.group, form.date, form.location, form.gear, form.tateText, form.cover, form.subtitle, form.description, form.featured, onChange]);
+  }, [form.title, form.slug, form.group, form.date, form.location, form.gear, form.tateText, form.cover, form.subtitle, form.description, form.featured, form.seoTitle, form.seoDescription, onChange]);
 
   const save = () => {
     clearTimeout(saveTimer.current);
@@ -69,32 +71,48 @@ export function EventEditor({
     </label>
   );
 
-  // AI description generation
-  const [aiLoading, setAiLoading] = useState(false);
+  // AI generation
+  const [aiLoading, setAiLoading] = useState<string | null>(null); // tracks which action is loading
   const [aiError, setAiError] = useState<string | null>(null);
 
-  const handleGenerate = async () => {
-    setAiLoading(true);
+  const eventCtx = {
+    title: form.title,
+    group: form.group || "",
+    date: form.date || "",
+    location: form.location || "",
+    gear: form.gear || "",
+    photoCount: event.photos.length,
+  };
+
+  const runAI = async <T,>(label: string, fn: () => Promise<T>, apply: (r: T) => void) => {
+    setAiLoading(label);
     setAiError(null);
     try {
-      const result = await generateDescription({
-        title: form.title,
-        group: form.group || "",
-        date: form.date || "",
-        location: form.location || "",
-        gear: form.gear || "",
-        photoCount: event.photos.length,
-        existingSubtitle: form.subtitle || undefined,
-        existingDescription: form.description || undefined,
-      });
-      set("subtitle", result.subtitle);
-      set("description", result.description);
+      apply(await fn());
     } catch (err) {
       setAiError(err instanceof Error ? err.message : "Generation failed");
     } finally {
-      setAiLoading(false);
+      setAiLoading(null);
     }
   };
+
+  const handleGenerateDesc = () => runAI("description", () => generateDescription({
+    ...eventCtx,
+    existingSubtitle: form.subtitle || undefined,
+    existingDescription: form.description || undefined,
+  }), (r) => { set("subtitle", r.subtitle); set("description", r.description); });
+
+  const handleGenerateTate = () => runAI("tate", () => generateTateText({
+    ...eventCtx,
+    eventIndex,
+    existingTateText: form.tateText || undefined,
+  }), (r) => set("tateText", r));
+
+  const handleGenerateSEO = () => runAI("seo", () => generateSEO({
+    ...eventCtx,
+    subtitle: form.subtitle || undefined,
+    description: form.description || undefined,
+  }), (r) => { set("seoTitle", r.seoTitle); set("seoDescription", r.seoDescription); });
 
   const coverSrc = form.cover ?? event.photos[0]?.src;
 
@@ -226,25 +244,46 @@ export function EventEditor({
               {field("Location", "location", { half: true })}
               {field("Gear", "gear", { half: true })}
             </div>
-            <div className="flex gap-4">
-              {field("Tate Text", "tateText", { half: true })}
+            <div className="flex gap-4 items-end">
+              <div className="flex-1">{field("Tate Text", "tateText")}</div>
+              <button
+                onClick={handleGenerateTate}
+                disabled={!!aiLoading}
+                className="mb-0.5 shrink-0 rounded border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 font-mono text-[9px] text-emerald-400 transition-colors hover:bg-emerald-400/20 disabled:opacity-50"
+              >
+                {aiLoading === "tate" ? "..." : "AI"}
+              </button>
               {field("Cover URL", "cover", { half: true })}
             </div>
             {field("Subtitle", "subtitle")}
             {field("Description", "description", { textarea: true })}
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2">
               <button
-                onClick={handleGenerate}
-                disabled={aiLoading}
+                onClick={handleGenerateDesc}
+                disabled={!!aiLoading}
                 className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-emerald-400 transition-colors hover:bg-emerald-400/20 disabled:opacity-50"
               >
-                {aiLoading ? "Generating..." : `Generate with AI (${getProvider()})`}
+                {aiLoading === "description" ? "Generating..." : "AI Subtitle + Description"}
               </button>
+              <button
+                onClick={handleGenerateSEO}
+                disabled={!!aiLoading}
+                className="rounded-lg border border-sky-400/30 bg-sky-400/10 px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-sky-400 transition-colors hover:bg-sky-400/20 disabled:opacity-50"
+              >
+                {aiLoading === "seo" ? "Generating..." : "AI SEO Meta"}
+              </button>
+              <span className="font-mono text-[9px] text-faint">via {getProvider()}</span>
               {aiError && (
                 <span className="font-mono text-[10px] text-crimson">{aiError}</span>
               )}
-              <span className="font-mono text-[9px] text-faint">Writes subtitle & description</span>
+            </div>
+
+            {/* SEO fields */}
+            <div className="rounded-lg border border-sky-400/20 bg-sky-400/5 p-4 space-y-3">
+              <p className="font-mono text-[9px] uppercase tracking-widest text-sky-400/60">SEO Overrides <span className="normal-case tracking-normal text-faint">(optional — falls back to title & subtitle)</span></p>
+              {field("SEO Title", "seoTitle")}
+              {field("SEO Description", "seoDescription")}
             </div>
 
             <label className="flex items-center gap-3">

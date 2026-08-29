@@ -556,6 +556,7 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
             ) : (
               <EventEditor
                 event={selectedEvent}
+                eventIndex={events.findIndex((e) => e.slug === selectedEvent.slug)}
                 onChange={(patch) => { updateEvent(selectedEvent.slug, patch); notify("Saved"); }}
                 onPhotosChange={(photos) => { updateEvent(selectedEvent.slug, { photos }); notify("Photos updated"); }}
                 onAutoPublish={scheduleAutoPublish}

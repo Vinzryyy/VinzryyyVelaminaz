@@ -36,8 +36,8 @@ export default function EventPage() {
   } : undefined).current;
 
   useDocumentHead({
-    title: event ? `${event.title} — VinzryyySaga` : "Not Found — VinzryyySaga",
-    description: event?.subtitle,
+    title: event ? (event.seoTitle || `${event.title} — VinzryyySaga`) : "Not Found — VinzryyySaga",
+    description: event?.seoDescription || event?.subtitle,
     ogImage: event?.cover ?? event?.photos[0]?.src,
     jsonLd,
   });

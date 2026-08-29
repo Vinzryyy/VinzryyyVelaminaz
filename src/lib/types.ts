@@ -32,5 +32,7 @@ export interface Event {
   layout?: EventLayout;              // event page layout style (default: classic)
   groupedInLayout?: boolean;         // also show grouped photos in the main layout grid
   disableGrouping?: boolean;         // ignore all sequences, show everything in layout
+  seoTitle?: string;                 // custom SEO page title (falls back to title)
+  seoDescription?: string;          // custom meta description (falls back to subtitle)
   photos: Photo[];
 }
