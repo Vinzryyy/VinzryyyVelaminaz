@@ -3794,8 +3794,8 @@ export const events: Event[] = [
     "featured": false,
     "photos": [
       {
-        "title": "JKT48 Don Bon Day 2 (1)",
-        "story": "",
+        "title": "First Flash",
+        "story": "The crowd's roar hits before the lights do, and her smile cuts through the haze like a warm blade.",
         "src": "/gallery/jkt48-don-bon-day-2/IMG_7697.webp",
         "width": 1920,
         "height": 1280,
@@ -3805,8 +3805,8 @@ export const events: Event[] = [
         "iso": 16000
       },
       {
-        "title": "JKT48 Don Bon Day 2 (2)",
-        "story": "",
+        "title": "Hands in the Air",
+        "story": "A sea of waving arms stretches to the barrier, each hand reaching for a moment she already owns.",
         "src": "/gallery/jkt48-don-bon-day-2/IMG_7696.webp",
         "width": 1920,
         "height": 1280,
@@ -3816,8 +3816,8 @@ export const events: Event[] = [
         "iso": 16000
       },
       {
-        "title": "JKT48 Don Bon Day 2 (3)",
-        "story": "",
+        "title": "Between Songs",
+        "story": "She catches her breath mid-step, sweat glistening, eyes scanning the dark for a familiar face.",
         "src": "/gallery/jkt48-don-bon-day-2/IMG_7683.webp",
         "width": 1920,
         "height": 1280,
@@ -3827,8 +3827,8 @@ export const events: Event[] = [
         "iso": 10000
       },
       {
-        "title": "JKT48 Don Bon Day 2 (4)",
-        "story": "",
+        "title": "Blue Light Confession",
+        "story": "Under the cold blue wash, her wink lands on a single fan — and the whole row forgets to breathe.",
         "src": "/gallery/jkt48-don-bon-day-2/IMG_7682.webp",
         "width": 1920,
         "height": 1280,
@@ -3838,8 +3838,8 @@ export const events: Event[] = [
         "iso": 12800
       },
       {
-        "title": "JKT48 Don Bon Day 2 (5)",
-        "story": "",
+        "title": "Last Bow",
+        "story": "The final pose lingers a second too long, as if the stage itself doesn't want to let her go.",
         "src": "/gallery/jkt48-don-bon-day-2/IMG_7690.webp",
         "width": 1920,
         "height": 1280,
