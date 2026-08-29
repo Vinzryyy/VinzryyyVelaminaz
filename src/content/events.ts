@@ -3563,6 +3563,125 @@ export const events: Event[] = [
         "aperture": "f/1.4",
         "shutter": "1/250",
         "iso": 2500
+      },
+      {
+        "title": "IMG_5991",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5991.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5990",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5990.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5986",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5986.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5838",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5838.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5835",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5835.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5833",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5833.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5831",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5831.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5829",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5829.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5827",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5827.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5824",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5824.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5838",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5838-1787974688847.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5811",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5811.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5808",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5808.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5855",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5855.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5857",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5857.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5848",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5848.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "IMG_5820",
+        "story": "",
+        "src": "/gallery/jkt48-klia/IMG_5820.webp",
+        "width": 1920,
+        "height": 1280
       }
     ]
   },
