@@ -82,6 +82,91 @@ export function getAnalytics(): AnalyticsSummary {
   return { totalViews, todayViews, topPages, dailyViews };
 }
 
+/* ── Photo view tracking ────────────────────────────────────────── */
+
+const PHOTO_VIEWS_KEY = "vinzryyy-photo-views";
+
+interface PhotoViewEntry {
+  eventSlug: string;
+  photoIndex: number;
+  date: string;
+  count: number;
+}
+
+function loadPhotoViews(): PhotoViewEntry[] {
+  try {
+    const data = localStorage.getItem(PHOTO_VIEWS_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch { return []; }
+}
+
+function savePhotoViews(views: PhotoViewEntry[]) {
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 90);
+  const cutoffStr = cutoff.toISOString().slice(0, 10);
+  const trimmed = views.filter((v) => v.date >= cutoffStr);
+  localStorage.setItem(PHOTO_VIEWS_KEY, JSON.stringify(trimmed));
+}
+
+export function trackPhotoView(eventSlug: string, photoIndex: number) {
+  const views = loadPhotoViews();
+  const d = today();
+  const existing = views.find((v) => v.eventSlug === eventSlug && v.photoIndex === photoIndex && v.date === d);
+  if (existing) {
+    existing.count += 1;
+  } else {
+    views.push({ eventSlug, photoIndex, date: d, count: 1 });
+  }
+  savePhotoViews(views);
+}
+
+/* ── Per-event analytics ────────────────────────────────────────── */
+
+export interface EventViewSummary {
+  slug: string;
+  views: number;
+}
+
+export function getEventViews(): EventViewSummary[] {
+  const views = load();
+  const eventViews = new Map<string, number>();
+
+  for (const v of views) {
+    // Match paths like /events/slug-name
+    const match = v.path.match(/^\/events\/(.+)$/);
+    if (match) {
+      const slug = match[1];
+      eventViews.set(slug, (eventViews.get(slug) ?? 0) + v.count);
+    }
+  }
+
+  return [...eventViews.entries()]
+    .map(([slug, views]) => ({ slug, views }))
+    .sort((a, b) => b.views - a.views);
+}
+
+/* ── Photo heatmap ──────────────────────────────────────────────── */
+
+export interface PhotoHeatmapEntry {
+  photoIndex: number;
+  views: number;
+}
+
+export function getPhotoHeatmap(eventSlug: string): PhotoHeatmapEntry[] {
+  const views = loadPhotoViews();
+  const byPhoto = new Map<number, number>();
+
+  for (const v of views) {
+    if (v.eventSlug === eventSlug) {
+      byPhoto.set(v.photoIndex, (byPhoto.get(v.photoIndex) ?? 0) + v.count);
+    }
+  }
+
+  return [...byPhoto.entries()]
+    .map(([photoIndex, views]) => ({ photoIndex, views }))
+    .sort((a, b) => b.views - a.views);
+}
+
 /* ── Web Vitals (Core Web Vitals via PerformanceObserver) ──────── */
 
 const VITALS_KEY = "vinzryyy-vitals";

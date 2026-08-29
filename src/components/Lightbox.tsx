@@ -4,6 +4,7 @@ import type { Photo, Event } from "@/lib/types";
 import { toKanji } from "@/lib/data";
 import { KatanaDivider } from "./KatanaDivider";
 import { useZoomPan, MIN_ZOOM, MAX_ZOOM } from "@/lib/useZoomPan";
+import { trackPhotoView } from "@/lib/analytics";
 
 /**
  * Fullscreen photo viewer with info panel, EXIF data, filmstrip,
@@ -33,6 +34,11 @@ export function Lightbox({
 
   const photo = photos[idx];
   const hasSrc = !!photo.src;
+
+  // Track photo views
+  useEffect(() => {
+    trackPhotoView(event.slug, idx);
+  }, [event.slug, idx]);
 
   const { zoom, offset, dragging, imgRef, isZoomed, didDrag, zoomTo, toggleZoom, reset, handlers } =
     useZoomPan(idx);

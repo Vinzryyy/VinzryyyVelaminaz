@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getAllEvents } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
-import { getAnalytics } from "@/lib/analytics";
+import { getAnalytics, getEventViews, getPhotoHeatmap } from "@/lib/analytics";
 import type { Event } from "@/lib/types";
 
 import {
@@ -389,6 +389,9 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
   }, [events]);
 
   const analytics = useMemo(() => getAnalytics(), [tab]); // refresh when switching to dashboard
+  const eventViews = useMemo(() => getEventViews(), [tab]);
+  const [heatmapSlug, setHeatmapSlug] = useState<string | null>(null);
+  const photoHeatmap = useMemo(() => heatmapSlug ? getPhotoHeatmap(heatmapSlug) : [], [heatmapSlug, tab]);
 
   /* ── Render ────────────────────────────────────────────────────── */
 
@@ -566,6 +569,88 @@ function AdminPanel({ onLogout }: { onLogout: () => void }) {
                 ))}
               </div>
             </div>
+
+            {/* Per-event view counts */}
+            <div>
+              <h3 className="mb-3 font-display text-lg font-bold text-ink">Event Views</h3>
+              {eventViews.length === 0 ? (
+                <p className="font-mono text-xs text-muted">No event page views yet</p>
+              ) : (
+                <div className="space-y-1.5">
+                  {eventViews.slice(0, 15).map((ev) => {
+                    const event = events.find((e) => e.slug === ev.slug);
+                    const maxViews = eventViews[0]?.views || 1;
+                    return (
+                      <div
+                        key={ev.slug}
+                        className="group flex cursor-pointer items-center gap-3 rounded-lg bg-card/50 px-3 py-2 transition-colors hover:bg-card"
+                        onClick={() => setHeatmapSlug(heatmapSlug === ev.slug ? null : ev.slug)}
+                      >
+                        <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-hairline">
+                          <div
+                            className="h-full rounded-full bg-crimson/60 transition-all"
+                            style={{ width: `${(ev.views / maxViews) * 100}%` }}
+                          />
+                        </div>
+                        <span className="min-w-0 shrink-0 truncate font-mono text-xs text-ink/70" style={{ maxWidth: "200px" }}>
+                          {event?.title || ev.slug}
+                        </span>
+                        <span className="font-mono text-xs font-semibold text-crimson">{ev.views}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Photo heatmap */}
+            {heatmapSlug && (
+              <div className="rounded-lg border border-violet-400/20 bg-violet-400/5 p-5">
+                <div className="mb-3 flex items-center justify-between">
+                  <h3 className="font-display text-lg font-bold text-ink">
+                    Photo Heatmap: {events.find((e) => e.slug === heatmapSlug)?.title || heatmapSlug}
+                  </h3>
+                  <button onClick={() => setHeatmapSlug(null)} className="font-mono text-[10px] text-muted hover:text-crimson">Close</button>
+                </div>
+                {photoHeatmap.length === 0 ? (
+                  <p className="font-mono text-xs text-muted">No photo views tracked yet for this event</p>
+                ) : (() => {
+                  const heatmapEvent = events.find((e) => e.slug === heatmapSlug);
+                  const maxPhotoViews = photoHeatmap[0]?.views || 1;
+                  return (
+                    <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                      {(heatmapEvent?.photos || []).map((photo, i) => {
+                        const entry = photoHeatmap.find((h) => h.photoIndex === i);
+                        const views = entry?.views || 0;
+                        const heat = maxPhotoViews > 0 ? views / maxPhotoViews : 0;
+                        return (
+                          <div key={i} className="relative overflow-hidden rounded-lg border border-hairline">
+                            {photo.src ? (
+                              <img src={photo.src} alt="" className="aspect-[3/2] w-full object-cover" />
+                            ) : (
+                              <div className="flex aspect-[3/2] w-full items-center justify-center bg-faint/20 font-mono text-xs text-muted">--</div>
+                            )}
+                            {/* Heat overlay */}
+                            <div
+                              className="pointer-events-none absolute inset-0 transition-opacity"
+                              style={{
+                                background: `rgba(239, 68, 68, ${heat * 0.4})`,
+                              }}
+                            />
+                            <div className="absolute bottom-0 inset-x-0 flex items-center justify-between bg-gradient-to-t from-black/70 to-transparent px-2 py-1.5">
+                              <span className="truncate font-mono text-[9px] text-white/70">{photo.title || `#${i + 1}`}</span>
+                              <span className={`font-mono text-[10px] font-bold ${views > 0 ? "text-white" : "text-white/30"}`}>
+                                {views}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
 
             <div>
               <h3 className="mb-3 font-display text-lg font-bold text-ink">Recent Events</h3>
