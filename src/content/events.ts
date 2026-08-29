@@ -3782,35 +3782,17 @@ export const events: Event[] = [
     ]
   },
   {
-    "slug": "jkt48-don-bon-day2",
-    "title": "JKT48 Don Bon Day 2",
-    "group": "JKT48",
+    "slug": "Quadlips-don-bon-day2",
+    "title": "Quadlips Don Odoru Day 2",
+    "group": "Quadlips",
     "tateText": "第十巻 · 縁",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
     "gear": "Canon EOS R5",
-    "subtitle": "Day two — Fiony in the last light of the session.",
-    "description": "Second day of the Don Bon series. Fiony carried the afternoon session with her usual energy. Two frames from the final hour when the light through the venue windows mixed with the overheads.",
+    "subtitle": "Day two — Quadlips in the last light of the session.",
+    "description": "Second day of the Don Bon series. Quadlips carried the afternoon session with her usual energy. Two frames from the final hour when the light through the venue windows mixed with the overheads.",
     "featured": true,
     "photos": [
-      {
-        "title": "Fiony",
-        "story": "Window light mixed with fluorescent. She didn't notice the difference but the camera did.",
-        "src": "/gallery/jkt48-don-bon-day2/fiony.webp",
-        "lens": "RF 85mm f/1.2L",
-        "aperture": "f/1.2",
-        "shutter": "1/400",
-        "iso": 1000
-      },
-      {
-        "title": "Fiony II",
-        "story": "Last fan of the day. She gave the same energy as the first.",
-        "src": "/gallery/jkt48-don-bon-day2/fiony2.webp",
-        "lens": "RF 85mm f/1.2L",
-        "aperture": "f/1.4",
-        "shutter": "1/320",
-        "iso": 1200
-      },
       {
         "title": "Mashiro (1)",
         "story": "",
@@ -4594,7 +4576,7 @@ export const events: Event[] = [
         "height": 1280
       }
     ],
-    "cover": "/gallery/jkt48-don-bon-day2/IMG_6808.webp"
+    "cover": "/gallery/jkt48-don-bon-day2/IMG_6829.webp"
   },
   {
     "slug": "jkt48-stage-day1",
