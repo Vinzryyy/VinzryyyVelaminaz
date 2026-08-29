@@ -3782,6 +3782,75 @@ export const events: Event[] = [
     ]
   },
   {
+    "slug": "jkt48-don-bon-day-2",
+    "title": "JKT48 Don Bon Day 2",
+    "group": "JKT48",
+    "tateText": "第九巻 · 縁",
+    "location": "LaLaport BBCC, Kuala Lumpur",
+    "date": "August 2026",
+    "gear": "Canon EOS R8",
+    "subtitle": "Three Jakarta stars, one KL night — dusk to dark.",
+    "description": "The second day unfolds as evening bleeds into night, JKT48 trading pop for the precision of traditional Japanese dance. Under LaLaport's glow, three silhouettes move through ritual and rhythm. The Canon R8 catches every pause, every breath — a quiet archive of motion.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "JKT48 Don Bon Day 2 (1)",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7697.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 16000
+      },
+      {
+        "title": "JKT48 Don Bon Day 2 (2)",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7696.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 16000
+      },
+      {
+        "title": "JKT48 Don Bon Day 2 (3)",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7683.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 10000
+      },
+      {
+        "title": "JKT48 Don Bon Day 2 (4)",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7682.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 12800
+      },
+      {
+        "title": "JKT48 Don Bon Day 2 (5)",
+        "story": "",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7690.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 16000
+      }
+    ]
+  },
+  {
     "slug": "Quadlips-don-bon-day2",
     "title": "Quadlips Don Odoru Day 2",
     "group": "Quadlips",
