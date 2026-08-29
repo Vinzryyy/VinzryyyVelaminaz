@@ -106,6 +106,11 @@ interface EventContext {
   location: string;
   gear: string;
   photoCount: number;
+  userContext?: string;  // free-form notes from the user to guide AI
+}
+
+function userContextBlock(ctx: { userContext?: string }): string {
+  return ctx.userContext ? `\nAdditional context from the photographer (use this to inform your writing):\n${ctx.userContext}\n` : "";
 }
 
 /* ── Generate Description ─────────────────────────────────────── */
@@ -126,7 +131,7 @@ Generate a subtitle (one sentence, under 80 chars) and a description (2-3 senten
 ${eventContext(ctx)}
 ${ctx.existingSubtitle ? `- Current subtitle (improve or rewrite): ${ctx.existingSubtitle}` : ""}
 ${ctx.existingDescription ? `- Current description (improve or rewrite): ${ctx.existingDescription}` : ""}
-
+${userContextBlock(ctx)}
 Reply ONLY with valid JSON, no markdown:
 {"subtitle": "...", "description": "..."}`;
 
@@ -157,7 +162,7 @@ ${eventContext(ctx)}
 ${ctx.existingTateText ? `- Current tateText (improve or rewrite): ${ctx.existingTateText}` : ""}
 
 Pick a theme kanji that fits the event. Use 舞台 for stage/concerts, 縁 for fan events/meetings, 街 for outdoor/street, or create a new fitting theme if none match.
-
+${userContextBlock(ctx)}
 Reply ONLY with valid JSON, no markdown:
 {"tateText": "第X巻 · ..."}`;
 
@@ -187,7 +192,7 @@ Event details:
 ${eventContext(ctx)}
 ${ctx.subtitle ? `- Subtitle: ${ctx.subtitle}` : ""}
 ${ctx.description ? `- Description: ${ctx.description}` : ""}
-
+${userContextBlock(ctx)}
 Reply ONLY with valid JSON, no markdown:
 {"seoTitle": "...", "seoDescription": "..."}`;
 
@@ -295,6 +300,7 @@ export async function rewriteTone(ctx: {
   subtitle: string;
   description: string;
   tone: WritingTone;
+  userContext?: string;
 }): Promise<{ subtitle: string; description: string }> {
   const prompt = `${TONE_INSTRUCTIONS[ctx.tone]}
 
@@ -305,7 +311,7 @@ ${ctx.subtitle}
 
 Description:
 ${ctx.description}
-
+${userContextBlock(ctx)}
 Reply ONLY with valid JSON, no markdown:
 {"subtitle": "...", "description": "..."}`;
 
@@ -321,6 +327,7 @@ export async function adjustLength(ctx: {
   subtitle: string;
   description: string;
   mode: LengthMode;
+  userContext?: string;
 }): Promise<{ subtitle: string; description: string }> {
   const instruction = ctx.mode === "shorten"
     ? "Make the text significantly shorter and more concise. Cut filler, merge sentences, keep only the essential meaning. Aim for roughly half the original word count."
@@ -335,7 +342,7 @@ ${ctx.subtitle}
 
 Description (${ctx.mode}):
 ${ctx.description}
-
+${userContextBlock(ctx)}
 Reply ONLY with valid JSON, no markdown:
 {"subtitle": "...", "description": "..."}`;
 

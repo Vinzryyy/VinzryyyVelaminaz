@@ -76,6 +76,7 @@ export function EventEditor({
   // AI generation
   const [aiLoading, setAiLoading] = useState<string | null>(null); // tracks which action is loading
   const [aiError, setAiError] = useState<string | null>(null);
+  const [aiContext, setAiContext] = useState("");
 
   const eventCtx = {
     title: form.title,
@@ -84,6 +85,7 @@ export function EventEditor({
     location: form.location || "",
     gear: form.gear || "",
     photoCount: event.photos.length,
+    userContext: aiContext || undefined,
   };
 
   const runAI = async <T,>(label: string, fn: () => Promise<T>, apply: (r: T) => void) => {
@@ -132,12 +134,14 @@ export function EventEditor({
     subtitle: form.subtitle,
     description: form.description,
     tone,
+    userContext: aiContext || undefined,
   }), (r) => { set("subtitle", r.subtitle); set("description", r.description); });
 
   const handleAdjustLength = (mode: LengthMode) => runAI(`length-${mode}`, () => adjustLength({
     subtitle: form.subtitle,
     description: form.description,
     mode,
+    userContext: aiContext || undefined,
   }), (r) => { set("subtitle", r.subtitle); set("description", r.description); });
 
   const coverSrc = form.cover ?? event.photos[0]?.src;
@@ -293,6 +297,31 @@ export function EventEditor({
             </div>
             {field("Subtitle", "subtitle")}
             {field("Description", "description", { textarea: true })}
+
+            {/* AI Context box */}
+            <div className="rounded-lg border border-emerald-400/20 bg-emerald-400/5 p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[9px] uppercase tracking-widest text-emerald-400/60">
+                  AI Context
+                  <span className="normal-case tracking-normal text-faint ml-2">&mdash; tell the AI what happened, it'll use this for all generation</span>
+                </span>
+                {aiContext && (
+                  <button
+                    onClick={() => setAiContext("")}
+                    className="font-mono text-[9px] text-muted hover:text-crimson"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+              <textarea
+                value={aiContext}
+                onChange={(e) => setAiContext(e.target.value)}
+                rows={3}
+                placeholder="e.g. &quot;Cole did a solo during the second song, crowd went wild. Shot mostly from left barrier. Mashiro had a costume change mid-set. Encore was acoustic.&quot;"
+                className="w-full rounded-lg border border-hairline bg-sumi px-3 py-2 font-sans text-sm text-ink outline-none transition-colors placeholder:text-faint/40 focus:border-emerald-400/50"
+              />
+            </div>
 
             <div className="flex flex-wrap items-center gap-2">
               <button
