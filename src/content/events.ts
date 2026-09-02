@@ -3143,6 +3143,19 @@ export const events: Event[] = [
     "cover": "/gallery/klp48-performance-day2/khalies.webp"
   },
   {
+    "slug": "klp48-teater-opening",
+    "title": "KLP48 Teater Opening",
+    "group": "KLP48",
+    "tateText": "第六巻 · 舞台",
+    "location": "LaLaport BBCC, Kuala Lumpur",
+    "date": "Desember 2025",
+    "gear": "Canon EOS R8",
+    "subtitle": "",
+    "description": "Night two closes the weekend with a sharper set and a crowd that learned every word. The encore stripped to acoustic bones, and two voices turned LaLaport's vast space into a quiet room. Light fell like a held breath.",
+    "featured": false,
+    "photos": []
+  },
+  {
     "slug": "klp48-kkv",
     "title": "KLP48 at KKV",
     "group": "KLP48",
