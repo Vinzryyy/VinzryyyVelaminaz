@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import type { Photo, SequenceDisplay } from "@/lib/types";
 import { toKanji } from "@/lib/data";
 import { PhotoFrame } from "./PhotoFrame";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 /* ── Sequence detection ──────────────────────────────────────────
  *
@@ -123,9 +128,9 @@ function GridRows({
         const slice = items.slice(offset, offset + row.count);
         offset += row.count;
         return (
-          <div key={ri} className={`grid gap-1 ${GRID_CLS[row.type]}`}>
+          <div key={ri} className={`grid gap-1 ${GRID_CLS[row.type]} gsap-photo-row`}>
             {slice.map(({ photo, globalIdx }) => (
-              <div key={globalIdx} className="reveal">
+              <div key={globalIdx}>
                 <PhotoFrame
                   photo={photo}
                   index={globalIdx}
@@ -167,7 +172,7 @@ function StackView({
 }) {
   const best = items[0];
   return (
-    <div className="reveal space-y-2 py-3">
+    <div className="gsap-photo-row space-y-2 py-3">
       <SequenceLabel label={label} count={items.length} />
       <div className="grid gap-1 grid-cols-1 sm:grid-cols-3">
         <div className="relative">
@@ -204,7 +209,7 @@ function FilmstripView({
   onOpen: (index: number) => void;
 }) {
   return (
-    <div className="reveal space-y-2 py-3">
+    <div className="gsap-photo-row space-y-2 py-3">
       <SequenceLabel label={label} count={items.length} />
       <div className="filmstrip -mx-4 flex gap-1 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 md:-mx-10 md:px-10">
         {items.map(({ photo, globalIdx }) => (
@@ -248,7 +253,7 @@ function SlideshowView({
   const cur = items[current];
 
   return (
-    <div className="reveal space-y-2 py-3">
+    <div className="gsap-photo-row space-y-2 py-3">
       <SequenceLabel label={label} count={items.length} />
       <div className="grid gap-1 grid-cols-1 sm:grid-cols-3">
         <button
@@ -321,7 +326,7 @@ function CollageView({
   const overflow = items.length > 5 ? items.length - 5 : 0;
 
   return (
-    <div className="reveal space-y-2 py-3">
+    <div className="gsap-photo-row space-y-2 py-3">
       <SequenceLabel label={label} count={items.length} />
       <div className="grid gap-1 grid-cols-2 sm:grid-cols-4 sm:grid-rows-2" style={{ gridAutoRows: "1fr" }}>
         {/* Hero — spans 2 cols and 2 rows */}
@@ -371,21 +376,30 @@ export function PhotoGrid({
 
   const segments = useMemo(() => buildSegments(photos), [photos]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08, rootMargin: "40px" },
-    );
-    ref.current?.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [photos]);
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const rows = gsap.utils.toArray<HTMLElement>(".gsap-photo-row", ref.current!);
+      if (rows.length === 0) return;
+
+      gsap.set(rows, { autoAlpha: 0, y: 30 });
+
+      ScrollTrigger.batch(rows, {
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "back.out(1.4)",
+            stagger: 0.08,
+          });
+        },
+        start: "top 92%",
+      });
+    },
+    { scope: ref, dependencies: [photos] },
+  );
 
   return (
     <div ref={ref} className="space-y-1">

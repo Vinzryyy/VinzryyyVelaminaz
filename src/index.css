@@ -43,17 +43,7 @@
   100% { transform: translateY(105vh) rotate(calc(var(--petal-rot) + 240deg)) translateX(var(--petal-drift)); opacity: 0; }
 }
 
-/* ── Filter re-layout pop ─────────────────────────────────────── */
-
-@keyframes chip-pop {
-  0%   { opacity: 0; transform: translateY(10px) scale(0.97); }
-  100% { opacity: 1; transform: translateY(0)    scale(1);    }
-}
-
-/* Event cards replay this whenever the active group changes */
-.card-pop {
-  animation: chip-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+/* card-pop replaced by GSAP ScrollTrigger.batch in Home.tsx */
 
 /* ── Base ─────────────────────────────────────────────────────── */
 
@@ -141,16 +131,7 @@ html, body, #root {
   100% { opacity: 1; }
 }
 
-/* ── Ken Burns — slow zoom on hero background ─────────────────── */
-
-@keyframes ken-burns {
-  0%   { transform: scale(1);    }
-  100% { transform: scale(1.08); }
-}
-
-.hero-bg {
-  animation: ken-burns 28s ease-in-out forwards;
-}
+/* Ken Burns replaced by GSAP timeline in Home.tsx */
 
 /* ── Hero giant name ──────────────────────────────────────────── */
 
@@ -177,89 +158,11 @@ html, body, #root {
   }
 }
 
-/* ── Scroll indicator bounce ──────────────────────────────────── */
+/* Scroll indicator bounce replaced by GSAP pulse in Home.tsx */
 
-@keyframes scroll-hint {
-  0%, 100% { transform: translateY(0); opacity: 0.6; }
-  50%      { transform: translateY(8px); opacity: 1; }
-}
+/* Marquee replaced by GSAP horizontal loop in Home.tsx */
 
-.scroll-hint {
-  animation: scroll-hint 2s ease-in-out infinite;
-}
-
-/* ── Marquee ──────────────────────────────────────────────────── */
-
-@keyframes marquee-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.marquee-track {
-  animation: marquee-scroll 40s linear infinite;
-  animation-play-state: paused;
-}
-
-@media (hover: hover) {
-  .marquee-track {
-    animation-play-state: running;
-  }
-  .marquee-track:hover {
-    animation-play-state: paused;
-  }
-}
-
-/* ── Scroll reveal ────────────────────────────────────────────── */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Direction variants */
-.reveal.reveal-left {
-  transform: translateX(-32px);
-}
-.reveal.reveal-left.is-visible {
-  transform: translateX(0);
-}
-
-.reveal.reveal-right {
-  transform: translateX(32px);
-}
-.reveal.reveal-right.is-visible {
-  transform: translateX(0);
-}
-
-.reveal.reveal-scale {
-  transform: scale(0.92);
-}
-.reveal.reveal-scale.is-visible {
-  transform: scale(1);
-}
-
-/* ── Staggered children reveal ────────────────────────────────── */
-
-.reveal-stagger > .reveal-child {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.reveal-stagger.is-visible > .reveal-child {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-stagger.is-visible > .reveal-child:nth-child(1)  { transition-delay: 0ms; }
-.reveal-stagger.is-visible > .reveal-child:nth-child(2)  { transition-delay: 70ms; }
-.reveal-stagger.is-visible > .reveal-child:nth-child(3)  { transition-delay: 140ms; }
-.reveal-stagger.is-visible > .reveal-child:nth-child(4)  { transition-delay: 210ms; }
-.reveal-stagger.is-visible > .reveal-child:nth-child(5)  { transition-delay: 280ms; }
-.reveal-stagger.is-visible > .reveal-child:nth-child(6)  { transition-delay: 350ms; }
+/* Scroll reveal classes replaced by GSAP ScrollTrigger in ScrollReveal.tsx */
 
 /* ── Katana blade divider ─────────────────────────────────────── */
 
@@ -303,7 +206,7 @@ html, body, #root {
   contain: layout paint;
 }
 
-.card-pop {
+.gsap-card {
   contain: layout style;
 }
 
@@ -460,39 +363,15 @@ button:active, a:active, [role="button"]:active {
     display: none;
   }
 
-  .reveal,
-  .reveal.reveal-left,
-  .reveal.reveal-right,
-  .reveal.reveal-scale,
-  .reveal-stagger > .reveal-child {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
   .page-enter,
   .page-exit,
   .lightbox-enter {
     animation: none;
   }
 
-  /* Continuous / decorative motion — previously still running */
-  .hero-bg,
-  .scroll-hint,
-  .marquee-track,
+  /* Continuous / decorative motion */
   .skeleton::after {
     animation: none !important;
-  }
-
-  .card-pop {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-
-  /* Marquee still needs to show its text, just parked */
-  .marquee-track {
-    transform: none;
   }
 
   /* Images appear immediately rather than blurring in */
