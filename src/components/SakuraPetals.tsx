@@ -7,13 +7,13 @@
 const PETAL_COUNT_DESKTOP = 20;
 const PETAL_COUNT_MOBILE = 9;
 const PETAL_PATH = "M10 1 C12 5, 18 8, 10 18 C2 8, 8 5, 10 1Z";
-// Lavender night palette — moody purples with soft violet petals
+// Warm amber palette — cinematic copper tones
 const PETAL_COLORS = [
-  "rgba(155,126,212,VAR)",   // bloom lavender
-  "rgba(184,160,232,VAR)",   // soft violet
-  "rgba(200,180,240,VAR)",   // pale lilac
-  "rgba(220,210,245,VAR)",   // near-white petal
-  "rgba(124,92,191,VAR)",    // deep purple
+  "rgba(212,148,90,VAR)",    // amber bloom
+  "rgba(232,196,160,VAR)",   // warm sand
+  "rgba(240,210,180,VAR)",   // pale gold
+  "rgba(245,230,210,VAR)",   // near-white warm
+  "rgba(196,112,58,VAR)",    // deep copper
 ];
 
 // Depth layers: far petals are smaller, blurred, and slower
