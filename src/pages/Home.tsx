@@ -451,7 +451,7 @@ export default function Home() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z" />
                     </svg>
-                    <span className="font-mono text-sm text-ink/70">Kuala Lumpur, Malaysia</span>
+                    <span className="font-mono text-sm text-ink/70">Indonesia</span>
                   </div>
 
                   {/* Focus */}
@@ -459,7 +459,7 @@ export default function Home() {
                     <svg className="h-5 w-5 text-bloom" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
                     </svg>
-                    <span className="font-mono text-sm text-ink/70">Live events &middot; Fan meets &middot; Concerts</span>
+                    <span className="font-mono text-sm text-ink/70">Live events &middot; Fan meets &middot; Idol</span>
                   </div>
                 </div>
               </ScrollReveal>
