@@ -429,41 +429,33 @@ export default function Home() {
               {/* Vertical divider — desktop only */}
               <div className="hidden bg-gradient-to-b from-transparent via-hairline to-transparent md:block" />
 
-              {/* Quote + stats */}
+              {/* Gear + location */}
               <ScrollReveal>
-                <div className="flex flex-col gap-8">
-                  {/* Quote */}
-                  <blockquote className="relative border-l-2 border-bloom/40 py-1 pl-5">
-                    <p className="font-display text-[15px] italic leading-relaxed text-ink/60">
-                      {content.profile.quote}
-                    </p>
-                  </blockquote>
-
-                  {/* Stats row */}
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <p className="font-display text-2xl font-bold text-ink md:text-3xl">{events.length}</p>
-                      <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">Events</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="font-display text-2xl font-bold text-ink md:text-3xl">{totalFrames}</p>
-                      <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">Frames</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="font-display text-2xl font-bold text-bloom md:text-3xl">
-                        {new Set(events.map(e => e.group).filter(Boolean)).size}
-                      </p>
-                      <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">Groups</p>
-                    </div>
-                  </div>
-
-                  {/* Gear tag */}
+                <div className="flex flex-col gap-6">
+                  {/* Gear */}
                   <div className="flex items-center gap-3">
-                    <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <svg className="h-5 w-5 text-bloom" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
                     </svg>
-                    <span className="font-mono text-[12px] text-muted">Canon EOS R8</span>
+                    <span className="font-mono text-sm text-ink/70">Canon EOS R8</span>
+                  </div>
+
+                  {/* Location */}
+                  <div className="flex items-center gap-3">
+                    <svg className="h-5 w-5 text-bloom" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0115 0z" />
+                    </svg>
+                    <span className="font-mono text-sm text-ink/70">Kuala Lumpur, Malaysia</span>
+                  </div>
+
+                  {/* Focus */}
+                  <div className="flex items-center gap-3">
+                    <svg className="h-5 w-5 text-bloom" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                    </svg>
+                    <span className="font-mono text-sm text-ink/70">Live events &middot; Fan meets &middot; Concerts</span>
                   </div>
                 </div>
               </ScrollReveal>
