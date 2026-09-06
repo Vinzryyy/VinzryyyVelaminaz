@@ -50,8 +50,8 @@ export function EventCard({
       )}
 
       {/* Gradient overlays — bottom darkens more on hover */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
 
       {/* Featured badge */}
@@ -82,7 +82,7 @@ export function EventCard({
 
       {/* Bottom text overlay — staggered reveal on hover */}
       <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-2 p-5">
-        <p className="translate-y-2 font-mono text-[9px] uppercase tracking-[0.3em] text-white/50 opacity-70 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        <p className="translate-y-2 font-mono text-[11px] uppercase tracking-[0.3em] text-white/80 opacity-70 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           {event.location} &middot; {event.date}
         </p>
 
@@ -90,14 +90,14 @@ export function EventCard({
           {event.title}
         </h3>
 
-        <p className="translate-y-2 line-clamp-2 text-[13px] leading-relaxed text-white/50 opacity-70 transition-all duration-300 delay-[100ms] group-hover:translate-y-0 group-hover:opacity-100">
+        <p className="translate-y-2 line-clamp-2 text-[13px] leading-relaxed text-white/80 opacity-70 transition-all duration-300 delay-[100ms] group-hover:translate-y-0 group-hover:opacity-100">
           {event.subtitle}
         </p>
 
         {/* Bottom accent line + view prompt — always visible on mobile, hover-reveal on desktop */}
         <div className="mt-1 flex items-center gap-3">
           <div className="h-px flex-1 origin-left bg-gradient-to-r from-crimson/60 to-transparent transition-transform duration-500 delay-[150ms] md:scale-x-75 md:group-hover:scale-x-100" />
-          <span className="font-mono text-[10px] tracking-wider text-white/40 transition-all duration-300 delay-[200ms] md:translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
+          <span className="font-mono text-[11px] tracking-wider text-white/70 transition-all duration-300 delay-[200ms] md:translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
             View &rarr;
           </span>
         </div>
