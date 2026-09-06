@@ -33,12 +33,12 @@ export function GroupFilter({
             aria-pressed={isActive}
             className={`shrink-0 cursor-pointer rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 ${
               isActive
-                ? "border-crimson/50 bg-crimson/10 text-crimson"
-                : "border-hairline text-faint hover:border-crimson/30 hover:text-muted"
+                ? "border-bloom/50 bg-bloom/10 text-bloom"
+                : "border-hairline text-faint hover:border-bloom/30 hover:text-muted"
             }`}
           >
             {g}
-            <span className={`ml-2 ${isActive ? "text-crimson/60" : "text-faint/60"}`}>
+            <span className={`ml-2 ${isActive ? "text-bloom/60" : "text-faint/60"}`}>
               {countForGroup(events, g)}
             </span>
           </button>

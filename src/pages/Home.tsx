@@ -168,9 +168,10 @@ export default function Home() {
           />
         )}
 
-        {/* Layered overlays — vignette + gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.5)_100%)]" />
+        {/* Layered overlays — vignette + gradient with warm sakura tint */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#16131d]/90 via-black/30 to-black/20" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(22,19,29,0.5)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#e8a0b4]/[0.04] via-transparent to-transparent" />
 
         {/* Bio text — top-left, below nav */}
         <div className="relative z-10 mt-20 px-4 sm:mt-28 sm:px-6 md:mt-32 md:px-10">
@@ -215,8 +216,9 @@ export default function Home() {
       <section className="relative overflow-hidden bg-sumi px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-36">
         {/* Subtle noise texture overlay */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
-        {/* Ambient glow */}
-        <div className="pointer-events-none absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-crimson/[0.04] blur-[180px]" />
+        {/* Sakura ambient glows */}
+        <div className="pointer-events-none absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-bloom/[0.06] blur-[180px]" />
+        <div className="pointer-events-none absolute -left-32 bottom-40 h-[20rem] w-[20rem] rounded-full bg-sakura/[0.03] blur-[160px]" />
 
         <div className="mx-auto max-w-[1400px]">
           {/* Section label with decorative line */}
@@ -286,7 +288,9 @@ export default function Home() {
       </section>
 
       {/* ── Events section ────────────────────────────────────── */}
-      <section id="events" className="px-4 pb-16 pt-8 sm:px-6 sm:pb-24 md:px-10">
+      <section id="events" className="relative px-4 pb-16 pt-8 sm:px-6 sm:pb-24 md:px-10">
+        {/* Sakura ambient glow */}
+        <div className="pointer-events-none absolute right-0 top-1/3 h-[25rem] w-[25rem] rounded-full bg-bloom/[0.03] blur-[200px]" />
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="mb-6">
@@ -358,8 +362,8 @@ export default function Home() {
 
       {/* ── Contact section ───────────────────────────────────── */}
       <section id="contact" className="relative border-t border-hairline px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-32">
-        {/* Ambient glow */}
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[20rem] w-[30rem] -translate-x-1/2 rounded-full bg-crimson/[0.03] blur-[160px]" />
+        {/* Sakura ambient glow */}
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[20rem] w-[30rem] -translate-x-1/2 rounded-full bg-bloom/[0.05] blur-[160px]" />
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="mx-auto max-w-xl text-center">

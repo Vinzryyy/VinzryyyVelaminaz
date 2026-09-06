@@ -27,7 +27,7 @@ async function checkAdminPath(path: string): Promise<boolean> {
 function PageLoader() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
+      <div className="h-8 w-8 animate-spin rounded-full border-2 border-bloom/30 border-t-crimson" />
     </div>
   );
 }
@@ -75,7 +75,7 @@ export default function App() {
     <div className="min-h-screen bg-sumi font-sans text-ink antialiased">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-crimson focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-ink"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-bloom focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-ink"
       >
         Skip to content
       </a>

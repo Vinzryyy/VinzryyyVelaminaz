@@ -3,15 +3,16 @@
 /* ── Theme tokens ─────────────────────────────────────────────── */
 
 @theme {
-  --color-sumi:     #14121a;
-  --color-card:     #1e1b28;
-  --color-ink:      #ede9f3;
+  --color-sumi:     #16131d;
+  --color-card:     #1f1b29;
+  --color-ink:      #f0ecf5;
   --color-muted:    #8b8598;
   --color-faint:    #3d3850;
-  --color-crimson:  #c4293b;
+  --color-crimson:  #d4556a;
   --color-sakura:   #f2b8c6;
-  --color-gold:     #c9a45c;
-  --color-hairline: #2a2634;
+  --color-gold:     #c9a868;
+  --color-hairline: #2c2638;
+  --color-bloom:    #e8a0b4;
 
   --font-display: "Fraunces", Georgia, serif;
   --font-sans:    "Space Grotesk", system-ui, sans-serif;
@@ -94,7 +95,7 @@ html, body, #root {
 /* ── Text selection — sakura tint instead of browser blue ─────── */
 
 ::selection {
-  background: rgba(196, 41, 59, 0.35);
+  background: rgba(232, 160, 180, 0.35);
   color: var(--color-ink);
 }
 
@@ -124,7 +125,7 @@ html, body, #root {
 /* ── Keyboard focus — visible everywhere, never on mouse click ── */
 
 :focus-visible {
-  outline: 2px solid var(--color-sakura);
+  outline: 2px solid var(--color-bloom);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -154,9 +155,9 @@ html, body, #root {
 /* ── Hero giant name ──────────────────────────────────────────── */
 
 .hero-name {
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
+  -webkit-text-stroke: 2px rgba(242, 184, 198, 0.7);
   color: transparent;
-  text-shadow: 0 4px 80px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 4px 80px rgba(232, 160, 180, 0.3);
 }
 
 .hero-name-solid {
@@ -264,7 +265,7 @@ html, body, #root {
 
 .katana-line {
   height: 2px;
-  background: linear-gradient(90deg, #c4293b, #c9a45c);
+  background: linear-gradient(90deg, #d4556a, #e8a0b4, #c9a868);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 0.6s ease;
@@ -397,9 +398,9 @@ img {
   background: linear-gradient(
     105deg,
     transparent 30%,
-    rgba(237, 233, 243, 0.06) 42%,
-    rgba(237, 233, 243, 0.09) 50%,
-    rgba(237, 233, 243, 0.06) 58%,
+    rgba(242, 184, 198, 0.05) 42%,
+    rgba(242, 184, 198, 0.08) 50%,
+    rgba(242, 184, 198, 0.05) 58%,
     transparent 70%
   );
   animation: skeleton-sweep 1.6s ease-in-out infinite;

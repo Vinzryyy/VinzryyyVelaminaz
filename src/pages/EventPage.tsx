@@ -178,7 +178,7 @@ export default function EventPage() {
                 to={`/events/${prevEvent.slug}`}
                 className="group flex items-center gap-4 rounded-lg border border-hairline bg-card/40 p-4 transition-all duration-300 hover:border-hairline/80 hover:bg-card/70"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson sm:h-10 sm:w-10">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-bloom group-hover:text-bloom sm:h-10 sm:w-10">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
@@ -216,7 +216,7 @@ export default function EventPage() {
                     {nextEvent.title}
                   </h3>
                 </div>
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-crimson group-hover:text-crimson sm:h-10 sm:w-10">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-hairline text-muted transition-colors duration-200 group-hover:border-bloom group-hover:text-bloom sm:h-10 sm:w-10">
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
@@ -231,7 +231,7 @@ export default function EventPage() {
       {lightboxIdx !== null && (
         <Suspense fallback={
           <div className="fixed inset-0 z-[100] flex items-center justify-center bg-sumi/98">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-bloom/30 border-t-bloom" />
           </div>
         }>
           <Lightbox

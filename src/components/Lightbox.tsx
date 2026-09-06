@@ -202,7 +202,7 @@ export function Lightbox({
       {/* ── Progress bar ───────────────────────────────────────── */}
       <div className="absolute inset-x-0 top-0 z-30 h-0.5 bg-ink/10" aria-hidden="true">
         <div
-          className="h-full bg-gradient-to-r from-crimson to-gold transition-[width] duration-300 ease-out"
+          className="h-full bg-gradient-to-r from-bloom to-gold transition-[width] duration-300 ease-out"
           style={{ width: `${((idx + 1) / photos.length) * 100}%` }}
         />
       </div>
@@ -271,7 +271,7 @@ export function Lightbox({
           {/* Spinner */}
           {hasSrc && !loaded && !error && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="h-8 w-8 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-bloom/30 border-t-bloom" />
             </div>
           )}
 
@@ -279,7 +279,7 @@ export function Lightbox({
           {error && (
             <div className="absolute inset-0 flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
               <div className="text-center">
-                <p className="font-mono text-sm text-crimson">Image failed to load</p>
+                <p className="font-mono text-sm text-bloom">Image failed to load</p>
                 <p className="mt-1 font-mono text-[10px] text-muted break-all px-8">{photo.src}</p>
               </div>
             </div>
@@ -445,7 +445,7 @@ export function Lightbox({
               onClick={() => { setLoaded(false); setIdx(i); }}
               className={`h-11 w-11 shrink-0 overflow-hidden transition-all duration-200 sm:h-14 sm:w-14 ${
                 i === idx
-                  ? "scale-110 opacity-100 ring-2 ring-crimson ring-offset-1 ring-offset-sumi"
+                  ? "scale-110 opacity-100 ring-2 ring-bloom ring-offset-1 ring-offset-sumi"
                   : "opacity-40 hover:opacity-70"
               }`}
               aria-label={`Go to ${p.title}`}

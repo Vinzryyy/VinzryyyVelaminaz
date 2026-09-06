@@ -4,9 +4,17 @@
  * Mounted once in the root layout.
  */
 
-const PETAL_COUNT_DESKTOP = 14;
-const PETAL_COUNT_MOBILE = 6;
+const PETAL_COUNT_DESKTOP = 20;
+const PETAL_COUNT_MOBILE = 9;
 const PETAL_PATH = "M10 1 C12 5, 18 8, 10 18 C2 8, 8 5, 10 1Z";
+// Spring sakura palette — warm pinks with occasional white petals
+const PETAL_COLORS = [
+  "rgba(242,184,198,VAR)",   // classic sakura
+  "rgba(232,160,180,VAR)",   // bloom pink
+  "rgba(248,200,214,VAR)",   // pale blossom
+  "rgba(255,220,230,VAR)",   // near-white petal
+  "rgba(220,140,165,VAR)",   // deeper rose
+];
 
 // Depth layers: far petals are smaller, blurred, and slower
 type Depth = "far" | "mid" | "near";
@@ -21,6 +29,7 @@ function makePetal(i: number) {
   const depth = DEPTHS[i % 3];
   const cfg = DEPTH_CONFIG[depth];
   const t = (i * 0.618) % 1; // golden ratio spread
+  const colorTemplate = PETAL_COLORS[i % PETAL_COLORS.length];
   return {
     id: i,
     left: `${(i * 7.3 + Math.sin(i * 1.7) * 10 + 50) % 100}%`,
@@ -32,6 +41,8 @@ function makePetal(i: number) {
     opacity: cfg.opacityRange[0] + t * (cfg.opacityRange[1] - cfg.opacityRange[0]),
     blur: cfg.blur,
     depth,
+    fillColor: colorTemplate.replace("VAR", String(depth === "far" ? 0.35 : 0.5)),
+    strokeColor: colorTemplate.replace("VAR", "0.25"),
   };
 }
 
@@ -65,11 +76,11 @@ export function SakuraPetals() {
             viewBox="0 0 20 22"
             style={{ transform: `scale(${p.scale})` }}
           >
-            <path d={PETAL_PATH} fill={`rgba(242,184,198,${p.depth === "far" ? 0.35 : 0.5})`} />
+            <path d={PETAL_PATH} fill={p.fillColor} />
             <path
               d={PETAL_PATH}
               fill="none"
-              stroke="rgba(242,184,198,0.25)"
+              stroke={p.strokeColor}
               strokeWidth="0.4"
             />
           </svg>

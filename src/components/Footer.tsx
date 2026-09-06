@@ -9,14 +9,14 @@ export function Footer() {
         {/* Top row: brand + back to top */}
         <div className="mb-8 flex items-center justify-between">
           <Link to="/" className="font-display text-lg font-bold text-ink/60 transition-colors duration-200 hover:text-ink/80">
-            Vinzryyy<span className="text-crimson/60">Saga</span>
+            Vinzryyy<span className="text-bloom/60">Saga</span>
           </Link>
           <button
             onClick={scrollToTop}
             className="group flex cursor-pointer items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-faint transition-colors duration-200 hover:text-muted"
           >
             Back to top
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-hairline transition-all duration-200 group-hover:border-crimson/40 group-hover:-translate-y-0.5">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-hairline transition-all duration-200 group-hover:border-bloom/40 group-hover:-translate-y-0.5">
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
               </svg>

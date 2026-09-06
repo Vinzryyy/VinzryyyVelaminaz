@@ -80,7 +80,7 @@ export function Nav() {
               scrolled ? "text-base" : "text-lg"
             }`}
           >
-            Vinzryyy<span className="text-crimson">Saga</span>
+            Vinzryyy<span className="text-bloom">Saga</span>
           </span>
         </Link>
 
@@ -90,7 +90,7 @@ export function Nav() {
           className="absolute left-1/2 -translate-x-1/2 md:hidden"
           onClick={() => setMenuOpen(false)}
         >
-          <span className="font-display text-xl font-bold tracking-wide text-crimson">
+          <span className="font-display text-xl font-bold tracking-wide text-bloom">
             標識
           </span>
         </Link>

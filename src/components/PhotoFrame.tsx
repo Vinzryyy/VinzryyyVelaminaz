@@ -68,7 +68,7 @@ export function PhotoFrame({
               </svg>
               <button
                 onClick={(e) => { e.stopPropagation(); setErrored(false); setLoaded(false); }}
-                className="font-mono text-[9px] text-muted transition-colors hover:text-crimson"
+                className="font-mono text-[9px] text-muted transition-colors hover:text-bloom"
               >
                 Retry
               </button>

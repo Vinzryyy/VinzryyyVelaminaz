@@ -47,7 +47,7 @@ export function InstallPrompt() {
         <span className="font-mono text-xs text-muted">Add to Home Screen</span>
         <button
           onClick={handleInstall}
-          className="rounded-full bg-crimson px-4 py-1.5 font-mono text-[11px] font-semibold text-white transition-colors hover:bg-crimson/80"
+          className="rounded-full bg-bloom px-4 py-1.5 font-mono text-[11px] font-semibold text-white transition-colors hover:bg-bloom/80"
         >
           Install
         </button>

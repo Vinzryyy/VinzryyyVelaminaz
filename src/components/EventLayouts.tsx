@@ -188,7 +188,7 @@ export function SpotlightLayout({ photos, onOpen }: LayoutProps) {
             key={i}
             onClick={() => setActive(i)}
             className={`h-16 w-16 flex-none overflow-hidden rounded transition-all sm:h-20 sm:w-20 ${
-              i === active ? "ring-2 ring-crimson scale-110" : "opacity-50 hover:opacity-80"
+              i === active ? "ring-2 ring-bloom scale-110" : "opacity-50 hover:opacity-80"
             }`}
           >
             {p.src ? (
@@ -244,7 +244,7 @@ export function TimelineLayout({ photos, onOpen }: LayoutProps) {
       {photos.map((p, i) => (
         <div key={i} className="relative mb-10 last:mb-0">
           {/* Dot on timeline */}
-          <div className="absolute -left-[calc(2rem+5px)] top-4 h-2.5 w-2.5 rounded-full border-2 border-crimson bg-sumi md:-left-[calc(3rem+5px)]" />
+          <div className="absolute -left-[calc(2rem+5px)] top-4 h-2.5 w-2.5 rounded-full border-2 border-bloom bg-sumi md:-left-[calc(3rem+5px)]" />
 
           {/* Kanji number */}
           <span className="absolute -left-[calc(2rem+28px)] top-3 font-jp text-xs text-gold/40 md:-left-[calc(3rem+28px)]" lang="ja">{toKanji(i + 1)}</span>
@@ -493,7 +493,7 @@ export function CarouselLayout({ photos, onOpen }: LayoutProps) {
 
       <div className="flex items-center justify-center gap-1.5">
         {photos.map((_, i) => (
-          <button key={i} onClick={() => setIdx(i)} className={`h-2 rounded-full transition-all ${i === idx ? "w-6 bg-crimson" : "w-2 bg-faint hover:bg-muted"}`} />
+          <button key={i} onClick={() => setIdx(i)} className={`h-2 rounded-full transition-all ${i === idx ? "w-6 bg-bloom" : "w-2 bg-faint hover:bg-muted"}`} />
         ))}
       </div>
     </div>
@@ -634,7 +634,7 @@ export function InfiniteLayout({ photos, onOpen }: LayoutProps) {
 
       {visible < photos.length && (
         <div ref={sentinelRef} className="flex items-center justify-center py-8">
-          <div className="h-6 w-6 animate-spin rounded-full border-2 border-crimson/30 border-t-crimson" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-bloom/30 border-t-bloom" />
         </div>
       )}
 
