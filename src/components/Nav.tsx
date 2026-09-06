@@ -43,7 +43,7 @@ export function Nav() {
     >
       {/* Top bar */}
       <div
-        className={`flex items-center justify-between px-4 transition-[height] duration-300 sm:px-6 md:px-10 ${
+        className={`flex items-center justify-between px-4 sm:px-6 md:px-10 ${
           scrolled ? "h-12 sm:h-14" : "h-16 sm:h-20"
         }`}
       >
@@ -116,7 +116,7 @@ export function Nav() {
 
       {/* Mobile dropdown menu */}
       <div
-        className={`overflow-hidden border-t border-hairline/50 transition-all duration-300 md:hidden ${
+        className={`overflow-hidden border-t border-hairline/50 transition-[max-height,opacity,border-color] duration-300 md:hidden ${
           menuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 border-t-transparent"
         }`}
       >
