@@ -25,7 +25,7 @@ export function EventCard({
   return (
     <Link
       to={`/events/${event.slug}`}
-      className="group relative block aspect-[3/4] cursor-pointer overflow-hidden rounded-xl border border-hairline/60 transition-all duration-500 hover:-translate-y-1.5 hover:border-bloom/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_50px_rgba(124,92,191,0.12)]"
+      className="group relative block aspect-[3/4] cursor-pointer overflow-hidden rounded-xl border border-hairline/60 shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-500 active:scale-[0.98] md:shadow-none md:hover:-translate-y-1.5 md:hover:border-bloom/30 md:hover:shadow-[0_20px_60px_rgba(0,0,0,0.6),0_0_50px_rgba(124,92,191,0.12)]"
     >
       {/* Full-bleed cover image with blur-up */}
       {hasCover ? (
@@ -49,13 +49,13 @@ export function EventCard({
         />
       )}
 
-      {/* Gradient overlays */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      {/* Gradient overlays — stronger on mobile for readability */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent md:via-black/30 md:transition-opacity md:duration-500 md:group-hover:opacity-0" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/5 opacity-0 md:transition-opacity md:duration-500 md:group-hover:opacity-100" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
 
-      {/* Subtle bloom glow on hover — top-left corner */}
-      <div className="pointer-events-none absolute -left-20 -top-20 h-40 w-40 rounded-full bg-bloom/20 opacity-0 blur-[60px] transition-opacity duration-700 group-hover:opacity-100" />
+      {/* Subtle bloom glow on hover — desktop only */}
+      <div className="pointer-events-none absolute -left-20 -top-20 hidden h-40 w-40 rounded-full bg-bloom/20 blur-[60px] transition-opacity duration-700 md:block md:opacity-0 md:group-hover:opacity-100" />
 
       {/* Featured badge */}
       {event.featured && (
@@ -83,27 +83,27 @@ export function EventCard({
         </span>
       </div>
 
-      {/* Bottom text overlay — slides up on hover */}
-      <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1.5 rounded-b-xl bg-gradient-to-t from-black/95 via-black/80 to-transparent px-5 pb-5 pt-10 transition-transform duration-500 ease-out md:translate-y-3 md:group-hover:translate-y-0">
+      {/* Bottom text overlay — always visible on mobile, slides up on desktop hover */}
+      <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1.5 rounded-b-xl px-5 pb-5 pt-10 md:translate-y-3 md:transition-transform md:duration-500 md:ease-out md:group-hover:translate-y-0">
         {/* Location / date */}
-        <p className="font-mono text-[11px] tracking-[0.04em] text-white/60 transition-colors duration-300 group-hover:text-white/80">
+        <p className="font-mono text-[11px] tracking-[0.04em] text-white/70 md:text-white/60 md:transition-colors md:duration-300 md:group-hover:text-white/80">
           {event.location} &middot; {event.date}
         </p>
 
         {/* Title */}
-        <h3 className="font-display text-lg font-bold leading-tight text-white/90 transition-colors duration-300 group-hover:text-white">
+        <h3 className="font-display text-lg font-bold leading-tight text-white md:text-white/90 md:transition-colors md:duration-300 md:group-hover:text-white">
           {event.title}
         </h3>
 
-        {/* Subtitle — hidden at rest on desktop, revealed on hover */}
-        <p className="line-clamp-2 text-[13px] leading-relaxed text-white/50 transition-all duration-400 md:max-h-0 md:opacity-0 md:group-hover:max-h-12 md:group-hover:opacity-100">
+        {/* Subtitle — always visible on mobile, revealed on hover on desktop */}
+        <p className="line-clamp-2 text-[13px] leading-relaxed text-white/60 md:max-h-0 md:opacity-0 md:transition-all md:duration-400 md:group-hover:max-h-12 md:group-hover:opacity-100">
           {event.subtitle}
         </p>
 
         {/* Accent line + view CTA */}
         <div className="mt-1.5 flex items-center gap-3">
-          <div className="h-px flex-1 origin-left bg-gradient-to-r from-bloom/50 via-bloom/20 to-transparent transition-transform duration-600 md:scale-x-0 md:group-hover:scale-x-100" />
-          <span className="font-mono text-[11px] tracking-wider text-bloom/70 transition-all duration-300 group-hover:text-bloom md:translate-x-4 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
+          <div className="h-px flex-1 origin-left bg-gradient-to-r from-bloom/50 via-bloom/20 to-transparent md:scale-x-0 md:transition-transform md:duration-600 md:group-hover:scale-x-100" />
+          <span className="font-mono text-[11px] tracking-wider text-bloom md:translate-x-4 md:opacity-0 md:transition-all md:duration-300 md:group-hover:translate-x-0 md:group-hover:opacity-100">
             View &rarr;
           </span>
         </div>
