@@ -29,7 +29,7 @@ export function Footer() {
 
         {/* Bottom row */}
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
-          <p className="font-mono text-xs text-faint">
+          <p className="font-mono text-xs text-muted">
             &copy; {new Date().getFullYear()} VinzryyySaga &mdash; All rights reserved.
           </p>
 
@@ -54,7 +54,7 @@ export function Footer() {
             </a>
           </nav>
 
-          <p className="font-jp text-xs text-faint/60" lang="ja" aria-hidden="true">
+          <p className="font-jp text-xs text-muted/60" lang="ja" aria-hidden="true">
             侍 · 桜
           </p>
         </div>
