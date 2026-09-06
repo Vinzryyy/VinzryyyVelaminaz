@@ -13,7 +13,7 @@ export function Footer() {
           </Link>
           <button
             onClick={scrollToTop}
-            className="group flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-faint transition-colors duration-200 hover:text-muted"
+            className="group flex cursor-pointer items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-faint transition-colors duration-200 hover:text-muted"
           >
             Back to top
             <span className="flex h-8 w-8 items-center justify-center rounded-full border border-hairline transition-all duration-200 group-hover:border-crimson/40 group-hover:-translate-y-0.5">

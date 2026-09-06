@@ -49,7 +49,7 @@ export function Nav() {
       >
         {/* Left: Hamburger (mobile) / Wordmark (desktop) */}
         <button
-          className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] md:hidden"
+          className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] md:hidden"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}

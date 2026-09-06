@@ -58,6 +58,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Offset scroll targets below the fixed nav */
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -413,9 +415,16 @@ select {
   font-size: 16px;
 }
 
-/* Remove tap highlight on iOS */
+/* Remove tap highlight on iOS + eliminate 300ms tap delay */
 button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Active/pressed feedback on interactive elements */
+button:active, a:active, [role="button"]:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
 }
 
 /* Show hover-hidden elements on touch devices */
