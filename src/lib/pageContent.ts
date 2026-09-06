@@ -25,6 +25,9 @@ export interface PageContent {
     instagramUrl: string;
     instagramHandle: string;
   };
+  // NOTE: heading, description, and email are kept in the type for
+  // backwards compatibility with saved localStorage data, but are
+  // no longer rendered on the public site.
 }
 
 export const defaultContent: PageContent = {
