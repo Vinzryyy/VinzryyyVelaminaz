@@ -356,77 +356,130 @@ export default function Home() {
       </section>
 
       {/* ── Profile section ─────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-sumi px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-36">
+      <section className="relative overflow-hidden bg-sumi">
         {/* Subtle noise texture overlay */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.12] mix-blend-overlay" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")" }} />
-        {/* Sakura ambient glows */}
+        {/* Ambient glows */}
         <div className="pointer-events-none absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-bloom/[0.06] blur-[180px]" />
         <div className="pointer-events-none absolute -left-32 bottom-40 h-[20rem] w-[20rem] rounded-full bg-sakura/[0.03] blur-[160px]" />
 
-        <div className="mx-auto max-w-[1400px]">
-          {/* Section label with decorative line */}
+        {/* Top: full-width photo band with 3 images */}
+        <div className="relative">
           <ScrollReveal>
-            <div className="mb-12 flex items-center gap-6 sm:mb-20 md:mb-28">
-              <p className="font-display text-3xl italic text-ink/80 md:text-4xl">
-                {content.profile.sectionLabel}
-              </p>
-              <div className="h-px flex-1 bg-gradient-to-r from-hairline to-transparent" />
+            <div className="flex h-[280px] gap-1 overflow-hidden sm:h-[340px] md:h-[420px]">
+              <div className="relative flex-[2] overflow-hidden">
+                <img
+                  src={current.hero}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-cover"
+                  decoding="async"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-transparent to-transparent" />
+              </div>
+              <div className="relative hidden flex-1 overflow-hidden sm:block">
+                <img
+                  src={current.left}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-cover"
+                  decoding="async"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-transparent to-transparent" />
+              </div>
+              <div className="relative hidden flex-1 overflow-hidden md:block">
+                <img
+                  src={current.right}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-full w-full object-cover"
+                  decoding="async"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-transparent to-transparent" />
+              </div>
             </div>
           </ScrollReveal>
+        </div>
 
-          {/* Content: photo above text on mobile, text left photo right on desktop */}
-          <div className="grid items-center gap-10 md:gap-16 md:grid-cols-[1fr_320px] lg:grid-cols-[1fr_380px]">
-            {/* Photo stack — shown first on mobile (order-first), second on desktop (md:order-last) */}
-            <ScrollReveal direction="right" className="order-first md:order-last">
-              <div className="photo-stack relative mx-auto h-64 w-48 sm:h-80 sm:w-60 md:mx-0 md:h-[360px] md:w-72">
-                {/* Back photo — tilted */}
-                <div className="photo-back absolute inset-0 rotate-6 overflow-hidden border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.4)] transition-transform duration-500">
-                  <img
-                    src={current.left}
-                    alt=""
-                    width={288}
-                    height={360}
-                    decoding="async"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                {/* Front photo — slight opposite tilt */}
-                <div className="photo-front absolute inset-0 -rotate-2 overflow-hidden border border-white/10 shadow-[0_12px_50px_rgba(0,0,0,0.4)] transition-transform duration-500">
-                  <img
-                    src={current.right}
-                    alt=""
-                    width={288}
-                    height={360}
-                    decoding="async"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
+        {/* Bottom: text content overlapping the photo band */}
+        <div className="relative -mt-16 px-4 pb-16 sm:-mt-20 sm:px-6 sm:pb-24 md:-mt-24 md:px-10 md:pb-36">
+          <div className="mx-auto max-w-[1400px]">
+            {/* Section label */}
+            <ScrollReveal>
+              <div className="mb-8 flex items-end gap-4 sm:mb-12 md:mb-16">
+                <p className="font-display text-3xl font-bold text-ink md:text-5xl">
+                  {content.profile.sectionLabel}
+                </p>
+                <div className="mb-2 h-px flex-1 bg-gradient-to-r from-hairline to-transparent" />
+                <span className="mb-1 font-jp text-sm text-gold/40" lang="ja" aria-hidden="true">侍</span>
               </div>
             </ScrollReveal>
 
-            {/* Bio text — shown second on mobile, first on desktop */}
-            <ScrollReveal className="order-last md:order-first">
-              <div className="space-y-6 text-center md:text-left">
-                <p className="max-w-[65ch] text-sm leading-7 text-ink/70 md:text-[15px] md:leading-8" style={{ textAlign: "justify", hyphens: "auto" }}>
-                  {content.profile.bio}
-                </p>
-                <p className="max-w-[65ch] font-display text-sm italic text-sakura/50">
-                  {content.profile.quote}
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
+            {/* Two-column: bio left, stats/quote right */}
+            <div className="grid gap-10 md:grid-cols-[1fr_1px_320px] md:gap-12">
+              {/* Bio */}
+              <ScrollReveal>
+                <div className="space-y-5">
+                  <p className="max-w-[60ch] text-[15px] leading-[1.85] text-ink/75 md:text-base md:leading-8" style={{ hyphens: "auto" }}>
+                    {content.profile.bio}
+                  </p>
+                </div>
+              </ScrollReveal>
 
-          {/* Giant name at bottom — infinite marquee, half-clipped */}
-          <div className="mt-20 h-[8vw] overflow-hidden md:mt-28">
-            <div ref={marqueeRef} className="marquee-track flex w-max">
-              <p className="hero-name-solid select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-[14vw] md:text-[11vw]" aria-hidden="true">
-                VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-              </p>
-              <p className="hero-name-solid select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-[14vw] md:text-[11vw]" aria-hidden="true">
-                VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;
-              </p>
+              {/* Vertical divider — desktop only */}
+              <div className="hidden bg-gradient-to-b from-transparent via-hairline to-transparent md:block" />
+
+              {/* Quote + stats */}
+              <ScrollReveal>
+                <div className="flex flex-col gap-8">
+                  {/* Quote */}
+                  <blockquote className="relative border-l-2 border-bloom/40 py-1 pl-5">
+                    <p className="font-display text-[15px] italic leading-relaxed text-ink/60">
+                      {content.profile.quote}
+                    </p>
+                  </blockquote>
+
+                  {/* Stats row */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <p className="font-display text-2xl font-bold text-ink md:text-3xl">{events.length}</p>
+                      <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">Events</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="font-display text-2xl font-bold text-ink md:text-3xl">{totalFrames}</p>
+                      <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">Frames</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="font-display text-2xl font-bold text-bloom md:text-3xl">
+                        {new Set(events.map(e => e.group).filter(Boolean)).size}
+                      </p>
+                      <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-muted">Groups</p>
+                    </div>
+                  </div>
+
+                  {/* Gear tag */}
+                  <div className="flex items-center gap-3">
+                    <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                    </svg>
+                    <span className="font-mono text-[12px] text-muted">Canon EOS R5 · Canon EOS R8</span>
+                  </div>
+                </div>
+              </ScrollReveal>
             </div>
+          </div>
+        </div>
+
+        {/* Giant name marquee */}
+        <div className="h-[8vw] overflow-hidden">
+          <div ref={marqueeRef} className="marquee-track flex w-max">
+            <p className="hero-name-solid select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-[14vw] md:text-[11vw]" aria-hidden="true">
+              VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            </p>
+            <p className="hero-name-solid select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-[14vw] md:text-[11vw]" aria-hidden="true">
+              VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            </p>
           </div>
         </div>
       </section>
