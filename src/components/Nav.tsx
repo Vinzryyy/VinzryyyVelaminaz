@@ -76,7 +76,7 @@ export function Nav() {
           onClick={() => setMenuOpen(false)}
         >
           <span
-            className={`font-display font-bold tracking-wide text-ink/90 transition-all duration-300 ${
+            className={`font-display font-bold tracking-wide text-ink/90 ${
               scrolled ? "text-base" : "text-lg"
             }`}
           >
@@ -116,11 +116,11 @@ export function Nav() {
 
       {/* Mobile dropdown menu */}
       <div
-        className={`overflow-hidden border-t border-hairline/50 transition-[max-height,opacity,border-color] duration-300 md:hidden ${
-          menuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0 border-t-transparent"
+        className={`grid border-t border-hairline/50 transition-[grid-template-rows,opacity,border-color] duration-300 md:hidden ${
+          menuOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 border-t-transparent"
         }`}
       >
-        <nav className="flex flex-col gap-1 px-6 py-4">
+        <nav className="flex flex-col gap-1 overflow-hidden px-6 py-4">
           <a href="/#events" onClick={scrollTo("events")} className={`py-2 ${italicLink}`}>
             Events
           </a>

@@ -82,7 +82,7 @@ export function EventCard({
 
       {/* Bottom text overlay — staggered reveal on hover */}
       <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-2 rounded-b-lg bg-black/90 p-5">
-        <p className="translate-y-2 font-mono text-[11px] tracking-[0.04em] text-white/80 opacity-70 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        <p className="translate-y-2 font-mono text-[11px] tracking-[0.04em] text-white/70 transition-all duration-300 group-hover:translate-y-0 group-hover:text-white/90">
           {event.location} &middot; {event.date}
         </p>
 
@@ -90,7 +90,7 @@ export function EventCard({
           {event.title}
         </h3>
 
-        <p className="translate-y-2 line-clamp-2 text-[13px] leading-relaxed text-white/80 opacity-70 transition-all duration-300 delay-[100ms] group-hover:translate-y-0 group-hover:opacity-100">
+        <p className="translate-y-2 line-clamp-2 text-[13px] leading-relaxed text-white/60 transition-all duration-300 delay-[100ms] group-hover:translate-y-0 group-hover:text-white/80">
           {event.subtitle}
         </p>
 
