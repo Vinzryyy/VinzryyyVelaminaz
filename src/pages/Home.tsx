@@ -236,7 +236,7 @@ export default function Home() {
                 <p className="max-w-[65ch] text-sm leading-7 text-ink/70 md:text-[15px] md:leading-8" style={{ textAlign: "justify", hyphens: "auto" }}>
                   {content.profile.bio}
                 </p>
-                <p className="font-display text-sm italic text-sakura/50">
+                <p className="max-w-[65ch] font-display text-sm italic text-sakura/50">
                   {content.profile.quote}
                 </p>
               </div>
