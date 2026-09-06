@@ -193,11 +193,17 @@ html, body, #root {
 }
 
 .marquee-track {
-  animation: marquee-scroll 20s linear infinite;
+  animation: marquee-scroll 40s linear infinite;
+  animation-play-state: paused;
 }
 
-.marquee-track:hover {
-  animation-play-state: paused;
+@media (hover: hover) {
+  .marquee-track {
+    animation-play-state: running;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
 }
 
 /* ── Scroll reveal ────────────────────────────────────────────── */
