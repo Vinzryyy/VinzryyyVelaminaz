@@ -363,9 +363,6 @@ export default function Home() {
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>
             <div className="mx-auto max-w-xl text-center">
-              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.35em] text-sakura/60">
-                {content.contact.label}
-              </p>
               <h2 className="fluid-display-md font-display font-bold text-ink">
                 {content.contact.heading}
               </h2>
