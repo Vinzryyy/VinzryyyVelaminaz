@@ -233,7 +233,7 @@ export default function Home() {
           <div className="grid items-center gap-16 md:grid-cols-[1fr_320px] lg:grid-cols-[1fr_380px]">
             <ScrollReveal direction="left">
               <div className="space-y-6">
-                <p className="max-w-2xl text-sm leading-7 text-ink/70 md:text-[15px] md:leading-8" style={{ textAlign: "justify" }}>
+                <p className="max-w-2xl text-sm leading-7 text-ink/70 md:text-[15px] md:leading-8" style={{ textAlign: "justify", hyphens: "auto" }}>
                   {content.profile.bio}
                 </p>
                 <p className="font-display text-sm italic text-sakura/50">
