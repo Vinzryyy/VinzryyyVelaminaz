@@ -154,7 +154,7 @@ export const events: Event[] = [
         "height": 1280
       }
     ],
-    "cover": "/gallery/JKT48DonOboriDay2/IMG_6299.webp"
+    "cover": "/gallery/JKT48DonOboriDay2/IMG_6332.webp"
   },
   {
     "slug": "quadlips-performance-day1",
@@ -420,7 +420,8 @@ export const events: Event[] = [
         "shutter": "1/250",
         "iso": 4000
       }
-    ]
+    ],
+    "cover": "/gallery/quadlips-performance-day1/Quadlips Full Squad.webp"
   },
   {
     "slug": "quadlips-performance-day2",
@@ -1460,7 +1461,7 @@ export const events: Event[] = [
     "tateText": "第三巻 · 縁",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
+    "gear": "Canon EOS R8",
     "subtitle": "Fan meet energy — Cole, Fame, Feni, and Mashiro up close.",
     "description": "The Don Bon fan meeting series puts the members at arm's length. No barricade, no pit — just eye contact and conversation. The light was harsh fluorescent overhead, so I shot wide open and let the backgrounds melt.",
     "featured": false,
@@ -2903,14 +2904,14 @@ export const events: Event[] = [
     "tateText": "第六巻 · 舞台",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
+    "gear": "Canon EOS R8",
     "subtitle": "Night two — Devi and Khalies close the weekend.",
     "description": "The second and final night. Tighter setlist, louder crowd, better light. Devi and Khalies carried the encore with a stripped-down acoustic arrangement that silenced the entire atrium.",
     "featured": false,
     "photos": [
       {
         "title": "Devi",
-        "story": "Acoustic encore. One spot, one voice, the whole atrium holding its breath.",
+        "story": "Under the hot stage lights, Devi's smile flickers like a neon sign, catching a breath between choreography and the roar of the crowd.",
         "src": "/gallery/klp48-performance-day2/Devi.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -2919,14 +2920,240 @@ export const events: Event[] = [
       },
       {
         "title": "Khalies",
-        "story": "Khalies closed the night. The last note hung in the atrium for a full second.",
+        "story": "Khalies turns mid-song, sweat tracing her temple, eyes locking onto a single fan in the dark — a private moment inside the noise.",
         "src": "/gallery/klp48-performance-day2/khalies.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
         "shutter": "1/400",
         "iso": 3200
+      },
+      {
+        "title": "KLP48 Performance Day 2 (3)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5768.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48 Performance Day 2 (4)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5767.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48 Performance Day 2 (5)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5783.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (6)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5779.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 2500
+      },
+      {
+        "title": "KLP48 Performance Day 2 (7)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5777.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 3200
+      },
+      {
+        "title": "KLP48 Performance Day 2 (8)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5774.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (9)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5773.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (10)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5772.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (11)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5771.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (12)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5770.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (13)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5768-1787995959197.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 10000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (14)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5767-1787995959442.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 10000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (15)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5766.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (16)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5765.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (17)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5764.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (18)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5763.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 6400
+      },
+      {
+        "title": "KLP48 Performance Day 2 (19)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5762.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (20)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5761.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 2500
+      },
+      {
+        "title": "KLP48 Performance Day 2 (21)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5760.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 5000
+      },
+      {
+        "title": "KLP48 Performance Day 2 (22)",
+        "story": "",
+        "src": "/gallery/klp48-performance-day2/IMG_5759.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/3.2",
+        "shutter": "1/400",
+        "iso": 5000
       }
-    ]
+    ],
+    "cover": "/gallery/klp48-performance-day2/khalies.webp"
+  },
+  {
+    "slug": "klp48-teater-opening",
+    "title": "KLP48 Teater Opening",
+    "group": "KLP48",
+    "tateText": "第六巻 · 舞台",
+    "location": "LaLaport BBCC, Kuala Lumpur",
+    "date": "Desember 2025",
+    "gear": "Canon EOS R8",
+    "subtitle": "",
+    "description": "Night two closes the weekend with a sharper set and a crowd that learned every word. The encore stripped to acoustic bones, and two voices turned LaLaport's vast space into a quiet room. Light fell like a held breath.",
+    "featured": false,
+    "photos": []
   },
   {
     "slug": "klp48-kkv",
@@ -3700,7 +3927,7 @@ export const events: Event[] = [
     "photos": [
       {
         "title": "Anin I",
-        "story": "Anin leaned in and the light landed perfectly.",
+        "story": "Stage lights catch her mid-laugh, a fleeting spark before the next beat drops.",
         "src": "/gallery/jkt48-don-bon-day1/anin1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -3709,7 +3936,7 @@ export const events: Event[] = [
       },
       {
         "title": "Anin II",
-        "story": "A genuine laugh. The shutter was already down.",
+        "story": "She glances sideways, hair swaying, as if sharing a secret with the crowd.",
         "src": "/gallery/jkt48-don-bon-day1/anin2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
@@ -3718,7 +3945,7 @@ export const events: Event[] = [
       },
       {
         "title": "Anin III",
-        "story": "She signed a postcard without looking down.",
+        "story": "A hand raised, fingers tracing the air — a silent verse in the choreography.",
         "src": "/gallery/jkt48-don-bon-day1/anin3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
@@ -3727,7 +3954,7 @@ export const events: Event[] = [
       },
       {
         "title": "Anin IV",
-        "story": "Between fans. A moment of quiet composure.",
+        "story": "In the pause between songs, her eyes find the lens, holding the moment still.",
         "src": "/gallery/jkt48-don-bon-day1/anin4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
@@ -3736,7 +3963,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin I",
-        "story": "Erin's first fan meet in KL. She was nervous but it didn't show.",
+        "story": "Her ponytail whips as she turns, a burst of motion frozen in amber light.",
         "src": "/gallery/jkt48-don-bon-day1/erin1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -3745,7 +3972,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin II",
-        "story": "Mid-conversation. The overhead light softened on her face.",
+        "story": "She mouths the lyrics, half-smiling, lost in the rhythm of the night.",
         "src": "/gallery/jkt48-don-bon-day1/erin2.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.4",
@@ -3754,7 +3981,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin III",
-        "story": "She looked up from the table and the frame was there.",
+        "story": "A low angle catches her silhouette against the screen, a dancer made of shadow.",
         "src": "/gallery/jkt48-don-bon-day1/erin3.webp",
         "lens": "RF 50mm f/1.2L",
         "aperture": "f/1.4",
@@ -3763,7 +3990,7 @@ export const events: Event[] = [
       },
       {
         "title": "Erin IV",
-        "story": "Profile in the warm zone. Fluorescent never looked this good.",
+        "story": "She waves to the back rows, a small gesture that bridges the distance.",
         "src": "/gallery/jkt48-don-bon-day1/erin4.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
@@ -3772,12 +3999,81 @@ export const events: Event[] = [
       },
       {
         "title": "Fiony",
-        "story": "Fiony brings a different energy to fan meets — louder, brighter, closer.",
+        "story": "Center stage, she holds the final note — the crowd's roar becomes her echo.",
         "src": "/gallery/jkt48-don-bon-day1/Fiony1.webp",
         "lens": "RF 85mm f/1.2L",
         "aperture": "f/1.2",
         "shutter": "1/500",
         "iso": 1600
+      }
+    ]
+  },
+  {
+    "slug": "jkt48-don-bon-day-2",
+    "title": "JKT48 Don Bon Day 2",
+    "group": "JKT48",
+    "tateText": "第九巻 · 縁",
+    "location": "LaLaport BBCC, Kuala Lumpur",
+    "date": "August 2026",
+    "gear": "Canon EOS R8",
+    "subtitle": "Three Jakarta stars, one KL night — dusk to dark.",
+    "description": "The second day unfolds as evening bleeds into night, JKT48 trading pop for the precision of traditional Japanese dance. Under LaLaport's glow, three silhouettes move through ritual and rhythm. The Canon R8 catches every pause, every breath — a quiet archive of motion.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "First Flash",
+        "story": "The crowd's roar hits before the lights do, and her smile cuts through the haze like a warm blade.",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7697.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 16000
+      },
+      {
+        "title": "Hands in the Air",
+        "story": "A sea of waving arms stretches to the barrier, each hand reaching for a moment she already owns.",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7696.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 16000
+      },
+      {
+        "title": "Between Songs",
+        "story": "She catches her breath mid-step, sweat glistening, eyes scanning the dark for a familiar face.",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7683.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 10000
+      },
+      {
+        "title": "Blue Light Confession",
+        "story": "Under the cold blue wash, her wink lands on a single fan — and the whole row forgets to breathe.",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7682.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/400",
+        "iso": 12800
+      },
+      {
+        "title": "Last Bow",
+        "story": "The final pose lingers a second too long, as if the stage itself doesn't want to let her go.",
+        "src": "/gallery/jkt48-don-bon-day-2/IMG_7690.webp",
+        "width": 1920,
+        "height": 1280,
+        "lens": "EF70-200mm f/2.8L IS II USM",
+        "aperture": "f/2.8",
+        "shutter": "1/500",
+        "iso": 16000
       }
     ]
   },
@@ -3788,9 +4084,9 @@ export const events: Event[] = [
     "tateText": "第十巻 · 縁",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
-    "subtitle": "Day two — Quadlips in the last light of the session.",
-    "description": "Second day of the Don Bon series. Quadlips carried the afternoon session with her usual energy. Two frames from the final hour when the light through the venue windows mixed with the overheads.",
+    "gear": "Canon EOS R8",
+    "subtitle": "Day two — Quadlips, where glass light met the last hour.",
+    "description": "The Don Bon series returns for its second act. Quadlips owned the afternoon, her movement cutting through the venue’s windowed glow. These 104 frames hold the final hour, when overheads and daylight fused into a single fleeting palette.",
     "featured": true,
     "photos": [
       {
@@ -4585,9 +4881,9 @@ export const events: Event[] = [
     "tateText": "第十一巻 · 舞台",
     "location": "LaLaport BBCC, Kuala Lumpur",
     "date": "August 2026",
-    "gear": "Canon EOS R5",
-    "subtitle": "Fiony, Lulu, and Oline on stage in KL.",
-    "description": "JKT48's stage show at LaLaport BBCC — closer and more intimate than an arena date. Fiony and Lulu shared a duet moment that stopped the room, and Oline's solo was pure presence. Four frames from a night that deserved forty.",
+    "gear": "Canon EOS R8",
+    "subtitle": "Eighty-six frames of a night that breathed.",
+    "description": "JKT48 at LaLaport BBCC — a stage closer than memory allows. Fiony and Lulu's duet held the room in amber, while Oline's solo burned through the lens. Four shots, but the night bled past the frame.",
     "featured": true,
     "photos": [
       {
@@ -5229,6 +5525,6 @@ export const events: Event[] = [
         "height": 1280
       }
     ],
-    "cover": "/gallery/jkt48-stage-day1/IMG_7271.webp"
+    "cover": "/gallery/jkt48-stage-day1/IMG_7275.webp"
   }
 ];
