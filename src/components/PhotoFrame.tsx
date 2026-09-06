@@ -107,7 +107,7 @@ export function PhotoFrame({
         <h4 className="font-display text-sm font-semibold text-ink">
           {photo.title}
         </h4>
-        <p className="mt-0.5 font-mono text-[10px] text-sakura/70">
+        <p className="mt-0.5 font-mono text-[11px] text-sakura/70">
           {[photo.lens, photo.aperture, photo.shutter, photo.iso != null ? `ISO ${photo.iso}` : null]
             .filter((v): v is string => v != null)
             .join(" · ")}

@@ -203,7 +203,7 @@ export default function Home() {
         {/* Scroll indicator */}
         <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center">
           <div className="scroll-hint flex flex-col items-center gap-1">
-            <span className="text-[9px] uppercase tracking-[0.3em] text-ink/40">Scroll</span>
+            <span className="text-[11px] uppercase tracking-[0.3em] text-ink/40">Scroll</span>
             <svg className="h-4 w-4 text-ink/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>

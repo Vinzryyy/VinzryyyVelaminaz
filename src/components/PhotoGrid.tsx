@@ -149,7 +149,7 @@ function SequenceLabel({ label, count }: { label: string; count: number }) {
       <span className="font-jp text-xs text-gold/50" lang="ja" aria-hidden="true">連</span>
       <span className="font-display text-sm font-semibold text-ink/70">{label}</span>
       <div className="h-px flex-1 bg-hairline" />
-      <span className="font-mono text-[10px] text-faint">{count} frames</span>
+      <span className="font-mono text-[11px] text-faint">{count} frames</span>
     </div>
   );
 }
@@ -182,7 +182,7 @@ function StackView({
             <svg className="h-3 w-3 text-ink/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
-            <span className="font-mono text-[10px] font-semibold text-ink/80">
+            <span className="font-mono text-[11px] font-semibold text-ink/80">
               1/{items.length}
             </span>
           </div>
@@ -279,7 +279,7 @@ function SlideshowView({
 
           {/* Counter + progress dots */}
           <div className="absolute bottom-2.5 left-2.5 z-10 flex items-center gap-2">
-            <span className="rounded-full border border-white/20 bg-sumi/80 px-2.5 py-1 font-mono text-[10px] font-semibold text-ink/80 backdrop-blur-sm">
+            <span className="rounded-full border border-white/20 bg-sumi/80 px-2.5 py-1 font-mono text-[11px] font-semibold text-ink/80 backdrop-blur-sm">
               {current + 1}/{items.length}
             </span>
             <div className="flex gap-1">

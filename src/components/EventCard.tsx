@@ -57,7 +57,7 @@ export function EventCard({
       {/* Featured badge */}
       {event.featured && (
         <div className="absolute right-4 top-12 z-10">
-          <span className="rounded-full border border-gold/30 bg-black/50 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.2em] text-gold backdrop-blur-sm">
+          <span className="rounded-full border border-gold/30 bg-black/50 px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.2em] text-gold backdrop-blur-sm">
             Featured
           </span>
         </div>
@@ -66,7 +66,7 @@ export function EventCard({
       {/* Top bar — group tag + kanji count */}
       <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-4">
         {event.group && (
-          <span className="rounded-full border border-white/15 bg-black/40 px-2.5 py-1 font-mono text-[9px] font-medium uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
+          <span className="rounded-full border border-white/15 bg-black/40 px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
             {event.group}
           </span>
         )}

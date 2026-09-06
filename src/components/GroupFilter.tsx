@@ -31,7 +31,7 @@ export function GroupFilter({
             key={g}
             onClick={() => onChange(g)}
             aria-pressed={isActive}
-            className={`shrink-0 rounded-full border px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] transition-all duration-300 ${
+            className={`shrink-0 rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 ${
               isActive
                 ? "border-crimson/50 bg-crimson/10 text-crimson"
                 : "border-hairline text-faint hover:border-crimson/30 hover:text-muted"
