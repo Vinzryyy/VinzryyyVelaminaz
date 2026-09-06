@@ -83,6 +83,7 @@ export default function Home() {
   useDocumentHead({
     title: "VinzryyySaga — Event Photography",
     description: "Live performance, documentary travel, and quiet portrait work — photographed on location at LaLaport BBCC, Kuala Lumpur.",
+    ogImage: "/og-cover.jpg",
   });
 
   // Preload critical images: hero bg + first 3 event covers
