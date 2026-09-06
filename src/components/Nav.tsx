@@ -35,7 +35,7 @@ export function Nav() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
         scrolled || menuOpen
           ? "bg-sumi/95 shadow-lg shadow-black/30 backdrop-blur-md"
           : "bg-transparent"
@@ -43,7 +43,7 @@ export function Nav() {
     >
       {/* Top bar */}
       <div
-        className={`flex items-center justify-between px-4 transition-all duration-300 sm:px-6 md:px-10 ${
+        className={`flex items-center justify-between px-4 transition-[height] duration-300 sm:px-6 md:px-10 ${
           scrolled ? "h-12 sm:h-14" : "h-16 sm:h-20"
         }`}
       >
