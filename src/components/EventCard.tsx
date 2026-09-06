@@ -25,7 +25,7 @@ export function EventCard({
   return (
     <Link
       to={`/events/${event.slug}`}
-      className="group relative block aspect-[3/4] cursor-pointer overflow-hidden rounded-lg border border-hairline transition-all duration-300 hover:-translate-y-1 hover:border-bloom/25 hover:shadow-[0_16px_56px_rgba(0,0,0,0.5),0_0_40px_rgba(232,160,180,0.1)]"
+      className="group relative block aspect-[3/4] cursor-pointer overflow-hidden rounded-lg border border-hairline transition-all duration-300 hover:-translate-y-1 hover:border-bloom/25 hover:shadow-[0_16px_56px_rgba(0,0,0,0.5),0_0_40px_rgba(124,92,191,0.12)]"
     >
       {/* Full-bleed cover image with blur-up */}
       {hasCover ? (

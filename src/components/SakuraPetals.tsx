@@ -7,13 +7,13 @@
 const PETAL_COUNT_DESKTOP = 20;
 const PETAL_COUNT_MOBILE = 9;
 const PETAL_PATH = "M10 1 C12 5, 18 8, 10 18 C2 8, 8 5, 10 1Z";
-// Spring sakura palette — warm pinks with occasional white petals
+// Lavender night palette — moody purples with soft violet petals
 const PETAL_COLORS = [
-  "rgba(242,184,198,VAR)",   // classic sakura
-  "rgba(232,160,180,VAR)",   // bloom pink
-  "rgba(248,200,214,VAR)",   // pale blossom
-  "rgba(255,220,230,VAR)",   // near-white petal
-  "rgba(220,140,165,VAR)",   // deeper rose
+  "rgba(155,126,212,VAR)",   // bloom lavender
+  "rgba(184,160,232,VAR)",   // soft violet
+  "rgba(200,180,240,VAR)",   // pale lilac
+  "rgba(220,210,245,VAR)",   // near-white petal
+  "rgba(124,92,191,VAR)",    // deep purple
 ];
 
 // Depth layers: far petals are smaller, blurred, and slower

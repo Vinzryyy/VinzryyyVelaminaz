@@ -313,10 +313,10 @@ export default function Home() {
           />
         )}
 
-        {/* Layered overlays — vignette + gradient with warm sakura tint */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#16131d]/90 via-black/30 to-black/20" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(22,19,29,0.5)_100%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#e8a0b4]/[0.04] via-transparent to-transparent" />
+        {/* Layered overlays — vignette + gradient with lavender tint */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#13121d]/90 via-black/30 to-black/20" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(19,18,29,0.5)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#9b7ed4]/[0.05] via-transparent to-transparent" />
 
         {/* Bio text — top-left, below nav */}
         <div className="relative z-10 mt-20 px-4 sm:mt-28 sm:px-6 md:mt-32 md:px-10">
