@@ -196,6 +196,10 @@ html, body, #root {
   animation: marquee-scroll 20s linear infinite;
 }
 
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
 /* ── Scroll reveal ────────────────────────────────────────────── */
 
 .reveal {
