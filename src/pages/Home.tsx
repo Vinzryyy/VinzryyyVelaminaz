@@ -23,11 +23,13 @@ type HeroSet = { hero: string; left: string; right: string };
  * Crossfade hook: keeps current + next image layered.
  * Fades next in over `duration` ms, then promotes it to current.
  */
-function useCrossfade(allPhotos: string[], interval: number, duration: number) {
+function useCrossfade(eventPhotos: string[][], interval: number, duration: number) {
+  // Pick 3 photos from the SAME event, cycling through events
   const pick = useCallback((): HeroSet => {
-    const p = pickRandom(allPhotos, 3);
-    return { hero: p[0], left: p[1], right: p[2] };
-  }, [allPhotos]);
+    const event = eventPhotos[Math.floor(Math.random() * eventPhotos.length)];
+    const p = pickRandom(event, 3);
+    return { hero: p[0], left: p[1] ?? p[0], right: p[2] ?? p[0] };
+  }, [eventPhotos]);
 
   const [current, setCurrent] = useState<HeroSet>(() => pick());
   const [next, setNext] = useState<HeroSet | null>(null);
@@ -61,12 +63,14 @@ export default function Home() {
   const location = useLocation();
   const events = getAllEvents();
 
-  const allPhotos = useMemo(
-    () => events.flatMap((e) => e.photos.map((p) => p.src).filter((s): s is string => !!s)),
+  const eventPhotos = useMemo(
+    () => events
+      .map((e) => e.photos.map((p) => p.src).filter((s): s is string => !!s))
+      .filter((photos) => photos.length >= 3),
     [events]
   );
 
-  const { current, next, fading } = useCrossfade(allPhotos, 25_000, 2000);
+  const { current, next, fading } = useCrossfade(eventPhotos, 25_000, 2000);
   const content = useMemo(() => getPageContent(), []);
 
   const [activeGroup, setActiveGroup] = useState<string>(ALL_GROUPS);
@@ -464,7 +468,7 @@ export default function Home() {
         </div>
 
         {/* Giant name marquee */}
-        <div className="h-[8vw] overflow-hidden">
+        <div className="h-[14vw] overflow-hidden sm:h-[12vw] md:h-[10vw]">
           <div ref={marqueeRef} className="marquee-track flex w-max">
             <p className="hero-name-solid select-none whitespace-nowrap font-display font-bold uppercase leading-[0.85] text-[14vw] md:text-[11vw]" aria-hidden="true">
               VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;VinzryyySaga&nbsp;&nbsp;&middot;&nbsp;&nbsp;
