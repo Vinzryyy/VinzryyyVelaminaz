@@ -52,6 +52,19 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Recovery: if the root stays empty for 4s (JS/CSS failed to load due to
+      // stale SW cache), unregister the service worker and hard-reload.
+      setTimeout(function () {
+        var root = document.getElementById("root");
+        if (root && root.children.length === 0 && "serviceWorker" in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            regs.forEach(function (r) { r.unregister(); });
+            if (regs.length) location.reload();
+          });
+        }
+      }, 4000);
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

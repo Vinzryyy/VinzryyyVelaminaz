@@ -53,8 +53,8 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // HTML pages & JS/CSS — network-first with cache fallback
-  if (request.destination === "document" || request.destination === "script" || request.destination === "style") {
+  // HTML pages — network-first with cache fallback; on total failure reload clean
+  if (request.destination === "document") {
     event.respondWith(
       fetch(request)
         .then((response) => {
@@ -65,6 +65,31 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // JS & CSS — network-first; if both network AND cache miss, force a full page
+  // reload so the browser fetches the latest index.html with correct asset hashes
+  if (request.destination === "script" || request.destination === "style") {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+          }
+          return response;
+        })
+        .catch(() =>
+          caches.match(request).then((cached) => {
+            if (cached) return cached;
+            // Asset missing from both network and cache — stale HTML is likely
+            // the cause. Unregister the SW so the next navigation gets a clean load.
+            self.registration.unregister();
+            return new Response("", { status: 404, statusText: "Asset not found" });
+          })
+        )
     );
     return;
   }
