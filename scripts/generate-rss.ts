@@ -22,7 +22,7 @@ async function main() {
     photos: Array<{ src?: string }>;
   }> };
 
-  const siteUrl = "https://vinzryyysaga.com";
+  const siteUrl = "https://vinzryyy-velaminaz.vercel.app";
   const now = new Date().toUTCString();
 
   const items = events

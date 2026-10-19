@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vinzryyysaga.com/sitemap.xml
+Sitemap: https://vinzryyy-velaminaz.vercel.app/sitemap.xml

@@ -27,9 +27,9 @@ export default function EventPage() {
     description: event.subtitle,
     location: { "@type": "Place", name: event.location },
     image: event.cover ?? event.photos[0]?.src
-      ? `https://vinzryyysaga.com${event.cover ?? event.photos[0]?.src}`
+      ? `https://vinzryyy-velaminaz.vercel.app${event.cover ?? event.photos[0]?.src}`
       : undefined,
-    url: `https://vinzryyysaga.com/events/${event.slug}`,
+    url: `https://vinzryyy-velaminaz.vercel.app/events/${event.slug}`,
     organizer: { "@type": "Person", name: "Vinzryyy" },
     performer: event.group ? { "@type": "PerformingGroup", name: event.group } : undefined,
     numberOfItems: event.photos.length,
