@@ -231,8 +231,11 @@ html, body, #root {
 
 /* ── Page transition ──────────────────────────────────────────── */
 
+/* `backwards`, not `both`: a transform left on the wrapper after the
+   animation would anchor `position: fixed` children (the Lightbox)
+   to the page instead of the viewport. */
 .page-enter {
-  animation: page-fade-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: page-fade-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 .page-exit {
