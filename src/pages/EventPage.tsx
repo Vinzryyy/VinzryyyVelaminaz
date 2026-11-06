@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useState, useRef } from "react";
+import { lazy, Suspense, useMemo, useState, useRef } from "react";
 import { Link, useParams } from "react-router";
 import { getEvent, getNextEvent, getPrevEvent } from "@/lib/data";
 import { useDocumentHead } from "@/lib/useDocumentHead";
@@ -6,6 +6,7 @@ import { FactsPanel } from "@/components/FactsPanel";
 import { KatanaDivider } from "@/components/KatanaDivider";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PhotoGrid } from "@/components/PhotoGrid";
+import { ResponsiveImg } from "@/components/ResponsiveImg";
 import type { Event, Photo, EventLayout } from "@/lib/types";
 import { MagazineLayout, FilmstripLayout, MasonryLayout, SpotlightLayout, FullbleedLayout, TimelineLayout, PolaroidLayout, HoneycombLayout, DiagonalLayout, SplitScrollLayout, CarouselLayout, StackedLayout, MosaicLayout, InfiniteLayout, type LayoutProps } from "@/components/EventLayouts";
 import NotFound from "@/pages/NotFound";
@@ -44,17 +45,6 @@ export default function EventPage() {
 
   const coverSrc = event?.cover ?? event?.photos[0]?.src;
 
-  // Preload cover image
-  useEffect(() => {
-    if (!coverSrc) return;
-    const link = document.createElement("link");
-    link.rel = "preload";
-    link.as = "image";
-    link.href = coverSrc;
-    document.head.appendChild(link);
-    return () => link.remove();
-  }, [coverSrc]);
-
   if (!event) return <NotFound />;
 
   const prevEvent = getPrevEvent(event.slug);
@@ -65,7 +55,7 @@ export default function EventPage() {
       {/* ── Cover hero ─────────────────────────────────────────── */}
       {coverSrc && (
         <section className="relative flex h-[40vh] min-h-[260px] items-end overflow-hidden sm:h-[50vh] sm:min-h-[320px]">
-          <img
+          <ResponsiveImg
             src={coverSrc}
             alt={event.title}
             width={1920}
@@ -73,7 +63,9 @@ export default function EventPage() {
             decoding="async"
             fetchPriority="high"
             className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-            sizes="100vw"
+            // On a portrait phone the 40vh-tall banner is narrower than the photo,
+            // which fills the height and is drawn 60vh wide.
+            sizes="(max-aspect-ratio: 3/5) 60vh, 100vw"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
           <div className="relative z-10 w-full px-4 pb-6 sm:px-6 sm:pb-8 md:px-10">
@@ -193,7 +185,7 @@ export default function EventPage() {
                 </div>
                 {prevEvent.photos[0]?.src && (
                   <div className="hidden h-14 w-14 shrink-0 overflow-hidden rounded border border-hairline md:block">
-                    <img src={prevEvent.photos[0].src} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                    <ResponsiveImg src={prevEvent.photos[0].src} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" sizes="84px" />
                   </div>
                 )}
               </Link>
@@ -205,7 +197,7 @@ export default function EventPage() {
               >
                 {nextEvent.photos[0]?.src && (
                   <div className="hidden h-14 w-14 shrink-0 overflow-hidden rounded border border-hairline md:block">
-                    <img src={nextEvent.photos[0].src} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" />
+                    <ResponsiveImg src={nextEvent.photos[0].src} alt="" className="h-full w-full object-cover" loading="lazy" decoding="async" sizes="84px" />
                   </div>
                 )}
                 <div className="min-w-0 flex-1 space-y-0.5">

@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useLocation } from "react-router";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { getAllEvents, ALL_GROUPS, toKanji } from "@/lib/data";
+import { largestCopy } from "@/lib/imageVariants";
 import { getPageContent } from "@/lib/pageContent";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { EventCard } from "@/components/EventCard";
 import { GroupFilter } from "@/components/GroupFilter";
+import { ResponsiveImg } from "@/components/ResponsiveImg";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -20,10 +22,24 @@ function pickRandom<T>(arr: T[], count: number): T[] {
 type HeroSet = { hero: string; left: string; right: string };
 
 /**
+ * The first hero is picked once per page load. React can render Home more
+ * than once before showing it, and a fresh random pick each time starts
+ * downloading another full-size photo that's never shown.
+ */
+let firstHeroSet: HeroSet | undefined;
+
+/**
  * Crossfade hook: keeps current + next image layered.
  * Fades next in over `duration` ms, then promotes it to current.
+ * Every rotation downloads a full-size photo, so it only rotates while the
+ * hero is on screen, and only fades once the new photo has arrived.
  */
-function useCrossfade(eventPhotos: string[][], interval: number, duration: number) {
+function useCrossfade(
+  eventPhotos: string[][],
+  interval: number,
+  duration: number,
+  heroRef: RefObject<HTMLElement | null>,
+) {
   // Pick 3 photos from the SAME event, cycling through events
   const pick = useCallback((): HeroSet => {
     const event = eventPhotos[Math.floor(Math.random() * eventPhotos.length)];
@@ -31,30 +47,45 @@ function useCrossfade(eventPhotos: string[][], interval: number, duration: numbe
     return { hero: p[0], left: p[1] ?? p[0], right: p[2] ?? p[0] };
   }, [eventPhotos]);
 
-  const [current, setCurrent] = useState<HeroSet>(() => pick());
+  const [current, setCurrent] = useState<HeroSet>(() => (firstHeroSet ??= pick()));
   const [next, setNext] = useState<HeroSet | null>(null);
   const [fading, setFading] = useState(false);
   const timeoutRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
+    let heroVisible = true;
+    let cancelled = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+    });
+    if (heroRef.current) observer.observe(heroRef.current);
+
     const id = setInterval(() => {
+      if (!heroVisible || document.hidden) return;
       const incoming = pick();
-      setNext(incoming);
-      // Trigger fade on next frame so the new img element is in DOM at opacity 0
-      requestAnimationFrame(() => setFading(true));
-      // After transition completes, promote next → current
-      timeoutRef.current = window.setTimeout(() => {
-        setCurrent(incoming);
-        setNext(null);
-        setFading(false);
-      }, duration);
+      const img = new Image();
+      img.src = largestCopy(incoming.hero);
+      img.decode().catch(() => {}).then(() => {
+        if (cancelled) return;
+        setNext(incoming);
+        // Trigger fade on next frame so the new img element is in DOM at opacity 0
+        requestAnimationFrame(() => setFading(true));
+        // After transition completes, promote next → current
+        timeoutRef.current = window.setTimeout(() => {
+          setCurrent(incoming);
+          setNext(null);
+          setFading(false);
+        }, duration);
+      });
     }, interval);
 
     return () => {
+      cancelled = true;
+      observer.disconnect();
       clearInterval(id);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [pick, interval, duration]);
+  }, [pick, interval, duration, heroRef]);
 
   return { current, next, fading };
 }
@@ -70,7 +101,8 @@ export default function Home() {
     [events]
   );
 
-  const { current, next, fading } = useCrossfade(eventPhotos, 25_000, 2000);
+  const heroRef = useRef<HTMLElement>(null);
+  const { current, next, fading } = useCrossfade(eventPhotos, 25_000, 2000, heroRef);
   const content = useMemo(() => getPageContent(), []);
 
   const [activeGroup, setActiveGroup] = useState<string>(ALL_GROUPS);
@@ -95,25 +127,6 @@ export default function Home() {
     ogImage: "/og-cover.jpg",
   });
 
-  // Preload critical images: hero bg + first 3 event covers
-  useEffect(() => {
-    const srcs = [
-      current.hero,
-      ...events.slice(0, 3).map((e) => e.cover ?? e.photos[0]?.src).filter(Boolean),
-    ] as string[];
-
-    const links = srcs.map((src) => {
-      const link = document.createElement("link");
-      link.rel = "preload";
-      link.as = "image";
-      link.href = src;
-      document.head.appendChild(link);
-      return link;
-    });
-
-    return () => links.forEach((l) => l.remove());
-  }, []); // eslint-disable-line -- only on mount
-
   const totalFrames = visibleEvents.reduce((n, e) => n + e.photos.length, 0);
 
   // Handle deferred scroll from Nav links on other pages
@@ -130,7 +143,6 @@ export default function Home() {
   }, [location.state]);
 
   /* ── GSAP refs ──────────────────────────────────────────────── */
-  const heroRef = useRef<HTMLElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const cardGridRef = useRef<HTMLDivElement>(null);
 
@@ -295,7 +307,7 @@ export default function Home() {
         {/* Hero background — smooth crossfade + GSAP Ken Burns + parallax */}
         <img
           key={`bg-cur-${current.hero}`}
-          src={current.hero}
+          src={largestCopy(current.hero)}
           alt=""
           aria-hidden="true"
           width={1920}
@@ -307,7 +319,7 @@ export default function Home() {
         {next && (
           <img
             key={`bg-nxt-${next.hero}`}
-            src={next.hero}
+            src={largestCopy(next.hero)}
             alt=""
             aria-hidden="true"
             width={1920}
@@ -372,8 +384,9 @@ export default function Home() {
           <ScrollReveal>
             <div className="flex h-[280px] gap-1 overflow-hidden sm:h-[340px] md:h-[420px]">
               <div className="relative flex-[2] overflow-hidden">
+                {/* Same file as the hero above, so it's already downloaded */}
                 <img
-                  src={current.hero}
+                  src={largestCopy(current.hero)}
                   alt=""
                   aria-hidden="true"
                   className="h-full w-full object-cover"
@@ -381,23 +394,29 @@ export default function Home() {
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-transparent to-transparent" />
               </div>
+              {/* Side photos: hidden on phones, where lazy loading means they're never downloaded.
+                  The band is 340/420px tall, so a landscape photo is drawn ~510/630px wide. */}
               <div className="relative hidden flex-1 overflow-hidden sm:block">
-                <img
+                <ResponsiveImg
                   src={current.left}
                   alt=""
                   aria-hidden="true"
                   className="h-full w-full object-cover"
                   decoding="async"
+                  loading="lazy"
+                  sizes="(min-width: 768px) 640px, 510px"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-transparent to-transparent" />
               </div>
               <div className="relative hidden flex-1 overflow-hidden md:block">
-                <img
+                <ResponsiveImg
                   src={current.right}
                   alt=""
                   aria-hidden="true"
                   className="h-full w-full object-cover"
                   decoding="async"
+                  loading="lazy"
+                  sizes="640px"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-transparent to-transparent" />
               </div>

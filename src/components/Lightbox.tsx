@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 import type { Photo, Event } from "@/lib/types";
 import { toKanji } from "@/lib/data";
 import { KatanaDivider } from "./KatanaDivider";
+import { ResponsiveImg } from "./ResponsiveImg";
 import { useZoomPan, MIN_ZOOM, MAX_ZOOM } from "@/lib/useZoomPan";
 import { trackPhotoView } from "@/lib/analytics";
 
@@ -452,7 +453,7 @@ export function Lightbox({
               aria-current={i === idx ? "true" : undefined}
             >
               {p.src ? (
-                <img src={p.src} alt="" className="h-full w-full object-cover" loading="lazy" />
+                <ResponsiveImg src={p.src} alt="" className="h-full w-full object-cover" loading="lazy" sizes="84px" />
               ) : (
                 <div
                   className="h-full w-full"

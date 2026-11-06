@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { toKanji, placeholder } from "@/lib/data";
 import type { Photo } from "@/lib/types";
+import { ResponsiveImg } from "./ResponsiveImg";
 
 /**
  * A single photo in the grid.
@@ -11,11 +12,14 @@ export function PhotoFrame({
   photo,
   index,
   aspectClass,
+  sizes = "(min-width: 640px) 33vw, 100vw",
   onClick,
 }: {
   photo: Photo;
   index: number;
   aspectClass: string;
+  /** Width the photo is drawn at, so the browser can pick a small enough copy. */
+  sizes?: string;
   onClick: () => void;
 }) {
   const hasSrc = !!photo.src;
@@ -75,7 +79,7 @@ export function PhotoFrame({
             </div>
           )}
           {inView && !errored && (
-            <img
+            <ResponsiveImg
               ref={imgRef}
               src={photo.src}
               alt={photo.title}
@@ -86,7 +90,7 @@ export function PhotoFrame({
               onLoad={() => setLoaded(true)}
               onError={() => { setErrored(true); setLoaded(true); }}
               className={`img-blur-up absolute inset-0 h-full w-full object-cover transition-transform duration-300 ${loaded ? "img-loaded" : ""}`}
-              sizes="(min-width: 640px) 33vw, 100vw"
+              sizes={sizes}
             />
           )}
         </>

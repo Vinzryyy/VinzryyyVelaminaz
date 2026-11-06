@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useRef, useState } from "react";
 import type { Event } from "@/lib/types";
 import { toKanji, placeholder } from "@/lib/data";
+import { ResponsiveImg } from "./ResponsiveImg";
 
 /**
  * Full-bleed magazine-cover card for the home page event grid.
@@ -29,17 +30,18 @@ export function EventCard({
     >
       {/* Full-bleed cover image with blur-up */}
       {hasCover ? (
-        <img
+        <ResponsiveImg
           ref={imgRef}
           src={coverSrc}
           alt={event.title}
           className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.08] ${
             loaded ? "blur-0 scale-100" : "blur-md scale-105"
           }`}
-          loading={index < 3 ? "eager" : "lazy"}
-          fetchPriority={index < 3 ? "high" : undefined}
+          // Cards sit below the full-screen hero, so none are visible on arrival.
+          loading="lazy"
           decoding="async"
-          sizes="(min-width: 768px) 33vw, 100vw"
+          // The card is portrait, so a landscape cover fills its height and is drawn ~2x the card's width.
+          sizes="(min-width: 1480px) 910px, (min-width: 768px) calc(66vw - 80px), calc(188vw - 60px)"
           onLoad={() => setLoaded(true)}
         />
       ) : (

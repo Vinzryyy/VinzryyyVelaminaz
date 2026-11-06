@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import type { Photo } from "@/lib/types";
 import { toKanji, placeholder } from "@/lib/data";
+import { ResponsiveImg } from "./ResponsiveImg";
 
 /**
  * Alternate event page photo layouts.
@@ -28,7 +29,7 @@ export function MagazineLayout({ photos, onOpen }: LayoutProps) {
           onClick={() => onOpen(0)}
         >
           {hero.src ? (
-            <img src={hero.src} alt={hero.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="eager" />
+            <ResponsiveImg src={hero.src} alt={hero.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="eager" />
           ) : (
             <div className="h-full w-full" style={{ background: placeholder(0) }} />
           )}
@@ -42,7 +43,7 @@ export function MagazineLayout({ photos, onOpen }: LayoutProps) {
             onClick={() => onOpen(i + 1)}
           >
             {p.src ? (
-              <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="eager" />
+              <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="eager" />
             ) : (
               <div className="h-full w-full" style={{ background: placeholder(i + 1) }} />
             )}
@@ -60,7 +61,7 @@ export function MagazineLayout({ photos, onOpen }: LayoutProps) {
               onClick={() => onOpen(idx)}
             >
               {p.src ? (
-                <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
+                <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
               ) : (
                 <div className="h-full w-full" style={{ background: placeholder(idx) }} />
               )}
@@ -87,7 +88,7 @@ export function FilmstripLayout({ photos, onOpen }: LayoutProps) {
           >
             <div className="aspect-[2/3]">
               {p.src ? (
-                <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
+                <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
               ) : (
                 <div className="h-full w-full" style={{ background: placeholder(i) }} />
               )}
@@ -130,7 +131,7 @@ export function MasonryLayout({ photos, onOpen }: LayoutProps) {
                 onClick={() => onOpen(idx)}
               >
                 {photo.src ? (
-                  <img src={photo.src} alt={photo.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
+                  <ResponsiveImg src={photo.src} alt={photo.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
                 ) : (
                   <div className="h-full w-full" style={{ background: placeholder(idx) }} />
                 )}
@@ -168,7 +169,7 @@ export function SpotlightLayout({ photos, onOpen }: LayoutProps) {
         onClick={() => onOpen(active)}
       >
         {photo.src ? (
-          <img src={photo.src} alt={photo.title} className="h-full w-full object-cover" />
+          <ResponsiveImg src={photo.src} alt={photo.title} className="h-full w-full object-cover" />
         ) : (
           <div className="h-full w-full" style={{ background: placeholder(active) }} />
         )}
@@ -192,7 +193,7 @@ export function SpotlightLayout({ photos, onOpen }: LayoutProps) {
             }`}
           >
             {p.src ? (
-              <img src={p.src} alt="" className="h-full w-full object-cover" loading="lazy" />
+              <ResponsiveImg src={p.src} alt="" className="h-full w-full object-cover" loading="lazy" />
             ) : (
               <div className="h-full w-full" style={{ background: placeholder(i) }} />
             )}
@@ -220,7 +221,7 @@ export function FullbleedLayout({ photos, onOpen }: LayoutProps) {
         >
           <div className="aspect-[21/9]">
             {p.src ? (
-              <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" loading="lazy" />
+              <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" loading="lazy" />
             ) : (
               <div className="h-full w-full" style={{ background: placeholder(i) }} />
             )}
@@ -256,7 +257,7 @@ export function TimelineLayout({ photos, onOpen }: LayoutProps) {
           >
             <div className="aspect-[16/9]">
               {p.src ? (
-                <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
+                <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
               ) : (
                 <div className="h-full w-full" style={{ background: placeholder(i) }} />
               )}
@@ -296,7 +297,7 @@ export function PolaroidLayout({ photos, onOpen }: LayoutProps) {
           <div className="rounded bg-white p-2 pb-10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
             <div className="h-40 w-36 overflow-hidden sm:h-48 sm:w-44">
               {p.src ? (
-                <img src={p.src} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
+                <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
               ) : (
                 <div className="h-full w-full" style={{ background: placeholder(i) }} />
               )}
@@ -334,7 +335,7 @@ export function HoneycombLayout({ photos, onOpen }: LayoutProps) {
             onClick={() => { if (active === i) onOpen(i); else setActive(i); }}
           >
             {p.src ? (
-              <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
+              <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
             ) : (
               <div className="h-full w-full" style={{ background: placeholder(i) }} />
             )}
@@ -366,7 +367,7 @@ export function DiagonalLayout({ photos, onOpen }: LayoutProps) {
           onClick={() => { if (active === i) onOpen(i); else setActive(i); }}
         >
           {p.src ? (
-            <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+            <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
           ) : (
             <div className="h-full w-full" style={{ background: placeholder(i) }} />
           )}
@@ -415,7 +416,7 @@ export function SplitScrollLayout({ photos, onOpen }: LayoutProps) {
       <div className="sticky top-0 flex h-[300px] items-center justify-center bg-sumi md:h-full">
         <button className="relative h-full w-full overflow-hidden" onClick={() => onOpen(active)}>
           {photo?.src ? (
-            <img src={photo.src} alt={photo.title} className="h-full w-full object-cover transition-opacity duration-500" />
+            <ResponsiveImg src={photo.src} alt={photo.title} className="h-full w-full object-cover transition-opacity duration-500" />
           ) : (
             <div className="h-full w-full" style={{ background: placeholder(active) }} />
           )}
@@ -472,7 +473,7 @@ export function CarouselLayout({ photos, onOpen }: LayoutProps) {
       <div className="relative aspect-[16/9] overflow-hidden rounded-lg border border-hairline bg-card">
         <button className="h-full w-full" onClick={() => onOpen(idx)}>
           {photo.src ? (
-            <img key={photo.src} src={photo.src} alt={photo.title} className="h-full w-full object-cover animate-[hero-fade_0.5s_ease-in-out]" />
+            <ResponsiveImg key={photo.src} src={photo.src} alt={photo.title} className="h-full w-full object-cover animate-[hero-fade_0.5s_ease-in-out]" />
           ) : (
             <div className="h-full w-full" style={{ background: placeholder(idx) }} />
           )}
@@ -525,7 +526,7 @@ export function StackedLayout({ photos, onOpen }: LayoutProps) {
               onClick={() => { if (isTop) onOpen(i); else next(); }}
             >
               {p.src ? (
-                <img src={p.src} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
+                <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover" loading="lazy" />
               ) : (
                 <div className="h-full w-full" style={{ background: placeholder(i) }} />
               )}
@@ -572,7 +573,7 @@ export function MosaicLayout({ photos, onOpen }: LayoutProps) {
         return (
           <button key={i} className={`group relative overflow-hidden border border-hairline bg-card ${pattern}`} onClick={() => onOpen(i)}>
             {p.src ? (
-              <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
+              <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
             ) : (
               <div className="h-full w-full" style={{ background: placeholder(i) }} />
             )}
@@ -616,7 +617,7 @@ export function InfiniteLayout({ photos, onOpen }: LayoutProps) {
             <button key={i} className={`group relative overflow-hidden border border-hairline bg-card transition-transform duration-700 ${speed}`} onClick={() => onOpen(i)}>
               <div className="aspect-[4/5]">
                 {p.src ? (
-                  <img src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" loading="lazy" />
+                  <ResponsiveImg src={p.src} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" loading="lazy" />
                 ) : (
                   <div className="h-full w-full" style={{ background: placeholder(i) }} />
                 )}

@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import type { Photo, SequenceDisplay } from "@/lib/types";
 import { toKanji } from "@/lib/data";
 import { PhotoFrame } from "./PhotoFrame";
+import { ResponsiveImg } from "./ResponsiveImg";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -110,6 +111,13 @@ const GRID_CLS: Record<RowType, string> = {
   breather: "grid-cols-1",
 };
 
+/* Width each cell's photo is drawn at (the grid stops growing at 1400px). */
+const SIZES: Record<RowType, string> = {
+  triple:   "(min-width: 1480px) 464px, (min-width: 640px) 33vw, 100vw",
+  double:   "(min-width: 1480px) 698px, (min-width: 640px) 50vw, 100vw",
+  breather: "(min-width: 1480px) 1400px, 100vw",
+};
+
 /* ── Grid rows renderer ──────────────────────────────────────────── */
 
 function GridRows({
@@ -135,6 +143,7 @@ function GridRows({
                   photo={photo}
                   index={globalIdx}
                   aspectClass={ASPECT[row.type]}
+                  sizes={SIZES[row.type]}
                   onClick={() => onOpen(globalIdx)}
                 />
               </div>
@@ -180,6 +189,7 @@ function StackView({
             photo={best.photo}
             index={best.globalIdx}
             aspectClass="aspect-[4/3] sm:aspect-[3/2]"
+            sizes={SIZES.triple}
             onClick={() => onOpen(best.globalIdx)}
           />
           {/* Stack badge */}
@@ -198,6 +208,13 @@ function StackView({
 }
 
 /* ── 2. Filmstrip — horizontal scroll ────────────────────────────── */
+
+// Frames are 224/256/288px wide and portrait (3:4). A landscape photo (or one
+// of unknown shape) fills the frame's height, so it's drawn twice as wide.
+const FILMSTRIP_SIZES = {
+  portrait:  "(min-width: 768px) 288px, (min-width: 640px) 256px, 224px",
+  landscape: "(min-width: 768px) 576px, (min-width: 640px) 512px, 448px",
+};
 
 function FilmstripView({
   items,
@@ -218,6 +235,7 @@ function FilmstripView({
               photo={photo}
               index={globalIdx}
               aspectClass="aspect-[3/4]"
+              sizes={photo.width && photo.height && photo.width < photo.height ? FILMSTRIP_SIZES.portrait : FILMSTRIP_SIZES.landscape}
               onClick={() => onOpen(globalIdx)}
             />
           </div>
@@ -264,12 +282,13 @@ function SlideshowView({
           {/* All images stacked, current visible */}
           {items.map(({ photo, globalIdx }, idx) => (
             photo.src && (
-              <img
+              <ResponsiveImg
                 key={globalIdx}
                 src={photo.src}
                 alt={photo.title}
                 decoding="async"
                 loading="lazy"
+                sizes={SIZES.triple}
                 className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1500ms] ease-in-out ${
                   idx === current ? "opacity-100" : "opacity-0"
                 }`}
@@ -335,6 +354,7 @@ function CollageView({
             photo={hero.photo}
             index={hero.globalIdx}
             aspectClass="aspect-square"
+            sizes="(min-width: 1480px) 1050px, (min-width: 640px) 75vw, 150vw"
             onClick={() => onOpen(hero.globalIdx)}
           />
         </div>
@@ -346,6 +366,7 @@ function CollageView({
               photo={photo}
               index={globalIdx}
               aspectClass="aspect-square"
+              sizes="(min-width: 1480px) 520px, (min-width: 640px) 38vw, 75vw"
               onClick={() => onOpen(globalIdx)}
             />
             {/* Overflow badge on last visible tile */}
