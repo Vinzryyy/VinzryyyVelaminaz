@@ -410,7 +410,9 @@ export function EventEditor({
                 onChange={(e) => set("featured", e.target.checked)}
                 className="h-4 w-4 rounded border-hairline accent-crimson"
               />
-              <span className="font-mono text-xs text-muted">Featured event</span>
+              <span className="font-mono text-xs text-muted">
+                Featured event <span className="text-faint">· shown in the Featured row on home</span>
+              </span>
             </label>
 
             <label className="block">

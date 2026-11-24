@@ -8,7 +8,9 @@ import { largestCopy } from "@/lib/imageVariants";
 import { getPageContent } from "@/lib/pageContent";
 import { useDocumentHead } from "@/lib/useDocumentHead";
 import { EventCard } from "@/components/EventCard";
+import { FeaturedRail } from "@/components/FeaturedRail";
 import { GroupFilter } from "@/components/GroupFilter";
+import { HighlightedText } from "@/components/HighlightedText";
 import { ResponsiveImg } from "@/components/ResponsiveImg";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
@@ -111,6 +113,7 @@ export default function Home() {
     () => (activeGroup === ALL_GROUPS ? events : events.filter((e) => e.group === activeGroup)),
     [events, activeGroup]
   );
+  const featuredEvents = useMemo(() => events.filter((e) => e.featured), [events]);
 
   const handleGroupChange = useCallback((group: string) => {
     if (group === activeGroup) return;
@@ -444,7 +447,7 @@ export default function Home() {
               <ScrollReveal>
                 <div className="space-y-5">
                   <p className="max-w-[60ch] text-[15px] leading-[1.85] text-ink/75 md:text-base md:leading-8" style={{ hyphens: "auto" }}>
-                    {content.profile.bio}
+                    <HighlightedText text={content.profile.bio} highlightClassName="font-medium text-ink" />
                   </p>
                 </div>
               </ScrollReveal>
@@ -498,6 +501,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── Featured row ──────────────────────────────────────── */}
+      {featuredEvents.length > 0 && <FeaturedRail events={featuredEvents} />}
 
       {/* ── Events section ────────────────────────────────────── */}
       <section id="events" className="relative px-4 pb-16 pt-8 sm:px-6 sm:pb-24 md:px-10">

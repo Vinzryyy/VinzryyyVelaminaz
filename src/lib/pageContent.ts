@@ -39,7 +39,8 @@ export const defaultContent: PageContent = {
   },
   profile: {
     sectionLabel: "Profile",
-    bio: "Vinzryyy is a fan who fell in love with taking photos at live events. What started as snapping memories from the crowd grew into a passion for capturing the energy, emotion, and fleeting moments that make every show unique. Armed with a camera and a front-row spirit, Vinzryyy documents performances, fan meetings, and behind-the-scenes glimpses — turning the experience of being a fan into visual stories that preserve those moments long after the lights go down.",
+    // Words wrapped in **double asterisks** are drawn brighter on the page.
+    bio: "Vinzryyy is a fan who fell in love with taking photos at **live events**. What started as snapping memories from the crowd grew into a passion for capturing the energy, emotion, and fleeting moments that make every show unique. Armed with a camera and a front-row spirit, Vinzryyy documents **performances**, **fan meetings**, and **behind-the-scenes glimpses** — turning the experience of being a fan into **visual stories** that preserve those moments long after the lights go down.",
     quote: "No studio, no assignments — just a fan with a lens and a love for the stage.",
   },
   contact: {

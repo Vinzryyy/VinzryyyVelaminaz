@@ -27,7 +27,7 @@ export interface Event {
   gear: string;
   subtitle: string;     // one-line teaser on the home card
   description: string;  // full story on the event page
-  featured: boolean;    // full-width card on home
+  featured: boolean;    // shown in the Featured row on home
   cover?: string;       // card image; falls back to first photo
   layout?: EventLayout;              // event page layout style (default: classic)
   groupedInLayout?: boolean;         // also show grouped photos in the main layout grid

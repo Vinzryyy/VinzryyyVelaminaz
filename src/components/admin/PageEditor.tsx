@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getPageContent, savePageContent, resetPageContent, defaultContent, type PageContent } from "@/lib/pageContent";
+import { HighlightedText } from "@/components/HighlightedText";
 
 /* ── Page Editor ─────────────────────────────────────────────────── */
 
@@ -28,7 +29,7 @@ export function PageEditor({ onNotify }: { onNotify: (msg: string) => void }) {
     section: keyof PageContent,
     key: string,
     label: string,
-    opts?: { textarea?: boolean },
+    opts?: { textarea?: boolean; hint?: string },
   ) => (
     <label className="block">
       <span className="mb-1 block font-mono text-[10px] uppercase tracking-wider text-muted">{label}</span>
@@ -47,6 +48,7 @@ export function PageEditor({ onNotify }: { onNotify: (msg: string) => void }) {
           className="w-full rounded-lg border border-hairline bg-sumi px-3 py-2 font-sans text-sm text-ink outline-none focus:border-crimson/50"
         />
       )}
+      {opts?.hint && <span className="mt-1 block font-mono text-[10px] text-faint">{opts.hint}</span>}
     </label>
   );
 
@@ -84,7 +86,10 @@ export function PageEditor({ onNotify }: { onNotify: (msg: string) => void }) {
           <h3 className="mb-4 font-display text-sm font-bold text-ink">Profile Section</h3>
           <div className="space-y-3">
             {field("profile", "sectionLabel", "Section Label")}
-            {field("profile", "bio", "Bio", { textarea: true })}
+            {field("profile", "bio", "Bio", {
+              textarea: true,
+              hint: "Wrap words in **double asterisks** to make them stand out.",
+            })}
             {field("profile", "quote", "Quote")}
           </div>
         </div>
@@ -139,7 +144,7 @@ export function PageEditor({ onNotify }: { onNotify: (msg: string) => void }) {
             {content.profile.sectionLabel}
           </p>
           <p className="text-sm leading-7 text-ink/70" style={{ textAlign: "justify" }}>
-            {content.profile.bio}
+            <HighlightedText text={content.profile.bio} highlightClassName="font-medium text-ink" />
           </p>
           <p className="mt-3 font-display text-sm italic text-sakura/50">
             {content.profile.quote}
