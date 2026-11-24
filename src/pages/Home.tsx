@@ -126,7 +126,7 @@ export default function Home() {
 
   useDocumentHead({
     title: "VinzryyySaga — Event Photography",
-    description: "Live performance, documentary travel, and quiet portrait work — photographed on location at LaLaport BBCC, Kuala Lumpur.",
+    description: "Idol stage shows, fan meets and behind-the-scenes moments from JKT48, KLP48 and Quadlips — photographed by a fan with a camera.",
     ogImage: "/og-cover.jpg",
   });
 
