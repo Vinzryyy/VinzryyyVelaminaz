@@ -2,6 +2,524 @@ import type { Event } from "@/lib/types";
 
 export const events: Event[] = [
   {
+    "slug": "jkt48-akb48-meet-and-greet-festival",
+    "title": "JKT48 & AKB48 Meet and Greet Festival",
+    "group": "JKT48",
+    "tateText": "第十六巻 · 縁",
+    "location": "ICE BSD City, Tangerang",
+    "date": "24 October 2026",
+    "gear": "Canon EOS R8",
+    "subtitle": "Feni, Muthe, Cynthia, and Nayla at the “Ayo Senyumlah” festival.",
+    "description": "The JKT48 & AKB48 Personal Meet and Greet Festival “Ayo Senyumlah” at ICE BSD City. Feni in her outfit of the day and at the Axio booth, plus Muthe, Cynthia, and Nayla — seventeen frames.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "Feni",
+        "story": "Feni’s Outfit today",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/01.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Feni’s Outfit today",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/02.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Feni’s Outfit today",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/03.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Feni’s Outfit today",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/04.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Feni at Axio Booth",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/05.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Feni at Axio Booth",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/06.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Feni at Axio Booth",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/07.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Feni at Axio Booth",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/08.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Thank for having fun together!!",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/09.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Thank for having fun together!!",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/10.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Thank for having fun together!!",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/11.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Nayla",
+        "story": "Nayla outfit",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/12.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Nayla",
+        "story": "Nayla outfit",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/13.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Cynthia",
+        "story": "",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/14.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Cynthia",
+        "story": "",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/15.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni & Muthe",
+        "story": "",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/16.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni & Muthe",
+        "story": "",
+        "src": "/gallery/jkt48-akb48-meet-and-greet-festival/17.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ]
+  },
+  {
+    "slug": "akb48-arrivals-cgk",
+    "title": "AKB48 Arrivals at CGK",
+    "group": "AKB48",
+    "tateText": "第十五巻 · 空港",
+    "location": "Soekarno–Hatta Airport (CGK)",
+    "date": "22 October 2026",
+    "gear": "Canon EOS R8",
+    "subtitle": "Welcoming AKB48 to Jakarta, two days before the festival.",
+    "description": "AKB48 members landing at Soekarno–Hatta International Airport, two days before the JKT48 & AKB48 meet and greet festival. Ten arrivals, one frame each.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "@48Suzuha_16LOVE",
+        "story": "Welcome zunchan",
+        "src": "/gallery/akb48-arrivals-cgk/01.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "@ayamin_112",
+        "story": "Welcome",
+        "src": "/gallery/akb48-arrivals-cgk/02.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "@kurooosu_48_16",
+        "story": "Welcome hachan 🌼🌻",
+        "src": "/gallery/akb48-arrivals-cgk/03.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "@miyuu_mizushima",
+        "story": "Welcome",
+        "src": "/gallery/akb48-arrivals-cgk/04.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "@erii_20031027",
+        "story": "Welcome",
+        "src": "/gallery/akb48-arrivals-cgk/05.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "@erichan_akb48",
+        "story": "Welcome",
+        "src": "/gallery/akb48-arrivals-cgk/06.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "@yuki_hirata0903",
+        "story": "Welcome",
+        "src": "/gallery/akb48-arrivals-cgk/07.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "@kurooosu_48_16",
+        "story": "🌻",
+        "src": "/gallery/akb48-arrivals-cgk/08.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "@kohina_narita",
+        "story": "Welcome",
+        "src": "/gallery/akb48-arrivals-cgk/09.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "@mayuu_masai0301",
+        "story": "Welcome",
+        "src": "/gallery/akb48-arrivals-cgk/10.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ]
+  },
+  {
+    "slug": "jkt48-kilau-raya-mnctv-35",
+    "title": "Kilau Raya MNCTV 35",
+    "group": "JKT48",
+    "tateText": "第十四巻 · 舞台",
+    "location": "MNC Studios, Kebon Jeruk, Jakarta",
+    "date": "21 October 2026",
+    "gear": "Canon EOS R8",
+    "subtitle": "Eli and Feni at MNCTV’s 35th anniversary show.",
+    "description": "JKT48 on stage at Kilau Raya MNCTV 35, the channel’s 35th anniversary show, broadcast live from MNC Studios. Seventeen frames of Eli and Feni, teddy bear included.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "Feni",
+        "story": "Kak Fen",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/01.webp",
+        "width": 1920,
+        "height": 1281
+      },
+      {
+        "title": "Feni",
+        "story": "Kak Fen",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/02.webp",
+        "width": 1920,
+        "height": 1281
+      },
+      {
+        "title": "Feni",
+        "story": "Kak Fen",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/03.webp",
+        "width": 1920,
+        "height": 1281
+      },
+      {
+        "title": "Feni",
+        "story": "Kak Fen",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/04.webp",
+        "width": 1920,
+        "height": 1281
+      },
+      {
+        "title": "Eli",
+        "story": "Kicau",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/05.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Eli",
+        "story": "Kicau",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/06.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Eli",
+        "story": "Hi",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/07.webp",
+        "width": 1281,
+        "height": 1920
+      },
+      {
+        "title": "Eli",
+        "story": "Hi",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/08.webp",
+        "width": 1920,
+        "height": 1281
+      },
+      {
+        "title": "Feni",
+        "story": "Feni dan Boneka",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/09.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Feni dan Boneka",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/10.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Eli & Feni",
+        "story": "Fav Duo, one iconic moment. 🎤✨",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/11.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Eli & Feni",
+        "story": "Fav Duo, one iconic moment. 🎤✨",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/12.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Eli & Feni",
+        "story": "Fav Duo, one iconic moment. 🎤✨",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/13.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Bocil",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/14.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Bocil",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/15.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Eli",
+        "story": "😸",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/16.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Eli",
+        "story": "😸",
+        "src": "/gallery/jkt48-kilau-raya-mnctv-35/17.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ]
+  },
+  {
+    "slug": "jkt48-pop-ice-colour-fest",
+    "title": "Pop Ice Colour Fest 2026",
+    "group": "JKT48",
+    "tateText": "第十三巻 · 舞台",
+    "location": "SMAN 70 Jakarta",
+    "date": "21 October 2026",
+    "gear": "Canon EOS R8",
+    "subtitle": "Marsha, Oniel, Michie, and Fritzy at SMAN 70’s anniversary.",
+    "description": "Pop Ice Colour Fest 2026 — Colouring My Life, held for SMAN 70 Jakarta’s school anniversary. Fourteen frames of Marsha, Oniel, Michie, and Fritzy.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "Fritzy",
+        "story": "",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/01.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Fritzy",
+        "story": "",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/02.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Michie",
+        "story": "Kak mich",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/03.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Michie",
+        "story": "Kak mich",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/04.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Michie",
+        "story": "Kak mich",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/05.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Colouring Festival Pop Ice 2026",
+        "story": "",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/06.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Oniel",
+        "story": "",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/07.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Oniel",
+        "story": "",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/08.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Marsha",
+        "story": "Meng",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/09.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Marsha",
+        "story": "Meng",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/10.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Marsha",
+        "story": "Kiss from Meng",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/11.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Marsha",
+        "story": "Kiss from Meng",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/12.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Marsha",
+        "story": "Kiss from Meng",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/13.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Marsha",
+        "story": "Kiss from Meng",
+        "src": "/gallery/jkt48-pop-ice-colour-fest/14.webp",
+        "width": 1920,
+        "height": 1280
+      }
+    ]
+  },
+  {
+    "slug": "jkt48-ayo-senyumlah-mv-shoot",
+    "title": "“Ayo Senyumlah” MV Shoot",
+    "group": "JKT48",
+    "tateText": "第十二巻 · 街",
+    "location": "Car Free Day, GBK Senayan, Jakarta",
+    "date": "20 September 2026",
+    "gear": "Canon EOS R8",
+    "subtitle": "Feni on set for JKT48’s 28th single.",
+    "description": "Shooting day for JKT48’s 28th single, “Ayo Senyumlah”, at the Sunday Car Free Day by Gelora Bung Karno. Six frames of Feni in the batik costume.",
+    "featured": false,
+    "photos": [
+      {
+        "title": "Feni",
+        "story": "Selamat pagi kak fen",
+        "src": "/gallery/jkt48-ayo-senyumlah-mv-shoot/01.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Selamat pagi kak fen",
+        "src": "/gallery/jkt48-ayo-senyumlah-mv-shoot/02.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Jauh di mata dekat di hati",
+        "src": "/gallery/jkt48-ayo-senyumlah-mv-shoot/03.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Jauh di mata dekat di hati",
+        "src": "/gallery/jkt48-ayo-senyumlah-mv-shoot/04.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Feni",
+        "story": "Tft",
+        "src": "/gallery/jkt48-ayo-senyumlah-mv-shoot/05.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Feni",
+        "story": "Tft",
+        "src": "/gallery/jkt48-ayo-senyumlah-mv-shoot/06.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ]
+  },
+  {
     "slug": "JKT48DonOboriDay2",
     "title": "JKT48 Stage Day 2",
     "group": "JKT48",
