@@ -25,9 +25,8 @@ export interface PageContent {
     instagramUrl: string;
     instagramHandle: string;
   };
-  // NOTE: heading, description, and email are kept in the type for
-  // backwards compatibility with saved localStorage data, but are
-  // no longer rendered on the public site.
+  // NOTE: email is kept in the type for backwards compatibility with saved
+  // localStorage data, but is not rendered on the public site.
 }
 
 export const defaultContent: PageContent = {
@@ -45,8 +44,8 @@ export const defaultContent: PageContent = {
   },
   contact: {
     label: "Get in Touch",
-    heading: "Let's create something together",
-    description: "Interested in event coverage or collaborative projects? Reach out and let's make it happen.",
+    heading: "Say hello",
+    description: "Found your oshi in one of these frames, or just want to talk about the last show? Send me a DM on Instagram.",
     email: "hello@vinzryyysaga.com",
     instagramUrl: "https://instagram.com/VinzryyySaga",
     instagramHandle: "@VinzryyySaga",

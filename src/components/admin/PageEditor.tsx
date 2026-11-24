@@ -101,7 +101,7 @@ export function PageEditor({ onNotify }: { onNotify: (msg: string) => void }) {
             {field("contact", "label", "Label")}
             {field("contact", "heading", "Heading")}
             {field("contact", "description", "Description", { textarea: true })}
-            {field("contact", "email", "Email")}
+            {field("contact", "email", "Email", { hint: "Not shown on the public site." })}
             <div className="flex gap-3">
               {field("contact", "instagramUrl", "Instagram URL")}
               {field("contact", "instagramHandle", "Instagram Handle")}
