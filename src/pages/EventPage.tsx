@@ -18,6 +18,8 @@ const Lightbox = lazy(() =>
 export default function EventPage() {
   const { slug } = useParams<{ slug: string }>();
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  // The cover's shape, read once it loads: older photos were saved without a width and height.
+  const [measuredCover, setMeasuredCover] = useState<{ src: string; portrait: boolean } | null>(null);
 
   const event = slug ? getEvent(slug) : undefined;
 
@@ -47,6 +49,15 @@ export default function EventPage() {
 
   if (!event) return <NotFound />;
 
+  // The banner is far wider than a portrait photo, so cropping one to fit leaves
+  // a thin band through the middle and cuts the face off. On wider screens a
+  // portrait cover is shown whole instead, over a blurred copy of itself.
+  const coverPhoto = event.photos.find((p) => p.src === coverSrc);
+  const coverIsPortrait =
+    measuredCover && measuredCover.src === coverSrc
+      ? measuredCover.portrait
+      : (coverPhoto?.height ?? 0) > (coverPhoto?.width ?? Infinity);
+
   const prevEvent = getPrevEvent(event.slug);
   const nextEvent = getNextEvent(event.slug);
 
@@ -62,11 +73,35 @@ export default function EventPage() {
             height={1080}
             decoding="async"
             fetchPriority="high"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              setMeasuredCover({ src: coverSrc, portrait: img.naturalHeight > img.naturalWidth });
+            }}
+            className={`pointer-events-none absolute inset-0 h-full w-full object-cover ${
+              coverIsPortrait
+                ? "object-[50%_35%] md:scale-110 md:opacity-40 md:blur-2xl"
+                : "object-[50%_30%]"
+            }`}
             // On a portrait phone the 40vh-tall banner is narrower than the photo,
             // which fills the height and is drawn 60vh wide.
             sizes="(max-aspect-ratio: 3/5) 60vh, 100vw"
           />
+          {coverIsPortrait && (
+            <div className="pointer-events-none absolute inset-0 hidden px-10 md:block" aria-hidden="true">
+              <div className="mx-auto h-full max-w-[1400px]">
+                <ResponsiveImg
+                  src={coverSrc}
+                  alt=""
+                  width={coverPhoto?.width}
+                  height={coverPhoto?.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="ml-auto h-full w-auto object-contain"
+                  sizes="(min-width: 768px) 35vh, 0px"
+                />
+              </div>
+            </div>
+          )}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-sumi via-sumi/40 to-transparent" />
           <div className="relative z-10 w-full px-4 pb-6 sm:px-6 sm:pb-8 md:px-10">
             <div className="mx-auto max-w-[1400px]">
