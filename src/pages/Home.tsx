@@ -518,10 +518,10 @@ export default function Home() {
                 <h2 className="font-display text-2xl font-bold text-ink">Events</h2>
               </div>
               <p className="mt-2 font-jp text-[13px] tracking-wider text-muted" lang="ja" aria-live="polite">
-                <span className="text-gold/60">{toKanji(visibleEvents.length)}</span>
-                <span className="text-ink/40"> events · </span>
-                <span className="text-gold/60">{toKanji(totalFrames)}</span>
-                <span className="text-ink/40"> frames</span>
+                <span className="text-gold/80">{toKanji(visibleEvents.length)}</span>
+                <span className="text-muted"> events · </span>
+                <span className="text-gold/80">{toKanji(totalFrames)}</span>
+                <span className="text-muted"> frames</span>
               </p>
               <div className="mt-3 h-px bg-gradient-to-r from-hairline to-transparent" />
             </div>

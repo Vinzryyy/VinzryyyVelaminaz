@@ -108,7 +108,7 @@ export default function EventPage() {
               <Link
                 to="/"
                 state={{ scrollTo: "events" }}
-                className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/80 backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:text-ink"
+                className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-ink/80 backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:text-ink"
               >
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -116,7 +116,7 @@ export default function EventPage() {
                 All events
               </Link>
               {event.group && (
-                <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.35em] text-sakura/60">
+                <p className="mb-2 font-mono text-xs uppercase tracking-[0.3em] text-sakura/80">
                   {event.group}
                 </p>
               )}
@@ -142,7 +142,7 @@ export default function EventPage() {
 
               <div className="space-y-4">
                 <ScrollReveal>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-sakura/60">
+                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-sakura/80">
                     {event.location} &middot; {event.date}
                   </p>
                 </ScrollReveal>
@@ -180,7 +180,7 @@ export default function EventPage() {
               <span className="font-jp text-sm text-gold/40" lang="ja" aria-hidden="true">枠</span>
               <h2 className="font-display text-xl font-bold text-ink">All frames</h2>
               <div className="h-px flex-1 bg-hairline" />
-              <span className="font-mono text-[11px] text-faint">
+              <span className="font-mono text-xs text-muted">
                 {event.photos.length} photographs
               </span>
             </div>
@@ -211,7 +211,7 @@ export default function EventPage() {
                   </svg>
                 </span>
                 <div className="min-w-0 flex-1 space-y-0.5">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-sakura/80">
                     Previous
                   </p>
                   <h3 className="truncate font-display text-base font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink sm:text-lg">
@@ -236,7 +236,7 @@ export default function EventPage() {
                   </div>
                 )}
                 <div className="min-w-0 flex-1 space-y-0.5">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-sakura/80">
                     Next
                   </p>
                   <h3 className="truncate font-display text-base font-bold text-ink/80 transition-colors duration-200 group-hover:text-ink sm:text-lg">
@@ -377,7 +377,7 @@ function EventPhotos({ event, onOpen }: { event: Event; onOpen: (idx: number) =>
           {sequences.length > 0 && ungroupedPhotos.length > 0 && (
             <div className="flex items-center gap-3 px-1">
               <div className="h-px flex-1 bg-hairline" />
-              <span className="font-mono text-[10px] text-faint">
+              <span className="font-mono text-[11px] text-muted">
                 {ungroupedPhotos.length} ungrouped
               </span>
               <div className="h-px flex-1 bg-hairline" />

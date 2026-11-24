@@ -33,14 +33,14 @@ export function GroupFilter({
             key={g}
             onClick={() => onChange(g)}
             aria-pressed={isActive}
-            className={`shrink-0 cursor-pointer rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-all duration-300 ${
+            className={`shrink-0 cursor-pointer rounded-full border px-4 py-2.5 font-mono text-xs uppercase tracking-[0.15em] transition-all duration-300 md:py-2 ${
               isActive
                 ? "border-bloom/50 bg-bloom/10 text-bloom"
-                : "border-hairline text-faint hover:border-bloom/30 hover:text-muted"
+                : "border-hairline text-muted hover:border-bloom/30 hover:text-ink"
             }`}
           >
             {g}
-            <span className={`ml-2 ${isActive ? "text-bloom/60" : "text-faint/60"}`}>
+            <span className={`ml-2 ${isActive ? "text-bloom/70" : "text-muted/70"}`}>
               {countForGroup(events, g)}
             </span>
           </button>

@@ -396,7 +396,7 @@ export function Lightbox({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="border-b border-hairline px-4 py-2.5 sm:px-5 sm:py-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/70">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-sakura/80">
               Frame <span lang="ja">{toKanji(idx + 1)}</span> &middot; {event.location}
             </p>
           </div>
@@ -409,11 +409,11 @@ export function Lightbox({
 
           {exifItems.length > 0 && (
             <div className="px-4 py-2.5 sm:px-5 sm:py-4">
-              <p className="mb-2 font-mono text-[9px] uppercase tracking-[0.3em] text-faint sm:mb-3">EXIF Data</p>
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.25em] text-muted sm:mb-3">EXIF Data</p>
               <div className="grid grid-cols-2 gap-px border border-hairline sm:grid-cols-2">
                 {exifItems.map(({ label, value }) => (
                   <div key={label} className="bg-sumi/50 px-2.5 py-2 sm:px-3 sm:py-2.5">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">{label}</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{label}</p>
                     <p className="mt-0.5 font-mono text-xs text-ink/70">{value}</p>
                   </div>
                 ))}
@@ -422,11 +422,11 @@ export function Lightbox({
           )}
 
           <div className="px-4 pb-2.5 sm:px-5 sm:pb-4">
-            <p className="hidden font-mono text-[9px] leading-5 text-faint/60 md:block">
+            <p className="hidden font-mono text-[10px] leading-5 text-muted/70 md:block">
               ← → navigate · click or scroll to zoom · drag to pan<br />
               + − 0 zoom · Home / End jump · Esc close
             </p>
-            <p className="font-mono text-[9px] leading-5 text-faint/60 md:hidden">
+            <p className="font-mono text-[10px] leading-5 text-muted/70 md:hidden">
               Swipe to navigate · tap to zoom · pinch to scale · drag to pan
             </p>
           </div>

@@ -13,7 +13,7 @@ export function Footer() {
           </Link>
           <button
             onClick={scrollToTop}
-            className="group flex cursor-pointer items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-faint transition-colors duration-200 hover:text-muted"
+            className="group flex cursor-pointer items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors duration-200 hover:text-ink"
           >
             Back to top
             <span className="flex h-8 w-8 items-center justify-center rounded-full border border-hairline transition-all duration-200 group-hover:border-bloom/40 group-hover:-translate-y-0.5">
@@ -36,19 +36,19 @@ export function Footer() {
           <nav className="flex items-center gap-6">
             <Link
               to="/"
-              className="font-mono text-[11px] uppercase tracking-[0.15em] text-faint transition-colors duration-200 hover:text-muted"
+              className="font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors duration-200 hover:text-ink"
             >
               Home
             </Link>
             <a
               href="/#events"
-              className="font-mono text-[11px] uppercase tracking-[0.15em] text-faint transition-colors duration-200 hover:text-muted"
+              className="font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors duration-200 hover:text-ink"
             >
               Events
             </a>
             <a
               href="/#contact"
-              className="font-mono text-[11px] uppercase tracking-[0.15em] text-faint transition-colors duration-200 hover:text-muted"
+              className="font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors duration-200 hover:text-ink"
             >
               Contact
             </a>

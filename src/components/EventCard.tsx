@@ -71,7 +71,7 @@ export function EventCard({
       {/* Top bar — group tag + kanji count */}
       <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between p-4">
         {event.group && (
-          <span className="rounded-full border border-white/10 bg-black/50 px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm transition-colors duration-300 group-hover:border-bloom/20 group-hover:text-white">
+          <span className="rounded-full border border-white/10 bg-black/50 px-2.5 py-1 font-mono text-xs font-medium uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm transition-colors duration-300 group-hover:border-bloom/20 group-hover:text-white">
             {event.group}
           </span>
         )}
@@ -88,7 +88,7 @@ export function EventCard({
       {/* Bottom text overlay — always visible on mobile, slides up on desktop hover */}
       <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col gap-1.5 rounded-b-xl px-5 pb-5 pt-10 md:translate-y-3 md:transition-transform md:duration-500 md:ease-out md:group-hover:translate-y-0">
         {/* Location / date */}
-        <p className="font-mono text-[11px] tracking-[0.04em] text-white/70 md:text-white/60 md:transition-colors md:duration-300 md:group-hover:text-white/80">
+        <p className="font-mono text-xs tracking-[0.04em] text-white/80 md:text-white/75 md:transition-colors md:duration-300 md:group-hover:text-white/90">
           {event.location} &middot; {event.date}
         </p>
 
@@ -105,7 +105,7 @@ export function EventCard({
         {/* Accent line + view CTA */}
         <div className="mt-1.5 flex items-center gap-3">
           <div className="h-px flex-1 origin-left bg-gradient-to-r from-bloom/50 via-bloom/20 to-transparent md:scale-x-0 md:transition-transform md:duration-600 md:group-hover:scale-x-100" />
-          <span className="font-mono text-[11px] tracking-wider text-bloom md:translate-x-4 md:opacity-0 md:transition-all md:duration-300 md:group-hover:translate-x-0 md:group-hover:opacity-100">
+          <span className="font-mono text-xs tracking-wider text-bloom md:translate-x-4 md:opacity-0 md:transition-all md:duration-300 md:group-hover:translate-x-0 md:group-hover:opacity-100">
             View &rarr;
           </span>
         </div>

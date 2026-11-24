@@ -23,7 +23,7 @@ export function FactsPanel({ event }: { event: Event }) {
             i < lastRowStart ? "border-b border-hairline" : ""
           } ${i % cols < cols - 1 && i < facts.length - 1 ? "border-r border-hairline" : ""}`}
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-sakura/60">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-sakura/80">
             {label}
           </p>
           <p className="font-mono text-sm text-ink/80">{value}</p>

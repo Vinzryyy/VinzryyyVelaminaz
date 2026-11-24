@@ -111,8 +111,8 @@ export function FeaturedRail({ events }: { events: Event[] }) {
               <span className="font-display text-sm tracking-widest text-ink/40" aria-hidden="true">──</span>
               <h2 id="featured-heading" className="font-display text-2xl font-bold text-ink">Featured</h2>
             </div>
-            <p className="mt-2 text-[13px] tracking-wider text-ink/40">
-              <span className="font-jp text-gold/60" lang="ja">{toKanji(events.length)}</span> handpicked events
+            <p className="mt-2 text-[13px] tracking-wider text-muted">
+              <span className="font-jp text-gold/80" lang="ja">{toKanji(events.length)}</span> handpicked events
             </p>
           </div>
           <button
@@ -182,11 +182,11 @@ function FeaturedCard({
 
         {/* Top: position in the row, group, photo count */}
         <div className="absolute inset-x-0 top-0 flex items-center gap-3 p-4 sm:p-5">
-          <span className="font-mono text-[11px] tracking-[0.2em] text-white/60">
+          <span className="font-mono text-[11px] tracking-[0.2em] text-white/70">
             {pad(index + 1)} / {pad(total)}
           </span>
           {event.group && (
-            <span className="rounded-full border border-white/10 bg-black/50 px-2.5 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
+            <span className="rounded-full border border-white/10 bg-black/50 px-2.5 py-1 font-mono text-xs font-medium uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
               {event.group}
             </span>
           )}
@@ -198,7 +198,7 @@ function FeaturedCard({
         {/* Bottom: where and when, title */}
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-4 sm:p-6">
           <div className="min-w-0">
-            <p className="font-mono text-[11px] tracking-[0.04em] text-white/70">
+            <p className="font-mono text-xs tracking-[0.04em] text-white/80">
               {event.location} &middot; {event.date}
             </p>
             <h3 className="mt-1 font-display text-xl font-bold leading-tight text-white sm:text-2xl md:text-3xl">
@@ -210,7 +210,7 @@ function FeaturedCard({
           </div>
           <span
             aria-hidden="true"
-            className="shrink-0 font-mono text-[11px] tracking-wider text-bloom transition-transform duration-300 group-hover:translate-x-1"
+            className="shrink-0 font-mono text-xs tracking-wider text-bloom transition-transform duration-300 group-hover:translate-x-1"
           >
             View &rarr;
           </span>
