@@ -513,7 +513,7 @@ export default function Home() {
           <ScrollReveal>
             <div className="mb-6">
               <div className="flex items-baseline gap-3">
-                <span className="font-jp text-lg text-gold/50" lang="ja" aria-hidden="true">第巻</span>
+                <span className="font-jp text-lg text-gold/50" lang="ja" aria-hidden="true">全巻</span>
                 <span className="font-display text-sm tracking-widest text-ink/40">──</span>
                 <h2 className="font-display text-2xl font-bold text-ink">Events</h2>
               </div>

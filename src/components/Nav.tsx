@@ -84,14 +84,14 @@ export function Nav() {
           </span>
         </Link>
 
-        {/* Center: Logo kanji (mobile only) */}
+        {/* Center: wordmark (mobile only) */}
         <Link
           to="/"
           className="absolute left-1/2 -translate-x-1/2 md:hidden"
           onClick={() => setMenuOpen(false)}
         >
-          <span className="font-display text-xl font-bold tracking-wide text-bloom">
-            標識
+          <span className="font-display text-lg font-bold tracking-wide text-ink/90">
+            Vinzryyy<span className="text-bloom">Saga</span>
           </span>
         </Link>
 
