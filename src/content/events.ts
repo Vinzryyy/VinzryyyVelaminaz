@@ -3666,12 +3666,510 @@ export const events: Event[] = [
     "group": "KLP48",
     "tateText": "第六巻 · 舞台",
     "location": "LaLaport BBCC, Kuala Lumpur",
-    "date": "Desember 2025",
+    "date": "28 December 2025",
     "gear": "Canon EOS R8",
-    "subtitle": "",
-    "description": "Night two closes the weekend with a sharper set and a crowd that learned every word. The encore stripped to acoustic bones, and two voices turned LaLaport's vast space into a quiet room. Light fell like a held breath.",
+    "subtitle": "Shonichi — KLP48’s own theatre opens at LaLaport BBCC.",
+    "description": "KLP48 opened its own theatre at LaLaport BBCC on 28 December 2025. Seventy-one frames from the opening — the members with their KLP48 THEATRE banners, the congratulatory flowers, and the first show inside.",
     "featured": false,
-    "photos": []
+    "photos": [
+      {
+        "title": "Joo",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/01.webp",
+        "width": 1281,
+        "height": 1920
+      },
+      {
+        "title": "Joo",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/02.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Joo",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/03.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48 Theatre",
+        "story": "Shonichi!!!",
+        "src": "/gallery/klp48-teater-opening/04.webp",
+        "width": 1920,
+        "height": 1440
+      },
+      {
+        "title": "Yishyan",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/05.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Yishyan",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/06.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Devi",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/07.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Devi",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/08.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/09.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/10.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/11.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Devi",
+        "story": "Close Up Devi 🫵🏻🫵🏻",
+        "src": "/gallery/klp48-teater-opening/12.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Devi",
+        "story": "Close Up Devi 🫵🏻🫵🏻",
+        "src": "/gallery/klp48-teater-opening/13.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Maia",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/14.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Maia",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/15.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "KLP48",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/16.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "KLP48",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/17.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Khalies",
+        "story": "Khalies❤️❤️❤️",
+        "src": "/gallery/klp48-teater-opening/18.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Diva",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/19.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Diva",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/20.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "KLP48 Theatre",
+        "story": "Izin 🙏",
+        "src": "/gallery/klp48-teater-opening/21.webp",
+        "width": 1440,
+        "height": 1920
+      },
+      {
+        "title": "Yurina",
+        "story": "Yurina Gyoten",
+        "src": "/gallery/klp48-teater-opening/22.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Yurina",
+        "story": "Yurina Gyoten",
+        "src": "/gallery/klp48-teater-opening/23.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Khalies",
+        "story": "Puspita Ayu, Sang fajar akan bertamu",
+        "src": "/gallery/klp48-teater-opening/24.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Khalies",
+        "story": "Puspita Ayu, Sang fajar akan bertamu",
+        "src": "/gallery/klp48-teater-opening/25.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Yishyan",
+        "story": "El Capitano del equipo",
+        "src": "/gallery/klp48-teater-opening/26.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Tiffany",
+        "story": "Dedek",
+        "src": "/gallery/klp48-teater-opening/27.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Tiffany",
+        "story": "Dedek",
+        "src": "/gallery/klp48-teater-opening/28.webp",
+        "width": 1281,
+        "height": 1920
+      },
+      {
+        "title": "Tiffany",
+        "story": "Dedek",
+        "src": "/gallery/klp48-teater-opening/29.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Sharleez",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/30.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Sharleez",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/31.webp",
+        "width": 1920,
+        "height": 1281
+      },
+      {
+        "title": "Hana",
+        "story": "Kak Hana…. Kamu la",
+        "src": "/gallery/klp48-teater-opening/32.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Isabel",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/33.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Isabel",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/34.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Yishyan",
+        "story": "Congrats Captain !! See u on theatres soon ?!",
+        "src": "/gallery/klp48-teater-opening/35.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Yishyan",
+        "story": "Congrats Captain !! See u on theatres soon ?!",
+        "src": "/gallery/klp48-teater-opening/36.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Suzuha",
+        "story": "Zunchan",
+        "src": "/gallery/klp48-teater-opening/37.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Devi",
+        "story": "Small steps, big energy, endless confidence 💚",
+        "src": "/gallery/klp48-teater-opening/38.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Devi",
+        "story": "Small steps, big energy, endless confidence 💚",
+        "src": "/gallery/klp48-teater-opening/39.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Devi",
+        "story": "Pure joy, playful energy, and a heart that shine 💚",
+        "src": "/gallery/klp48-teater-opening/40.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Devi",
+        "story": "Pure joy, playful energy, and a heart that shine 💚",
+        "src": "/gallery/klp48-teater-opening/41.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Yishyan",
+        "story": "Grace in every motion, charm in every glance.",
+        "src": "/gallery/klp48-teater-opening/42.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Yishyan",
+        "story": "Grace in every motion, charm in every glance.",
+        "src": "/gallery/klp48-teater-opening/43.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Hana",
+        "story": "Tiny moments, big joy.",
+        "src": "/gallery/klp48-teater-opening/44.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Alice",
+        "story": "Soft smiles and gentle dreams.",
+        "src": "/gallery/klp48-teater-opening/45.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Shuzhen & Hana",
+        "story": "Loved a little extra today 💖",
+        "src": "/gallery/klp48-teater-opening/46.webp",
+        "width": 1634,
+        "height": 1089
+      },
+      {
+        "title": "Shuzhen & Hana",
+        "story": "Loved a little extra today 💖",
+        "src": "/gallery/klp48-teater-opening/47.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Suzuha & Cocoa",
+        "story": "Just another lovely moment. 🍫🍓💖",
+        "src": "/gallery/klp48-teater-opening/48.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "She is beautiful, and my heart has fallen too deep—happily, like petals surrendering to the wind~~",
+        "src": "/gallery/klp48-teater-opening/49.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "She is beautiful, and my heart has fallen too deep—happily, like petals surrendering to the wind~~",
+        "src": "/gallery/klp48-teater-opening/50.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "She is beautiful, and my heart has fallen too deep—happily, like petals surrendering to the wind~~",
+        "src": "/gallery/klp48-teater-opening/51.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "She is beautiful, and my heart has fallen too deep—happily, like petals surrendering to the wind~~",
+        "src": "/gallery/klp48-teater-opening/52.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "A shy girl who grew up beautifully. Once unsure of how to shine, she slowly found her light — and now she glows in her own gentle way ✨",
+        "src": "/gallery/klp48-teater-opening/53.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "A shy girl who grew up beautifully. Once unsure of how to shine, she slowly found her light — and now she glows in her own gentle way ✨",
+        "src": "/gallery/klp48-teater-opening/54.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "A shy girl who grew up beautifully. Once unsure of how to shine, she slowly found her light — and now she glows in her own gentle way ✨",
+        "src": "/gallery/klp48-teater-opening/55.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "A shy girl who grew up beautifully. Once unsure of how to shine, she slowly found her light — and now she glows in her own gentle way ✨",
+        "src": "/gallery/klp48-teater-opening/56.webp",
+        "width": 1920,
+        "height": 1440
+      },
+      {
+        "title": "KLP48",
+        "story": "Even if the dream once quiet silence, I hope it will always be chased — until the world finally sees how strong your ambition truly is.",
+        "src": "/gallery/klp48-teater-opening/57.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "KLP48",
+        "story": "Even if the dream once quiet silence, I hope it will always be chased — until the world finally sees how strong your ambition truly is.",
+        "src": "/gallery/klp48-teater-opening/58.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "Even if the dream once quiet silence, I hope it will always be chased — until the world finally sees how strong your ambition truly is.",
+        "src": "/gallery/klp48-teater-opening/59.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48",
+        "story": "Even if the dream once quiet silence, I hope it will always be chased — until the world finally sees how strong your ambition truly is.",
+        "src": "/gallery/klp48-teater-opening/60.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Devi & Yurina",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/61.webp",
+        "width": 1536,
+        "height": 1920
+      },
+      {
+        "title": "Cocoa",
+        "story": "Cocoa-tan",
+        "src": "/gallery/klp48-teater-opening/62.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Shuzhen",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/63.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Shuzhen",
+        "story": "",
+        "src": "/gallery/klp48-teater-opening/64.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "KLP48 Theatre",
+        "story": "Dibalik Teater itu ada kamu",
+        "src": "/gallery/klp48-teater-opening/65.webp",
+        "width": 1920,
+        "height": 1280
+      },
+      {
+        "title": "Yurina",
+        "story": "リズムに迷い、魂に見出される。❤️‍🔥",
+        "src": "/gallery/klp48-teater-opening/66.webp",
+        "width": 1080,
+        "height": 1920
+      },
+      {
+        "title": "KLP48",
+        "story": "If you know, you know 😉",
+        "src": "/gallery/klp48-teater-opening/67.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "KLP48",
+        "story": "If you know, you know 😉",
+        "src": "/gallery/klp48-teater-opening/68.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "KLP48",
+        "story": "If you know, you know 😉",
+        "src": "/gallery/klp48-teater-opening/69.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Yurina",
+        "story": "君は今まで見た中で一番綺麗な女性だ。",
+        "src": "/gallery/klp48-teater-opening/70.webp",
+        "width": 1280,
+        "height": 1920
+      },
+      {
+        "title": "Yurina",
+        "story": "君は今まで見た中で一番綺麗な女性だ。",
+        "src": "/gallery/klp48-teater-opening/71.webp",
+        "width": 1280,
+        "height": 1920
+      }
+    ]
   },
   {
     "slug": "klp48-kkv",
