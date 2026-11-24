@@ -33,8 +33,10 @@ export function EventEditor({
   };
 
   // Auto-save text fields when form changes (debounced)
+  // The timer reads the latest form from this ref. React only allows writing
+  // refs outside render, so it's updated in an effect after each render.
   const formRef = useRef(form);
-  formRef.current = form;
+  useEffect(() => { formRef.current = form; });
   const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => {
     saveTimer.current = setTimeout(() => {
