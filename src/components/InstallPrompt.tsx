@@ -12,6 +12,9 @@ export function InstallPrompt() {
 
   useEffect(() => {
     const handler = (e: Event) => {
+      // "Add to Home Screen" is for phones and tablets. On a laptop the pill only
+      // covers the page, and the address bar already has its own install button.
+      if (!window.matchMedia("(pointer: coarse)").matches) return;
       e.preventDefault();
       deferredPrompt = e as BeforeInstallPromptEvent;
       // Only show if user hasn't dismissed before
@@ -47,7 +50,7 @@ export function InstallPrompt() {
         <span className="font-mono text-xs text-muted">Add to Home Screen</span>
         <button
           onClick={handleInstall}
-          className="rounded-full bg-bloom px-4 py-1.5 font-mono text-[11px] font-semibold text-white transition-colors hover:bg-bloom/80"
+          className="rounded-full bg-bloom px-4 py-1.5 font-mono text-xs font-semibold text-white transition-colors hover:bg-bloom/80"
         >
           Install
         </button>
