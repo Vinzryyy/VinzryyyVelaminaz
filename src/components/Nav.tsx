@@ -41,6 +41,15 @@ export function Nav() {
           : "bg-transparent"
       }`}
     >
+      {/* Soft shade behind the bar, so the logo and links stay readable over a
+          bright photo. It fades out once the bar gets its solid background. */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-black/60 via-black/25 to-transparent transition-opacity duration-300 ${
+          scrolled || menuOpen ? "opacity-0" : "opacity-100"
+        }`}
+      />
+
       {/* Top bar */}
       <div
         className={`flex items-center justify-between px-4 sm:px-6 md:px-10 ${
