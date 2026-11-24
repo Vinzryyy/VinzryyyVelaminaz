@@ -576,8 +576,8 @@ export default function Home() {
       </section>
 
       {/* ── Contact section ───────────────────────────────────── */}
-      <section id="contact" className="relative border-t border-hairline px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-32">
-        {/* Sakura ambient glow */}
+      <section id="contact" className="relative overflow-x-clip border-t border-hairline px-4 py-16 sm:px-6 sm:py-24 md:px-10 md:py-32">
+        {/* Sakura ambient glow. It's wider than a phone screen, so the section clips it sideways. */}
         <div className="pointer-events-none absolute left-1/2 top-0 h-[20rem] w-[30rem] -translate-x-1/2 rounded-full bg-bloom/[0.05] blur-[160px]" />
         <div className="mx-auto max-w-[1400px]">
           <ScrollReveal>

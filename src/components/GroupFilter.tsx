@@ -4,6 +4,8 @@ import { getGroupNames, countForGroup } from "@/lib/data";
 /**
  * Horizontal filter chips for the events grid.
  * Scrolls sideways on narrow screens rather than wrapping into a tall block.
+ * The row runs edge to edge: its negative margin cancels the events section's
+ * padding (px-4, sm:px-6), so the two must match or the page scrolls sideways.
  * Renders nothing when there is only one group to choose from.
  */
 export function GroupFilter({
@@ -20,7 +22,7 @@ export function GroupFilter({
 
   return (
     <div
-      className="-mx-6 flex gap-2 overflow-x-auto px-6 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
+      className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:-mx-6 sm:px-6 md:mx-0 md:flex-wrap md:overflow-visible md:px-0"
       role="group"
       aria-label="Filter events by group"
     >
